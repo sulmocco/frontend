@@ -1,12 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
 import { ThemeProvider } from 'styled-components';
 import Theme from './styles/Theme';
-import GlobalStyles from './styles/GlobalStyles';
+import { Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
+      hello world
       <ThemeProvider theme={Theme}>
         <Routes>
           

@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import store from "./redux/store";
+import GlobalStyles from './styles/GlobalStyles';
 
 const queryClient = new QueryClient()
 
@@ -15,6 +16,7 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <GlobalStyles />
         <App />
       </QueryClientProvider>
     </BrowserRouter>

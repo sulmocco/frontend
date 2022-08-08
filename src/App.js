@@ -1,13 +1,15 @@
 import { ThemeProvider } from "styled-components";
 import Theme from "./styles/Theme";
-import { Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
     <div className="App">
-      테스트할고얌123
       <ThemeProvider theme={Theme}>
-        <Routes></Routes>
+        <Routes>
+          <Route path="/signup" element={<SignUp />}/>
+        </Routes>
       </ThemeProvider>
     </div>
   );

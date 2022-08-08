@@ -1,0 +1,58 @@
+{
+  "knowhow": [
+    {
+      "id": 0,
+      "subject": "KNOWHOW",
+      "title": "자영업자의 절반이 놓치고 있는 '이' 보험",
+      "writer": "신세희 컨설턴트",
+      "content": "안녕하세요. 프라임에셋 소속 보험 전문 컨설턴트 신세희입니다.\n절대적으로 완벽하게 좋은 보험은 세상에 없습니다. 나에게 맞는 보험만이 있을 뿐입니다.\n나에게 딱 맞는 보험을 알아보는 기준이 무엇인지 보험 컨설팅 노하우를 알려드리겠습니다.",
+      "imgurlList": ["https://pbs.twimg.com/media/EtHubB8UUAEkgbN.jpg"],
+      "bookmark": false,
+      "createdAt": "2022.07.01"
+    },
+    {
+      "id": 1,
+      "subject": "KNOWHOW",
+      "title": "요통은 왜 생길까요?!",
+      "writer": "신체교정 전문가",
+      "content": "오늘은 흔히 일어나는 통증 중 요추 통증에 대해서 알아보겠습니다.",
+      "imgurlList": ["https://pbs.twimg.com/media/EtHubB8UUAEkgbN.jpg"],
+      "bookmark": true,
+      "createdAt": "2022.07.12"
+    },
+    {
+      "id": 2,
+      "subject": "KNOWHOW",
+      "title": "춤을 배우고 싶다면 이것부터!",
+      "writer": "댄스 마스터",
+      "content": "제가 생각했을 때 춤을 배우기 시작함과 동시에 필수적으로 갖춰야 하는 능력에 대해서 말씀드리겠습니다.",
+      "imgurlList": ["https://pbs.twimg.com/media/EtHubB8UUAEkgbN.jpg"],
+      "bookmark": false,
+      "createdAt": "2022.07.21"
+    },
+    {
+      "id": 3,
+      "subject": "KNOWHOW",
+      "title": "인테리어 시공 순서 정하는 꿀팁!",
+      "writer": "라인폴딩도어",
+      "content": "제가 생각했을 때 춤을 배우기 시작함과 동시에 필수적으로 갖춰야 하는 능력에 대해서 말씀드리겠습니다.",
+      "imgurlList": ["https://pbs.twimg.com/media/EtHubB8UUAEkgbN.jpg"],
+      "bookmark": true,
+      "createdAt": "2022.07.27"
+    }
+  ],
+  "comments": [
+    {
+      "id": 0,
+      "username": "김종수",
+      "content": "토요일 오후시간은 가능합니다.",
+      "createdAt": "2022.07.28"
+    },
+    {
+      "id": 1,
+      "username": "장복란",
+      "content": "청소하실 날짜가 언제인지요?",
+      "createdAt": "2022.07.28"
+    }
+  ]
+}

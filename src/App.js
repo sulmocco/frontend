@@ -1,13 +1,16 @@
 import { ThemeProvider } from "styled-components";
 import Theme from "./styles/Theme";
-import { Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import LoginRending from "./pages/loginrending";
 
 function App() {
   return (
     <div className="App">
       테스트할고얌123
       <ThemeProvider theme={Theme}>
-        <Routes></Routes>
+        <Routes>
+          <Route path="/loginrending" element={<LoginRending />} />
+        </Routes>
       </ThemeProvider>
     </div>
   );

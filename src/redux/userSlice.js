@@ -1,27 +1,25 @@
-import axios from 'axios';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLogin: false,
-  NAME: ""
+  NAME: "",
 };
 
-
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     userLogin(state, action) {
-      state.isLogin = true
-      state.NAME = action.payload
+      state.isLogin = true;
+      state.NAME = action.payload;
     },
     userLogout(state, action) {
       state.isLogin = false;
-      state.NAME = '';
-      localStorage.removeItem('token');
-    }
+      state.NAME = "";
+      localStorage.removeItem("token");
+    },
   },
-  extraReducers: {}
+  extraReducers: {},
 });
 
 export default userSlice.reducer;

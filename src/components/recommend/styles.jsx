@@ -10,13 +10,12 @@ export const RecommendWrap = styled.div`
     .recommendsection {
         display: flex;
         flex-wrap: wrap;
-        gap: 3.2rem;
+        gap: 5.6rem;
     }
+    margin: 11.4rem 0;
 `
 export const RecommendItem = styled.li`
-    padding: 2.4rem 0;
     max-width: 29.6rem;
-    
     img{
         width: 29.6rem;
         height: 29.6rem;

@@ -41,11 +41,11 @@ const Terms = () => {
                 </ul>
                 <div className='desc'>
                     <p>술모꼬에서 제공하는 이벤트/혜택 등 다양한 정보를 Push 알람 및 E-mail 알람으로 받아보실 수 있습니다.</p>
-                <p>술모꼬는 만 19세(만19세가 되는 해의 1월 1일) 이상부터 이용가능 하며, 타인의 계정으로 본 서비스를 사용하는 경우 정보통신망 이용촉진 및 정보보호 등에 관한 법률에 의거 처벌을 받을 수 있습니다.</p>
+                    <p>술모꼬는 만 19세(만19세가 되는 해의 1월 1일) 이상부터 이용가능 하며, 타인의 계정으로 본 서비스를 사용하는 경우 정보통신망 이용촉진 및 정보보호 등에 관한 법률에 의거 처벌을 받을 수 있습니다.</p>
                 </div>
-                <SignUpButton style={{marginTop: "4.5rem"}}>동의하고 다음</SignUpButton>
+                <SignUpButton mt='4.5rem'>동의하고 다음</SignUpButton>
             </Termsection>
-        </TermsWrap>
+        </TermsWrap >
     );
 };
 

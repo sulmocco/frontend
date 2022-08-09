@@ -47,6 +47,9 @@ export const Termsection = styled.div`
             }
             input{
                 display: none;
+            &:checked + label:after {
+                    background-image: url('/images/icon_check_blue.svg');
+            }
             }
             label {
                 display: flex;
@@ -75,6 +78,14 @@ export const Termsection = styled.div`
             background-color: #f2f3f3;
             border-radius: 1rem;
             margin: 1.3rem 0;
+            input {
+                &:checked + label {
+                    background-color: ${props => props.theme.primary};
+                }
+                &:checked + label:after {
+                    background-image: url('/images/icon_check_white.svg');
+                }
+            }
             p {
                 font-weight: 700;
                 font-size: 2.6rem;

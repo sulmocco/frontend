@@ -104,4 +104,9 @@ export const Termsection = styled.div`
         flex-direction: column;
         gap: 0.6rem;
     }
+    .button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
 `

@@ -1,12 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SignUpButton } from '../SignUp/styles';
 import { Login } from './styles';
 
 const LoginRending = () => {
     const navigate = useNavigate();
     return (
-        <Login onClick={() => navigate(`/login`)}>
-            로그인 렌딩 페이지 버튼 희정님 컴포넌트 떼서 쓸예정
+        <Login>
+
+            <SignUpButton mt='71.9rem' onClick={() => navigate(`/login`)}>로그인</SignUpButton>
+            <p>회원가입</p>
         </Login>
     );
 };

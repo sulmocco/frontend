@@ -1,20 +1,26 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import InputWrapper from "../../components/InputWrapper";
+import sulmoggoApi from "../../shared/apis";
 import { SignUpButton } from "./styles";
 
 const SignUp = (props) => {
     const password = useRef({});
     const levelText = useRef({})
+    const username = useRef({})
     const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/
     const emailRegEx = /\S+@\S+\.\S+/
-    const nicknameRegEx = /^[A-Za-z\d_]{1,}$/
+    const usernameRegEx = /^[A-Za-z\d_]{1,}$/
+    const phoneRegEx = /^(\d{2,3})-(\d{3,4})-(\d{4})$/
     const [openDropdown, setOpenDropdown] = useState(false)
     // const [optionSelected, setOptionSelected] = useState(undefined)
     // const [optionSelectedText, setOptionSelectedText] = useState(undefined)
 
   const onSubmit = async (data) => {
     console.log(JSON.stringify(data));
+    sulmoggoApi.signUp(data).then(res => {
+      alert("아~주잘댐")
+    })
   };
   const onDropdownChange = (e) => {
     setValue("level", e.target.id)
@@ -37,19 +43,19 @@ const SignUp = (props) => {
 
   const {
     register, watch,
-    handleSubmit, setValue,
+    handleSubmit, setValue, setError,
     formState: { isSubmitting, isDirty, errors },
   } = useForm({ mode: "onChange" });
   password.current = watch("password", "");
   levelText.current = watch("level_text", "")
+  username.current = watch("username", "")
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{width: "400px", maxWidth: "100%" }}>
       <InputWrapper
         error={errors.username?.message}
         title="닉네임"
-        guide={`닉네임은 친구찾기, 친구추가, 프로필 등에 사용됩니다
-                영문, 숫자, 언더바만 사용 가능합니다.`}
+        guide={`닉네임은 친구찾기, 친구추가, 프로필 등에 사용됩니다`}
       >
         <input
           id="username"
@@ -58,22 +64,28 @@ const SignUp = (props) => {
           aria-invalid={!isDirty ? undefined : errors.username ? "true" : "false"}
           {...register("username", {
             required: "닉네임은 필수 입력입니다.",
-            pattern: {
-              value: nicknameRegEx,
-              message: "닉네임 형식에 맞지 않습니다.",
-            },
           })}
         />
+        <button type="button" onClick={()=>{
+          sulmoggoApi.usernameCheck(username.current).then(res => {
+            alert(res.data.res)
+          }).catch(e => {
+            alert("중복이다 중복!!")
+            setError('username', {type: "custom", message: "중복중복중복!!"})
+          })
+        }}>중복확인</button>
       </InputWrapper>
-      <InputWrapper error={errors.id?.message} title="아이디">
+      <InputWrapper error={errors.id?.message} title="아이디(전화번호)">
         <input
           id="id"
           type="text"
-          value="010-2074-9827"
           {...register("id", {
             required: "아이디는 필수 입력입니다.",
+            pattern: {
+              value: phoneRegEx,
+              message: "전화번호 형식에 맞지 않습니다"
+            }
           })}
-          readOnly
         />
       </InputWrapper>
       <InputWrapper

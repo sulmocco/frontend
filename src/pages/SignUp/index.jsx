@@ -9,8 +9,8 @@ const SignUp = (props) => {
     const levelText = useRef({})
     const username = useRef({})
     const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/
-    const emailRegEx = /\S+@\S+\.\S+/
-    const usernameRegEx = /^[A-Za-z\d_]{1,}$/
+    // const emailRegEx = /\S+@\S+\.\S+/
+    // const usernameRegEx = /^[A-Za-z\d_]{1,}$/
     const phoneRegEx = /^(\d{2,3})-(\d{3,4})-(\d{4})$/
     const [openDropdown, setOpenDropdown] = useState(false)
     // const [optionSelected, setOptionSelected] = useState(undefined)
@@ -44,7 +44,7 @@ const SignUp = (props) => {
   const {
     register, watch,
     handleSubmit, setValue, setError,
-    formState: { isSubmitting, isDirty, errors },
+    formState: { isDirty, errors },
   } = useForm({ mode: "onChange" });
   password.current = watch("password", "");
   levelText.current = watch("level_text", "")
@@ -146,7 +146,7 @@ const SignUp = (props) => {
           disabled
         />
         <div className="dropdownArrow" onClick={toggleDropdown}>
-            <img src="/images/icon_dropdown.svg" />
+            <img src="/images/icon_dropdown.svg" alt="down_arrow"/>
         </div>
       </InputWrapper>
       <SignUpButton type="submit" style={{marginBottom: "13.6rem"}}>회원가입</SignUpButton>

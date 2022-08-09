@@ -17,7 +17,7 @@ const InputWrapper = (props) => {
             {title}
           </label>
           <div className="error">
-            {error && <img src="/images/icon_information.svg" />}
+            {error && <img src="/images/icon_information.svg" alt="i"/>}
             {error}
           </div>
         </UpperWrapper>

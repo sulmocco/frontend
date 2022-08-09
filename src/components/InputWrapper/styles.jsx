@@ -7,6 +7,22 @@ export const Wrapper = styled.div`
   margin-bottom: 4rem;
   max-width: 100%;
   max-height: fit-content;
+  button{
+    width: 8.2rem;
+    height: 2.8rem;
+    background-color: ${props => props.theme.primary};
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: ${props => props.theme.white};
+    margin-top: 1.2rem;
+    border-radius: 2rem;
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 2rem;
+  }
 `;
 
 export const UpperWrapper = styled.div`

@@ -27,6 +27,7 @@ const GlobalStyles = createGlobalStyle`
     body {
         font-size: 1rem;
         padding: 0;
+        font-family: 'Pretendard-Regular';
     }
     h1,h2,h3,h4 {
         cursor: default;
@@ -36,6 +37,13 @@ const GlobalStyles = createGlobalStyle`
     }
     button {
         cursor: pointer;
+    }
+
+    @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
     }
 
 `;

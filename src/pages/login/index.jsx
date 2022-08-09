@@ -2,12 +2,16 @@ import React from 'react';
 import { useRef } from 'react';
 import { LoginSection, LoginWrap } from './styles';
 import { SignUpButton } from '../SignUp/styles';
+import sulmoggoApi from '../../shared/apis';
 
 const Login = () => {
     const id_ref = useRef();
     const pw_ref = useRef();
     const handleLogin = () => {
         console.log(id_ref.current.value, pw_ref.current.value);
+        sulmoggoApi.login({id: id_ref.current.value, password: pw_ref.current.value}).then(res => {
+            alert("로그인 잘 됨!")
+        })
     }
     return (
         <LoginWrap>

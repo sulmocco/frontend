@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Wrap>
       <Container>
-        <div>술모꼬</div>
+        <div>SULMOGGO</div>
         <p>항해99 X 동북ICT 이노베이션캠프</p>
         <p>Copyrightⓒ.2022.실전프로젝트4조.All Rights Reserved.</p>
       </Container>
@@ -17,6 +17,7 @@ export default Footer;
 
 const Wrap = styled.div`
   border-top: 1px solid #e1e1e1;
+  background-color: #4e4e56;
 `;
 
 const Container = styled.div`
@@ -26,7 +27,7 @@ const Container = styled.div`
 
   div {
     font-size: 24px;
-    font-weight: 550;
+    font-weight: 600;
   }
   p {
     color: #b5b5b5;

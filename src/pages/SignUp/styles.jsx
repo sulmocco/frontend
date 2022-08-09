@@ -5,12 +5,13 @@ export const SignUpButton = styled.button`
     height: 7.2rem;
     background-color: ${props => props.theme.primary};
     color: ${props => props.theme.white};
-    margin-top: 2.4rem;
+    margin-top: ${(props) => props.mt || '2.4rem'};
     border: none;
     cursor: pointer;
     border-radius: 10px;
     font-size: 2.6rem;
     font-weight: 700;
+    max-width: 40rem;
 `
 
 export const Container = styled.div`

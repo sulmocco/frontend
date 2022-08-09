@@ -1,15 +1,23 @@
 import { ThemeProvider } from "styled-components";
 import Theme from "./styles/Theme";
-import { Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+import Layout from "./components/common/Layout";
+import LoginRedirect from "./components/LoginRedirect";
+import Home from "./pages/Home";
+import Auth from "./pages/Auth";
 
 function App() {
   return (
-    <div className="App">
-      테스트할고얌123
-      <ThemeProvider theme={Theme}>
-        <Routes></Routes>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={Theme}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/oauth2/redirect" element={<LoginRedirect />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 

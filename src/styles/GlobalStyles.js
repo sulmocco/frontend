@@ -43,6 +43,7 @@ body{
     button {
         cursor: pointer;
     }
+
 `;
 
 export default GlobalStyles;

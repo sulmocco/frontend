@@ -1,14 +1,17 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import styled from "styled-components";
+import { Outlet, useLocation } from "react-router-dom";
+import styled, {css} from "styled-components";
 import Footer from "./Footer";
 import Header from "./Header";
 
 const Layout = () => {
+  const location = useLocation()
+  const isShow = location.pathname.startsWith("/signup") || location.pathname.startsWith("/login") || location.pathname.startsWith("/loginrending") || location.pathname.startsWith("/terms")
+  console.log(isShow);
   return (
     <>
       <Header />
-      <Main>
+      <Main show={isShow} loc={location.pathname}>
         <Outlet />
       </Main>
       <Footer />
@@ -19,7 +22,8 @@ const Layout = () => {
 export default Layout;
 
 const Main = styled.main`
-  max-width: 1200px;
+  max-width: ${props => props.show ? "100%" : "1200px"};
   margin: 0 auto;
-  padding: 72px 5px 30px;
+  ${props => props.show ? css`` : css`padding: 72px 5px 30px;`}
+  padding-top: ${props => props.loc.startsWith("/signup") ? "none" : "72px"};
 `;

@@ -2,16 +2,6 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
-body{
-    background-color: #F2F3F6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-}
-
     $primary : #2459e0;
     $secondary : #fdc250;
     *{
@@ -19,7 +9,10 @@ body{
         padding: 0;
         box-sizing: border-box;
         outline-style: none;
+    }
+    ul,li {
         list-style: none;
+        cursor: default;
     }
     a {
         text-decoration: none;
@@ -33,6 +26,7 @@ body{
     }
     body {
         font-size: 1rem;
+        padding: 0;
     }
     h1,h2,h3,h4 {
         cursor: default;

@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import InputWrapper from "../../components/InputWrapper";
 import sulmoggoApi from "../../shared/apis";
-import { SignUpButton } from "./styles";
+import { SignUpButton, Container } from "./styles";
 
 const SignUp = (props) => {
     const password = useRef({});
@@ -51,7 +51,8 @@ const SignUp = (props) => {
   username.current = watch("username", "")
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{width: "400px", maxWidth: "100%" }}>
+    <Container>
+    <form onSubmit={handleSubmit(onSubmit)} style={{width: "400px", maxWidth: "100%"}}>
       <InputWrapper
         error={errors.username?.message}
         title="닉네임"
@@ -148,8 +149,9 @@ const SignUp = (props) => {
             <img src="/images/icon_dropdown.svg" />
         </div>
       </InputWrapper>
-      <SignUpButton type="submit">회원가입</SignUpButton>
+      <SignUpButton type="submit" style={{marginBottom: "13.6rem"}}>회원가입</SignUpButton>
     </form>
+    </Container>
   );
 };
 

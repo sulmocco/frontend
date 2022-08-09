@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const LoginWrap = styled.div`
-    display: felx;
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -30,6 +30,7 @@ export const LoginSection = styled.div`
             background-color: #f2f3f3;
             border-radius: 1rem;
             padding: 1.8rem;
+            font-size: 1.6rem;
         }
     }
     p {

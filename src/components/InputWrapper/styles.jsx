@@ -4,8 +4,9 @@ export const Wrapper = styled.div`
   /* background-color: aqua; */
   display: flex;
   flex-direction: column;
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
   max-width: 100%;
+  max-height: fit-content;
 `;
 
 export const UpperWrapper = styled.div`
@@ -13,14 +14,14 @@ export const UpperWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   .title{
-    font-size: 1.25rem;
+    font-size: 2rem;
     font-weight: 700;
   }
   .error {
     display: flex;
     align-items: center;
     color: ${props => props.theme.error};
-    font-size: .875rem;
+    font-size: 1.4rem;
     font-weight: 400;
     img{
         margin-right: .3rem;
@@ -29,26 +30,26 @@ export const UpperWrapper = styled.div`
 `;
 
 export const GuideText = styled.div`
-  margin-top: 0.625rem;
-  font-size: 12px;
+  margin-top: 1rem;
+  font-size: 1.2rem;
   color: ${(props) => props.theme.grey_02};
   white-space: pre-line;
 `;
 
 export const CenterWrapper = styled.div`
-  margin-top: 0.75rem;
+  margin-top: 1.2rem;
   max-width: 100%;
   position: relative;
   input {
-    font-size: 1rem;
+    font-size: 1.6rem;
     /* width: 25rem; */
     width: 100%;
-    height: 3.5rem;
+    height: 5.6rem;
     background: #ffffff;
     border: ${(props) => (props.error ? "2px solid "+ props.theme.error : "2px solid transparent")};
     color: ${props => props.error ? props.theme.error : "#000000"};
     border-radius: 10px;
-    padding-left: .75rem;
+    padding-left: 1.2rem;
     box-sizing: border-box;
     &:focus{
         outline: none;
@@ -57,7 +58,7 @@ export const CenterWrapper = styled.div`
   .dropdownArrow{
     position: absolute;
     top: 0;
-    right: .75rem;
+    right: 1.2rem;
     height: 100%;
     /* background-color: red; */
     display: flex;
@@ -70,18 +71,19 @@ export const CenterWrapper = styled.div`
 
 export const OptionsWrapper = styled.div`
     background-color: #fff;
-    margin-top: .25rem;
+    margin-top: .4rem;
     padding: ${props => props.open ? "6px" : 0};
     border-radius: 10px;
-    height: ${props => props.open ? "17.5rem" : 0};
+    height: ${props => props.open ? "28rem" : 0};
     overflow: hidden;
     transition: all .3s ease-in-out;
     div{
-        font-size: 1rem;
+        font-size: 1.6rem;
         padding-left: 6px;
         cursor: pointer;
-        height: 3.5rem;
+        height: 5.6rem;
         display: flex;
+        align-items: center;
         &:hover{
             &:first-child{
                 border-top-left-radius: 10px;

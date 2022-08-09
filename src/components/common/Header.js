@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -7,15 +8,15 @@ const Header = () => {
       <Navbar>
         <NavLeft>
           <ul>
-            <li>술모꼬</li>
+            <li><Link to="/">술모꼬</Link></li>
             <li>술약속</li>
             <li>술상추천</li>
           </ul>
         </NavLeft>
         <NavRight>
           <ul>
-            <li>로그인</li>
-            <li>회원가입</li>
+            <li><Link to="/login">로그인</Link></li>
+            <li><Link to="/signup">회원가입</Link></li>
           </ul>
         </NavRight>
       </Navbar>
@@ -32,6 +33,13 @@ const Wrap = styled.div`
   right: 0;
   border-bottom: 1px solid #f2f2f2;
   z-index: 100;
+  color: white !important;
+  background-color: ${props => props.theme.primary};
+  a{
+    &:link, &:visited, &:hover, &:active{
+      color: white;
+    }
+  }
 `;
 
 const Navbar = styled.nav`

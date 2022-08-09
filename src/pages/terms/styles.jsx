@@ -38,20 +38,32 @@ export const Termsection = styled.div`
                 position: absolute;
                 right: 2rem;
                 display: block;
-                background-image: url('/images/arrow_right_gray.png');
+                background-image: url('/images/icon_arrow_right_gray.svg');
                 width: 1.4rem;
                 height: 2.4rem;
+            }
+            &:first-child:after{
+                display: none;
             }
             input{
                 display: none;
             }
             label {
-                display: block;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 width: 2.4rem;
                 height: 2.4rem;
                 border-radius: 50%;
                 background-color: #e3e5e9;
                 cursor: pointer;
+                &:after {
+                    content: '';
+                    display: block;
+                    background-image: url('/images/icon_check_gray.svg');
+                    width: 1.6rem;
+                    height: 1rem;
+                }
             }
             p {
                 font-weight: 400;
@@ -67,11 +79,18 @@ export const Termsection = styled.div`
                 font-weight: 700;
                 font-size: 2.6rem;
             }
+            &:after {
+                display: none;
+            }
         }
     }
     P {
         font-size: 1.4rem;
         color: #7a7a80;
-
+    }
+    .desc {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
     }
 `

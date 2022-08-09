@@ -8,6 +8,7 @@ const GlobalStyles = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
         outline-style: none;
+        list-style: none;
     }
     a {
         text-decoration: none;
@@ -23,6 +24,9 @@ const GlobalStyles = createGlobalStyle`
         font-size: 1rem;
     }
     h1,h2,h3,h4 {
+        cursor: default;
+    }
+    p, span {
         cursor: default;
     }
     button {

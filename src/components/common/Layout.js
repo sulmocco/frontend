@@ -27,7 +27,7 @@ const Layout = () => {
 export default Layout;
 
 const Main = styled.main`
-  max-width: ${(props) => (props.show ? "100%" : "1200px")};
+  /* max-width: ${props => props.show ? "100%" : "1200px"}; */
   margin: 0 auto;
   ${(props) =>
     props.show

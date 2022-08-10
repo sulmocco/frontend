@@ -33,11 +33,13 @@ const Wrap = styled.div`
   right: 0;
   border-bottom: 1px solid #f2f2f2;
   z-index: 100;
-  color: white !important;
-  background-color: ${props => props.theme.primary};
+  color: ${props => props.theme.black} !important;
+  background-color: ${props => props.theme.white};
+  box-shadow: ${props => props.theme.shadow_gray};
+  font-weight: 500;
   a{
     &:link, &:visited, &:hover, &:active{
-      color: white;
+      color: ${props => props.theme.black};
     }
   }
 `;
@@ -45,8 +47,8 @@ const Wrap = styled.div`
 const Navbar = styled.nav`
   display: flex;
   width: 100%;
-  max-width: 1200px;
-  height: 72px;
+  max-width: 1280px;
+  height: 11.2rem;
   margin: 0 auto;
 `;
 
@@ -56,7 +58,7 @@ const NavLeft = styled.div`
   margin-right: auto;
   ul {
     display: flex;
-    font-size: 18px;
+    font-size: 16px;
     gap: 48px;
   }
 `;
@@ -67,7 +69,7 @@ const NavRight = styled.div`
   margin-left: auto;
   ul {
     display: flex;
-    font-size: 18px;
+    font-size: 16px;
     gap: 48px;
   }
 `;

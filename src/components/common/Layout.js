@@ -12,7 +12,7 @@ const Layout = () => {
     location.pathname.startsWith("/loginrending") ||
     location.pathname.startsWith("/terms") ||
     location.pathname === "/";
-    
+
   console.log(isShow);
   return (
     <>
@@ -28,14 +28,14 @@ const Layout = () => {
 export default Layout;
 
 const Main = styled.main`
-  max-width: ${(props) => (props.show ? "100%" : "1200px")};
+  max-width: ${(props) => (props.show ? "100%" : "1280px")};
   margin: 0 auto;
   ${(props) =>
     props.show
       ? css``
       : css`
-          padding: 72px 5px 30px;
+          padding: 11.2rem 5px 30px;
         `}
   padding-top: ${(props) =>
-    props.loc.startsWith("/signup") ? "none" : "72px"};
+    props.loc.startsWith("/signup") ? "none" : "11.2rem"};
 `;

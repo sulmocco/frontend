@@ -43,6 +43,9 @@ export const ButtonBase = styled.div`
   font-weight: 700;
   font-size: 2rem;
   &:disabled {
+    background-color: ${(props) => props.theme.grey_04};
+    color: ${(props) => props.theme.black_02};
+    border: 1px solid #d6d6d6;
   }
 `;
 // 계속하기

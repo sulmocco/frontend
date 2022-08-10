@@ -36,7 +36,7 @@ const MainSlider = () => {
 export default MainSlider;
 
 const Carousel = styled.section`
-  margin-top: 30px;
+  /* margin-top: 30px; */
   .swiper-button-prev,
   .swiper-button-next {
     &::after {
@@ -57,4 +57,6 @@ const Carousel = styled.section`
 
 const Image = styled.img`
   width: 100%;
+  max-height: 60.9rem;
+  object-fit: cover;
 `;

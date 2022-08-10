@@ -79,15 +79,6 @@ const Home = () => {
       imageUrl: "/images/recommend.jpeg",
       redirectUrl: "https://www.naver.com/",
     },
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
   ];
 
   return (

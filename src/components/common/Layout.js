@@ -12,6 +12,7 @@ const Layout = () => {
     location.pathname.startsWith("/loginrending") ||
     location.pathname.startsWith("/terms") ||
     location.pathname === "/";
+    
   console.log(isShow);
   return (
     <>

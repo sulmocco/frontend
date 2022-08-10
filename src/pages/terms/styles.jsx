@@ -74,7 +74,7 @@ export const Termsection = styled.div`
                 color: #4e4e56;
             }
         }
-        .all_check {
+        .selectAll {
             background-color: #f2f3f3;
             border-radius: 1rem;
             margin: 1.3rem 0;

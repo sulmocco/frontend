@@ -66,6 +66,8 @@ export const TagBase = styled.div`
   padding: 0.4rem 1.2rem;
   border-radius: 2rem;
   font-weight: 500;
+  line-height: 1.9rem;
+  border: .1rem solid transparent;
   color: ${(props) => props.theme.black_02};
 `;
 
@@ -83,6 +85,16 @@ export const ThemeTag = styled(TagBase)`
 `;
 // 자유 태그
 export const FreeTag = styled(TagBase)`
-  border: 0.1rem solid ${(props) => props.theme.secondary};
-  color: ${(props) => props.theme.secondary};
+  border: 0.1rem solid ${(props) => props.theme.primary};
+  color: ${(props) => props.theme.primary};
+  background-color: ${props => props.theme.bg_light_blue};
 `;
+
+// 세로구분선
+export const Separator = styled.div`
+    display: inline-block;
+    width: .1rem;
+    height: .8rem;
+    background-color: #d9d9d9;
+    margin: 0rem .4rem;
+`

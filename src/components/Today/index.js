@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import {Wrap, Container} from "./styles"
 
 const Today = () => {
   return (
@@ -11,11 +12,4 @@ const Today = () => {
 
 export default Today;
 
-const Wrap = styled.div`
-  margin-top: 20px;
-`;
 
-const Container = styled.div`
-  border: 1px solid black;
-  height: 450px;
-`;

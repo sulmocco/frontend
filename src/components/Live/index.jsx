@@ -5,8 +5,10 @@ import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import {
   Wrap, LiveWrap, Title, Container,
   Pre, Next, Listbox, Image, ProfileBox, Desc, ProfileImage,  
-  Profile, Tag1, Tag2, Tag3
+  Profile
 } from "./styles";
+
+import {AlchholTag, SnackTag, ThemeTag} from "../../styles/CommonStyles"
 
 const Live = () => {
   const [list, setList] = useState([]);
@@ -109,10 +111,10 @@ const Live = () => {
                   <span>{v.members}</span>
                 </div>
               </Desc>
-              <div style={{ display: "flex" }}>
-                <Tag1>{v.theme}</Tag1>
-                <Tag2>{v.alcohol}</Tag2>
-                <Tag3>{v.food}</Tag3>
+              <div style={{ display: "flex", marginTop: "40px" }}>
+                <AlchholTag style= {{marginRight : "10px"}}>{v.theme}</AlchholTag>
+                <SnackTag style= {{marginRight : "10px"}}>{v.alcohol}</SnackTag>
+                <ThemeTag>{v.food}</ThemeTag>
               </div>
             </Listbox>
           );

@@ -1,7 +1,7 @@
 import React from "react";
-import MainSlider from "../components/MainSlider";
-import Live from "../components/Live";
-import Today from "../components/Today";
+import MainSlider from "../components/mainslider";
+import Live from "../components/live";
+import Today from "../components/today";
 import Recommend from "../components/recommend";
 import { RecommendWrap } from "../components/recommend/styles";
 

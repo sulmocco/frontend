@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import InputWrapper from "../../components/InputWrapper";
+import InputWrapper from "../../components/inputwrapper";
 import sulmoggoApi from "../../shared/apis";
 import { SignUpButton, Container } from "./styles";
 

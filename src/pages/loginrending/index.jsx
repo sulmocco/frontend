@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SignUpButton } from '../SignUp/styles';
+import { SignUpButton } from '../signup/styles';
 import { Login } from './styles';
 
 const LoginRending = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRef } from 'react';
 import { LoginSection, LoginWrap } from './styles';
-import { SignUpButton } from '../SignUp/styles';
+import { SignUpButton } from '../signup/styles';
 import sulmoggoApi from '../../shared/apis';
 
 const Login = () => {

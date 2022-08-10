@@ -1,6 +1,6 @@
 import React from 'react';
 import { Termsection, TermsWrap } from './styles';
-import { SignUpButton } from '../SignUp/styles';
+import { SignUpButton } from '../signup/styles';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 

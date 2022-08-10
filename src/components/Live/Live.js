@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { GiAlarmClock } from "react-icons/gi";
 import { BsFillPeopleFill } from "react-icons/bs";
+import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 
 const Live = () => {
   const [list, setList] = useState([]);
@@ -21,6 +22,12 @@ const Live = () => {
     getLiveList();
   }, []);
 
+  // 지금 인기있는 술약속 슬라이드 설정
+  const [slide, setSlide] = useState(false);
+  const moveSlide = () => {
+    setSlide(!slide);
+  };
+
   return (
     <Wrap>
       <Title>지금 인기있는 술약속</Title>
@@ -35,10 +42,29 @@ const Live = () => {
         더보기 &gt;
       </div>
       <Container>
+        {slide ? (
+          <Pre
+            onClick={() => {
+              moveSlide();
+            }}
+          >
+            <AiOutlineLeft />
+          </Pre>
+        ) : null}
+        {slide ? null : (
+          <Next
+            onClick={() => {
+              moveSlide();
+            }}
+          >
+            <AiOutlineRight />
+          </Next>
+        )}
+
         {list.map((v, i) => {
           return (
-            <div key={i} style={{ marginRight: "20px" }}>
-              <Image src="/images/icon-all.png" alt="썸네일"></Image>
+            <Listbox key={i} slide={slide}>
+              <Image src={v.thumbnail} alt="썸네일"></Image>
               <ProfileBox>
                 <ProfileImage
                   src="/images/icon-all.png"
@@ -78,9 +104,11 @@ const Live = () => {
                 </div>
               </Desc>
               <div style={{ display: "flex" }}>
-                <Tag>{v.theme}</Tag>
+                <Tag1>{v.theme}</Tag1>
+                <Tag2>{v.theme}</Tag2>
+                <Tag3>{v.theme}</Tag3>
               </div>
-            </div>
+            </Listbox>
           );
         })}
       </Container>
@@ -109,10 +137,75 @@ const Container = styled.div`
   }
 `;
 
+const Pre = styled.button`
+  position: absolute;
+  background: white;
+  width: 48px;
+  height: 48px;
+
+  outline: none;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 1px 1px 1px 1px gray;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  left: -25px;
+  top: 220px;
+  z-index: 100;
+
+  svg {
+    fill: gray;
+    font-size: 28px;
+  }
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
+`;
+
+const Next = styled.button`
+  position: absolute;
+  background: white;
+  width: 48px;
+  height: 48px;
+
+  outline: none;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 1px 1px 1px 1px gray;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  right: -25px;
+  top: 220px;
+  z-index: 100;
+
+  svg {
+    fill: gray;
+    font-size: 28px;
+  }
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
+`;
+
+const Listbox = styled.div`
+  margin-right: 20px;
+  width: 100%;
+
+  transform: ${(props) => (props.slide ? "translateX(-1000px)" : "0")};
+  transition: 1s;
+`;
+
 const Image = styled.img`
   width: 420px;
   height: 260px;
-  border: 1px solid black;
   border-radius: 10px;
 `;
 
@@ -153,12 +246,34 @@ const Profile = styled.div`
   justify-content: center;
 `;
 
-const Tag = styled.div`
+const Tag1 = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 40px;
+  margin-right: 10px;
+
+  background: #ffda93;
+  border-radius: 20px;
+  padding: 5px 12px 4px;
+`;
+
+const Tag2 = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 40px;
+  margin-right: 10px;
+
+  background: #ffefb7;
+  border-radius: 20px;
+  padding: 5px 12px 4px;
+`;
+
+const Tag3 = styled.div`
   font-size: 16px;
   font-weight: 400;
   margin-top: 40px;
 
-  background: #ffda93;
+  background: #eef3ff;
   border-radius: 20px;
   padding: 5px 12px 4px;
 `;

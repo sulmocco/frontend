@@ -2,65 +2,65 @@
   "room": [
     {
       "id": 0,
-      "thumbnail": "/images/icon-all.png",
-      "title": "오늘 하루를 뜨겁게 마무리합시다!",
+      "thumbnail": "/images/thumbnail-1.png",
+      "title": "레전드 간장게장",
       "time" : "02:11:21",
       "members": "2132",
       "alcohol": "주종",
       "food": "안주",
-      "theme": "테마",
+      "theme": "술약속",
       "username": "dkkwer123",
       "onair": "방송여부"
 
     },
     {
       "id": 1,
-      "thumbnail": "/images/icon-all.png",
+      "thumbnail": "/images/thumbnail-3.png",
       "title": "먹고 죽을 사람만 들어오세요.",
       "time" : "01:54:11",
       "members": "1133",
       "alcohol": "주종",
       "food": "안주",
-      "theme": "테마",
+      "theme": "술약속",
       "username": "manmansik11",
       "onair": "방송여부"
 
     },
     {
       "id": 2,
-      "thumbnail": "/images/icon-all.png",
-      "title": "방 타이틀을 길게길게적어보아요 이거는 엄청길어요오오오오",
+      "thumbnail": "/images/thumbnail-2.png",
+      "title": "대박 맛집!! 배달 삼겹살 강추합니다!!",
       "time" : "01:04:12",
       "members": "986",
       "alcohol": "주종",
       "food": "안주",
-      "theme": "테마",
+      "theme": "술약속",
       "username": "kkk123",
       "onair": "방송여부"
 
     },
     {
       "id": 3,
-      "thumbnail": "/images/icon-all.png",
+      "thumbnail": "/images/thumbnail-4.png",
       "title": "4번방 4번방",
       "time" : "01:04:12",
       "members": "986",
       "alcohol": "주종",
       "food": "안주",
-      "theme": "테마",
+      "theme": "술약속",
       "username": "kkk123",
       "onair": "방송여부"
 
     },
     {
       "id": 3,
-      "thumbnail": "/images/icon-all.png",
+      "thumbnail": "/images/thumbnail-5.png",
       "title": "이것은 5번방이 아니여",
       "time" : "01:04:12",
       "members": "986",
       "alcohol": "주종",
       "food": "안주",
-      "theme": "테마",
+      "theme": "술약속",
       "username": "kkk123",
       "onair": "방송여부"
 

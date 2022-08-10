@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import sulmoggoApi from "../../shared/apis";
 import { OneRankWrapper } from "./styles";
 import {
   Wrap,
   Container,
-  Title,
   RankWrapper,
   TableCardWrapper,
 } from "./styles";
 import { useQuery } from "@tanstack/react-query";
 import {
   AlchholTag,
-  BlueButton,
   FreeTag,
   UserLevel,
-  WhiteButton,
 } from "../../styles/CommonStyles";
 
 const Today = () => {
@@ -39,7 +35,7 @@ const Today = () => {
           {today[1] && (
             <OneRankWrapper>
               <div className="crown">
-                <img src="/images/today_2ndcrown.svg" />
+                <img src="/images/today_2ndcrown.svg" alt="second profile"/>
               </div>
               <TableCardWrapper
                 src={today[1].thumbnail}
@@ -65,7 +61,7 @@ const Today = () => {
           {today[0] && (
             <OneRankWrapper first>
               <div className="crown">
-                <img src="/images/today_1stcrown.svg" />
+                <img src="/images/today_1stcrown.svg"  alt="first profile"/>
               </div>
               <TableCardWrapper
                 first
@@ -88,11 +84,11 @@ const Today = () => {
               </TableCardWrapper>
             </OneRankWrapper>
           )}
-          
+
           {today[2] && (
             <OneRankWrapper>
               <div className="crown">
-                <img src="/images/today_3rdcrown.svg" />
+                <img src="/images/today_3rdcrown.svg" alt="third profile"/>
               </div>
               <TableCardWrapper
                 src={today[2].thumbnail}

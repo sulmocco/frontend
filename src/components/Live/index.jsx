@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { GiAlarmClock } from "react-icons/gi";
-import { BsFillPeopleFill } from "react-icons/bs";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import {
   Wrap, LiveWrap, Title, Container,
@@ -95,7 +93,8 @@ const Live = () => {
               </ProfileBox>
               <Desc>
                 <div style={{ fontSize: "16px", fontWeight: "400" }}>
-                  <GiAlarmClock />
+                  <img src="/images/live-clock.svg"
+                  alt="프로필사진" />
                   <span>{v.time}</span>
                 </div>
                 <div style={{ margin: "0 10px", fontSize: "16px" }}>|</div>
@@ -105,7 +104,8 @@ const Live = () => {
                     fontWeight: "400",
                   }}
                 >
-                  <BsFillPeopleFill />
+                 <img src="/images/live-people.svg"
+                  alt="프로필사진" />
                   <span>{v.members}</span>
                 </div>
               </Desc>

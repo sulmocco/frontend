@@ -1,16 +1,21 @@
 import styled from 'styled-components';
 
 export const RecommendWrap = styled.div`
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     h2 {
         font-size: 3.2rem;
         font-weight: 700;
         margin-bottom: 4rem;
+        text-align: left;
+        width: 128rem;
     }
     .recommendsection {
         display: flex;
         flex-wrap: wrap;
-        gap: 5.6rem;
+        gap: 3.2rem;
+        width: 128rem;
     }
     margin: 11.4rem 0;
 `

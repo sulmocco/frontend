@@ -1,30 +1,119 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {Wrap, Container, Title, RankWrapper, TableCardWrapper} from "./styles"
+import sulmoggoApi from "../../shared/apis";
+import { OneRankWrapper } from "./styles";
+import {
+  Wrap,
+  Container,
+  Title,
+  RankWrapper,
+  TableCardWrapper,
+} from "./styles";
+import { useQuery } from "@tanstack/react-query";
+import {
+  AlchholTag,
+  BlueButton,
+  FreeTag,
+  UserLevel,
+  WhiteButton,
+} from "../../styles/CommonStyles";
 
 const Today = () => {
+  const getToday = async () => {
+    const res = await sulmoggoApi.today();
+    return res.data;
+  };
+  const today = useQuery(["today"], getToday, {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  }).data;
+
+  console.log(today);
   return (
     <Wrap>
       <Container>
         <h2>오늘의 술상</h2>
+
         <RankWrapper>
-        <TableCardWrapper src="https://images.unsplash.com/photo-1659467112146-0c81519e02ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80">
-            <div className="img">
-              heyheyhey
-            </div>
-            <div className="bottom">
-              이것저것
-            </div>
-          </TableCardWrapper>
-          <TableCardWrapper first src="https://images.unsplash.com/photo-1659467112146-0c81519e02ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80">
-            <img src="/images/today_1stcrown.svg" />
-            <div className="img">
-              heyheyhey
-            </div>
-            <div className="bottom">
-              이것저것
-            </div>
-          </TableCardWrapper>
+          {today[1] && (
+            <OneRankWrapper>
+              <div className="crown">
+                <img src="/images/today_2ndcrown.svg" />
+              </div>
+              <TableCardWrapper
+                src={today[1].thumbnail}
+                profile={today[1].profileimgurl}
+              >
+                <div className="img" />
+                <div className="bottom">
+                  <div className="profile" />
+                  <div className="title">{today[1].title}</div>
+                  <UserLevel style={{ marginTop: "1rem" }}>
+                    {today[1].level}
+                  </UserLevel>
+                  <div className="username">{today[1].username}</div>
+                  <div className="tags">
+                    <AlchholTag>{today[1].alcoholtag}</AlchholTag>
+                    <FreeTag>{today[1].freetag}</FreeTag>
+                  </div>
+                </div>
+              </TableCardWrapper>
+            </OneRankWrapper>
+          )}
+
+          {today[0] && (
+            <OneRankWrapper first>
+              <div className="crown">
+                <img src="/images/today_1stcrown.svg" />
+              </div>
+              <TableCardWrapper
+                first
+                src={today[0].thumbnail}
+                profile={today[0].profileimgurl}
+              >
+                <div className="img" />
+                <div className="bottom">
+                  <div className="profile" />
+                  <div className="title">{today[0].title}</div>
+                  <UserLevel style={{ marginTop: "1rem" }}>
+                    {today[0].level}
+                  </UserLevel>
+                  <div className="username">{today[0].username}</div>
+                  <div className="tags">
+                    <AlchholTag>{today[0].alcoholtag}</AlchholTag>
+                    <FreeTag>{today[0].freetag}</FreeTag>
+                  </div>
+                </div>
+              </TableCardWrapper>
+            </OneRankWrapper>
+          )}
+          
+          {today[2] && (
+            <OneRankWrapper>
+              <div className="crown">
+                <img src="/images/today_3rdcrown.svg" />
+              </div>
+              <TableCardWrapper
+                src={today[2].thumbnail}
+                profile={today[2].profileimgurl}
+              >
+                <div className="img" />
+                <div className="bottom">
+                  <div className="profile" />
+                  <div className="title">{today[2].title}</div>
+                  <UserLevel style={{ marginTop: "1rem" }}>
+                    {today[2].level}
+                  </UserLevel>
+                  <div className="username">{today[2].username}</div>
+                  <div className="tags">
+                    <AlchholTag>{today[2].alcoholtag}</AlchholTag>
+                    <FreeTag>{today[2].freetag}</FreeTag>
+                  </div>
+                </div>
+              </TableCardWrapper>
+            </OneRankWrapper>
+          )}
         </RankWrapper>
       </Container>
     </Wrap>
@@ -32,5 +121,3 @@ const Today = () => {
 };
 
 export default Today;
-
-

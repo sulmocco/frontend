@@ -18,7 +18,8 @@ const api = axios.create({
   const sulmoggoApi = {
         signUp: (user) => api.post('/signup', user),
         usernameCheck: (username) => api.get(`/checkUser/${username}`),
-        login: (user) => api.post('/user/login', user)
+        login: (user) => api.post('/user/login', user),
+        today: () => api.get('/alcoholTables')
   }
 
   export default sulmoggoApi

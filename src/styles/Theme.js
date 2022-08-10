@@ -1,14 +1,25 @@
 const Theme = {
     bg_light_gray: "#F2F3F6",
     bg_light_blue: "#EEF3FF",
+    bg_light_yellow: "#FFFBF4",
     primary: "#2459E0",
+    secondary: "#FDC250",
     black: "#000000",
+    black_2: "#343437",
     grey_01: "#4E4E56",
-    grey_03: "#B8BBC0",
     grey_02: "#7A7A80",
+    grey_03: "#B8BBC0",
+    grey_04: "#F2F3F3",
     white: "#FFFFFF",
+    red: "#FF4747",
     error: "#FF4747",
-    shadow_gray: "2px 2px 24px rgba(184, 187, 192, 0.26)"
+    light_yellow_01: "#FFDA93",
+    light_yellow_02: "#FFEFB7",
+
+    shadow_gray: "2px 2px 24px rgba(184, 187, 192, 0.26)",
+    
+    contentWidth: "128rem"
+
 }
 
 export default Theme

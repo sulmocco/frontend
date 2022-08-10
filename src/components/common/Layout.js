@@ -22,7 +22,7 @@ const Layout = () => {
 export default Layout;
 
 const Main = styled.main`
-  max-width: ${props => props.show ? "100%" : "1200px"};
+  /* max-width: ${props => props.show ? "100%" : "1200px"}; */
   margin: 0 auto;
   ${props => props.show ? css`` : css`padding: 72px 5px 30px;`}
   padding-top: ${props => props.loc.startsWith("/signup") ? "none" : "72px"};

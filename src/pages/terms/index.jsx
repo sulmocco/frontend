@@ -26,14 +26,14 @@ const Terms = () => {
         <TermsWrap>
             <Termsection>
                 <h2>회원가입에 필요한 약관에 동의해주세요.</h2>
-                <form onSubmit={handleSubmit((data) => console.log(JSON.stringify(data)))}>
+                <form>
                     <ul>
                         <li>
                             <input type='checkbox' id='adult' value='adult' checked={check1}
-                                onClick={() => { 
+                                onClick={() => {
                                     setCheck1(!check1)
                                     setfullCheck(false)
-                                 }}
+                                }}
                                 {...register('terms', {
                                     required: {
                                         value: true,
@@ -45,10 +45,10 @@ const Terms = () => {
                         </li>
                         <li>
                             <input type='checkbox' id='service' value='sevice' checked={check2}
-                             onClick={() => { 
-                                setCheck2(!check2)
-                                setfullCheck(false)
-                            }}
+                                onClick={() => {
+                                    setCheck2(!check2)
+                                    setfullCheck(false)
+                                }}
                                 {...register('terms', {
                                     required: {
                                         value: true,
@@ -60,10 +60,10 @@ const Terms = () => {
                         </li>
                         <li>
                             <input type='checkbox' id='privacy' value='privacy' checked={check3}
-                             onClick={() => { 
-                                setCheck3(!check3)
-                                setfullCheck(false)
-                            }}
+                                onClick={() => {
+                                    setCheck3(!check3)
+                                    setfullCheck(false)
+                                }}
                                 {...register('terms', {
                                     required: {
                                         value: true,
@@ -75,9 +75,9 @@ const Terms = () => {
                         </li>
                         <li className='selectAll'>
                             <input type='checkbox' id='selectAll' value='all' checked={fullCheck}
-                               onClick={() => { 
-                                setAll()
-                            }}
+                                onClick={() => {
+                                    setAll()
+                                }}
                                 {...register('selectAll')}
                             />
                             <label htmlFor='selectAll'></label>
@@ -85,11 +85,10 @@ const Terms = () => {
                         </li>
                     </ul>
                     <div className='desc'>
-                        <p>술모꼬에서 제공하는 이벤트/혜택 등 다양한 정보를 Push 알람 및 E-mail 알람으로 받아보실 수 있습니다.</p>
                         <p>술모꼬는 만 19세(만19세가 되는 해의 1월 1일) 이상부터 이용가능 하며, 타인의 계정으로 본 서비스를 사용하는 경우 정보통신망 이용촉진 및 정보보호 등에 관한 법률에 의거 처벌을 받을 수 있습니다.</p>
                     </div>
                     <div className="button">
-                        <SignUpButton mt='4.5rem' type='submit'
+                        <SignUpButton mt='4.5rem' type='submit' background='#d6d6d6' color='black'
                             disabled={!selectAll}
                             onClick={() => navigate('/signup')}
                         >동의하고 다음</SignUpButton>

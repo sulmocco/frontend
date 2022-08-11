@@ -3,8 +3,8 @@ import styled from "styled-components"
 export const SignUpButton = styled.button`
     width: 100%;
     height: 7.2rem;
-    background-color: ${props => props.theme.primary};
-    color: ${props => props.theme.white};
+    background-color: ${props => props.background || props.theme.primary};
+    color: ${props => props.color || props.theme.white};
     margin-top: ${(props) => props.mt || '2.4rem'};
     border: none;
     cursor: pointer;
@@ -12,6 +12,10 @@ export const SignUpButton = styled.button`
     font-size: 2.6rem;
     font-weight: 700;
     max-width: 40rem;
+    &:enabled {
+        color: ${props => props.theme.white};
+        background-color: ${props => props.theme.primary};
+    }
 `
 
 export const Container = styled.div`

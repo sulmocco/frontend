@@ -3,14 +3,24 @@ import { useRef } from 'react';
 import { LoginSection, LoginWrap } from './styles';
 import { SignUpButton } from '../signup/styles';
 import sulmoggoApi from '../../shared/apis';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const id_ref = useRef();
     const pw_ref = useRef();
-    const handleLogin = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const handleLogin = async () => {
         console.log(id_ref.current.value, pw_ref.current.value);
-        sulmoggoApi.login({id: id_ref.current.value, password: pw_ref.current.value}).then(res => {
-            alert("로그인 잘 됨!")
+        await sulmoggoApi.login({id: id_ref.current.value, password: pw_ref.current.value})
+        .then(res => {
+            // 로그인 정보 리덕스에 저장 후 메인페이지로 이동
+            dispatch(userActions.userLogin(res.data))
+            navigate("/")
+        }).catch(err => {
+            alert(err.data)
         })
     }
     return (

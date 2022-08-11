@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import {
   Wrap, LiveWrap, Title, Container,
@@ -9,6 +7,7 @@ import {
 } from "./styles";
 
 import {AlchholTag, SnackTag, ThemeTag} from "../../styles/CommonStyles"
+import sulmoggoApi from "../../shared/apis";
 
 const Live = () => {
   const [list, setList] = useState([]);
@@ -16,7 +15,7 @@ const Live = () => {
   // Live 목록 불러오기
   const getLiveList = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/room");
+      const res = await sulmoggoApi.live();
       setList(res.data);
     } catch (err) {
       console.log(err);

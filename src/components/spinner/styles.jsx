@@ -7,12 +7,17 @@ export const SpinnerWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    span{
+    /* span{
         width: 30rem;
         height: 30rem;
         border: 1rem solid ${props => props.theme.grey_03};
         border-radius: 50%;
         border-top: 1rem solid ${props => props.theme.secondary};
+        animation: rotate360 1s linear Infinite;
+    } */
+    img {
+        width: 20rem;
+        height: auto;
         animation: rotate360 1s linear Infinite;
     }
     @keyframes rotate360 {

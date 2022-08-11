@@ -4,7 +4,8 @@ export const TermsWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
+    max-height: calc(100vh - 23.2rem);
     background-color: #e3e5e9;
 `
 

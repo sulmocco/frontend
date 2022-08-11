@@ -4,7 +4,7 @@ import { SpinnerWrap } from './styles';
 const Spinner = () => {
     return (
         <SpinnerWrap>
-            <span></span>
+            <img src='/images/spinner.svg' alt='로딩스피너' />
         </SpinnerWrap>
     );
 };

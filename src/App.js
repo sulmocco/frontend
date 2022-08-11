@@ -1,8 +1,6 @@
 import { ThemeProvider } from "styled-components";
 import Theme from "./styles/Theme";
-
 import { Routes, Route } from "react-router-dom";
-
 import Layout from "./components/common/Layout";
 import LoginRedirect from "./components/LoginRedirect";
 import Home from "./pages/Home";

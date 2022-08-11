@@ -4,83 +4,13 @@ import Live from "../components/live";
 import Today from "../components/today";
 import Recommend from "../components/recommend";
 import { RecommendWrap } from "../components/recommend/styles";
+import { useQuery } from "@tanstack/react-query";
+import sulmoggoApi from "../shared/apis";
 
 const Home = () => {
-  const data = [
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
-    {
-      productId: "1",
-      title:
-        "[밀키트] 프리미엄 식품관에서 공수해온 밀키트 할아요이오요엉ㄹ오옹",
-      price: "123,456,789",
-      alcoholtag: "술먹방",
-      imageUrl: "/images/recommend.jpeg",
-      redirectUrl: "https://www.naver.com/",
-    },
-  ];
-
+  const { data } = useQuery(["products"], () =>
+    sulmoggoApi.getProducts().then((res) => res.data)
+  );
   return (
     <div>
       <MainSlider />
@@ -96,6 +26,7 @@ const Home = () => {
               title={item.title}
               price={item.price}
               tag={item.alcoholtag}
+              url={item.redirectUrl}
             />
           ))}
         </section>

@@ -20,6 +20,7 @@ export const RecommendWrap = styled.div`
     margin: 11.4rem 0;
 `
 export const RecommendItem = styled.li`
+    margin-bottom: 2.4rem;
     max-width: 29.6rem;
     img{
         width: 29.6rem;
@@ -42,7 +43,7 @@ export const RecommendItem = styled.li`
         flex-direction: row;
         align-items: center;
         gap: 0.2rem;
-        margin-top: 4rem;
+        margin-top: 3.2rem;
         
         & + p {
         font-size: 2.6rem;
@@ -54,7 +55,7 @@ export const RecommendItem = styled.li`
         flex-direction: row;
         align-items: center;
         gap: 0.6rem;
-        margin-top: 1.6rem;
+        margin-top: 1.8rem;
         p {
             font-size: 1.6rem;
             padding: 0.4rem 1.2rem;

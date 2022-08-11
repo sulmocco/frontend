@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import Theme from "./styles/Theme";
 import { Routes, Route } from "react-router-dom";
@@ -19,15 +19,15 @@ const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 function App() {
   const dispatch = useDispatch()
   const isLogin = useSelector(state => state.user.isLogin)
-  const refreshLogin = () => {
+  const refreshLogin = useCallback(() => {
     if(localStorage.getItem("token")){
       // 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
       dispatch(userActions.userLogin())
     }
-  }
+  }, [dispatch])
   useEffect(() => {
     refreshLogin();
-  }, [isLogin])
+  }, [isLogin, refreshLogin])
   return (
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>

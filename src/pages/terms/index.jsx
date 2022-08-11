@@ -17,8 +17,7 @@ const Terms = () => {
         setCheck3(!fullCheck)
     }
 
-
-    const { register, handleSubmit, watch } = useForm();
+    const { register, watch } = useForm();
     const selectAll = watch('selectAll');
     const navigate = useNavigate();
     console.log(selectAll)

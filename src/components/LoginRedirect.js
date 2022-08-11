@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import QueryString from "qs";
 import axios from "axios";
 
@@ -9,7 +9,7 @@ const LoginRedirect = () => {
   });
   console.log("인증코드 :", queryData.code);
 
-  const axiosLoad = async () => {
+  const axiosLoad = useCallback(async () => {
     try {
       const res = await axios.get(
         `http://13.209.8.162/oauth2/redirect?code=${queryData.code}`
@@ -18,11 +18,11 @@ const LoginRedirect = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [queryData.code]);
 
   useEffect(() => {
     axiosLoad();
-  }, []);
+  }, [queryData, axiosLoad]);
 
   return (
     <div>

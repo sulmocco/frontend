@@ -20,7 +20,8 @@ const sulmoggoApi = {
   signUp: (user) => api.post("/signup", user),
   usernameCheck: (username) => api.get(`/checkUser/${username}`),
   login: (user) => api.post("/login", user),
-  live: (user) => api.get("/room/main"),
+  live: () => api.get("/room/main"),
+  today: () => api.get('/tables/main'),
 };
 
 export default sulmoggoApi;

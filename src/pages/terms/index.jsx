@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Termsection, TermsWrap } from './styles';
 import { SignUpButton } from '../signup/styles';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
 const Terms = () => {
+    const [check1, setCheck1] = useState(false);
+    const [check2, setCheck2] = useState(false);
+    const [check3, setCheck3] = useState(false);
+    const [fullCheck, setfullCheck] = useState(false);
+
+    const setAll = () => {
+        setfullCheck(!fullCheck)
+        setCheck1(!fullCheck)
+        setCheck2(!fullCheck)
+        setCheck3(!fullCheck)
+    }
+
+
     const { register, handleSubmit, watch } = useForm();
     const selectAll = watch('selectAll');
     const navigate = useNavigate();
@@ -16,8 +29,11 @@ const Terms = () => {
                 <form onSubmit={handleSubmit((data) => console.log(JSON.stringify(data)))}>
                     <ul>
                         <li>
-                            <input type='checkbox' id='adult' value='adult' checked={selectAll}
-                                onClick={(e) => console.log(e)}
+                            <input type='checkbox' id='adult' value='adult' checked={check1}
+                                onClick={() => { 
+                                    setCheck1(!check1)
+                                    setfullCheck(false)
+                                 }}
                                 {...register('terms', {
                                     required: {
                                         value: true,
@@ -28,7 +44,11 @@ const Terms = () => {
                             <p>20세 이상 성인입니다.</p>
                         </li>
                         <li>
-                            <input type='checkbox' id='service' value='sevice' checked={selectAll}
+                            <input type='checkbox' id='service' value='sevice' checked={check2}
+                             onClick={() => { 
+                                setCheck2(!check2)
+                                setfullCheck(false)
+                            }}
                                 {...register('terms', {
                                     required: {
                                         value: true,
@@ -39,7 +59,11 @@ const Terms = () => {
                             <p>서비스 이용 필수 약관 동의 (필수)</p>
                         </li>
                         <li>
-                            <input type='checkbox' id='privacy' value='privacy' checked={selectAll}
+                            <input type='checkbox' id='privacy' value='privacy' checked={check3}
+                             onClick={() => { 
+                                setCheck3(!check3)
+                                setfullCheck(false)
+                            }}
                                 {...register('terms', {
                                     required: {
                                         value: true,
@@ -50,7 +74,10 @@ const Terms = () => {
                             <p>개인정보 수집 및 이용 동의 (필수)</p>
                         </li>
                         <li className='selectAll'>
-                            <input type='checkbox' id='selectAll' value='all'
+                            <input type='checkbox' id='selectAll' value='all' checked={fullCheck}
+                               onClick={() => { 
+                                setAll()
+                            }}
                                 {...register('selectAll')}
                             />
                             <label htmlFor='selectAll'></label>

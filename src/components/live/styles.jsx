@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Wrap = styled.div`
   position: relative;
+  height: 64.4rem;
 `;
 
 export const LiveWrap = styled.div`

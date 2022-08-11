@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
     font-size: 1.6rem;
     font-weight: 700;
     color: ${props => props.theme.white};
-    margin-top: 1.2rem;
+    margin-top: 1.6rem;
     border-radius: 2rem;
     outline: none;
     border: none;
@@ -22,6 +22,10 @@ export const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     line-height: 2rem;
+    &:disabled{
+      background-color: ${props => props.theme.grey_03};
+      cursor: default;
+    }
   }
 `;
 
@@ -37,6 +41,16 @@ export const UpperWrapper = styled.div`
     display: flex;
     align-items: center;
     color: ${props => props.theme.error};
+    font-size: 1.4rem;
+    font-weight: 400;
+    img{
+        margin-right: .3rem;
+    }
+  }
+  .success{
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.primary};
     font-size: 1.4rem;
     font-weight: 400;
     img{
@@ -62,8 +76,24 @@ export const CenterWrapper = styled.div`
     width: 100%;
     height: 5.6rem;
     background: #ffffff;
-    border: ${(props) => (props.error ? "2px solid "+ props.theme.error : "2px solid transparent")};
-    color: ${props => props.error ? props.theme.error : "#000000"};
+    border: ${(props) => {
+      if(props.error){
+        return "2px solid "+ props.theme.error
+      }else if(props.success){
+        return "2px solid" + props.theme.primary
+      }else{
+        return "2px solid transparent"
+      }
+      }};
+    color: ${props => {
+      if(props.error){
+        return props.theme.error
+      }else if(props.success){
+        return props.theme.primary
+      }else{
+        return props.theme.black
+      }
+      }};
     border-radius: 10px;
     padding-left: 1.2rem;
     box-sizing: border-box;
@@ -90,7 +120,7 @@ export const OptionsWrapper = styled.div`
     margin-top: .4rem;
     padding: ${props => props.open ? "6px" : 0};
     border-radius: 10px;
-    height: ${props => props.open ? "28rem" : 0};
+    height: ${props => props.open ? "29.2rem" : 0};
     overflow: hidden;
     transition: all .3s ease-in-out;
     div{

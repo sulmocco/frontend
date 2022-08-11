@@ -42,9 +42,9 @@ const Today = () => {
                   <div className="bottom">
                     <div className="profile" />
                     <div className="counterWrap">
-                      <img src="/images/icon_favorite.svg" />
+                      <img src="/images/icon_favorite.svg" alt="heart"/>
                       {today[1].likecount} <Separator />
-                      <img src="/images/icon_eye.svg" />
+                      <img src="/images/icon_eye.svg" alt="eye"/>
                       {today[1].viewcount}
                     </div>
                     <div className="title">{today[1]?.title}</div>
@@ -78,9 +78,9 @@ const Today = () => {
                   <div className="bottom">
                     <div className="profile" />
                     <div className="counterWrap">
-                      <img src="/images/icon_favorite.svg" />
+                      <img src="/images/icon_favorite.svg" alt="heart" />
                       {today[0].likecount} <Separator />
-                      <img src="/images/icon_eye.svg" />
+                      <img src="/images/icon_eye.svg" alt="eye" />
                       {today[0].viewcount}
                     </div>
                     <div className="title">{today[0]?.title}</div>
@@ -111,9 +111,9 @@ const Today = () => {
                   <div className="bottom">
                     <div className="profile" />
                     <div className="counterWrap">
-                      <img src="/images/icon_favorite.svg" />
+                      <img src="/images/icon_favorite.svg" alt="heart" />
                       {today[2].likecount} <Separator />
-                      <img src="/images/icon_eye.svg" />
+                      <img src="/images/icon_eye.svg" alt="eye" />
                       {today[2].viewcount}
                     </div>
                     <div className="title">{today[2]?.title}</div>

@@ -8,6 +8,7 @@ const Terms = () => {
     const { register, handleSubmit, watch } = useForm();
     const selectAll = watch('selectAll');
     const navigate = useNavigate();
+    console.log(selectAll)
     return (
         <TermsWrap>
             <Termsection>

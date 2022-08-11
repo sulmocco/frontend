@@ -7,7 +7,7 @@ export const LoginWrap = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.bg_light_gray};
-    height: calc(100vh - 72px - 120px);
+    min-height: calc(100vh - 72px - 120px);
 `
 
 export const LoginSection = styled.div`

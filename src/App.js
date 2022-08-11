@@ -16,7 +16,7 @@ const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 
 function App() {
   return (
-    <Suspense fallback={<Spinner />}> 
+    <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -27,6 +27,7 @@ function App() {
             <Route path="/loginrending" element={<LoginRending />} />
             <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/spinner" element={<Spinner />} />
           </Route>
         </Routes>
       </ThemeProvider>

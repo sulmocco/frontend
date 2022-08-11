@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AlchholTag, SnackTag } from '../../styles/CommonStyles';
 import { RecommendItem } from './styles';
 

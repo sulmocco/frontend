@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLogin: false,
-  NAME: "",
+  username: "",
 };
 
 const userSlice = createSlice({
@@ -11,11 +11,12 @@ const userSlice = createSlice({
   reducers: {
     userLogin(state, action) {
       state.isLogin = true;
-      state.NAME = action.payload;
+      state.username = action.payload?.username;
+      localStorage.setItem("token", action.payload?.token)
     },
     userLogout(state, action) {
       state.isLogin = false;
-      state.NAME = "";
+      state.username = "";
       localStorage.removeItem("token");
     },
   },

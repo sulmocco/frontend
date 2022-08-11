@@ -22,6 +22,8 @@ jobs:
 
       - name: Build
         run: yarn build
+        env: 
+          REACT_APP_API_SERVER: ${{ secrets.REACT_APP_API_SERVER }}
 
       - name: Deploy
         uses: lbertenasco/s3-deploy@v1

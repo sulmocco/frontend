@@ -16,7 +16,7 @@ const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 
 function App() {
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<Spinner />}> 
       <ThemeProvider theme={Theme}>
         <Routes>
           <Route path="/" element={<Layout />}>

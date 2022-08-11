@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -8,15 +8,21 @@ const Header = () => {
       <Navbar>
         <NavLeft>
           <ul>
-            <li><Link to="/">술모꼬</Link></li>
+            <li>
+              <Link to="/">술모꼬</Link>
+            </li>
             <li>술약속</li>
             <li>술상추천</li>
           </ul>
         </NavLeft>
         <NavRight>
           <ul>
-            <li><Link to="/login">로그인</Link></li>
-            <li><Link to="/signup">회원가입</Link></li>
+            <li>
+              <Link to="/login">로그인</Link>
+            </li>
+            <li>
+              <Link to="/terms">회원가입</Link>
+            </li>
           </ul>
         </NavRight>
       </Navbar>
@@ -33,13 +39,16 @@ const Wrap = styled.div`
   right: 0;
   border-bottom: 1px solid #f2f2f2;
   z-index: 100;
-  color: ${props => props.theme.black} !important;
-  background-color: ${props => props.theme.white};
-  box-shadow: ${props => props.theme.shadow_gray};
+  color: ${(props) => props.theme.black} !important;
+  background-color: ${(props) => props.theme.white};
+  box-shadow: ${(props) => props.theme.shadow_gray};
   font-weight: 500;
-  a{
-    &:link, &:visited, &:hover, &:active{
-      color: ${props => props.theme.black};
+  a {
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+      color: ${(props) => props.theme.black};
     }
   }
 `;

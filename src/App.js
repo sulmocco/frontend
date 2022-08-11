@@ -27,7 +27,6 @@ function App() {
             <Route path="/loginrending" element={<LoginRending />} />
             <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
-            <Route path="/spinner" element={<Spinner />} />
           </Route>
         </Routes>
       </ThemeProvider>

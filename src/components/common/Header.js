@@ -12,7 +12,7 @@ const Header = () => {
               <Link to="/">술모꼬</Link>
             </li>
             <li>술약속</li>
-            <li>술상추천</li>
+            <li><Link to="/tables">술상추천</Link></li>
           </ul>
         </NavLeft>
         <NavRight>

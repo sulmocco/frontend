@@ -14,8 +14,9 @@ const GlobalStyles = createGlobalStyle`
         list-style: none;
         cursor: default;
     }
-    a {
+    a, a:visited {
         text-decoration: none;
+        color: inherit;
     }
     img {
         border: 0;

@@ -23,6 +23,7 @@ const sulmoggoApi = {
   getProducts: () => api.get("/products"),
   live: () => api.get("/room/main"),
   today: () => api.get('/tables/main'),
+  getTables: () => api.get('/tables')
 };
 
 export default sulmoggoApi;

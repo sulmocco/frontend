@@ -7,6 +7,11 @@ export const CardWrapper = styled.div`
     background-color: ${props => props.theme.white};
     padding: 2rem;
     cursor: pointer;
+    transition: all .2s ease-in-out;
+    &:hover{
+        margin-top: -.5rem;
+        box-shadow: ${props => props.theme.shadow_gray};
+    }
     /* border: 1px solid black; */
     .cardUpperWrap{
         display: flex;

@@ -7,7 +7,7 @@ const TableCard = (props) => {
     const {tableId, thumbnail, title, username, likecount, viewcount, alcoholtag, freetag, profileimgurl} = props
     console.log(props);
   return (
-    <Link to={`/${tableId}`}>
+    <Link to={`/tables/${tableId}`}>
     <CardWrapper>
       <CardThumbnail src={thumbnail}/>
       <div className="cardUpperWrap">

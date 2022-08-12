@@ -22,8 +22,15 @@ const sulmoggoApi = {
   login: (user) => api.post("/login", user),
   getProducts: () => api.get("/products"),
   live: () => api.get("/room/main"),
-  today: () => api.get('/tables/main'),
-  getTables: () => api.get('/tables')
+  today: () => api.get("/tables/main"),
+  getTables: (params) =>
+    api.get(
+      `/tables?keyword=${params?.keyword}&alcohol=${
+        params?.alcohol
+      }&sort=${params?.sort}&page=${params?.page}&isAsc=${
+        params?.isAsc || true
+      }`
+    ),
 };
 
 export default sulmoggoApi;

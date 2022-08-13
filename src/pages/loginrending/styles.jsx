@@ -13,5 +13,6 @@ export const Login = styled.div`
         color: ${props => props.theme.grey_02};
         text-align: center;
         margin-top: 2.4rem;
+        cursor: pointer;
     }
 `

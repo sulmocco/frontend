@@ -9,7 +9,7 @@ const LoginRending = () => {
         <Login>
 
             <SignUpButton mt='71.9rem' onClick={() => navigate(`/login`)}>로그인</SignUpButton>
-            <p>회원가입</p>
+            <p onClick={() => navigate(`/terms`)}>회원가입</p>
         </Login>
     );
 };

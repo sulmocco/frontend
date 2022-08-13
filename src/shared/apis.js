@@ -31,6 +31,7 @@ const sulmoggoApi = {
         params?.isAsc || true
       }`
     ),
+  img: () => api.post("/images"), // 술상 추천 게시글 작성 mock api
 };
 
 export default sulmoggoApi;

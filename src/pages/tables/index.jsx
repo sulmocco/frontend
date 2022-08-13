@@ -1,30 +1,24 @@
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom";
 import TableCard from "../../components/tablecard";
 import sulmoggoApi from "../../shared/apis";
-import { Container } from "../signup/styles";
+// import { Container } from "../signup/styles";
 import { TablesWrapper } from "./styles";
 
 const Tables = (props) => {
-  const [queryParams, setQueryParams] = useSearchParams();
-  const searchParams = new URLSearchParams();
-  const keyword = searchParams.get("keyword") || null;
-  const alcohol = searchParams.get("alcohol") || null;
-  const sort = searchParams.get("sort") || null;
-  const page = searchParams.get("page") || 0;
-  const isAsc = searchParams.get("isAsc") || null;
+  // const [queryParams, setQueryParams] = useSearchParams();
+  const queryParams = new URLSearchParams();
+  const keyword = queryParams.get("keyword") || null;
+  const alcohol = queryParams.get("alcohol") || null;
+  const sort = queryParams.get("sort") || null;
+  const page = queryParams.get("page") || 0;
+  const isAsc = queryParams.get("isAsc") || null;
   const lastTableRef = useRef();
 
-  const handleIntersect = useCallback(([entry]) => {
-    if (entry.isIntersecting && hasNextPage) {
-      console.log("!!!!intersect!!!!");
-      fetchNextPage();
-      console.log(queryParams);
-    }
-  });
 
-  const getTables = async (pageParam) => {
+
+  const getTables = useCallback(async (pageParam) => {
     const res = await sulmoggoApi.getTables({
       keyword,
       alcohol,
@@ -37,22 +31,25 @@ const Tables = (props) => {
       nextPage: pageParam + 1,
       lastPage: res.data.lastPage,
     };
-  };
+  }, [alcohol, isAsc, keyword, sort]);
   const {
     isSuccess,
     data,
-    error,
+    // error,
     fetchNextPage,
     hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
+    // isFetching,
+    // isFetchingNextPage,
+    // status,
   } = useInfiniteQuery(
     ["tables", keyword, alcohol, sort, page, isAsc],
     ({ pageParam = page }) => getTables(pageParam),
     {
       getNextPageParam: (currPage, allPages) => {
-        if (!currPage.lastPage) return currPage.nextPage;
+        if (!currPage.lastPage) {
+            // setQueryParams({keyword, alcohol, sort, page, isAsc})
+            return currPage.nextPage;
+        }
         return undefined;
       },
       onSuccess: (data) => {
@@ -60,6 +57,14 @@ const Tables = (props) => {
       },
     }
   );
+
+  const handleIntersect = useCallback(([entry]) => {
+    if (entry.isIntersecting && hasNextPage) {
+      console.log("!!!!intersect!!!!");
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersect, {
       threshold: 0.8,
@@ -70,7 +75,7 @@ const Tables = (props) => {
     return () => {
       observer.disconnect();
     };
-  }, [handleIntersect]);
+  }, [handleIntersect, data]);
   return (
     <TablesWrapper>
       {isSuccess &&

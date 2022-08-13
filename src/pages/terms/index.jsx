@@ -89,7 +89,7 @@ const Terms = () => {
                     <div className="button">
                         <SignUpButton mt='4.5rem' type='submit' background='#d6d6d6' color='black'
                             disabled={!selectAll}
-                            onClick={() => navigate('/signup')}
+                            onClick={() => navigate('/auth')}
                         >동의하고 다음</SignUpButton>
                     </div>
                 </form>

@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 import InputWrapper from "../../components/inputwrapper";
 import sulmoggoApi from "../../shared/apis";
 import { AlcoholLevel } from "../../shared/options";
 import { SignUpButton, Container } from "./styles";
 
 const SignUp = (props) => {
+  const navigate = useNavigate();
   // const [optionSelected, setOptionSelected] = useState(undefined)
   // const [optionSelectedText, setOptionSelectedText] = useState(undefined)
   // const emailRegEx = /\S+@\S+\.\S+/
@@ -31,6 +33,7 @@ const SignUp = (props) => {
     await sulmoggoApi.signUp(data).then((res) => {
       alert(res.data);
     });
+    navigate('/login');
   };
 
   // 나의 술 레벨 컨트롤

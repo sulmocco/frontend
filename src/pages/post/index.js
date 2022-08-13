@@ -52,9 +52,9 @@ const Post = () => {
   const onUploadImage = async (blob, callback) => {
     try {
       const url = await sulmoggoApi.img();
-      console.log(url.data.url);
-      callback(url.data.url, "alt text");
-      SetImgList((state) => [...state, url.data.url]);
+      console.log(url.data.imgUrls[0].url);
+      callback(url.data.imgUrls[0].url, "alt text");
+      SetImgList((state) => [...state, url.data.imgUrls[0].url]);
     } catch (err) {
       console.log(err);
     }

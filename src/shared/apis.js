@@ -22,7 +22,8 @@ const sulmoggoApi = {
   login: (user) => api.post("/login", user),
   getProducts: () => api.get("/products"),
   live: () => api.get("/room/main"),
-  today: () => api.get('/tables/main'),
+  today: () => api.get("/tables/main"),
+  img: () => api.post("/images"), // 술상 추천 게시글 작성 mock api
 };
 
 export default sulmoggoApi;

@@ -1820,7 +1820,7 @@
 
 "@toast-ui/react-editor@^3.2.0":
   version "3.2.0"
-  resolved "https://registry.npmjs.org/@toast-ui/react-editor/-/react-editor-3.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/@toast-ui/react-editor/-/react-editor-3.2.0.tgz#59ad6fa4c4c48cb0e49a2396443d1f8a55882ffd"
   integrity sha512-kUPKikE+qHte4/NarACyJHwM1FKsN6QZG2SMLWTlCIQfm3cQ8MCV4t6rassHnbq9R6sPQZm5H1RfsQpKwBMo9A==
   dependencies:
     "@toast-ui/editor" "^3.2.0"

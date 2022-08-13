@@ -67,7 +67,7 @@ export const TagBase = styled.div`
   border-radius: 2rem;
   font-weight: 500;
   line-height: 1.9rem;
-  border: .1rem solid transparent;
+  border: 0.1rem solid transparent;
   color: ${(props) => props.theme.black_02};
 `;
 
@@ -87,14 +87,14 @@ export const ThemeTag = styled(TagBase)`
 export const FreeTag = styled(TagBase)`
   border: 0.1rem solid ${(props) => props.theme.primary};
   color: ${(props) => props.theme.primary};
-  background-color: ${props => props.theme.bg_light_blue};
+  background-color: ${(props) => props.theme.bg_light_blue};
 `;
 
 // 세로구분선
 export const Separator = styled.div`
-    display: inline-block;
-    width: .1rem;
-    height: .8rem;
-    background-color: #d9d9d9;
-    margin: 0rem .4rem;
-`
+  display: inline-block;
+  width: 0.1rem;
+  height: 0.8rem;
+  background-color: #d9d9d9;
+  margin: 0rem 0.4rem;
+`;

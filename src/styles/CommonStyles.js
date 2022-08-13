@@ -69,6 +69,9 @@ export const TagBase = styled.div`
   line-height: 1.9rem;
   border: 0.1rem solid transparent;
   color: ${(props) => props.theme.black_02};
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 // 주종 태그

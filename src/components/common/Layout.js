@@ -12,14 +12,17 @@ const Layout = () => {
     location.pathname.startsWith("/loginrending") ||
     location.pathname.startsWith("/terms") ||
     location.pathname === "/";
+  const grayBg = location.pathname.startsWith("/tables")
 
   console.log(isShow);
   return (
     <>
       <Header />
+      <Background bg={grayBg}>
       <Main show={isShow} loc={location.pathname}>
         <Outlet />
       </Main>
+      </Background>
       <Footer />
     </>
   );
@@ -27,8 +30,14 @@ const Layout = () => {
 
 export default Layout;
 
+const Background = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${props => props.bg ? props.theme.bg_light_gray : "transparent"};
+`
+
 const Main = styled.main`
-  max-width: ${(props) => (props.show ? "100%" : "1280px")};
+  max-width: ${(props) => (props.show ? "100%" : "1290px")};
   margin: 0 auto;
   ${(props) =>
     props.show

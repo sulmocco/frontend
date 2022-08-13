@@ -14,6 +14,7 @@ const Auth = React.lazy(() => import("./pages/Auth"));
 const SignUp = React.lazy(() => import("./pages/signup"));
 const Login = React.lazy(() => import("./pages/login"));
 const Terms = React.lazy(() => import("./pages/terms"));
+const Tables = React.lazy(() => import("./pages/tables"))
 const LoginRending = React.lazy(() => import("./pages/loginrending"));
 const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 
@@ -43,6 +44,7 @@ function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/post" element={<Post />} />
             <Route path="/spinner" element={<Spinner />} />
+            <Route path="/tables" element={<Tables />} />
           </Route>
         </Routes>
       </ThemeProvider>

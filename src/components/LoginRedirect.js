@@ -24,20 +24,7 @@ const LoginRedirect = () => {
     axiosLoad();
   }, [queryData, axiosLoad]);
 
-  return (
-    <div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-      <div>왜안되는고야아아아아아아아아아아아앙</div>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default LoginRedirect;

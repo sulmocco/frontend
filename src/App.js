@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import Spinner from "./components/spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "./redux/userSlice";
+import Post from "./pages/post";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/Auth"));
@@ -17,17 +18,17 @@ const LoginRending = React.lazy(() => import("./pages/loginrending"));
 const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 
 function App() {
-  const dispatch = useDispatch()
-  const isLogin = useSelector(state => state.user.isLogin)
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.isLogin);
   const refreshLogin = useCallback(() => {
-    if(localStorage.getItem("token")){
+    if (localStorage.getItem("token")) {
       // 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
-      dispatch(userActions.userLogin())
+      dispatch(userActions.userLogin());
     }
-  }, [dispatch])
+  }, [dispatch]);
   useEffect(() => {
     refreshLogin();
-  }, [isLogin, refreshLogin])
+  }, [isLogin, refreshLogin]);
   return (
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
@@ -40,6 +41,7 @@ function App() {
             <Route path="/loginrending" element={<LoginRending />} />
             <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/post" element={<Post />} />
             <Route path="/spinner" element={<Spinner />} />
           </Route>
         </Routes>

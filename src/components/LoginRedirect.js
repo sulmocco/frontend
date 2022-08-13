@@ -27,11 +27,12 @@ const LoginRedirect = () => {
   useEffect(() => {
     axiosLoad();
   }, []);
-  
+
   return (
     <div>
       <h1>아 너무 잘됨~~~~</h1>
     </div>
+  );
 };
 
 export default LoginRedirect;

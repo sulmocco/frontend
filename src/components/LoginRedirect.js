@@ -16,8 +16,8 @@ const LoginRedirect = () => {
       const res = await axios.get(
         `http://13.209.8.162/oauth2/redirect?code=${queryData.code}`
       );
-      console.log("리스폰스를 주세요!!", res);
-      navigate("/signup");
+      console.log("데이터확인", res.data);
+      navigate(`/signup?userId=${res.data.userId}`);
     } catch (err) {
       alert("성인이 아닙니다!");
       navigate("/loginrending");

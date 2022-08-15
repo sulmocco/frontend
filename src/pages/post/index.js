@@ -64,8 +64,8 @@ const Post = () => {
 
   // 웹 에디터 content영역 확인하기
   const onChange = () => {
-    console.log(editorRef.current?.getInstance().getHTML());
-    console.log("이미지리스트확인", imgList);
+    // console.log(editorRef.current?.getInstance().getHTML());
+    // console.log("이미지리스트확인", imgList);
   };
 
   return (
@@ -90,7 +90,7 @@ const Post = () => {
               addTag(e);
             }}
           >
-            {tagColor == 0 ? (
+            {tagColor === 0 ? (
               <li value="0" className="fill">
                 맥주
               </li>
@@ -98,35 +98,35 @@ const Post = () => {
               <li value="0">맥주</li>
             )}
 
-            {tagColor == 1 ? (
+            {tagColor === 1 ? (
               <li value="1" className="fill">
                 소주
               </li>
             ) : (
               <li value="1">소주</li>
             )}
-            {tagColor == 2 ? (
+            {tagColor === 2 ? (
               <li value="2" className="fill">
                 와인
               </li>
             ) : (
               <li value="2">와인</li>
             )}
-            {tagColor == 3 ? (
+            {tagColor === 3 ? (
               <li value="3" className="fill">
                 막걸리
               </li>
             ) : (
               <li value="3">막걸리</li>
             )}
-            {tagColor == 4 ? (
+            {tagColor === 4 ? (
               <li value="4" className="fill">
                 양주
               </li>
             ) : (
               <li value="4">양주</li>
             )}
-            {tagColor == 5 ? (
+            {tagColor === 5 ? (
               <li value="5" className="fill">
                 전통주
               </li>

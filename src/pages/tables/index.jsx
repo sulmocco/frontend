@@ -11,9 +11,7 @@ import { AlcoholButtons, Separator } from "../../styles/CommonStyles";
 import {
   AlcoholCategories,
   AlcoholCategory,
-  LeftBox,
   PageTitle,
-  SearchBox,
   SearchBoxWrapper,
   SortButton,
   TablesGrid,
@@ -111,10 +109,6 @@ const Tables = (props) => {
     };
   }, [handleIntersect, data]);
 
-  useEffect(() => {
-    // setQueryParams({ alcohol: Alcohol[0] });
-    console.log(queryParams);
-  }, []);
   return (
     <TablesWrapper>
       <PageTitle>술상추천</PageTitle>

@@ -18,7 +18,7 @@ const SearchBar = ({ placeholder, onSearch, maxLength }) => {
         maxLength={maxLength || 20}
         ref={keywordRef}
         onKeyPress={(e) => {
-          if (e.key == "Enter") {
+          if (e.key === "Enter") {
             e.preventDefault();
             onSearch(e.target.value);
           }
@@ -28,6 +28,7 @@ const SearchBar = ({ placeholder, onSearch, maxLength }) => {
         <img
           src="/images/icon_search.svg"
           onClick={() => onSearch(keywordRef.current.value)}
+          alt="검색"
         />
       </button>
     </SearchBox>

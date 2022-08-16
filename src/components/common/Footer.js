@@ -6,14 +6,17 @@ const Footer = () => {
     <Wrap>
       <Container>
         <div>
-          <img src="/images/logo_gray.svg"/>
+          <img src="/images/logo_gray.svg" alt="술모꼬 로고" />
         </div>
         <div>
-          <div>
-            
+          <div className="upper">
+            <p>이용약관</p>
+            <FooterSeparator />
+            <p>개인정보처리방침</p>
           </div>
-        <p>이용약관 <FooterSeparator /> 개인정보처리방침</p>
-        <p>Copyright ⓒ 2022 술모꼬 All Right Reserved.</p>
+          <p className="copyright">
+            Copyright ⓒ 2022 술모꼬 All Right Reserved.
+          </p>
         </div>
       </Container>
     </Wrap>
@@ -37,7 +40,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  img{
+  img {
     width: 20.503rem;
   }
   div {
@@ -47,25 +50,27 @@ const Container = styled.div`
     flex-direction: column;
     gap: 1.2rem;
   }
-  p {
-    color: ${props => props.theme.white};
+  .upper {
+    color: ${(props) => props.theme.white};
     font-size: 1.4rem;
     letter-spacing: -0.04em;
     font-weight: 500;
     display: flex;
-    gap: .6rem;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.6rem;
     align-items: center;
-    &:last-child{
-      font-size: 1.4rem;
-      font-weight: 400;
-      color: ${props => props.theme.grey_03};
-    }
+  }
+  .copyright {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: ${(props) => props.theme.grey_03};
   }
 `;
 
 const FooterSeparator = styled.div`
-display: inline-block;
-width: .1rem;
-height: 1.2rem;
-background-color: ${props => props.theme.grey_04};
-`
+  display: inline-block;
+  width: 0.1rem;
+  height: 1.2rem;
+  background-color: ${(props) => props.theme.grey_04};
+`;

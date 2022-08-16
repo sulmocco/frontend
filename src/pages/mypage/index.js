@@ -2,15 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { Outlet, NavLink } from "react-router-dom";
 
-const index = () => {
+const Mypage = () => {
   return (
     <div>
       <Profile>
         <div className="img"></div>
-        <div className="nickname">닉네임</div>
+        <div className="info">
+          <div className="level">술레벨</div>
+          <div>닉네임</div>
+        </div>
         <button>수정하기</button>
       </Profile>
-
       <MypageNav>
         <ul>
           <li>
@@ -35,7 +37,7 @@ const index = () => {
   );
 };
 
-export default index;
+export default Mypage;
 
 const Profile = styled.div`
   display: flex;
@@ -52,9 +54,21 @@ const Profile = styled.div`
     background: #d9d9d9;
   }
 
-  .nickname {
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 36px;
     margin-top: 50px;
+
+    .level {
+      margin-right: 20px;
+      background-color: #00c7ae;
+      font-size: 28px;
+      padding: 10px;
+      color: white;
+      border-radius: 20px;
+    }
   }
 
   button {
@@ -93,6 +107,10 @@ const MypageNav = styled.nav`
     a {
       &.active {
         font-weight: 700;
+
+        div {
+          background: #f2f3f6;
+        }
       }
     }
   }

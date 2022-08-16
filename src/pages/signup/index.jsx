@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import InputWrapper from "../../components/inputwrapper";
@@ -12,10 +12,11 @@ const SignUp = (props) => {
   // const [optionSelectedText, setOptionSelectedText] = useState(undefined)
   // const emailRegEx = /\S+@\S+\.\S+/
   // const usernameRegEx = /^[A-Za-z\d_]{1,}$/
-
+  const userId = new URLSearchParams().get("userId")
   const password = useRef({});
   const levelText = useRef({});
   const username = useRef({});
+  const id = useRef({})
 
   // 정규식
   const passwordRegEx =
@@ -65,6 +66,7 @@ const SignUp = (props) => {
   password.current = watch("password", "");
   levelText.current = watch("level_text", "");
   username.current = watch("username", "");
+  id.current = watch("id", "");
 
   // 닉네임 중복체크
   const checkUsername = () => {
@@ -89,6 +91,10 @@ const SignUp = (props) => {
     setUsernameOK(false);
     return false;
   };
+
+  useEffect(() => {
+    setValue("id", userId)
+  }, [userId])
 
   return (
     <Container>
@@ -120,7 +126,7 @@ const SignUp = (props) => {
           />
         </InputWrapper>
         {/* -------------------------------아이디------------------------------- */}
-        <InputWrapper error={errors.id?.message} title="아이디(전화번호)">
+        <InputWrapper error={errors.id?.message} title="아이디">
           <input
             id="id"
             type="text"
@@ -131,6 +137,7 @@ const SignUp = (props) => {
                 message: "숫자만 입력해주세요.",
               },
             })}
+            disabled
           />
         </InputWrapper>
         {/* -------------------------------비밀번호------------------------------- */}

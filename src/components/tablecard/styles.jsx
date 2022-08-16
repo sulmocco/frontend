@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const CardWrapper = styled.div`
-    width: 40.5rem;
+    width: 100%;
+    /* max-width: 40.5rem; */
     height: fit-content;
     border-radius: 1rem;
     background-color: ${props => props.theme.white};
@@ -24,7 +25,7 @@ export const CardWrapper = styled.div`
         display: flex;
         flex-direction: column;
         margin-left: .8rem;
-        width: 29.3rem;
+        width: calc(100% - 7.2rem);
     }
     .tableTitle{
         font-size: 2.6rem;
@@ -73,7 +74,7 @@ export const CardThumbnail = styled.div`
     width: 100%;
     height: 24rem;
     border-radius: 1rem;
-    background-image: url(${props => props.src});
+    background-image: url(${props => props.src || props.theme.placeholder});
     background-color: #d9d9d9;
     background-size: cover;
     background-position: center;
@@ -82,7 +83,7 @@ export const ProfileCircle = styled.div`
     width: 6.4rem;
     height: 6.4rem;
     border-radius: 50%;
-    background-image: url(${props => props.src});
+    background-image: url(${props => props.src || props.theme.placeholder_profile});
     background-color: #d9d9d9;
     background-size: cover;
     background-position: center;

@@ -19,7 +19,10 @@ const Theme = {
     shadow_gray: "2px 2px 24px rgba(184, 187, 192, 0.26)",
     shadow_blue: "4px 4px 20px rgba(131, 174, 243, 0.24)",
     
-    contentWidth: "128rem"
+    contentWidth: "128rem",
+
+    placeholder: "/images/placeholder.png",
+    placeholder_profile: "/images/placeholder-profile.png",
 
 }
 

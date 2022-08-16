@@ -163,6 +163,8 @@ const Post = () => {
             {imgList.length >= 1 ? (
               <div className="ImgA1">
                 <img src={imgList[0]} alt="img" />
+                <div className="main">대표</div>
+                <div className="border"></div>
               </div>
             ) : (
               <div className="ImgB1">
@@ -174,6 +176,7 @@ const Post = () => {
             {imgList.length >= 2 ? (
               <div className="ImgA2">
                 <img src={imgList[1]} alt="img" />
+                <div className="border"></div>
               </div>
             ) : (
               <div className="ImgB2">
@@ -307,11 +310,26 @@ const Image = styled.div`
 
   .ImgA1,
   .ImgA2 {
+    position: relative;
+
     img {
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      background-size: cover;
+      /* background-size: cover; */
+    }
+
+    .border {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+
+      &:hover {
+        border: 3px solid #2459e0;
+        border-radius: 10px;
+      }
     }
   }
 
@@ -329,6 +347,20 @@ const Image = styled.div`
       font-weight: 400;
       margin-top: 5px;
       color: #7a7a80;
+    }
+  }
+
+  .ImgA1 {
+    position: relative;
+
+    .main {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background-color: #2459e0;
+      border-radius: 5px;
+      color: white;
+      padding: 10px;
     }
   }
 `;

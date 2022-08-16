@@ -2,26 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({location}) => {
   return (
     <Wrap>
       <Navbar>
         <NavLeft>
           <ul>
             <li>
-              <Link to="/">술모꼬</Link>
+              <NavLink to="/" active={location?.pathname.startsWith("/asd")}>
+                <img src="/images/logo.svg"/>
+              </NavLink>
             </li>
             <li>술약속</li>
-            <li><Link to="/tables">술상추천</Link></li>
+            <li><NavLink to="/tables" active={location?.pathname.startsWith("/tables")}>술상추천</NavLink></li>
           </ul>
         </NavLeft>
         <NavRight>
           <ul>
-            <li>
-              <Link to="/login">로그인</Link>
+          <li>
+              <NavLive to="/live">방송하기</NavLive>
             </li>
             <li>
-              <Link to="/terms">회원가입</Link>
+              <NavLink to="/login" active={location?.pathname.startsWith("/login")}>로그인</NavLink>
+            </li>
+            <li>
+              <NavLink to="/terms">회원가입</NavLink>
             </li>
           </ul>
         </NavRight>
@@ -43,13 +48,8 @@ const Wrap = styled.div`
   background-color: ${(props) => props.theme.white};
   box-shadow: ${(props) => props.theme.shadow_gray};
   font-weight: 500;
-  a {
-    &:link,
-    &:visited,
-    &:hover,
-    &:active {
-      color: ${(props) => props.theme.black};
-    }
+  img{
+    width: 14.403rem;
   }
 `;
 
@@ -67,10 +67,15 @@ const NavLeft = styled.div`
   margin-right: auto;
   ul {
     display: flex;
-    font-size: 16px;
-    gap: 48px;
+    align-items: center;
+    font-size: 2rem;
+    gap: 8rem;
   }
 `;
+
+const NavLink = styled(Link)`
+  color: ${props => props.active ? props.theme.primary : props.theme.black} !important;
+`
 
 const NavRight = styled.div`
   display: flex;
@@ -78,7 +83,19 @@ const NavRight = styled.div`
   margin-left: auto;
   ul {
     display: flex;
-    font-size: 16px;
-    gap: 48px;
+    align-items: center;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    gap: 2.2rem;
+letter-spacing: -0.04em;
   }
 `;
+
+const NavLive = styled(Link)`
+padding: .4rem 1.2rem;
+background-color: ${props => props.theme.bg_light_blue};
+font-size: 1.6rem;
+line-height: 1.9rem;
+border-radius: .4rem;
+color: ${props => props.theme.primary} !important;
+`

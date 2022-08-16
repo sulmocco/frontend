@@ -31,7 +31,7 @@ export const UserLevel = styled.div`
 `;
 
 // 버튼 베이스 스타일 (디자인 시스템)
-export const ButtonBase = styled.div`
+export const ButtonBase = styled.button`
   width: 22.4rem;
   height: 6.4rem;
   display: flex;
@@ -42,6 +42,7 @@ export const ButtonBase = styled.div`
   border-radius: 1rem;
   font-weight: 700;
   font-size: 2rem;
+  border: none;
   &:disabled {
     background-color: ${(props) => props.theme.grey_04};
     color: ${(props) => props.theme.black_02};
@@ -102,6 +103,7 @@ export const Separator = styled.div`
   margin: 0rem 0.4rem;
 `;
 
+// 주종 버튼(파란색)
 export const AlcoholButtons = styled.div`
   padding: 0.6rem 1.6rem 0.7rem;
   background-color: ${(props) => props.theme.primary};
@@ -111,4 +113,12 @@ export const AlcoholButtons = styled.div`
   letter-spacing: -0.04em;
   font-size: 1.6rem;
   line-height: 1.6rem;
+`;
+
+// 페이지 제목
+export const PageTitle = styled.h1`
+  font-size: 3.4rem;
+  line-height: 4.1rem;
+  letter-spacing: -0.02em;
+  font-weight: 700;
 `;

@@ -20,7 +20,7 @@ const Header = ({location}) => {
         <NavRight>
           <ul>
           <li>
-              <NavLive to="/live">방송하기</NavLive>
+              <NavLive to="/live/new">방송하기</NavLive>
             </li>
             <li>
               <NavLink to="/login" active={location?.pathname.startsWith("/login") || ""}>로그인</NavLink>

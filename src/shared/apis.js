@@ -25,11 +25,7 @@ const sulmoggoApi = {
   today: () => api.get("/tables/main"),
   getTables: (params) =>
     api.get(
-      `/tables?keyword=${params?.keyword}&alcohol=${
-        params?.alcohol
-      }&sort=${params?.sort}&page=${params?.page}&isAsc=${
-        params?.isAsc || true
-      }`
+      "/tables", {params}
     ),
   img: () => api.post("/images"), // 술상 추천 게시글 작성 mock api
 };

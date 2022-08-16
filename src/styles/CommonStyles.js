@@ -101,3 +101,14 @@ export const Separator = styled.div`
   background-color: #d9d9d9;
   margin: 0rem 0.4rem;
 `;
+
+export const AlcoholButtons = styled.div`
+  padding: 0.6rem 1.6rem 0.7rem;
+  background-color: ${(props) => props.theme.primary};
+  border-radius: 2rem;
+  font-weight: 700;
+  color: ${(props) => props.theme.white};
+  letter-spacing: -0.04em;
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+`;

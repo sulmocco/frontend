@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,9 @@ const Post = () => {
   const [tagList, setTagList] = useState("맥주");
   const [tagColor, setTagColor] = useState(0);
   const [imgList, SetImgList] = useState([]);
+  const [content, SetContent] = useState("");
+  const [thumbnail, SetThumbnail] = useState(0);
+  const [thumbnailImg, SetThumbnailImg] = useState("");
   const editorRef = useRef();
 
   // 태그 선택
@@ -31,6 +34,7 @@ const Post = () => {
       content: editorRef.current?.getInstance().getHTML(),
       alcoholtag: tagList,
       freetag: data.freetag,
+      thumbnail: thumbnailImg,
     };
 
     try {
@@ -64,9 +68,16 @@ const Post = () => {
 
   // 웹 에디터 content영역 확인하기
   const onChange = () => {
-    // console.log(editorRef.current?.getInstance().getHTML());
-    // console.log("이미지리스트확인", imgList);
+    console.log(editorRef.current?.getInstance().getHTML());
+    console.log("이미지리스트확인", imgList);
+    SetContent(editorRef.current?.getInstance().getHTML());
+    console.log(thumbnailImg);
   };
+
+  // 최초 이미지 업로드 및 대표 이미지 선택시 썸네일 지정
+  useEffect(() => {
+    SetThumbnailImg(imgList[thumbnail]);
+  }, [imgList, thumbnail]);
 
   return (
     <Wrap>
@@ -159,27 +170,32 @@ const Post = () => {
         </Content>
         <Image>
           <div>사진 업로드</div>
+          <div className="pre_image">
+            업로드한 이미지를 클릭 시 대표이미지로 설정이 가능합니다.
+          </div>
           <div className="upload">
-            {imgList.length >= 1 ? (
-              <div className="ImgA1">
-                <img src={imgList[0]} alt="img" />
-              </div>
-            ) : (
-              <div className="ImgB1">
-                <img src="/images/image_upload.svg" alt="" />
-                <p>대표사진</p>
-              </div>
-            )}
-
-            {imgList.length >= 2 ? (
-              <div className="ImgA2">
-                <img src={imgList[1]} alt="img" />
-              </div>
-            ) : (
-              <div className="ImgB2">
-                <img src="/images/+.svg" alt="" />
-              </div>
-            )}
+            {imgList.map((v, i) => {
+              return (
+                <div key={i}>
+                  {content.includes(v) ? (
+                    <div
+                      className="Img"
+                      onClick={(e) => {
+                        SetThumbnail(i);
+                        // SetThumbnailImg(v);
+                        console.log("썸네일 이미지 설정");
+                      }}
+                    >
+                      <img src={v} alt="img" />
+                      {thumbnail === i ? (
+                        <div className="main">대표</div>
+                      ) : null}
+                      <div className="border"></div>
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
           </div>
         </Image>
         <Tag>
@@ -274,6 +290,12 @@ const Content = styled.div`
 
 const Image = styled.div`
   margin-top: 40px;
+
+  .pre_image {
+    font-size: 14px;
+    color: #bcbcbc;
+  }
+
   div {
     font-weight: 700;
     font-size: 20px;
@@ -285,50 +307,41 @@ const Image = styled.div`
     display: flex;
   }
 
-  .ImgB1,
-  .ImgA1,
-  .ImgB2,
-  .ImgA2 {
+  .Img {
     width: 180px;
     height: 180px;
     background: #f2f3f3;
     border-radius: 10px;
-  }
-  .ImgB1,
-  .ImgB2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    img {
-      width: 24px;
-      height: 21.6px;
-    }
-  }
+    position: relative;
+    margin-right: 20px;
 
-  .ImgA1,
-  .ImgA2 {
     img {
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      background-size: cover;
+      /* background-size: cover; */
     }
-  }
 
-  .ImgB1,
-  .ImgA1 {
-    margin-right: 20px;
-  }
+    .border {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
 
-  .ImgB1 {
-    display: flex;
-    flex-direction: column;
-
-    p {
-      font-size: 14px;
-      font-weight: 400;
-      margin-top: 5px;
-      color: #7a7a80;
+      &:hover {
+        border: 3px solid #2459e0;
+        border-radius: 10px;
+      }
+    }
+    .main {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background-color: #2459e0;
+      border-radius: 5px;
+      color: white;
+      padding: 10px;
     }
   }
 `;

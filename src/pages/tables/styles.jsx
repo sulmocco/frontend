@@ -8,7 +8,7 @@ export const TablesWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  .checkedAlcoholWrapper{
+  .checkedAlcoholWrapper {
     margin-top: 1.6rem;
   }
 `;
@@ -29,23 +29,61 @@ export const PageTitle = styled.h1`
 `;
 
 export const AlcoholCategories = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 2.4rem;
-    margin-top: 3.2rem;
-    
-`
+  display: flex;
+  flex-direction: row;
+  gap: 2.4rem;
+  margin-top: 3.2rem;
+`;
 
 export const AlcoholCategory = styled.button`
-    outline: none;
-    border: none;
-    font-size: 2.6rem;
-    line-height: 3.1rem;
-    letter-spacing: -0.02em;
-    color: ${props => props.checked ? props.theme.black_2 : props.theme.grey_03};
-    font-weight: 700;
-    transition: all .1s ease-in-out;
-    &:hover{
-        color: ${props => props.theme.black_2};
+  outline: none;
+  border: none;
+  font-size: 2.6rem;
+  line-height: 3.1rem;
+  letter-spacing: -0.02em;
+  color: ${(props) =>
+    props.checked ? props.theme.black_2 : props.theme.grey_03};
+  font-weight: 700;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    color: ${(props) => props.theme.black_2};
+  }
+`;
+export const SearchBoxWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 6.4rem;
+  .leftWrapper {
+    display: flex;
+    flex-direction: column;
+    p {
+      font-size: 2rem;
+      font-weight: 400;
+      color: ${(props) => props.theme.grey_02};
     }
-`
+    span {
+      font-weight: 500;
+      color: ${(props) => props.theme.black_2};
+    }
+  }
+  .rightWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.4rem;
+  }
+`;
+
+export const SortButton = styled.button`
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+  letter-spacing: -0.04em;
+  background-color: transparent;
+  color: ${(props) =>
+    props.checked ? props.theme.black_2 : props.theme.grey_03};
+`;

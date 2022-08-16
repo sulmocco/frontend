@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
-import { AiFillDelete } from "react-icons/ai";
 
 // 웹 에디터 관리
 import { useRef } from "react";
@@ -15,7 +14,9 @@ const Post = () => {
   const [tagList, setTagList] = useState("맥주");
   const [tagColor, setTagColor] = useState(0);
   const [imgList, SetImgList] = useState([]);
-  const [deleteImg, SetDeleteImg] = useState(false);
+  const [content, SetContent] = useState("");
+  const [thumbnail, SetThumbnail] = useState(0);
+  const [thumbnailImg, SetThumbnailImg] = useState("");
   const editorRef = useRef();
 
   // 태그 선택
@@ -33,6 +34,7 @@ const Post = () => {
       content: editorRef.current?.getInstance().getHTML(),
       alcoholtag: tagList,
       freetag: data.freetag,
+      thumbnail: thumbnailImg,
     };
 
     try {
@@ -66,14 +68,17 @@ const Post = () => {
 
   // 웹 에디터 content영역 확인하기
   const onChange = () => {
-    // console.log(editorRef.current?.getInstance().getHTML());
-    // console.log("이미지리스트확인", imgList);
+    console.log(editorRef.current?.getInstance().getHTML());
+    console.log("이미지리스트확인", imgList);
+    SetContent(editorRef.current?.getInstance().getHTML());
+    console.log(thumbnailImg);
   };
 
-  // 이미지 리스트 삭제
-  const deleteImgList = () => {
-    alert("이미지를 삭제하시겠습니까?");
-  };
+  // 최초 이미지 업로드 및 대표 이미지 선택시 썸네일 지정
+  useEffect(() => {
+    SetThumbnailImg(imgList[thumbnail]);
+  }, [imgList, thumbnail]);
+
   return (
     <Wrap>
       <h2>게시글 작성</h2>
@@ -165,84 +170,32 @@ const Post = () => {
         </Content>
         <Image>
           <div>사진 업로드</div>
+          <div className="pre_image">
+            업로드한 이미지를 클릭 시 대표이미지로 설정이 가능합니다.
+          </div>
           <div className="upload">
-            {imgList.length >= 1 ? (
-              <div className="ImgA1">
-                <img src={imgList[0]} alt="img" />
-                <div className="main">대표</div>
-                <Border bg={deleteImg}>
-                  <div
-                    className="border"
-                    onMouseOver={() => {
-                      SetDeleteImg(true);
-                    }}
-                    onMouseOut={() => {
-                      SetDeleteImg(false);
-                    }}
-                  ></div>
-                </Border>
-
-                {deleteImg ? (
-                  <div
-                    className="remove"
-                    onMouseOver={() => {
-                      SetDeleteImg(true);
-                    }}
-                    onMouseOut={() => {
-                      SetDeleteImg(false);
-                    }}
-                    onClick={(e) => {
-                      deleteImgList(e);
-                    }}
-                  >
-                    <AiFillDelete />
-                  </div>
-                ) : null}
-              </div>
-            ) : (
-              <div className="ImgB1">
-                <img src="/images/image_upload.svg" alt="" />
-                <p>대표사진</p>
-              </div>
-            )}
-
-            {imgList.length >= 2 ? (
-              <div className="ImgA2">
-                <Border bg={deleteImg}>
-                  <img src={imgList[1]} alt="img" />
-                  <div
-                    className="border"
-                    onMouseOver={() => {
-                      SetDeleteImg(true);
-                    }}
-                    onMouseOut={() => {
-                      SetDeleteImg(false);
-                    }}
-                  ></div>
-                </Border>
-
-                {deleteImg ? (
-                  <div
-                    className="remove"
-                    onMouseOver={() => {
-                      SetDeleteImg(true);
-                    }}
-                    onMouseOut={() => {
-                      SetDeleteImg(false);
-                    }}
-                    onClick={(e) => {
-                      deleteImgList(e);
-                    }}
-                  >
-                    <AiFillDelete />
-                  </div>
-                ) : null}
-              </div>
-            ) : (
-              <div className="ImgB2">
-                <img src="/images/+.svg" alt="" />
-              </div>
-            )}
+            {imgList.map((v, i) => {
+              return (
+                <div key={i}>
+                  {content.includes(v) ? (
+                    <div
+                      className="Img"
+                      onClick={(e) => {
+                        SetThumbnail(i);
+                        // SetThumbnailImg(v);
+                        console.log("썸네일 이미지 설정");
+                      }}
+                    >
+                      <img src={v} alt="img" />
+                      {thumbnail === i ? (
+                        <div className="main">대표</div>
+                      ) : null}
+                      <div className="border"></div>
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
           </div>
         </Image>
         <Tag>
@@ -337,6 +290,12 @@ const Content = styled.div`
 
 const Image = styled.div`
   margin-top: 40px;
+
+  .pre_image {
+    font-size: 14px;
+    color: #bcbcbc;
+  }
+
   div {
     font-weight: 700;
     font-size: 20px;
@@ -348,29 +307,13 @@ const Image = styled.div`
     display: flex;
   }
 
-  .ImgB1,
-  .ImgA1,
-  .ImgB2,
-  .ImgA2 {
+  .Img {
     width: 180px;
     height: 180px;
     background: #f2f3f3;
     border-radius: 10px;
-  }
-  .ImgB1,
-  .ImgB2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    img {
-      width: 24px;
-      height: 21.6px;
-    }
-  }
-
-  .ImgA1,
-  .ImgA2 {
     position: relative;
+    margin-right: 20px;
 
     img {
       width: 100%;
@@ -385,45 +328,12 @@ const Image = styled.div`
       width: 100%;
       height: 100%;
       cursor: pointer;
-    }
-
-    .remove {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 20px;
-      height: 20px;
-      color: black;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
 
       &:hover {
-        color: red;
+        border: 3px solid #2459e0;
+        border-radius: 10px;
       }
     }
-  }
-
-  .ImgB1,
-  .ImgA1 {
-    margin-right: 20px;
-  }
-
-  .ImgB1 {
-    display: flex;
-    flex-direction: column;
-
-    p {
-      font-size: 14px;
-      font-weight: 400;
-      margin-top: 5px;
-      color: #7a7a80;
-    }
-  }
-
-  .ImgA1 {
     .main {
       position: absolute;
       top: 0px;
@@ -433,13 +343,6 @@ const Image = styled.div`
       color: white;
       padding: 10px;
     }
-  }
-`;
-
-const Border = styled.div`
-  .border {
-    border: ${(props) => (props.bg ? "3px solid #2459e0" : null)};
-    border-radius: ${(props) => (props.bg ? "10px" : null)};
   }
 `;
 

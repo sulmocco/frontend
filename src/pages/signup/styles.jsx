@@ -29,5 +29,5 @@ export const Container = styled.div`
     padding: 0;
     padding-top: 13.6rem;
     /* overflow: auto; */
-    width: 100vw;
+    /* width: 100vw; */
 `

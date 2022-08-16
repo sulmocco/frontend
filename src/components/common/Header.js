@@ -9,12 +9,12 @@ const Header = ({location}) => {
         <NavLeft>
           <ul>
             <li>
-              <NavLink to="/" active={location?.pathname.startsWith("/asd")}>
+              <NavLink to="/" active={location?.pathname.startsWith("/asd") || ""}>
                 <img src="/images/logo.svg" alt="술모꼬 로고"/>
               </NavLink>
             </li>
             <li>술약속</li>
-            <li><NavLink to="/tables" active={location?.pathname.startsWith("/tables")}>술상추천</NavLink></li>
+            <li><NavLink to="/tables" active={location?.pathname.startsWith("/tables") || ""}>술상추천</NavLink></li>
           </ul>
         </NavLeft>
         <NavRight>
@@ -23,7 +23,7 @@ const Header = ({location}) => {
               <NavLive to="/live">방송하기</NavLive>
             </li>
             <li>
-              <NavLink to="/login" active={location?.pathname.startsWith("/login")}>로그인</NavLink>
+              <NavLink to="/login" active={location?.pathname.startsWith("/login") || ""}>로그인</NavLink>
             </li>
             <li>
               <NavLink to="/terms">회원가입</NavLink>
@@ -80,7 +80,7 @@ const NavLink = styled(Link)`
 const NavRight = styled.div`
   display: flex;
   align-items: center;
-  margin-left: auto;
+  /* margin-left: auto; */
   ul {
     display: flex;
     align-items: center;

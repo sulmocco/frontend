@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback } from "react";
+import { useEffect } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import InputWrapper from "../../components/inputwrapper";
 import sulmoggoApi from "../../shared/apis";
 import { AlcoholLevel } from "../../shared/options";
@@ -12,7 +14,7 @@ const SignUp = (props) => {
   // const [optionSelectedText, setOptionSelectedText] = useState(undefined)
   // const emailRegEx = /\S+@\S+\.\S+/
   // const usernameRegEx = /^[A-Za-z\d_]{1,}$/
-  const userId = new URLSearchParams().get("userId")
+  const userIdParam = useSearchParams()[0];
   const password = useRef({});
   const levelText = useRef({});
   const username = useRef({});
@@ -21,7 +23,7 @@ const SignUp = (props) => {
   // 정규식
   const passwordRegEx =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
-  const phoneRegEx = /^[0-9]*$/;
+  // const phoneRegEx = /^[0-9]*$/;
 
   // 드롭다운 열리면 true 닫히면 false
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -67,6 +69,8 @@ const SignUp = (props) => {
   levelText.current = watch("level_text", "");
   username.current = watch("username", "");
   id.current = watch("id", "");
+  const setId = useCallback(() => setValue("id", userIdParam.get("userId")), [userIdParam])
+  
 
   // 닉네임 중복체크
   const checkUsername = () => {
@@ -93,8 +97,8 @@ const SignUp = (props) => {
   };
 
   useEffect(() => {
-    setValue("id", userId)
-  }, [userId])
+    setId()
+  }, [setId])
 
   return (
     <Container>
@@ -132,10 +136,6 @@ const SignUp = (props) => {
             type="text"
             {...register("id", {
               required: "아이디는 필수 입력입니다.",
-              pattern: {
-                value: phoneRegEx,
-                message: "숫자만 입력해주세요.",
-              },
             })}
             disabled
           />
@@ -150,6 +150,7 @@ const SignUp = (props) => {
           <input
             id="password"
             type="password"
+            autoComplete="off"
             aria-invalid={
               !isDirty ? undefined : errors.password ? "true" : "false"
             }
@@ -170,6 +171,7 @@ const SignUp = (props) => {
           <input
             id="password_check"
             type="password"
+            autoComplete="off"
             aria-invalid={
               !isDirty ? undefined : errors.password_check ? "true" : "false"
             }

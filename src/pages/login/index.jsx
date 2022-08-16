@@ -6,7 +6,6 @@ import sulmoggoApi from '../../shared/apis';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const Login = () => {
     const id_ref = useRef();

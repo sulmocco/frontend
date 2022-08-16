@@ -10,7 +10,7 @@ const Header = ({location}) => {
           <ul>
             <li>
               <NavLink to="/" active={location?.pathname.startsWith("/asd")}>
-                <img src="/images/logo.svg"/>
+                <img src="/images/logo.svg" alt="술모꼬 로고"/>
               </NavLink>
             </li>
             <li>술약속</li>

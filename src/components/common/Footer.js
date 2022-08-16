@@ -6,7 +6,7 @@ const Footer = () => {
     <Wrap>
       <Container>
         <div>
-          <img src="/images/logo_gray.svg"/>
+          <img src="/images/logo_gray.svg" alt="술모꼬 로고"/>
         </div>
         <div>
           <div>

@@ -23,11 +23,10 @@ const sulmoggoApi = {
   getProducts: () => api.get("/products"),
   live: () => api.get("/room/main"),
   today: () => api.get("/tables/main"),
-  getTables: (params) =>
-    api.get(
-      "/tables", {params}
-    ),
+  getTables: (params) => api.get("/tables", {params}),
   img: () => api.post("/images"), // 술상 추천 게시글 작성 mock api
+  getUser: () => api.get("/mypage"),
+  putUser: (data) => api.put("/mypage", data),
 };
 
 export default sulmoggoApi;

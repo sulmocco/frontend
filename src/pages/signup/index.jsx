@@ -69,7 +69,8 @@ const SignUp = (props) => {
   levelText.current = watch("level_text", "");
   username.current = watch("username", "");
   id.current = watch("id", "");
-  const setId = useCallback(() => setValue("id", userIdParam.get("userId")), [userIdParam])
+  // eslint-disable-next-line
+  const setId = useCallback(() => setValue("id", userIdParam.get("userId")), [userIdParam, setValue])
   
 
   // 닉네임 중복체크

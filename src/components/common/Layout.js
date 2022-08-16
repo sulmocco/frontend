@@ -17,7 +17,7 @@ const Layout = () => {
   console.log(isShow);
   return (
     <>
-      <Header />
+      <Header location={location}/>
       <Background bg={grayBg}>
       <Main show={isShow} loc={location.pathname}>
         <Outlet />

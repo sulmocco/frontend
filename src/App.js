@@ -8,6 +8,11 @@ import Spinner from "./components/spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "./redux/userSlice";
 import Post from "./pages/post";
+import Mypage from "./pages/mypage";
+import Bookmark from "./components/mypage/Bookmark";
+import Friends from "./components/mypage/Friends";
+import Mypost from "./components/mypage/Mypost";
+import NewLive from "./pages/newlive";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/Auth"));
@@ -46,7 +51,13 @@ function App() {
             <Route path="/post" element={<Post />} />
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
-            <Route path="/mypage" element={<ProfileEdit />} />
+            <Route path="/profile" element={<ProfileEdit />} />
+            <Route path="/live/new" element={<NewLive />} />
+            <Route path="/mypage" element={<Mypage />}>
+              <Route path="/mypage/bookmark" element={<Bookmark />} />
+              <Route path="/mypage/mypost" element={<Mypost />} />
+              <Route path="/mypage/friends" element={<Friends />} />
+            </Route>
           </Route>
         </Routes>
       </ThemeProvider>

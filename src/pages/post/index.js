@@ -4,6 +4,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
+import { AiFillDelete } from "react-icons/ai";
 
 // 웹 에디터 관리
 import { useRef } from "react";
@@ -14,6 +15,7 @@ const Post = () => {
   const [tagList, setTagList] = useState("맥주");
   const [tagColor, setTagColor] = useState(0);
   const [imgList, SetImgList] = useState([]);
+  const [deleteImg, SetDeleteImg] = useState(false);
   const editorRef = useRef();
 
   // 태그 선택
@@ -68,6 +70,10 @@ const Post = () => {
     // console.log("이미지리스트확인", imgList);
   };
 
+  // 이미지 리스트 삭제
+  const deleteImgList = () => {
+    alert("이미지를 삭제하시겠습니까?");
+  };
   return (
     <Wrap>
       <h2>게시글 작성</h2>
@@ -164,7 +170,34 @@ const Post = () => {
               <div className="ImgA1">
                 <img src={imgList[0]} alt="img" />
                 <div className="main">대표</div>
-                <div className="border"></div>
+                <Border bg={deleteImg}>
+                  <div
+                    className="border"
+                    onMouseOver={() => {
+                      SetDeleteImg(true);
+                    }}
+                    onMouseOut={() => {
+                      SetDeleteImg(false);
+                    }}
+                  ></div>
+                </Border>
+
+                {deleteImg ? (
+                  <div
+                    className="remove"
+                    onMouseOver={() => {
+                      SetDeleteImg(true);
+                    }}
+                    onMouseOut={() => {
+                      SetDeleteImg(false);
+                    }}
+                    onClick={(e) => {
+                      deleteImgList(e);
+                    }}
+                  >
+                    <AiFillDelete />
+                  </div>
+                ) : null}
               </div>
             ) : (
               <div className="ImgB1">
@@ -175,8 +208,35 @@ const Post = () => {
 
             {imgList.length >= 2 ? (
               <div className="ImgA2">
-                <img src={imgList[1]} alt="img" />
-                <div className="border"></div>
+                <Border bg={deleteImg}>
+                  <img src={imgList[1]} alt="img" />
+                  <div
+                    className="border"
+                    onMouseOver={() => {
+                      SetDeleteImg(true);
+                    }}
+                    onMouseOut={() => {
+                      SetDeleteImg(false);
+                    }}
+                  ></div>
+                </Border>
+
+                {deleteImg ? (
+                  <div
+                    className="remove"
+                    onMouseOver={() => {
+                      SetDeleteImg(true);
+                    }}
+                    onMouseOut={() => {
+                      SetDeleteImg(false);
+                    }}
+                    onClick={(e) => {
+                      deleteImgList(e);
+                    }}
+                  >
+                    <AiFillDelete />
+                  </div>
+                ) : null}
               </div>
             ) : (
               <div className="ImgB2">
@@ -325,10 +385,23 @@ const Image = styled.div`
       width: 100%;
       height: 100%;
       cursor: pointer;
+    }
+
+    .remove {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      color: black;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
 
       &:hover {
-        border: 3px solid #2459e0;
-        border-radius: 10px;
+        color: red;
       }
     }
   }
@@ -351,8 +424,6 @@ const Image = styled.div`
   }
 
   .ImgA1 {
-    position: relative;
-
     .main {
       position: absolute;
       top: 0px;
@@ -362,6 +433,13 @@ const Image = styled.div`
       color: white;
       padding: 10px;
     }
+  }
+`;
+
+const Border = styled.div`
+  .border {
+    border: ${(props) => (props.bg ? "3px solid #2459e0" : null)};
+    border-radius: ${(props) => (props.bg ? "10px" : null)};
   }
 `;
 

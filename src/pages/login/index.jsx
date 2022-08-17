@@ -31,7 +31,7 @@ const Login = () => {
                     <input type='text' placeholder='핸드폰 번호' ref={id_ref} />
                     <input type='password' placeholder='비밀번호' ref={pw_ref} />
                 </form>
-                <p>비밀번호 찾기</p>
+                <p onClick={() => navigate("/resetPassword")}>비밀번호 찾기</p>
                 <SignUpButton style={{ marginTop: "6.4rem" }} onClick={handleLogin}>로그인</SignUpButton>
             </LoginSection>
         </LoginWrap>

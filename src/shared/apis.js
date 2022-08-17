@@ -27,6 +27,7 @@ const sulmoggoApi = {
   img: () => api.post("/images"), // 술상 추천 게시글 작성 mock api
   getUser: () => api.get("/mypage"),
   putUser: (data) => api.put("/mypage", data),
+  resetPassword: (user) => api.put("/resetPw", user),
   postReply: (postId, content) => api.post(`/replies/${postId}`, content),
   getReplies: (postId) => api.get(`/replies/${postId}`),
   deleteReply: (replyId) => api.delete(`/replies/${replyId}`),

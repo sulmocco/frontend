@@ -24,13 +24,14 @@ const Tables = React.lazy(() => import("./pages/tables"));
 const LoginRending = React.lazy(() => import("./pages/loginrending"));
 const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 const ProfileEdit = React.lazy(() => import("./pages/profileedit"));
+const Comment = React.lazy(() => import("./components/comment"))
 
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
   const refreshLogin = useCallback(() => {
     if (localStorage.getItem("token")) {
-      // 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
+      // TODO: 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
       dispatch(userActions.userLogin());
     }
   }, [dispatch]);
@@ -55,7 +56,7 @@ function App() {
             <Route path="/profile" element={<ProfileEdit />} />
             <Route path="/live/new" element={<NewLive />} />
             <Route path="/resetPassword" element={<ResetPassword />}/>
-
+            <Route path="/comment" element={<Comment />}/>
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />
               <Route path="/mypage/mypost" element={<Mypost />} />

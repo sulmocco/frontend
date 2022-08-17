@@ -13,6 +13,7 @@ import Bookmark from "./components/mypage/Bookmark";
 import Friends from "./components/mypage/Friends";
 import Mypost from "./components/mypage/Mypost";
 import NewLive from "./pages/newlive";
+import ResetPassword from "./pages/resetpassword";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/Auth"));
@@ -53,6 +54,8 @@ function App() {
             <Route path="/tables" element={<Tables />} />
             <Route path="/profile" element={<ProfileEdit />} />
             <Route path="/live/new" element={<NewLive />} />
+            <Route path="/resetPassword" element={<ResetPassword />}/>
+
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />
               <Route path="/mypage/mypost" element={<Mypost />} />

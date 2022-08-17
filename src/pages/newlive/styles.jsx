@@ -36,6 +36,7 @@ export const AlcoholWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 2.4rem;
+  gap: .8rem;
 `;
 
 export const AlcoholButton = styled.div`

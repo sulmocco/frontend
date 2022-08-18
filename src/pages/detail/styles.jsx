@@ -46,7 +46,7 @@ export const DetailHeader = styled.div`
     }
 `
 export const DetailCont = styled.div`
-margin-top: 3.5rem;
+margin: 3.5rem 0 6.4rem 0;
     .header {
         color: ${props => props.theme.grey_02};
         font-size: 1.6rem;

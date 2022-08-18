@@ -73,7 +73,7 @@ const Detail = () => {
             postLikeMutation.mutate(tableId)
         }
     }
-    if (status == 'loading') {
+    if (status === 'loading') {
         return <Spinner />
     }
     return (

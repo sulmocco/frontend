@@ -107,7 +107,7 @@ export const WriteButton = styled(Link)`
   }
   .fixed{
     position: fixed;
-    top: 80rem;
+    top: 90vh;
     /* right: 0; */
     background-color: ${props => props.theme.secondary};
   display: flex;

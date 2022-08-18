@@ -66,13 +66,14 @@ const Tables = (props) => {
         lastPage: res.data.lastPage,
       };
       // TODO: 작업용 코드. 완성 시에는 삭제해야함.
+      // eslint-disable-next-line
       return {
         data: "",
         nextPage: pageParam + 1,
         lastPage: true,
       };
     },
-    [alcohol, isAsc, keyword, sortBy]
+    [alcohol, keyword, sortBy]
   );
   const {
     isSuccess,
@@ -144,7 +145,7 @@ const Tables = (props) => {
                         alcohol.replace(Alcohol[0], "") +
                         "," +
                         x
-                      ).replace(/^\,/, ""),
+                      ).replace(/^,/, ""),
                     });
                   } else if (alcohol.includes(x)) {
                     let newAlcohols = alcohol.split(",");

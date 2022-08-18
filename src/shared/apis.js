@@ -32,8 +32,10 @@ const sulmoggoApi = {
   }), // 술상 추천 게시글 작성 이미지 가로채기
   tables: (newData) => api.post("/tables", newData),
   deletePost: (tableId) => api.delete(`tables/${tableId}`),
-  like: (tableId, data) => api.post(`tables/${tableId}/like`, data),
-  bookmark: (tableId, data) => api.post(`tables/${tableId}/bookmark`, data),
+  postLike: (tableId) => api.post(`tables/${tableId}/like`),
+  deleteLike: (tableId) => api.delete(`tables/${tableId}/like`),
+  postBookmark: (tableId) => api.post(`tables/${tableId}/bookmark`),
+  deleteBookmark: (tableId) => api.delete(`tables/${tableId}/bookmark`),
   getUser: () => api.get("/mypage"),
   putUser: (data) => api.put("/mypage", data),
   getDetail: (tableId) => api.get(`/tables/${tableId}`),

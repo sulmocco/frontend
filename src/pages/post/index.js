@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
@@ -17,6 +18,7 @@ const Post = () => {
   const [content, SetContent] = useState("");
   const [thumbnail, SetThumbnail] = useState(0);
   const [thumbnailImg, SetThumbnailImg] = useState("");
+  const navigate = useNavigate();
   const editorRef = useRef();
   const username = useSelector(state => state.user.username);
 
@@ -43,6 +45,7 @@ const Post = () => {
     try {
       const res = await sulmoggoApi.tables(newData);
       console.log(res);
+      navigate(`/tables`);
     } catch (err) {
       console.log(err);
     }

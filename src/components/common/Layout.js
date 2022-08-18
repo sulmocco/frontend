@@ -13,7 +13,7 @@ const Layout = () => {
     location.pathname.startsWith("/terms") ||
     location.pathname.startsWith("/resetPassword") ||
     location.pathname === "/";
-  const grayBg = location.pathname.startsWith("/tables")
+  const grayBg = location.pathname === ("/tables") || location.pathname.startsWith("/tables?")
 
   console.log(isShow);
   return (

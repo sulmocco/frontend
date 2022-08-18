@@ -41,7 +41,7 @@ const Header = ({ location }) => {
                 <div
                   onClick={() => {
                     localStorage.removeItem("token");
-                    window.location.reload("/");
+                    window.location.replace("/");
                   }}
                 >
                   로그아웃

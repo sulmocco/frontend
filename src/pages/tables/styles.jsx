@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const TablesWrapper = styled.div`
@@ -10,6 +11,9 @@ export const TablesWrapper = styled.div`
   align-items: flex-start;
   .checkedAlcoholWrapper {
     margin-top: 1.6rem;
+    display: flex;
+    flex-direction: row;
+    gap: .8rem;
   }
 `;
 
@@ -45,6 +49,7 @@ export const AlcoholCategory = styled.button`
     props.checked ? props.theme.black_2 : props.theme.grey_03};
   font-weight: 700;
   transition: all 0.1s ease-in-out;
+  background-color: transparent;
   &:hover {
     color: ${(props) => props.theme.black_2};
   }
@@ -87,3 +92,44 @@ export const SortButton = styled.button`
   color: ${(props) =>
     props.checked ? props.theme.black_2 : props.theme.grey_03};
 `;
+
+export const WriteButton = styled(Link)`
+  position: relative;
+  /* background-color: aliceblue; */
+  box-sizing: inherit;
+  width: 100%;
+  .absolute{
+    /* background-color: teal; */
+    position: absolute;
+    top: 0%;
+    left: calc(100% - 8rem);
+    /* right: 0%; */
+  }
+  .fixed{
+    position: fixed;
+    top: 80rem;
+    /* right: 0; */
+    background-color: ${props => props.theme.secondary};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 4rem;
+  box-shadow: ${props => props.theme.shadow_gray};
+  z-index: 400;
+  }
+  img{
+    width: 3.2rem;
+    height: 3.52rem;
+  }
+`
+
+export const NoList = styled.div`
+  padding: 20rem 0;
+  font-size: 3.4rem;
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  color: ${props => props.theme.grey_03};
+`

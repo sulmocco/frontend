@@ -8,7 +8,7 @@ export const RecommendWrap = styled.div`
         font-size: 3.2rem;
         font-weight: 700;
         margin-bottom: 4rem;
-        text-align: left;
+        text-align: center;
         width: 128rem;
     }
     .recommendsection {

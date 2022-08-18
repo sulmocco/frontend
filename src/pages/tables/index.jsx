@@ -11,24 +11,28 @@ import { AlcoholButtons, Separator } from "../../styles/CommonStyles";
 import {
   AlcoholCategories,
   AlcoholCategory,
+  NoList,
   PageTitle,
   SearchBoxWrapper,
   SortButton,
   TablesGrid,
   TablesWrapper,
+  WriteButton,
 } from "./styles";
 
 const Tables = (props) => {
   const [queryParams, setQueryParams] = useSearchParams();
   // const queryParams = new URLSearchParams();
   const keyword = queryParams.get("keyword") || null;
-  const alcohol = queryParams.get("alcohol") || "전체";
-  const sort = queryParams.get("sort") || "인기순";
-  const page = queryParams.get("page") || 0;
+  const alcohol = keyword ? null : queryParams.get("alcohol") || "전체";
+  const sortBy = queryParams.get("sortBy") || "id";
+  const page = queryParams.get("page") || 1;
   const isAsc = queryParams.get("isAsc") || null;
-  const allParams = { keyword, alcohol, sort, isAsc };
+  const allParams = { keyword, alcohol, sortBy, isAsc };
   const lastTableRef = useRef();
   const [total, setTotal] = useState(0);
+
+  console.log(alcohol);
 
   const searchTables = (keyword) => {
     if (keyword) {
@@ -40,13 +44,20 @@ const Tables = (props) => {
 
   const getTables = useCallback(
     async (pageParam) => {
-      const res = await sulmoggoApi.getTables({
-        keyword,
-        alcohol: String(alcohol),
-        sort,
-        page: pageParam,
-        isAsc,
-      });
+      const newQuery = 
+        {
+          keyword,
+          alcohol: String(alcohol),
+          sortBy,
+          page: pageParam,
+          size: 9,
+          isAsc: true,
+        }
+      if(keyword) delete newQuery.alcohol
+      else delete newQuery.keyword
+      
+      console.log(newQuery);
+      const res = await sulmoggoApi.getTables(newQuery);
       setTotal(res.data.total);
       console.log("search!", keyword);
       return {
@@ -54,8 +65,14 @@ const Tables = (props) => {
         nextPage: pageParam + 1,
         lastPage: res.data.lastPage,
       };
+      // TODO: 작업용 코드. 완성 시에는 삭제해야함.
+      return {
+        data: "",
+        nextPage: pageParam + 1,
+        lastPage: true,
+      };
     },
-    [alcohol, isAsc, keyword, sort]
+    [alcohol, isAsc, keyword, sortBy]
   );
   const {
     isSuccess,
@@ -67,12 +84,12 @@ const Tables = (props) => {
     // isFetchingNextPage,
     // status,
   } = useInfiniteQuery(
-    ["tables", keyword, alcohol, sort, page, isAsc],
+    ["tables", keyword, alcohol, sortBy, page, isAsc],
     ({ pageParam = page }) => getTables(pageParam),
     {
       getNextPageParam: (currPage, allPages) => {
         if (!currPage.lastPage) {
-          // setQueryParams({keyword, alcohol, sort, page, isAsc})
+          // setQueryParams({keyword, alcohol, sortBy, page, isAsc})
           return currPage.nextPage;
         }
         return undefined;
@@ -112,15 +129,32 @@ const Tables = (props) => {
   return (
     <TablesWrapper>
       <PageTitle>술상추천</PageTitle>
-      {!keyword && (
+      {alcohol && (
         <>
           <AlcoholCategories>
-            {Alcohol.map((x) => (
+            {Alcohol.map((x, i) => (
               <AlcoholCategory
                 key={x}
                 checked={alcohol.includes(x)}
                 onClick={() => {
-                  setQueryParams({ alcohol: x });
+                  if (i !== 0 && !alcohol.includes(x)) {
+                    // console.log(alcohol.replace(Alcohol[0], "").replace(/^,/, ""));
+                    setQueryParams({
+                      alcohol: (
+                        alcohol.replace(Alcohol[0], "") +
+                        "," +
+                        x
+                      ).replace(/^\,/, ""),
+                    });
+                  } else if (alcohol.includes(x)) {
+                    let newAlcohols = alcohol.split(",");
+                    const idx = newAlcohols.indexOf(x);
+                    console.log(idx);
+                    newAlcohols.splice(idx, 1);
+                    setQueryParams({ alcohol: newAlcohols.join(",") });
+                  } else {
+                    setQueryParams({});
+                  }
                 }}
               >
                 {x}
@@ -128,32 +162,47 @@ const Tables = (props) => {
             ))}
           </AlcoholCategories>
           <div className="checkedAlcoholWrapper">
-            <AlcoholButtons>{alcohol}</AlcoholButtons>
+            {alcohol.split(",").map((x) => (
+              <AlcoholButtons>{x}</AlcoholButtons>
+            ))}
           </div>
         </>
       )}
       <SearchBoxWrapper>
         <div className="leftWrapper">
           <p>
-            <span>{total}개</span>의 술모임이 있습니다.
+            <span>{total || 0}개</span>의 술상추천이 있습니다.
           </p>
           <SearchBar onSearch={(keyword) => searchTables(keyword)} />
         </div>
         <div className="rightWrapper">
           <SortButton
-            checked={sort === "인기순"}
+            checked={sortBy === "viewCount"}
             onClick={() => {
-              console.log(queryParams);
-              setQueryParams({ ...allParams, sort: "인기순" });
+              console.log(allParams);
+              if (keyword) {
+                setQueryParams({ keyword, sortBy: "viewCount" });
+              } else if (alcohol !== "전체") {
+                setQueryParams({ alcohol, sortBy: "viewCount" });
+              } else {
+                setQueryParams({ sortBy: "viewCount" });
+              }
             }}
           >
             인기순
           </SortButton>
           <Separator />
           <SortButton
-            checked={sort === "최신순"}
+            checked={sortBy === "id"}
             onClick={() => {
-              setQueryParams({ ...allParams, sort: "최신순" });
+              console.log(allParams);
+              if (keyword) {
+                setQueryParams({ keyword, sortBy: "id" });
+              } else if (alcohol !== "전체") {
+                setQueryParams({ alcohol, sortBy: "id" });
+              } else {
+                setQueryParams({ sortBy: "id" });
+              }
             }}
           >
             최신순
@@ -174,7 +223,16 @@ const Tables = (props) => {
                 );
             });
           })}
+          {console.log(data.pages)}
+          {!total && <NoList>작성된 술상추천이 없습니다.</NoList>}
       </TablesGrid>
+      <WriteButton to="/post">
+        <div className="absolute">
+        <div className="fixed">
+          <img src="/images/icon_write.svg" alt="작성" />
+        </div>
+        </div>
+      </WriteButton>
     </TablesWrapper>
   );
 };

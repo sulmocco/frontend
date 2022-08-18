@@ -25,7 +25,7 @@ const LoginRending = React.lazy(() => import("./pages/loginrending"));
 const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 const ProfileEdit = React.lazy(() => import("./pages/profileedit"));
 const Detail = React.lazy(() => import("./pages/detail"));
-const Comment = React.lazy(() => import("./components/comment"))
+const Comment = React.lazy(() => import("./components/comment"));
 
 function App() {
   const dispatch = useDispatch();
@@ -54,11 +54,11 @@ function App() {
             <Route path="/post" element={<Post />} />
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
+            <Route path="/tables/:tableId" element={<Detail />} />
             <Route path="/profile" element={<ProfileEdit />} />
-            <Route path="/detail" element={<Detail />} />
             <Route path="/live/new" element={<NewLive />} />
-            <Route path="/resetPassword" element={<ResetPassword />}/>
-            <Route path="/comment" element={<Comment />}/>
+            <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route path="/comment" element={<Comment />} />
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />
               <Route path="/mypage/mypost" element={<Mypost />} />

@@ -24,6 +24,7 @@ const Tables = React.lazy(() => import("./pages/tables"));
 const LoginRending = React.lazy(() => import("./pages/loginrending"));
 const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 const ProfileEdit = React.lazy(() => import("./pages/profileedit"));
+const Detail = React.lazy(() => import("./pages/detail"));
 const Comment = React.lazy(() => import("./components/comment"))
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
             <Route path="/profile" element={<ProfileEdit />} />
+            <Route path="/detail" element={<Detail />} />
             <Route path="/live/new" element={<NewLive />} />
             <Route path="/resetPassword" element={<ResetPassword />}/>
             <Route path="/comment" element={<Comment />}/>

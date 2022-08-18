@@ -16,8 +16,9 @@ const Login = () => {
         console.log(id_ref.current.value, pw_ref.current.value);
         await sulmoggoApi.login({ id: id_ref.current.value, password: pw_ref.current.value })
             .then(res => {
+                console.log(res.data);
                 // 로그인 정보 리덕스에 저장 후 메인페이지로 이동
-                dispatch(userActions.userLogin(res.data))
+                dispatch(userActions.userLogin({...res.data, token: res.headers.authorization}))
                 navigate("/")
             }).catch(err => {
                 alert(err.data)

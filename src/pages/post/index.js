@@ -8,6 +8,7 @@ import sulmoggoApi from "../../shared/apis";
 import { useRef } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
+import { useSelector } from "react-redux";
 
 const Post = () => {
   const [tagList, setTagList] = useState("맥주");
@@ -17,6 +18,7 @@ const Post = () => {
   const [thumbnail, SetThumbnail] = useState(0);
   const [thumbnailImg, SetThumbnailImg] = useState("");
   const editorRef = useRef();
+  const username = useSelector(state => state.user.username);
 
   // 태그 선택
   const addTag = (e) => {
@@ -33,7 +35,9 @@ const Post = () => {
       content: editorRef.current?.getInstance().getHTML(),
       alcoholtag: tagList,
       freetag: data.freetag,
-      thumbnail: thumbnailImg,
+      thumbnail: thumbnailImg || imgList[0],
+      imgUrlList: imgList,
+      username
     };
 
     try {
@@ -54,10 +58,12 @@ const Post = () => {
   // 업로드 이미지 관리
   const onUploadImage = async (blob, callback) => {
     try {
-      const url = await sulmoggoApi.img();
-      console.log(url.data.imgUrls[0].url);
-      callback(url.data.imgUrls[0].url, "alt text");
-      SetImgList((state) => [...state, url.data.imgUrls[0].url]);
+      const formData = new FormData();
+      formData.append('file', blob);
+      const url = await sulmoggoApi.img(formData);
+      console.log(url.data[0].url);
+      callback(url.data[0].url, "alt text");
+      SetImgList((state) => [...state, url.data[0].url]);
     } catch (err) {
       console.log(err);
     }
@@ -70,6 +76,12 @@ const Post = () => {
     console.log(editorRef.current?.getInstance().getHTML());
     console.log("이미지리스트확인", imgList);
     SetContent(editorRef.current?.getInstance().getHTML());
+    if(imgList.length > 1){
+    const firstImageUrl = editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g)[0]
+    const idx = imgList.indexOf(firstImageUrl)
+    SetThumbnail(idx)
+    }
+    console.log(editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g)[0]);
     console.log(thumbnailImg);
   };
 

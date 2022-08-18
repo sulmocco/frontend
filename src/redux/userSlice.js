@@ -13,11 +13,13 @@ const userSlice = createSlice({
       state.isLogin = true;
       state.username = action.payload?.username;
       localStorage.setItem("token", action.payload?.token)
+      localStorage.setItem("username", action.payload?.username)
     },
     userLogout(state, action) {
       state.isLogin = false;
       state.username = "";
       localStorage.removeItem("token");
+      localStorage.removeItem("username");
     },
   },
   extraReducers: {},

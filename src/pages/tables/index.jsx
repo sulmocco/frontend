@@ -53,7 +53,7 @@ const Tables = (props) => {
           size: 9,
           isAsc: true,
         }
-      if(keyword) delete newQuery.alcohol
+      if(keyword || alcohol === "전체") delete newQuery.alcohol
       else delete newQuery.keyword
       
       console.log(newQuery);
@@ -63,15 +63,15 @@ const Tables = (props) => {
       return {
         data: res.data,
         nextPage: pageParam + 1,
-        lastPage: res.data.lastPage,
+        lastPage: res.data.last,
       };
       // TODO: 작업용 코드. 완성 시에는 삭제해야함.
       // eslint-disable-next-line
-      return {
-        data: "",
-        nextPage: pageParam + 1,
-        lastPage: true,
-      };
+      // return {
+      //   data: "",
+      //   nextPage: pageParam + 1,
+      //   lastPage: true,
+      // };
     },
     [alcohol, keyword, sortBy]
   );
@@ -90,6 +90,7 @@ const Tables = (props) => {
     {
       getNextPageParam: (currPage, allPages) => {
         if (!currPage.lastPage) {
+          console.log("not last page");
           // setQueryParams({keyword, alcohol, sortBy, page, isAsc})
           return currPage.nextPage;
         }
@@ -213,9 +214,9 @@ const Tables = (props) => {
       <TablesGrid>
         {isSuccess &&
           data.pages.map((page) => {
-            const tables = page.data.tables;
-            return tables?.map((table, idx) => {
-              if (idx !== tables.length - 1) return <TableCard {...table} />;
+            const content = page.data.content;
+            return content?.map((table, idx) => {
+              if (idx !== content.length - 1) return <TableCard {...table} />;
               else
                 return (
                   <div ref={lastTableRef}>

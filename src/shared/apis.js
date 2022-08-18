@@ -10,8 +10,9 @@ const api = axios.create({
 
 api.interceptors.request.use(function (config) {
   const accessToken = localStorage.getItem("token"); // localStorage에 TOKEN 저장
+  console.log(accessToken);
   if (accessToken) {
-    config.headers.common["Authorization"] = `${accessToken}`;
+    config.headers.common.authorization = accessToken;
   } // Header에 토큰을 넣어서 보내준다.
   return config;
 });
@@ -24,8 +25,11 @@ const sulmoggoApi = {
   live: () => api.get("/room/main"),
   today: () => api.get("/tables/main"),
   getTables: (params) => api.get("/tables", { params }),
-
-  img: () => api.post("/images"), // 술상 추천 게시글 작성 이미지 가로채기
+  img: (formData) => api.post("/images", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }), // 술상 추천 게시글 작성 이미지 가로채기
   tables: (newData) => api.post("/tables", newData),
   deletePost: (tableId) => api.delete(`tables/${tableId}`),
   like: (tableId, data) => api.post(`tables/${tableId}/like`, data),

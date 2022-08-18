@@ -33,7 +33,7 @@ function App() {
   const refreshLogin = useCallback(() => {
     if (localStorage.getItem("token")) {
       // TODO: 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
-      dispatch(userActions.userLogin());
+      dispatch(userActions.userLogin({username: localStorage.getItem("username"),token: localStorage.getItem("token")}));
     }
   }, [dispatch]);
   useEffect(() => {

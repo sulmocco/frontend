@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
@@ -16,11 +16,11 @@ const Post = () => {
   const [tagColor, setTagColor] = useState(0);
   const [imgList, SetImgList] = useState([]);
   const [content, SetContent] = useState("");
-  const [thumbnail, SetThumbnail] = useState(0);
+  const [thumbnail, SetThumbnail] = useState("");
   const [thumbnailImg, SetThumbnailImg] = useState("");
   const navigate = useNavigate();
   const editorRef = useRef();
-  const username = useSelector(state => state.user.username);
+  const username = useSelector((state) => state.user.username);
 
   // 태그 선택
   const addTag = (e) => {
@@ -39,7 +39,7 @@ const Post = () => {
       freetag: data.freetag,
       thumbnail: thumbnailImg || imgList[0],
       imgUrlList: imgList,
-      username
+      username,
     };
 
     try {
@@ -62,7 +62,7 @@ const Post = () => {
   const onUploadImage = async (blob, callback) => {
     try {
       const formData = new FormData();
-      formData.append('file', blob);
+      formData.append("file", blob);
       const url = await sulmoggoApi.img(formData);
       console.log(url.data[0].url);
       callback(url.data[0].url, "alt text");
@@ -79,19 +79,12 @@ const Post = () => {
     console.log(editorRef.current?.getInstance().getHTML());
     console.log("이미지리스트확인", imgList);
     SetContent(editorRef.current?.getInstance().getHTML());
-    if(imgList.length > 1){
-    const firstImageUrl = editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g)[0]
-    const idx = imgList.indexOf(firstImageUrl)
-    SetThumbnail(idx)
-    }
-    console.log(editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g)[0]);
-    console.log(thumbnailImg);
   };
 
   // 최초 이미지 업로드 및 대표 이미지 선택시 썸네일 지정
-  useEffect(() => {
-    SetThumbnailImg(imgList[thumbnail]);
-  }, [imgList, thumbnail]);
+  // useEffect(() => {
+  //   SetThumbnailImg(imgList[thumbnail]);
+  // }, [imgList, thumbnail]);
 
   return (
     <Wrap>
@@ -185,7 +178,8 @@ const Post = () => {
         <Image>
           <div>사진 업로드</div>
           <div className="pre_image">
-            업로드한 이미지를 클릭 시 대표이미지로 설정이 가능합니다.
+            업로드한 이미지를 <span style={{ color: "red" }}>클릭</span> 시
+            대표이미지로 설정이 가능합니다.
           </div>
           <div className="upload">
             {imgList.map((v, i) => {
@@ -230,7 +224,9 @@ const Post = () => {
         </Tag>
         <Button>
           <div>
-            <WhiteButton className="whitebutton">취소하기</WhiteButton>
+            <Link to="/tables">
+              <WhiteButton className="whitebutton">취소하기</WhiteButton>
+            </Link>
             <button className="bluebutton">작성완료</button>
           </div>
         </Button>

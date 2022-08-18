@@ -28,6 +28,11 @@ const sulmoggoApi = {
   getUser: () => api.get("/mypage"),
   putUser: (data) => api.put("/mypage", data),
   getDetail: () => api.get("/tables/01"),
+  resetPassword: (user) => api.put("/resetPw", user),
+  postReply: (postId, content) => api.post(`/replies/${postId}`, content),
+  getReplies: (postId) => api.get(`/replies/${postId}`),
+  deleteReply: (replyId) => api.delete(`/replies/${replyId}`),
+  updateReply: (replyId, content) => api.put(`/replies/${replyId}`, content)
 };
 
 export default sulmoggoApi;

@@ -13,6 +13,7 @@ import Bookmark from "./components/mypage/Bookmark";
 import Friends from "./components/mypage/Friends";
 import Mypost from "./components/mypage/Mypost";
 import NewLive from "./pages/newlive";
+import ResetPassword from "./pages/resetpassword";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/Auth"));
@@ -24,13 +25,14 @@ const LoginRending = React.lazy(() => import("./pages/loginrending"));
 const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 const ProfileEdit = React.lazy(() => import("./pages/profileedit"));
 const Detail = React.lazy(() => import("./pages/detail"));
+const Comment = React.lazy(() => import("./components/comment"))
 
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
   const refreshLogin = useCallback(() => {
     if (localStorage.getItem("token")) {
-      // 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
+      // TODO: 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
       dispatch(userActions.userLogin());
     }
   }, [dispatch]);
@@ -55,6 +57,8 @@ function App() {
             <Route path="/profile" element={<ProfileEdit />} />
             <Route path="/detail" element={<Detail />} />
             <Route path="/live/new" element={<NewLive />} />
+            <Route path="/resetPassword" element={<ResetPassword />}/>
+            <Route path="/comment" element={<Comment />}/>
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />
               <Route path="/mypage/mypost" element={<Mypost />} />

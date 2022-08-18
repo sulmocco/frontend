@@ -29,7 +29,7 @@ const ProfileEdit = () => {
     }
 
     // 로딩스피너 적용
-    if (status == 'loading') {
+    if (status === 'loading') {
         return (<Spinner />)
     }
     return (

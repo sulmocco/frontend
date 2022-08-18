@@ -2,8 +2,7 @@ import React from "react";
 
 const Auth = () => {
   const AuthBbaton = () => {
-    window.location.href =
-      "https://bauth.bbaton.com/oauth/authorize?client_id=JDJhJDA0JDMwN05RYjlwMG54UjJFOGZ2Z2JtQmVNRGJPcDFEWHY0UndMUGpu&redirect_uri=http://localhost:3000/oauth2/redirect&response_type=code&scope=read_profile";
+    window.location.href = process.env.REACT_APP_AUTH;
   };
 
   return (

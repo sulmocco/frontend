@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
@@ -38,7 +37,7 @@ const Post = () => {
     };
 
     try {
-      const res = await axios.post(`http://localhost:5001/tables`, newData);
+      const res = await sulmoggoApi.tables(newData);
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -182,7 +181,7 @@ const Post = () => {
                       className="Img"
                       onClick={(e) => {
                         SetThumbnail(i);
-                        // SetThumbnailImg(v);
+                        SetThumbnailImg(v);
                         console.log("썸네일 이미지 설정");
                       }}
                     >

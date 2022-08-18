@@ -24,7 +24,8 @@ const sulmoggoApi = {
   live: () => api.get("/room/main"),
   today: () => api.get("/tables/main"),
   getTables: (params) => api.get("/tables", { params }),
-  img: () => api.post("/images"), // 술상 추천 게시글 작성 mock api
+  img: () => api.post("/images"), // 술상 추천 게시글 작성 이미지 가로채기
+  tables: (newData) => api.post("/tables", newData),
   getUser: () => api.get("/mypage"),
   putUser: (data) => api.put("/mypage", data),
   getDetail: () => api.get("/tables/01"),
@@ -32,7 +33,7 @@ const sulmoggoApi = {
   postReply: (postId, content) => api.post(`/replies/${postId}`, content),
   getReplies: (postId) => api.get(`/replies/${postId}`),
   deleteReply: (replyId) => api.delete(`/replies/${replyId}`),
-  updateReply: (replyId, content) => api.put(`/replies/${replyId}`, content)
+  updateReply: (replyId, content) => api.put(`/replies/${replyId}`, content),
 };
 
 export default sulmoggoApi;

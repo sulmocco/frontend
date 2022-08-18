@@ -24,10 +24,12 @@ const sulmoggoApi = {
   live: () => api.get("/room/main"),
   today: () => api.get("/tables/main"),
   getTables: (params) => api.get("/tables", { params }),
+
+  img: () => api.post("/images"), // 술상 추천 게시글 작성 이미지 가로채기
+  tables: (newData) => api.post("/tables", newData),
   deletePost: (tableId) => api.delete(`tables/${tableId}`),
   like: (tableId, data) => api.post(`tables/${tableId}/like`, data),
   bookmark: (tableId, data) => api.post(`tables/${tableId}/bookmark`, data),
-  img: () => api.post("/images"), // 술상 추천 게시글 작성 mock api
   getUser: () => api.get("/mypage"),
   putUser: (data) => api.put("/mypage", data),
   getDetail: (tableId) => api.get(`/tables/${tableId}`),

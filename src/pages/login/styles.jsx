@@ -12,12 +12,12 @@ export const LoginWrap = styled.div`
 
 export const LoginSection = styled.div`
     background-color: #fff;
-    width: 712px;
-    height: 581px;
-    padding: 88px 156px;
+    padding: 8.8rem 15.5rem;
     border-radius: 1rem;
-    h1 {
-        text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    img{
         margin-bottom: 6.4rem;
     }
     form {
@@ -31,9 +31,12 @@ export const LoginSection = styled.div`
             border-radius: 1rem;
             padding: 1.8rem;
             font-size: 1.6rem;
+            width: 100%;
+            min-width: 40rem;
         }
     }
     p {
+        width: 100%;
         text-align: right;
         color: #7a7a80;
         font-size: 1.6rem;

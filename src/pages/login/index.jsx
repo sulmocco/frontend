@@ -18,7 +18,7 @@ const Login = () => {
             .then(res => {
                 console.log(res.data);
                 // 로그인 정보 리덕스에 저장 후 메인페이지로 이동
-                dispatch(userActions.userLogin({...res.data, token: res.headers.authorization}))
+                dispatch(userActions.userLogin({ ...res.data, token: res.headers.authorization }))
                 navigate("/")
             }).catch(err => {
                 alert(err.data)
@@ -27,7 +27,7 @@ const Login = () => {
     return (
         <LoginWrap>
             <LoginSection>
-                <h1>술모꼬</h1>
+                <img src='/images/icon_login_logo.svg' alt='로고' />
                 <form action="">
                     <input type='text' placeholder='아이디' ref={id_ref} />
                     <input type='password' placeholder='비밀번호' ref={pw_ref} />

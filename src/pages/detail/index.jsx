@@ -6,19 +6,20 @@ import { DetailCont, DetailHeader, DetailWrap, Icon } from './styles';
 import Spinner from '../../components/spinner';
 import Comment from '../../components/comment';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Viewer } from '@toast-ui/react-editor';
+import { useState } from 'react';
 
 const Detail = () => {
+    const user = localStorage.getItem('username');
     const { tableId } = useParams();
-    const { data, status } = useQuery(['table'], async() => await sulmoggoApi.getDetail(tableId).then(res => res.data), {
-        onSuccess: (data) => {
-            console.log(data);
-        }
-    });
+    const { data, status } = useQuery(['table'], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data));
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-    const deleteMutation = useMutation(async(tableId) => await sulmoggoApi.deletePost(tableId), {
+
+    //게시글 삭제
+    const deleteMutation = useMutation(async (tableId) => await sulmoggoApi.deletePost(tableId), {
         onSuccess: () => {
-            alert('삭제성공');
+            alert('술상이 엎어졌습니다');
             navigate(`/tables`);
         },
         onError: (error) => {
@@ -26,50 +27,50 @@ const Detail = () => {
         }
     });
     //북마크
-    const postBookmarkMutation = useMutation(async () => await sulmoggoApi.postBookmark(tableId, {
+    const postBookmarkMutation = useMutation(async () => await sulmoggoApi.postBookmark(tableId), {
         onSuccess: () => {
-            queryClient.invalidateQueries('table');
+            queryClient.refetchQueries('table');
+        },
+        onError: (error) => {
+            console.error(error);
+        }
+    });
+    const deleteBookmarkMutation = useMutation(async () => await sulmoggoApi.deleteBookmark(tableId), {
+        onSuccess: () => {
+            queryClient.refetchQueries('table');
         },
         onError: (error) => {
             console.log(error)
         }
-    }));
-    const deleteBookmarkMutation = useMutation(async() => await sulmoggoApi.deleteBookmark(tableId, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('table');
-        },
-        onError: (error) => {
-            console.log(error)
-        }
-    }));
+    });
     const handleBookmark = () => {
-        if(data.bookmark){
-            deleteBookmarkMutation.mutate(tableId)
-        }else{
-            postBookmarkMutation.mutate(tableId)
+        if (data.bookmark) {
+            deleteBookmarkMutation.mutate();
+        } else {
+            postBookmarkMutation.mutate();
         }
     }
     //좋아요
-    const postLikeMutation = useMutation(async () => await sulmoggoApi.postLike(tableId, {
+    const postLikeMutation = useMutation(async () => await sulmoggoApi.postLike(tableId), {
         onSuccess: () => {
             queryClient.invalidateQueries('table');
         },
         onError: (error) => {
             console.log(error)
         }
-    }));
-    const deleteLikeMutation = useMutation(async () => await sulmoggoApi.deleteLike(tableId, {
+    });
+    const deleteLikeMutation = useMutation(async () => await sulmoggoApi.deleteLike(tableId), {
         onSuccess: () => {
             queryClient.invalidateQueries('table');
         },
         onError: (error) => {
             console.log(error)
         }
-    }));
+    });
     const handleLike = () => {
-        if(data.bookmark){
+        if (data.like) {
             deleteLikeMutation.mutate(tableId)
-        }else{
+        } else {
             postLikeMutation.mutate(tableId)
         }
     }
@@ -88,7 +89,7 @@ const Detail = () => {
                     )}
                 </section>
                 <section className='user'>
-                    <img src={data.profileimgurl} alt='프로필 이미지' />
+                    <img src={data?.profileimgurl || '/images/profile_default.svg'} alt='프로필 이미지' />
                     <div className='desc'>
                         <p className='user-name'>{data.username}</p>
                         <div className='tag'>
@@ -101,15 +102,19 @@ const Detail = () => {
             <DetailCont>
                 <section className='header'>
                     <p>{data.createAt}</p>
-                    <span className='edit'>
-                        <p onClick={() => navigate(`/post/${tableId}`)}>수정</p>
-                        <p onClick={() => {
-                            deleteMutation.mutate(tableId)
-                        }}>삭제</p>
-                    </span>
+                    {data.username == user && (
+                        <span className='edit'>
+                            <p onClick={() => navigate(`/post/${tableId}`)}>수정</p>
+                            <p onClick={() => {
+                                if (window.confirm('정말로 술상을 엎으시겠습니까?'))
+                                    deleteMutation.mutate(tableId)
+                            }}>삭제</p>
+                        </span>
+                    )}
                 </section>
                 <section className='main'>
-                    <p>{data.content}</p>
+                    <Viewer initialValue={data.content} />
+                    {/* {data.content} */}
                 </section>
                 <section className='footer'>
                     <Icon like={data?.like} onClick={handleLike}>

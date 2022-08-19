@@ -16,6 +16,8 @@ const Terms = () => {
         setCheck2(!fullCheck)
         setCheck3(!fullCheck)
     }
+    
+    const allCheck = check1 && check2 && check3
 
     const { register, watch } = useForm();
     const selectAll = watch('selectAll');
@@ -73,6 +75,16 @@ const Terms = () => {
                             <p>개인정보 수집 및 이용 동의 (필수)</p>
                         </li>
                         <li className='selectAll'>
+                          {allCheck ?   <>
+                            <input type='checkbox' id='selectAll' value='all' checked='true'
+                                onClick={() => {
+                                    setAll()
+                                }}
+                                {...register('selectAll')}
+                            />
+                            <label htmlFor='selectAll'></label>
+                            <p>약관 전체 동의</p>
+                            </> :   <>
                             <input type='checkbox' id='selectAll' value='all' checked={fullCheck}
                                 onClick={() => {
                                     setAll()
@@ -81,6 +93,8 @@ const Terms = () => {
                             />
                             <label htmlFor='selectAll'></label>
                             <p>약관 전체 동의</p>
+                            </>}
+                     
                         </li>
                     </ul>
                     <div className='desc'>

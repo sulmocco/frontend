@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../redux/userSlice";
 
 const Header = ({ location }) => {
   const Token = localStorage.getItem("token");
+  const dispatch = useDispatch()
   return (
     <Wrap>
       <Navbar>
@@ -40,8 +43,7 @@ const Header = ({ location }) => {
               <li>
                 <div
                   onClick={() => {
-                    localStorage.removeItem("token");
-                    window.location.replace("/");
+                    dispatch(userActions.userLogout())
                   }}
                 >
                   로그아웃

@@ -103,7 +103,7 @@ const Detail = () => {
             <DetailCont>
                 <section className='header'>
                     <p>{data.createAt}</p>
-                    {data.username == user && (
+                    {data.username === user && (
                         <span className='edit'>
                             <p onClick={() => navigate(`/post/${tableId}`)}>수정</p>
                             <p onClick={() => {

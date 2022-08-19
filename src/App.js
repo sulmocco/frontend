@@ -16,7 +16,7 @@ import NewLive from "./pages/newlive";
 import ResetPassword from "./pages/resetpassword";
 
 const Home = React.lazy(() => import("./pages/Home"));
-const Auth = React.lazy(() => import("./pages/Auth"));
+const Auth = React.lazy(() => import("./pages/auth"));
 const SignUp = React.lazy(() => import("./pages/signup"));
 const Login = React.lazy(() => import("./pages/login"));
 const Terms = React.lazy(() => import("./pages/terms"));
@@ -33,7 +33,12 @@ function App() {
   const refreshLogin = useCallback(() => {
     if (localStorage.getItem("token")) {
       // TODO: 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
-      dispatch(userActions.userLogin({username: localStorage.getItem("username"),token: localStorage.getItem("token")}));
+      dispatch(
+        userActions.userLogin({
+          username: localStorage.getItem("username"),
+          token: localStorage.getItem("token"),
+        })
+      );
     }
   }, [dispatch]);
   useEffect(() => {

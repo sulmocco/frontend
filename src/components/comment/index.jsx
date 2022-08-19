@@ -125,7 +125,7 @@ const Comment = ({ postId }) => {
             )}
             <div className="createdAt">
               <img src="/images/icon_clock.svg" alt="시계"/>
-              <p>{x.createdAt}</p>
+              <p>{new Date(x.createdAt).toLocaleString()}</p>
             </div>
           </CommentOne>
         ))}

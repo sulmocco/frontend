@@ -16,13 +16,11 @@ const Terms = () => {
         setCheck2(!fullCheck)
         setCheck3(!fullCheck)
     }
-    
+
     const allCheck = check1 && check2 && check3
 
-    const { register, watch } = useForm();
-    const selectAll = watch('selectAll');
+    const { register } = useForm();
     const navigate = useNavigate();
-    console.log(selectAll)
     return (
         <TermsWrap>
             <Termsection>
@@ -75,26 +73,26 @@ const Terms = () => {
                             <p>개인정보 수집 및 이용 동의 (필수)</p>
                         </li>
                         <li className='selectAll'>
-                          {allCheck ?   <>
-                            <input type='checkbox' id='selectAll' value='all' checked='true'
-                                onClick={() => {
-                                    setAll()
-                                }}
-                                {...register('selectAll')}
-                            />
-                            <label htmlFor='selectAll'></label>
-                            <p>약관 전체 동의</p>
-                            </> :   <>
-                            <input type='checkbox' id='selectAll' value='all' checked={fullCheck}
-                                onClick={() => {
-                                    setAll()
-                                }}
-                                {...register('selectAll')}
-                            />
-                            <label htmlFor='selectAll'></label>
-                            <p>약관 전체 동의</p>
+                            {allCheck ? <>
+                                <input type='checkbox' id='selectAll' value='all' checked='true'
+                                    onClick={() => {
+                                        setAll()
+                                    }}
+                                    {...register('selectAll')}
+                                />
+                                <label htmlFor='selectAll'></label>
+                                <p>약관 전체 동의</p>
+                            </> : <>
+                                <input type='checkbox' id='selectAll' value='all' checked={fullCheck}
+                                    onClick={() => {
+                                        setAll()
+                                    }}
+                                    {...register('selectAll')}
+                                />
+                                <label htmlFor='selectAll'></label>
+                                <p>약관 전체 동의</p>
                             </>}
-                     
+
                         </li>
                     </ul>
                     <div className='desc'>
@@ -102,7 +100,7 @@ const Terms = () => {
                     </div>
                     <div className="button">
                         <SignUpButton mt='4.5rem' type='submit' background='#d6d6d6' color='black'
-                            disabled={!selectAll}
+                            disabled={!allCheck}
                             onClick={() => navigate('/auth')}
                         >동의하고 다음</SignUpButton>
                     </div>

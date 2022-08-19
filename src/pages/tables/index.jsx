@@ -44,18 +44,18 @@ const Tables = (props) => {
 
   const getTables = useCallback(
     async (pageParam) => {
-      const newQuery = 
-        {
-          keyword,
-          alcohol: String(alcohol),
-          sortBy,
-          page: pageParam,
-          size: 9,
-          isAsc: true,
-        }
-      if(keyword || alcohol === "전체") delete newQuery.alcohol
+      const newQuery =
+      {
+        keyword,
+        alcohol: String(alcohol),
+        sortBy,
+        page: pageParam,
+        size: 9,
+        isAsc: true,
+      }
+      if (keyword || alcohol === "전체") delete newQuery.alcohol
       else delete newQuery.keyword
-      
+
       console.log(newQuery);
       const res = await sulmoggoApi.getTables(newQuery);
       setTotal(res.data.total);
@@ -225,14 +225,14 @@ const Tables = (props) => {
                 );
             });
           })}
-          {console.log(data.pages)}
-          {!total && <NoList>작성된 술상추천이 없습니다.</NoList>}
+        {console.log(data.pages)}
+        {!total && <NoList>작성된 술상추천이 없습니다.</NoList>}
       </TablesGrid>
       <WriteButton to="/post">
         <div className="absolute">
-        <div className="fixed">
-          <img src="/images/icon_write.svg" alt="작성" />
-        </div>
+          <div className="fixed">
+            <img src="/images/icon_write.svg" alt="작성" />
+          </div>
         </div>
       </WriteButton>
     </TablesWrapper>

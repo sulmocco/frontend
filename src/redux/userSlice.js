@@ -20,6 +20,7 @@ const userSlice = createSlice({
       state.username = "";
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      window.location.href = "/"
     },
   },
   extraReducers: {},

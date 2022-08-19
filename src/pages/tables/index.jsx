@@ -213,16 +213,16 @@ const Tables = (props) => {
       </SearchBoxWrapper>
       <TablesGrid>
         {isSuccess &&
-          data.pages.map((page) => {
+          data.pages.map((page, pageidx) => {
             const content = page.data.content;
             return content?.map((table, idx) => {
-              if (idx !== content.length - 1) return <TableCard {...table} />;
+              if (idx === content.length - 1 && pageidx === data.pages.length - 1) return (
+                <div ref={lastTableRef}>
+                  <TableCard {...table} />
+                </div>
+              )
               else
-                return (
-                  <div ref={lastTableRef}>
-                    <TableCard {...table} />
-                  </div>
-                );
+                return <TableCard {...table} />;
             });
           })}
         {console.log(data.pages)}

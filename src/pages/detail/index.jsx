@@ -7,12 +7,19 @@ import Spinner from '../../components/spinner';
 import Comment from '../../components/comment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
-import { useState } from 'react';
 
 const Detail = () => {
     const user = localStorage.getItem('username');
     const { tableId } = useParams();
-    const { data, status } = useQuery(['table'], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data));
+    const { data, status } = useQuery(['table'], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data), {
+        staleTime: 0,
+        cacheTime: 0,
+        refetchOnMount: 'always',
+        refetchOnReconnect: true,
+        refetchInterval: true,
+        refetchIntervalInBackground: true,
+        refetchInterval: 0,
+    });
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 

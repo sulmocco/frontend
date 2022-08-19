@@ -4,20 +4,20 @@ export const RecommendWrap = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 11.4rem 0;
+
     h2 {
-        font-size: 3.2rem;
+        font-size: 3.4rem;
         font-weight: 700;
-        margin-bottom: 4rem;
         text-align: center;
-        width: 128rem;
+        margin-bottom: 5.6rem;
     }
     .recommendsection {
         display: flex;
         flex-wrap: wrap;
-        gap: 3.2rem;
+        gap: 4.8rem 3.2rem;
         width: 128rem;
     }
-    margin: 11.4rem 0;
 `
 export const RecommendItem = styled.li`
     margin-bottom: 2.4rem;

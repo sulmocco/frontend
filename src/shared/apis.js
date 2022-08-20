@@ -25,11 +25,12 @@ const sulmoggoApi = {
   live: () => api.get("/room/main"),
   today: () => api.get("/tables/main"),
   getTables: (params) => api.get("/tables", { params }),
-  img: (formData) => api.post("/images", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  }), // 술상 추천 게시글 작성 이미지 가로채기
+  img: (formData) =>
+    api.post("/images", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }), // 술상 추천 게시글 작성 이미지 가로채기
   tables: (newData) => api.post("/tables", newData),
   deletePost: (tableId) => api.delete(`tables/${tableId}`),
   postLike: (tableId) => api.post(`tables/${tableId}/like`),
@@ -37,6 +38,8 @@ const sulmoggoApi = {
   postBookmark: (tableId) => api.post(`tables/${tableId}/bookmark`),
   deleteBookmark: (tableId) => api.delete(`tables/${tableId}/bookmark`),
   getUser: () => api.get("/mypage"),
+  getMyPost: (pageParam) =>
+    api.get(`/mypage/tables?page=${pageParam}&size=${9}`),
   putUser: (data) => api.put("/mypage", data),
   getDetail: (tableId) => api.get(`/tables/${tableId}`),
   resetPassword: (user) => api.put("/resetPw", user),

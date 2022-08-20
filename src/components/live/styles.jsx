@@ -8,7 +8,7 @@ export const Wrap = styled.div`
 export const LiveWrap = styled.div`
   position: relative;
   width: 1280px;
-
+  text-align: center;
   margin: 0 auto; 
 `;
 

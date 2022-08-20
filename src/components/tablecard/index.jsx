@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const TableCard = (props) => {
     const {tableId, thumbnail, title, username, likecount, viewcount, alcoholtag, freetag, profileimgurl} = props
-    console.log(props);
+    // console.log(props);
   return (
     <Link to={`/tables/${tableId}`}>
     <CardWrapper>

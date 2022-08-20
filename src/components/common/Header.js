@@ -1,30 +1,76 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../redux/userSlice";
 
-const Header = () => {
+const Header = ({ location }) => {
+  const Token = localStorage.getItem("token");
+  const dispatch = useDispatch()
   return (
     <Wrap>
       <Navbar>
         <NavLeft>
           <ul>
             <li>
-              <Link to="/">술모꼬</Link>
+              <NavLink
+                to="/"
+                active={location?.pathname.startsWith("/asd") || ""}
+              >
+                <img src="/images/logo.svg" alt="술모꼬 로고" />
+              </NavLink>
             </li>
             <li>술약속</li>
-            <li><Link to="/tables">술상추천</Link></li>
+            <li>
+              <NavLink
+                to="/tables"
+                active={location?.pathname.startsWith("/tables") || ""}
+              >
+                술상추천
+              </NavLink>
+            </li>
           </ul>
         </NavLeft>
-        <NavRight>
-          <ul>
-            <li>
-              <Link to="/login">로그인</Link>
-            </li>
-            <li>
-              <Link to="/terms">회원가입</Link>
-            </li>
-          </ul>
-        </NavRight>
+        {Token ? (
+          <NavRight>
+            <ul>
+              <li>
+                <NavLive to="/live/new">방송하기</NavLive>
+              </li>
+              <li>
+                <NavLink to="/mypage">마이페이지</NavLink>
+              </li>
+              <li>
+                <div
+                  onClick={() => {
+                    dispatch(userActions.userLogout())
+                  }}
+                >
+                  로그아웃
+                </div>
+              </li>
+            </ul>
+          </NavRight>
+        ) : (
+          <NavRight>
+            <ul>
+              <li>
+                <NavLive to="/live/new">방송하기</NavLive>
+              </li>
+              <li>
+                <NavLink
+                  to="/login"
+                  active={location?.pathname.startsWith("/login") || ""}
+                >
+                  로그인
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/terms">회원가입</NavLink>
+              </li>
+            </ul>
+          </NavRight>
+        )}
       </Navbar>
     </Wrap>
   );
@@ -43,13 +89,8 @@ const Wrap = styled.div`
   background-color: ${(props) => props.theme.white};
   box-shadow: ${(props) => props.theme.shadow_gray};
   font-weight: 500;
-  a {
-    &:link,
-    &:visited,
-    &:hover,
-    &:active {
-      color: ${(props) => props.theme.black};
-    }
+  img {
+    width: 14.403rem;
   }
 `;
 
@@ -67,18 +108,40 @@ const NavLeft = styled.div`
   margin-right: auto;
   ul {
     display: flex;
-    font-size: 16px;
-    gap: 48px;
+    align-items: center;
+    font-size: 2rem;
+    gap: 8rem;
   }
+`;
+
+const NavLink = styled(Link)`
+  color: ${(props) =>
+    props.active ? props.theme.primary : props.theme.black} !important;
 `;
 
 const NavRight = styled.div`
   display: flex;
   align-items: center;
-  margin-left: auto;
+  /* margin-left: auto; */
   ul {
     display: flex;
-    font-size: 16px;
-    gap: 48px;
+    align-items: center;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    gap: 2.2rem;
+    letter-spacing: -0.04em;
+
+    li div {
+      cursor: pointer;
+    }
   }
+`;
+
+const NavLive = styled(Link)`
+  padding: 0.4rem 1.2rem;
+  background-color: ${(props) => props.theme.bg_light_blue};
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+  border-radius: 0.4rem;
+  color: ${(props) => props.theme.primary} !important;
 `;

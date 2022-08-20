@@ -5,9 +5,19 @@ const Footer = () => {
   return (
     <Wrap>
       <Container>
-        <div>SULMOGGO</div>
-        <p>항해99 X 동북ICT 이노베이션캠프</p>
-        <p>Copyrightⓒ.2022.실전프로젝트4조.All Rights Reserved.</p>
+        <div>
+          <img src="/images/logo_gray.svg" alt="술모꼬 로고" />
+        </div>
+        <div>
+          <div className="upper">
+            <p>이용약관</p>
+            <FooterSeparator />
+            <p>개인정보처리방침</p>
+          </div>
+          <p className="copyright">
+            Copyright ⓒ 2022 술모꼬 All Right Reserved.
+          </p>
+        </div>
       </Container>
     </Wrap>
   );
@@ -18,20 +28,49 @@ export default Footer;
 const Wrap = styled.div`
   border-top: 1px solid #e1e1e1;
   background-color: #4e4e56;
+  height: 17.6rem;
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 0;
-
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  img {
+    width: 20.503rem;
+  }
   div {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
   }
-  p {
-    color: #b5b5b5;
-    margin: 5px 0;
-    font-size: 14px;
+  .upper {
+    color: ${(props) => props.theme.white};
+    font-size: 1.4rem;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    align-items: center;
   }
+  .copyright {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: ${(props) => props.theme.grey_03};
+  }
+`;
+
+const FooterSeparator = styled.div`
+  display: inline-block;
+  width: 0.1rem;
+  height: 1.2rem;
+  background-color: ${(props) => props.theme.grey_04};
 `;

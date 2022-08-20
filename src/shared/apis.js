@@ -10,8 +10,9 @@ const api = axios.create({
 
 api.interceptors.request.use(function (config) {
   const accessToken = localStorage.getItem("token"); // localStorage에 TOKEN 저장
+  console.log(accessToken);
   if (accessToken) {
-    config.headers.common["Authorization"] = `${accessToken}`;
+    config.headers.common.authorization = accessToken;
   } // Header에 토큰을 넣어서 보내준다.
   return config;
 });
@@ -37,6 +38,8 @@ const sulmoggoApi = {
   postBookmark: (tableId) => api.post(`tables/${tableId}/bookmark`),
   deleteBookmark: (tableId) => api.delete(`tables/${tableId}/bookmark`),
   getUser: () => api.get("/mypage"),
+  getMyPost: (pageParam) =>
+    api.get(`/mypage/tables?page=${pageParam}&size=${9}`),
   putUser: (data) => api.put("/mypage", data),
   getDetail: (tableId) => api.get(`/tables/${tableId}`),
   resetPassword: (user) => api.put("/resetPw", user),

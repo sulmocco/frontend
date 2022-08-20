@@ -6,7 +6,6 @@ import sulmoggoApi from '../../shared/apis';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const Login = () => {
     const id_ref = useRef();
@@ -17,8 +16,9 @@ const Login = () => {
         console.log(id_ref.current.value, pw_ref.current.value);
         await sulmoggoApi.login({ id: id_ref.current.value, password: pw_ref.current.value })
             .then(res => {
+                console.log(res.data);
                 // 로그인 정보 리덕스에 저장 후 메인페이지로 이동
-                dispatch(userActions.userLogin(res.data))
+                dispatch(userActions.userLogin({ ...res.data, token: res.headers.authorization }))
                 navigate("/")
             }).catch(err => {
                 alert(err.data)
@@ -27,13 +27,13 @@ const Login = () => {
     return (
         <LoginWrap>
             <LoginSection>
-                <h1>술모꼬</h1>
+                <img src='/images/icon_login_logo.svg' alt='로고' />
                 <form action="">
-                    <input type='text' placeholder='핸드폰 번호' ref={id_ref} />
+                    <input type='text' placeholder='아이디' ref={id_ref} />
                     <input type='password' placeholder='비밀번호' ref={pw_ref} />
                 </form>
-                <p>비밀번호 찾기</p>
-                <SignUpButton style={{ marginTop: "6.4rem" }} onClick={handleLogin}>로그인</SignUpButton>
+                <p onClick={() => navigate("/resetPassword")}>비밀번호 찾기</p>
+                <SignUpButton style={{ marginTop: "6.4rem" }} onClick={handleLogin} onKeyPress={(e) => e.key == 'Enter' && handleLogin()}>로그인</SignUpButton>
             </LoginSection>
         </LoginWrap>
     );

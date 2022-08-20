@@ -11,17 +11,21 @@ const Layout = () => {
     location.pathname.startsWith("/login") ||
     location.pathname.startsWith("/loginrending") ||
     location.pathname.startsWith("/terms") ||
+    location.pathname.startsWith("/auth") ||
+    location.pathname.startsWith("/resetPassword") ||
+    location.pathname.startsWith("/mypage") ||
     location.pathname === "/";
-  const grayBg = location.pathname.startsWith("/tables")
+  const grayBg =
+    location.pathname === "/tables" || location.pathname.startsWith("/tables?");
 
   console.log(isShow);
   return (
     <>
-      <Header />
+      <Header location={location} />
       <Background bg={grayBg}>
-      <Main show={isShow} loc={location.pathname}>
-        <Outlet />
-      </Main>
+        <Main show={isShow} loc={location.pathname}>
+          <Outlet />
+        </Main>
       </Background>
       <Footer />
     </>
@@ -33,8 +37,9 @@ export default Layout;
 const Background = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${props => props.bg ? props.theme.bg_light_gray : "transparent"};
-`
+  background-color: ${(props) =>
+    props.bg ? props.theme.bg_light_gray : "transparent"};
+`;
 
 const Main = styled.main`
   max-width: ${(props) => (props.show ? "100%" : "1290px")};

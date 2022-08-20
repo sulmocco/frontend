@@ -15,6 +15,7 @@ export const Container = styled.div`
   /* background-color: antiquewhite; */
   width: 100%;
   max-width: 128rem;
+  text-align: center;
   h2 {
     /* padding-top: 6.4rem; */
     font-size: 3.2rem;

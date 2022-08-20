@@ -8,8 +8,6 @@ import Spinner from "./components/spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "./redux/userSlice";
 import Post from "./pages/post";
-<<<<<<< Updated upstream
-=======
 import Mypage from "./pages/mypage";
 import Bookmark from "./components/mypage/Bookmark";
 import Friends from "./components/mypage/Friends";
@@ -17,24 +15,31 @@ import Mypost from "./components/mypage/Mypost";
 import NewLive from "./pages/newlive";
 import ResetPassword from "./pages/resetpassword";
 import Chat from "./pages/chat";
->>>>>>> Stashed changes
 
 const Home = React.lazy(() => import("./pages/Home"));
-const Auth = React.lazy(() => import("./pages/Auth"));
+const Auth = React.lazy(() => import("./pages/auth"));
 const SignUp = React.lazy(() => import("./pages/signup"));
 const Login = React.lazy(() => import("./pages/login"));
 const Terms = React.lazy(() => import("./pages/terms"));
-const Tables = React.lazy(() => import("./pages/tables"))
+const Tables = React.lazy(() => import("./pages/tables"));
 const LoginRending = React.lazy(() => import("./pages/loginrending"));
 const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
+const ProfileEdit = React.lazy(() => import("./pages/profileedit"));
+const Detail = React.lazy(() => import("./pages/detail"));
+const Comment = React.lazy(() => import("./components/comment"));
 
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
   const refreshLogin = useCallback(() => {
     if (localStorage.getItem("token")) {
-      // 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
-      dispatch(userActions.userLogin());
+      // TODO: 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
+      dispatch(
+        userActions.userLogin({
+          username: localStorage.getItem("username"),
+          token: localStorage.getItem("token"),
+        })
+      );
     }
   }, [dispatch]);
   useEffect(() => {
@@ -53,10 +58,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/post" element={<Post />} />
+            <Route path="/post/:tableId" element={<Post />} />
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
-<<<<<<< Updated upstream
-=======
             <Route path="/tables/:tableId" element={<Detail />} />
             <Route path="/profile" element={<ProfileEdit />} />
             <Route path="/live/new" element={<NewLive />} />
@@ -68,7 +72,6 @@ function App() {
               <Route path="/mypage/mypost" element={<Mypost />} />
               <Route path="/mypage/friends" element={<Friends />} />
             </Route>
->>>>>>> Stashed changes
           </Route>
         </Routes>
       </ThemeProvider>

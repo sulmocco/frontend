@@ -33,7 +33,7 @@ const Login = () => {
                     <input type='password' placeholder='비밀번호' ref={pw_ref} />
                 </form>
                 <p onClick={() => navigate("/resetPassword")}>비밀번호 찾기</p>
-                <SignUpButton style={{ marginTop: "6.4rem" }} onClick={handleLogin}>로그인</SignUpButton>
+                <SignUpButton style={{ marginTop: "6.4rem" }} onClick={handleLogin} onKeyPress={(e) => e.key == 'Enter' && handleLogin()}>로그인</SignUpButton>
             </LoginSection>
         </LoginWrap>
     );

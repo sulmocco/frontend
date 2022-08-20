@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
 
@@ -10,8 +10,11 @@ import { useRef } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { useSelector } from "react-redux";
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 const Post = () => {
+  const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주"];
   const [tagList, setTagList] = useState("맥주");
   const [tagColor, setTagColor] = useState(0);
   const [imgList, SetImgList] = useState([]);
@@ -21,11 +24,22 @@ const Post = () => {
   const navigate = useNavigate();
   const editorRef = useRef();
   const username = useSelector((state) => state.user.username);
+  const { tableId } = useParams();
+  const [isEdit, setEdit] = useState(false);
+  const { data } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data));
+  console.log(data);
 
+  useEffect(() => {
+    if (tableId !== undefined) {
+      setEdit(true)
+      setTagList(data?.alcoholtag);
+      setTagColor(tag.findIndex((el) => el == data?.alcoholtag));
+    } else {
+      setEdit(false)
+    }
+  }, []);
   // 태그 선택
   const addTag = (e) => {
-    const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주"];
-    // console.log(tag[e.target.value]);
     setTagColor(e.target.value);
     setTagList(tag[e.target.value]);
   };
@@ -88,13 +102,14 @@ const Post = () => {
 
   return (
     <Wrap>
-      <h2>게시글 작성</h2>
+      {isEdit ? <h2>게시글 수정</h2> : <h2>게시글 작성</h2>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Title>
           <div>제목</div>
           <input
             type="text"
             placeholder="제목을 입력해주세요."
+            defaultValue={isEdit && data?.title || ''}
             autoComplete="off"
             {...register("title", {
               required: true,
@@ -157,6 +172,7 @@ const Post = () => {
           <Editor
             ref={editorRef} // DOM 선택용 useRef
             placeholder="내용을 입력해주세요."
+            initialValue='내용'
             previewStyle="vertical" // 미리보기 스타일 지정
             height="600px" // 에디터 창 높이
             initialEditType="wysiwyg" // 초기 입력모드 설정
@@ -211,6 +227,7 @@ const Post = () => {
           <input
             type="text"
             placeholder="자유태그 입력(한개만 입력 가능, 띄어쓰기 포함 10글자까지)"
+            defaultValue={isEdit && data?.freetag || ''}
             autoComplete="off"
             {...register("freetag", {
               required: "자유태그를 입력해주세요.",

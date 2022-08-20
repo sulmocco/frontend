@@ -57,6 +57,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/post" element={<Post />} />
+            <Route path="/post/:tableId" element={<Post />} />
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
             <Route path="/tables/:tableId" element={<Detail />} />

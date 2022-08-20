@@ -66,49 +66,71 @@ const Mypost = () => {
     }
   }, [inView, fetchNextPage]);
 
-  // console.log("찍어봄", my_table_query);
+  console.log("찍어봄", my_table_query);
 
   if (status === "loading") {
     return <Loading />;
   }
 
   return (
-    <Wrap>
-      <TablesGrid>
-        {my_table_query?.pages.map((page, idx) => {
-          return (
-            <React.Fragment key={idx}>
-              {page.data.map((v, i) => {
+    <>
+      {my_table_query.pages[0].data.length >= 1 ? (
+        <Wrap>
+          <TablesGrid>
+            {my_table_query &&
+              my_table_query.pages.map((page, idx) => {
                 return (
-                  <CardWrapper key={i}>
-                    <CardThumbnail src={v.thumbnail} />
-                    <div className="cardUpperWrap">
-                      <ProfileCircle src={v.profileimgurl} />
-                      <div className="cardTitleWrap">
-                        <div className="tableTitle">{v.title}</div>
-                        <div className="tableUser">{v.username}</div>
-                      </div>
-                    </div>
-                    <div className="counterWrap">
-                      <img src="/images/icon_favorite.svg" alt="heart" />
-                      {v.likecount || 0}
-                      <Separator />
-                      <img src="/images/icon_eye.svg" alt="eye" />
-                      {v.viewcount || 0}
-                    </div>
-                    <div className="tagWrap">
-                      {v.alcoholtag && <AlchholTag>{v.alcoholtag}</AlchholTag>}
-                      {v.freetag && <FreeTag>{v.freetag}</FreeTag>}
-                    </div>
-                  </CardWrapper>
+                  <React.Fragment key={idx}>
+                    {page.data.map((v, i) => {
+                      return (
+                        <CardWrapper key={i}>
+                          <CardThumbnail src={v.thumbnail} />
+                          <div className="cardUpperWrap">
+                            <ProfileCircle src={v.profileimgurl} />
+                            <div className="cardTitleWrap">
+                              <div className="tableTitle">{v.title}</div>
+                              <div className="tableUser">{v.username}</div>
+                            </div>
+                          </div>
+                          <div className="counterWrap">
+                            <img src="/images/icon_favorite.svg" alt="heart" />
+                            {v.likecount || 0}
+                            <Separator />
+                            <img src="/images/icon_eye.svg" alt="eye" />
+                            {v.viewcount || 0}
+                          </div>
+                          <div className="tagWrap">
+                            {v.alcoholtag && (
+                              <AlchholTag>{v.alcoholtag}</AlchholTag>
+                            )}
+                            {v.freetag && <FreeTag>{v.freetag}</FreeTag>}
+                          </div>
+                        </CardWrapper>
+                      );
+                    })}
+                  </React.Fragment>
                 );
               })}
-            </React.Fragment>
-          );
-        })}
-      </TablesGrid>
-      {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
-    </Wrap>
+          </TablesGrid>
+          {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
+        </Wrap>
+      ) : (
+        <Content>
+          <img src="/images/none.png" alt="북마크"></img>
+          <div style={{ fontSize: "28px" }}>작성한 술상 목록이 없습니다!</div>
+          <div
+            style={{
+              color: "#b5b5b5",
+              marginTop: "5px",
+              textAlign: "center",
+              fontSize: "18px",
+            }}
+          >
+            자신만의 술상을 공유해주세요!
+          </div>
+        </Content>
+      )}
+    </>
   );
 };
 

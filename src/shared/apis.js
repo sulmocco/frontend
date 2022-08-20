@@ -23,15 +23,28 @@ const sulmoggoApi = {
   getProducts: () => api.get("/products"),
   live: () => api.get("/room/main"),
   today: () => api.get("/tables/main"),
-  getTables: (params) =>
-    api.get(
-      `/tables?keyword=${params?.keyword}&alcohol=${
-        params?.alcohol
-      }&sort=${params?.sort}&page=${params?.page}&isAsc=${
-        params?.isAsc || true
-      }`
-    ),
-  img: () => api.post("/images"), // 술상 추천 게시글 작성 mock api
+  getTables: (params) => api.get("/tables", { params }),
+  img: (formData) =>
+    api.post("/images", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }), // 술상 추천 게시글 작성 이미지 가로채기
+  tables: (newData) => api.post("/tables", newData),
+  deletePost: (tableId) => api.delete(`tables/${tableId}`),
+  postLike: (tableId) => api.post(`tables/${tableId}/like`),
+  deleteLike: (tableId) => api.delete(`tables/${tableId}/like`),
+  postBookmark: (tableId) => api.post(`tables/${tableId}/bookmark`),
+  deleteBookmark: (tableId) => api.delete(`tables/${tableId}/bookmark`),
+  getUser: () => api.get("/mypage"),
+  putUser: (data) => api.put("/mypage", data),
+  getDetail: (tableId) => api.get(`/tables/${tableId}`),
+  resetPassword: (user) => api.put("/resetPw", user),
+  postReply: (postId, content) => api.post(`/replies/${postId}`, content),
+  getReplies: (postId) => api.get(`/replies/${postId}`),
+  deleteReply: (replyId) => api.delete(`/replies/${replyId}`),
+  updateReply: (replyId, content) => api.put(`/replies/${replyId}`, content),
+  postChatRoom: (data) => api.post(`/chat/room`, data),
 };
 
 export default sulmoggoApi;

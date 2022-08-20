@@ -14,6 +14,7 @@ import Friends from "./components/mypage/Friends";
 import Mypost from "./components/mypage/Mypost";
 import NewLive from "./pages/newlive";
 import ResetPassword from "./pages/resetpassword";
+import Chat from "./pages/chat";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/auth"));
@@ -65,6 +66,7 @@ function App() {
             <Route path="/live/new" element={<NewLive />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/comment" element={<Comment />} />
+            <Route path="/chat/:roomId" element={<Chat />} />
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />
               <Route path="/mypage/mypost" element={<Mypost />} />

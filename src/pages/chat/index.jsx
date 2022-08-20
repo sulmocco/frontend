@@ -1,78 +1,88 @@
-import React, { useRef } from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import Auth from '../Auth';
 import { ChatWrap } from './styles';
 
 const Chat = () => {
     const [message, setMessage] = useState('');
-    const sock = new SockJS('http://localhost:8080/chat'); // 서버주소 수정하기
-    const client = Stomp.over(sock);
+    const [content, setContent] = useState('');
     const chat_ref = useRef();
+    const { roomId } = useParams();
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+
+    // const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/chat`); // 서버주소 수정하기
+    const sock = new SockJS('http://13.209.8.162/ws-stomp'); // 서버주소 수정하기
+    const client = Stomp.over(sock);
+
+    const headers = { Authorization: token };
+
+    // 웹소켓 연결시 stomp에서 자동으로 connect이 되었다는것을 console에 보여주는데 그것을 감추기 위한 debug
+    client.debug = null;
+
+    // 소켓연결
     const socketConnect = () => {
         try {
-            client.debug = null;
-            //웹소켓 연결시 stomp에서 자동으로 connect이 되었다는것을 
-            //console에 보여주는데 그것을 감추기 위한 debug
-
-            client.connect({}, () => {
-                client.subscribe(`서버주소`, (data) => {
-                    const newMessage = Json.parse(data.body);
-
-                    // 데이터 파싱
+            client.connect(headers, () => {
+                client.subscribe(`/sub/chat/room/${roomId}`, (data) => {
+                    const newMessage = JSON.parse(data.body);
+                    setContent(newMessage);
                 });
             });
         }
         catch (error) {
-            console.log(error)
+            console.log('연결실패', error)
         }
     }
-
+    // 소켓연결 해제
     const socketDisConnect = () => {
         try {
-            client.debug = null;
             client.disconnect(() => {
                 client.unsubscribe('sub-0');
             });
         }
         catch (error) {
-            console.log(error);
+            console.log('연결해제 실패', error);
         }
     }
 
-    const SendMessage = () => {
-        client.debug = null;
-        const data = {
-            // 데이터 부분 수정해야함!
-            type: 'TALK',
-            roomId: roomId,
-            sender: sender,
-            message: message
+    // 메세지 보내기
+    const sendMessage = () => {
+        try {
+            client.send(`/pub/chat`, JSON.stringify({
+                type: 'TALK',
+                roomId: roomId,
+                sender: username,
+                message: chat_ref.current.value
+            }));
+            // if (chat_ref === '') {
+            //     return
+            // }
         }
-        // 메세지 보내기
-        client.send(`/pub/chat/${(메세지받을대상)}`, token, JSON.stringify(msg));
+        catch (error) {
+            console.log('메세지 보내기 실패', error)
+        }
+        setMessage('');
     }
 
+    // 메세지 받기
+
+    // roomId가 바뀔때마다 다시 연결
     useEffect(() => {
-        client.connect({}, () => {
-            //접속한 유저 정보 받기
-            console.log('연결 : ' + Auth.user.id);
-            client.send("/app/join", {}, JSON.stringify(auth.user.id))
-        })
-    }, [])
-
+        socketConnect();
+    }, [roomId])
     return (
         <ChatWrap>
             <div className="message-wrap">
-                <span>메세지 내용</span>
+                <span>{content}</span>
             </div>
             <form action="">
                 <input type="text" placeholder='채팅치시오' ref={chat_ref} />
                 <button onClick={(e) => {
                     e.preventDefault();
                     console.log(chat_ref.current.value);
+                    sendMessage(chat_ref.current.value);
                 }}>보내기</button>
             </form>
         </ChatWrap>

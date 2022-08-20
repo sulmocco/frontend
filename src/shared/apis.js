@@ -47,6 +47,7 @@ const sulmoggoApi = {
   getReplies: (postId) => api.get(`/replies/${postId}`),
   deleteReply: (replyId) => api.delete(`/replies/${replyId}`),
   updateReply: (replyId, content) => api.put(`/replies/${replyId}`, content),
+  postChatRoom: (data) => api.post(`/chat/room`, data),
 };
 
 export default sulmoggoApi;

@@ -1,6 +1,10 @@
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import React from "react";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
+import sulmoggoApi from '../../shared/apis';
 import { Alcohol } from "../../shared/options";
 import { BlueButton } from "../../styles/CommonStyles";
 import { PageTitle } from "../tables/styles";
@@ -14,6 +18,14 @@ import {
   VideoWrapper,
 } from "./styles";
 
+const data = {
+  "version": "라이브 종류",
+  "thumbnail": '/images/img.png',
+  "alcoholtag": "주종",
+  "food": '안주',
+  'theme': '테마'
+}
+
 const NewLive = (props) => {
   const alcohol = useRef({});
   const {
@@ -22,6 +34,13 @@ const NewLive = (props) => {
     handleSubmit,
   } = useForm();
   alcohol.current = watch("alcohol", "맥주");
+
+  const navigate = useNavigate();
+  const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
+    onSuccess: (data) => {
+      console.log(data);
+    }
+  });
 
   return (
     <>
@@ -48,7 +67,7 @@ const NewLive = (props) => {
                     />
                   </AlcoholButton>
                 );
-                return null
+              return null
             })}
           </AlcoholWrapper>
           <VideoWrapper>
@@ -68,7 +87,10 @@ const NewLive = (props) => {
           <StyledInput type="text" placeholder="테마를 입력해 주세요." />
 
           <SubmitWrapper>
-            <BlueButton>시작하기</BlueButton>
+            <BlueButton onClick={() => {
+              mutation.mutate(data);
+              navigate(`/chat/01`)
+            }}>시작하기</BlueButton>
           </SubmitWrapper>
         </form>
       </NewLiveContainer>

@@ -31,6 +31,12 @@ const sulmoggoApi = {
         "Content-Type": "multipart/form-data",
       },
     }), // 술상 추천 게시글 작성 이미지 가로채기
+  searchTables: (params) => api.get("/tables/search", { params }),
+  img: (formData) => api.post("/images", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }), // 술상 추천 게시글 작성 이미지 가로채기
   tables: (newData) => api.post("/tables", newData),
   deletePost: (tableId) => api.delete(`tables/${tableId}`),
   postLike: (tableId) => api.post(`tables/${tableId}/like`),

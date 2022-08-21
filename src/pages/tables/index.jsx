@@ -51,13 +51,19 @@ const Tables = (props) => {
         sortBy,
         page: pageParam,
         size: 9,
-        isAsc: true,
+        isAsc: false,
       }
       if (keyword || alcohol === "전체") delete newQuery.alcohol
       else delete newQuery.keyword
 
       console.log(newQuery);
-      const res = await sulmoggoApi.getTables(newQuery);
+
+      let res = null
+      if(keyword) {
+      res = await sulmoggoApi.searchTables(newQuery);
+    }else{
+      res = await sulmoggoApi.getTables(newQuery)
+    }
       setTotal(res.data.total);
       console.log("search!", keyword);
       return {
@@ -179,15 +185,15 @@ const Tables = (props) => {
         </div>
         <div className="rightWrapper">
           <SortButton
-            checked={sortBy === "viewCount"}
+            checked={sortBy === "count"}
             onClick={() => {
               console.log(allParams);
               if (keyword) {
-                setQueryParams({ keyword, sortBy: "viewCount" });
+                setQueryParams({ keyword, sortBy: "count" });
               } else if (alcohol !== "전체") {
-                setQueryParams({ alcohol, sortBy: "viewCount" });
+                setQueryParams({ alcohol, sortBy: "count" });
               } else {
-                setQueryParams({ sortBy: "viewCount" });
+                setQueryParams({ sortBy: "count" });
               }
             }}
           >
@@ -226,7 +232,7 @@ const Tables = (props) => {
             });
           })}
         {console.log(data.pages)}
-        {!total && <NoList>작성된 술상추천이 없습니다.</NoList>}
+        {/* {!total && isSuccess && data?.pages[0]?.content.length === 0 && <NoList>작성된 술상추천이 없습니다.</NoList>} */}
       </TablesGrid>
       <WriteButton to="/post">
         <div className="absolute">

@@ -10,7 +10,7 @@ export const CardWrapper = styled.div`
     cursor: pointer;
     transition: all .2s ease-in-out;
     &:hover{
-        margin-top: -.5rem;
+        transform: translateY(-0.5rem);
         box-shadow: ${props => props.theme.shadow_gray};
     }
     /* border: 1px solid black; */

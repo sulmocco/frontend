@@ -11,7 +11,7 @@ import { AlcoholButtons, Separator } from "../../styles/CommonStyles";
 import {
   AlcoholCategories,
   AlcoholCategory,
-  NoList,
+  // NoList,
   PageTitle,
   SearchBoxWrapper,
   SortButton,

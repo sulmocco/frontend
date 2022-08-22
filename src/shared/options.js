@@ -9,6 +9,11 @@ export const AlcoholLevel = [
     { value: 4, text: "술고래" },
 ]
 
+export const LiveVersion = [
+    {value: 0, text: "친구와 함께"},
+    {value: 1, text: "혼자 술약속"}
+]
+
 // 주종(술상추천)
 export const Alcohol = [
     "전체", "맥주", "소주", "양주", "막걸리", "와인", "전통주"  

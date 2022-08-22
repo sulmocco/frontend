@@ -33,6 +33,8 @@ const data = {
 const NewLive = (props) => {
   const alcohol = useRef({});
   const [versionOpen, setVersionOpen] = useState(false);
+  const [cameraDevices, setCameraDevices] = useState([])
+  const [audioDevices, setAudioDevices] = useState([])
   const { register, watch, handleSubmit, setValue } = useForm();
   alcohol.current = watch("alcohol", "맥주");
 
@@ -44,16 +46,23 @@ const NewLive = (props) => {
   });
 
   const getUserMedia = async (constraints) => {
-    let stream = null;
-    console.log("asd");
-    try {
-      stream = await navigator.mediaDevices.getUserMedia();
-      console.log(stream);
-    } catch {}
+    let devices = [];
+    const cameraPermission = await navigator.permissions.query({
+      name: "camera",
+    });
+    const micPermission = await navigator.permissions.query({
+      name: "microphone",
+    });
+    if (cameraPermission !== "denied" && micPermission !== "denied") {
+      devices = await navigator.mediaDevices.enumerateDevices();
+      setCameraDevices(devices.filter(x => x.kind === 'videoinput'))
+      setAudioDevices(devices.filter(x => x.king === 'audioinput'))
+    }
   };
 
   useEffect(() => {
     getUserMedia();
+    console.log(cameraDevices, audioDevices);
   }, []);
 
   return (
@@ -123,7 +132,7 @@ const NewLive = (props) => {
                     />
                   </AlcoholButton>
                 );
-              return null
+              return null;
             })}
           </AlcoholWrapper>
           <VideoWrapper>
@@ -147,10 +156,14 @@ const NewLive = (props) => {
           <StyledInput type="text" placeholder="테마를 입력해 주세요." />
 
           <SubmitWrapper>
-            <BlueButton onClick={() => {
-              mutation.mutate(data);
-              navigate(`/chat/01`)
-            }}>시작하기</BlueButton>
+            <BlueButton
+              onClick={() => {
+                mutation.mutate(data);
+                navigate(`/chat/01`);
+              }}
+            >
+              시작하기
+            </BlueButton>
           </SubmitWrapper>
         </form>
       </NewLiveContainer>

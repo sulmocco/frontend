@@ -2,8 +2,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import RoomCard from "../../components/roomscard";
 import SearchBar from "../../components/searchbar";
-import TableCard from "../../components/tablecard";
 import sulmoggoApi from "../../shared/apis";
 import { Alcohol } from "../../shared/options";
 import { AlcoholButtons, Separator } from "../../styles/CommonStyles";
@@ -11,16 +11,15 @@ import { AlcoholButtons, Separator } from "../../styles/CommonStyles";
 import {
   AlcoholCategories,
   AlcoholCategory,
-  // NoList,
   PageTitle,
   SearchBoxWrapper,
   SortButton,
-  TablesGrid,
-  TablesWrapper,
-  WriteButton,
+  RoomsGrid,
+  RoomsWrapper,
+  RoomsTopWrapper,
 } from "./styles";
 
-const Tables = (props) => {
+const Rooms = (props) => {
   const [queryParams, setQueryParams] = useSearchParams();
   // const queryParams = new URLSearchParams();
   const keyword = queryParams.get("keyword") || null;
@@ -34,7 +33,7 @@ const Tables = (props) => {
 
   console.log(alcohol);
 
-  const searchTables = (keyword) => {
+  const searchRooms = (keyword) => {
     if (keyword) {
       setQueryParams({ keyword });
     } else {
@@ -42,7 +41,7 @@ const Tables = (props) => {
     }
   };
 
-  const getTables = useCallback(
+  const getRooms = useCallback(
     async (pageParam) => {
       const newQuery =
       {
@@ -60,9 +59,9 @@ const Tables = (props) => {
 
       let res = null
       if(keyword) {
-      res = await sulmoggoApi.searchTables(newQuery);
+      res = await sulmoggoApi.searchRooms(newQuery);
     }else{
-      res = await sulmoggoApi.getTables(newQuery)
+      res = await sulmoggoApi.getRooms(newQuery)
     }
       setTotal(res.data.total);
       console.log("search!", keyword);
@@ -92,7 +91,7 @@ const Tables = (props) => {
     // status,
   } = useInfiniteQuery(
     ["tables", keyword, alcohol, sortBy, page, isAsc],
-    ({ pageParam = page }) => getTables(pageParam),
+    ({ pageParam = page }) => getRooms(pageParam),
     {
       getNextPageParam: (currPage, allPages) => {
         if (!currPage.lastPage) {
@@ -135,8 +134,10 @@ const Tables = (props) => {
   }, [handleIntersect, data]);
 
   return (
-    <TablesWrapper>
-      <PageTitle>술상추천</PageTitle>
+    <RoomsWrapper>
+    <RoomsTopWrapper>
+        <div>
+      <PageTitle>술약속</PageTitle>
       {alcohol && (
         <>
           <AlcoholCategories>
@@ -179,9 +180,9 @@ const Tables = (props) => {
       <SearchBoxWrapper>
         <div className="leftWrapper">
           <p>
-            <span>{total || 0}개</span>의 술상추천이 있습니다.
+            <span>{total || 0}개</span>의 술약속이 있습니다.
           </p>
-          <SearchBar onSearch={(keyword) => searchTables(keyword)} />
+          <SearchBar onSearch={(keyword) => searchRooms(keyword)} />
         </div>
         <div className="rightWrapper">
           <SortButton
@@ -217,32 +218,28 @@ const Tables = (props) => {
           </SortButton>
         </div>
       </SearchBoxWrapper>
-      <TablesGrid>
+      </div>
+      </RoomsTopWrapper>
+      <RoomsGrid>
         {isSuccess &&
           data.pages.map((page, pageidx) => {
             const content = page.data.content;
             return content?.map((table, idx) => {
               if (idx === content.length - 1 && pageidx === data.pages.length - 1) return (
                 <div ref={lastTableRef}>
-                  <TableCard {...table} />
+                  <RoomCard {...table} />
                 </div>
               )
               else
-                return <TableCard {...table} />;
+                return <RoomCard {...table} />;
             });
           })}
         {console.log(data.pages)}
         {/* {!total && isSuccess && data?.pages[0]?.content.length === 0 && <NoList>작성된 술상추천이 없습니다.</NoList>} */}
-      </TablesGrid>
-      <WriteButton to="/post">
-        <div className="absolute">
-          <div className="fixed">
-            <img src="/images/icon_write.svg" alt="작성" />
-          </div>
-        </div>
-      </WriteButton>
-    </TablesWrapper>
+      </RoomsGrid>
+    
+    </RoomsWrapper>
   );
 };
 
-export default Tables;
+export default Rooms;

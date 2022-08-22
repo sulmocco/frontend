@@ -15,7 +15,17 @@ api.interceptors.request.use(function (config) {
     config.headers.common.authorization = accessToken;
   } // Header에 토큰을 넣어서 보내준다.
   return config;
+}, error => {
+  alert("요청중에 뭔가 잘못됨!!" + error.response.status)
 });
+
+api.interceptors.response.use(
+  res => {return res},
+  err => {
+    console.log("sadasd");
+    alert("응답이 뭔가 잘못됨!!" + err.resonse.status)
+  }
+)
 
 const sulmoggoApi = {
   signUp: (user) => api.post("/signup", user),
@@ -31,7 +41,10 @@ const sulmoggoApi = {
         "Content-Type": "multipart/form-data",
       },
     }), // 술상 추천 게시글 작성 이미지 가로채기
+  searchTables: (params) => api.get("/tables/search", { params }),
   tables: (newData) => api.post("/tables", newData),
+  getRooms: (params) => api.get("/rooms", {params}),
+  searchRooms: (params) => api.get("/rooms/search", {params}),
   deletePost: (tableId) => api.delete(`tables/${tableId}`),
   postLike: (tableId) => api.post(`tables/${tableId}/like`),
   deleteLike: (tableId) => api.delete(`tables/${tableId}/like`),

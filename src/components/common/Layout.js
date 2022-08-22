@@ -15,6 +15,7 @@ const Layout = () => {
     location.pathname.startsWith("/resetPassword") ||
     location.pathname.startsWith("/password") ||
     location.pathname.startsWith("/mypage") ||
+    location.pathname.startsWith("/rooms") ||
     location.pathname === "/";
   const grayBg =
     location.pathname === "/tables" || location.pathname.startsWith("/tables?");

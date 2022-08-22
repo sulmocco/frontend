@@ -29,6 +29,7 @@ const ResetPassword = React.lazy(() => import("./pages/resetpassword"));
 const NewLive = React.lazy(() => import("./pages/newlive"));
 const Mypage = React.lazy(() => import("./pages/mypage"));
 const Post = React.lazy(() => import("./pages/post"));
+const Rooms = React.lazy(() => import("./pages/rooms"));
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ function App() {
             <Route path="/passwordRending" element={<PasswordRending />} />
             <Route path="/comment" element={<Comment />} />
             <Route path="/chat/:roomId" element={<Chat />} />
+            <Route path="/rooms" element={<Rooms />}/>
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />
               <Route path="/mypage/mypost" element={<Mypost />} />

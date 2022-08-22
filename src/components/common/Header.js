@@ -20,7 +20,14 @@ const Header = ({ location }) => {
                 <img src="/images/logo.svg" alt="술모꼬 로고" />
               </NavLink>
             </li>
-            <li>술약속</li>
+            <li>
+            <NavLink
+                to="/rooms"
+                active={location?.pathname.startsWith("/rooms") || ""}
+              >
+                술약속
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 to="/tables"

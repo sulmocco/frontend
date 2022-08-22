@@ -77,23 +77,23 @@ export const CenterWrapper = styled.div`
     height: 5.6rem;
     background: #ffffff;
     border: ${(props) => {
-      if(props.error){
-        return "2px solid "+ props.theme.error
-      }else if(props.success){
-        return "2px solid" + props.theme.primary
-      }else{
-        return "2px solid transparent"
-      }
-      }};
+    if (props.error) {
+      return "2px solid " + props.theme.error
+    } else if (props.success) {
+      return "2px solid" + props.theme.primary
+    } else {
+      return "2px solid transparent"
+    }
+  }};
     color: ${props => {
-      if(props.error){
-        return props.theme.error
-      }else if(props.success){
-        return props.theme.primary
-      }else{
-        return props.theme.black
-      }
-      }};
+    if (props.error) {
+      return props.theme.error
+    } else if (props.success) {
+      return props.theme.primary
+    } else {
+      return props.theme.black
+    }
+  }};
     border-radius: 10px;
     padding-left: 1.2rem;
     box-sizing: border-box;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LoginWrap = styled.div`
+export const PasswordWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,11 +10,11 @@ export const LoginWrap = styled.div`
     min-height: calc(100vh - 72px - 120px);
 `
 
-export const LoginSection = styled.div`
+export const PasswordSection = styled.div`
     margin: 13.6rem 0;
     background-color: #fff;
     width: 712px;
-    padding: 8.8rem 1.18rem;
+    padding: 8.8rem 15.6rem;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -24,7 +24,6 @@ export const LoginSection = styled.div`
         font-size: 3.2rem;
         font-weight: 700;
         text-align: center;
-        /* margin-bottom: 6.4rem; */
     }
     form {
         display: flex;
@@ -54,9 +53,6 @@ export const LoginSection = styled.div`
         &:last-of-type{
             margin-top: 4rem;
         }
-    }
-    img{
-        margin-top: 3.3rem;
     }
     p {
         color: #000;

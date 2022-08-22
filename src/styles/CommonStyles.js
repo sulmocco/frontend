@@ -17,6 +17,11 @@ export const BigButton = styled.button`
   font-size: 2.6rem;
   font-weight: 700;
   max-width: 40rem;
+  &:disabled {
+    background-color: ${(props) => props.theme.grey_04};
+    color: #000;
+    border: 1px solid #d6d6d6;
+  }
 `;
 
 // 나의 술 레벨

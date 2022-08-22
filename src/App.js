@@ -1,21 +1,17 @@
-import React, { useCallback, useEffect } from "react";
-import { ThemeProvider } from "styled-components";
-import Theme from "./styles/Theme";
+import React, { useCallback, useEffect, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/common/Layout";
-import { Suspense } from "react";
-import Spinner from "./components/spinner";
 import { useDispatch, useSelector } from "react-redux";
+import { ThemeProvider } from "styled-components";
 import { userActions } from "./redux/userSlice";
-import Post from "./pages/post";
-import Mypage from "./pages/mypage";
+import Theme from "./styles/Theme";
+import Layout from "./components/common/Layout";
+import Spinner from "./components/spinner";
 import Bookmark from "./components/mypage/Bookmark";
 import Friends from "./components/mypage/Friends";
 import Mypost from "./components/mypage/Mypost";
-import NewLive from "./pages/newlive";
-import ResetPassword from "./pages/resetpassword";
-import Chat from "./pages/chat";
-import Rooms from "./pages/rooms";
+import PasswordRedirect from "./components/passwordredirect";
+import PasswordRending from "./components/passwordrending";
+import PassWordInput from "./components/passwordreset";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/auth"));
@@ -28,6 +24,12 @@ const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 const ProfileEdit = React.lazy(() => import("./pages/profileedit"));
 const Detail = React.lazy(() => import("./pages/detail"));
 const Comment = React.lazy(() => import("./components/comment"));
+const Chat = React.lazy(() => import("./pages/chat"));
+const ResetPassword = React.lazy(() => import("./pages/resetpassword"));
+const NewLive = React.lazy(() => import("./pages/newlive"));
+const Mypage = React.lazy(() => import("./pages/mypage"));
+const Post = React.lazy(() => import("./pages/post"));
+const Rooms = React.lazy(() => import("./pages/rooms"));
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +56,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/oauth2/redirect" element={<LoginRedirect />} />
+            <Route path="/oauth2/redirect_pw" element={<PasswordRedirect />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/loginrending" element={<LoginRending />} />
             <Route path="/login" element={<Login />} />
@@ -66,6 +69,8 @@ function App() {
             <Route path="/profile" element={<ProfileEdit />} />
             <Route path="/live/new" element={<NewLive />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route path="/password" element={<PassWordInput />} />
+            <Route path="/passwordRending" element={<PasswordRending />} />
             <Route path="/comment" element={<Comment />} />
             <Route path="/chat/:roomId" element={<Chat />} />
             <Route path="/rooms" element={<Rooms />}/>

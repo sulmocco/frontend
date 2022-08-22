@@ -19,7 +19,7 @@ import {
 } from "./styles";
 
 const data = {
-  "version": "라이브 종류",
+  'version': '라이브 종류',
   "thumbnail": '/images/img.png',
   "alcoholtag": "주종",
   "food": '안주',

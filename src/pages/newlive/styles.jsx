@@ -137,12 +137,20 @@ export const VideoWrapper = styled.div`
     height: 55.2rem;
     background: #d9d9d9;
     margin-top: 1.6rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    video{
+      width: 100%;
+      height: 100%;
+      background-color: ${props => props.theme.black};
+    }
   }
   .thumbnail {
     margin-top: 1.6rem;
     width: 40rem;
     height: 26rem;
     background-color: #d9d9d9;
+    border-radius: 1rem;
   }
 `;
 

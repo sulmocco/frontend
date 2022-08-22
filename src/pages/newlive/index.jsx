@@ -32,9 +32,11 @@ const data = {
 
 const NewLive = (props) => {
   const alcohol = useRef({});
+  const videoPreview = useRef();
   const [versionOpen, setVersionOpen] = useState(false);
   const [cameraDevices, setCameraDevices] = useState([])
   const [audioDevices, setAudioDevices] = useState([])
+  const [camera, setCamera] = useState(null)
   const { register, watch, handleSubmit, setValue } = useForm();
   alcohol.current = watch("alcohol", "맥주");
 
@@ -57,14 +59,22 @@ const NewLive = (props) => {
       devices = await navigator.mediaDevices.enumerateDevices();
       setCameraDevices(devices.filter(x => x.kind === 'videoinput'))
       setAudioDevices(devices.filter(x => x.king === 'audioinput'))
+      await navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+        videoPreview.current.srcObject = stream
+      })
     }
   };
 
   useEffect(() => {
-    getUserMedia();
+    getUserMedia({video: camera ? {deviceId:camera.deviceId} : true});
     console.log(cameraDevices, audioDevices);
-  }, []);
+    console.log("this..");
+  }, [camera]);
 
+  useEffect(() => {
+    // setCamera(cameraDevices ? cameraDevices[1] : null)
+    console.log("how..");
+  }, [])
   return (
     <>
       <NewLiveContainer>
@@ -138,7 +148,9 @@ const NewLive = (props) => {
           <VideoWrapper>
             <div>
               <SubTitle>방송화면</SubTitle>
-              <div className="video"></div>
+              <div className="video">
+                <video autoPlay ref={videoPreview}/>
+              </div>
             </div>
             <div>
               {/* TODO: 비디오 오디오 선택 드롭다운이 될 예정 */}

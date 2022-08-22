@@ -16,6 +16,7 @@ import NewLive from "./pages/newlive";
 import ResetPassword from "./pages/resetpassword";
 import Chat from "./pages/chat";
 import Rooms from "./pages/rooms";
+import Live from "./pages/live";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/auth"));
@@ -50,6 +51,7 @@ function App() {
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
         <Routes>
+          <Route path="/live" element={<Live />}/>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<Auth />} />

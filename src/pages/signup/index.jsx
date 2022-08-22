@@ -36,7 +36,7 @@ const SignUp = (props) => {
     await sulmoggoApi.signUp(data).then((res) => {
       alert(res.data);
     });
-    navigate('/login');
+    navigate('/render/signup');
   };
 
   // 나의 술 레벨 컨트롤
@@ -71,7 +71,7 @@ const SignUp = (props) => {
   id.current = watch("id", "");
   // eslint-disable-next-line
   const setId = useCallback(() => setValue("id", userIdParam.get("userId")), [userIdParam, setValue])
-  
+
 
   // 닉네임 중복체크
   const checkUsername = () => {

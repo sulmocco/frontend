@@ -70,10 +70,10 @@ function App() {
             <Route path="/live/new" element={<NewLive />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/password" element={<PassWordInput />} />
-            <Route path="/passwordRending" element={<PasswordRending />} />
+            <Route path="/render/:params" element={<PasswordRending />} />
             <Route path="/comment" element={<Comment />} />
             <Route path="/chat/:roomId" element={<Chat />} />
-            <Route path="/rooms" element={<Rooms />}/>
+            <Route path="/rooms" element={<Rooms />} />
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />
               <Route path="/mypage/mypost" element={<Mypost />} />

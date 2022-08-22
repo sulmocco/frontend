@@ -11,32 +11,55 @@ export const LoginWrap = styled.div`
 `
 
 export const LoginSection = styled.div`
+    margin: 13.6rem 0;
     background-color: #fff;
-    padding: 8.8rem 15.5rem;
+    width: 712px;
+    /* height: 581px; */
+    padding: 88px 156px;
     border-radius: 1rem;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    img{
-        margin-bottom: 6.4rem;
+    justify-content: center;
+    align-items: center;
+    h1 {
+        font-size: 3.2rem;
+        font-weight: 700;
+        text-align: center;
+        /* margin-bottom: 6.4rem; */
     }
     form {
         display: flex;
         flex-direction: column;
         gap: 1.2rem;
+        width: 100%;
         input {
+            width: 100%;
             height: 5.6rem;
             border: none;
-            background-color: #f2f3f3;
+            background-color: ${props => props.theme.grey_04};
             border-radius: 1rem;
             padding: 1.8rem;
             font-size: 1.6rem;
-            width: 100%;
-            min-width: 40rem;
+            &::placeholder{
+                color: ${props => props.theme.grey_03};
+            }
         }
     }
+    label{
+        font-size: 2rem;
+        font-weight: 700;
+        color: ${props => props.theme.grey_01};
+        &:first-of-type{
+            margin-top: 5.6rem;
+        }
+        &:last-of-type{
+            margin-top: 4rem;
+        }
+    }
+    img{
+        margin-top: 3.3rem;
+    }
     p {
-        width: 100%;
         text-align: right;
         color: #7a7a80;
         font-size: 1.6rem;

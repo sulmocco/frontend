@@ -1,28 +1,43 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const TablesWrapper = styled.div`
+export const RoomsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding-top: 14.4rem;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   .checkedAlcoholWrapper {
     margin-top: 1.6rem;
     display: flex;
     flex-direction: row;
-    gap: .8rem;
+    gap: 0.8rem;
   }
 `;
 
-export const TablesGrid = styled.div`
+export const RoomsTopWrapper = styled.div`
+  padding-top: 14.4rem;
+  padding-bottom: 4.8rem;
+  background-color: ${(props) => props.theme.bg_light_gray};
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  & > div {
+    width: 100%;
+    max-width: ${(props) => props.theme.contentWidth};
+  }
+  /* max-width: ${(props) => props.theme.contentWidth}; */
+`;
+
+export const RoomsGrid = styled.div`
+  max-width: ${(props) => props.theme.contentWidth};
   width: 100%;
   margin-top: 3.2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40.5rem, 1fr));
-  grid-gap: 3.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+  grid-row-gap: 6.4rem;
+  grid-column-gap: 4rem;
+  margin-bottom: 16rem;
 `;
 
 export const PageTitle = styled.h1`
@@ -93,43 +108,11 @@ export const SortButton = styled.button`
     props.checked ? props.theme.black_2 : props.theme.grey_03};
 `;
 
-export const WriteButton = styled(Link)`
-  position: relative;
-  /* background-color: aliceblue; */
-  box-sizing: inherit;
-  width: 100%;
-  .absolute{
-    /* background-color: teal; */
-    position: absolute;
-    top: 0%;
-    left: calc(100% - 8rem);
-    /* right: 0%; */
-  }
-  .fixed{
-    position: fixed;
-    top: 90vh;
-    /* right: 0; */
-    background-color: ${props => props.theme.secondary};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 8rem;
-  height: 8rem;
-  border-radius: 4rem;
-  box-shadow: ${props => props.theme.shadow_gray};
-  z-index: 400;
-  }
-  img{
-    width: 3.2rem;
-    height: 3.52rem;
-  }
-`
-
 export const NoList = styled.div`
   padding: 20rem 0;
   font-size: 3.4rem;
   width: 100%;
   text-align: center;
   font-weight: 700;
-  color: ${props => props.theme.grey_03};
-`
+  color: ${(props) => props.theme.grey_03};
+`;

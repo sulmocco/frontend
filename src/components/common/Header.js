@@ -1,35 +1,83 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../redux/userSlice";
 
-const Header = ({location}) => {
+const Header = ({ location }) => {
+  const Token = localStorage.getItem("token");
+  const dispatch = useDispatch()
   return (
     <Wrap>
       <Navbar>
         <NavLeft>
           <ul>
             <li>
-              <NavLink to="/" active={location?.pathname.startsWith("/asd") || ""}>
-                <img src="/images/logo.svg" alt="술모꼬 로고"/>
+              <NavLink
+                to="/"
+                active={location?.pathname.startsWith("/asd") || ""}
+              >
+                <img src="/images/logo.svg" alt="술모꼬 로고" />
               </NavLink>
             </li>
-            <li>술약속</li>
-            <li><NavLink to="/tables" active={location?.pathname.startsWith("/tables") || ""}>술상추천</NavLink></li>
+            <li>
+            <NavLink
+                to="/rooms"
+                active={location?.pathname.startsWith("/rooms") || ""}
+              >
+                술약속
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/tables"
+                active={location?.pathname.startsWith("/tables") || ""}
+              >
+                술상추천
+              </NavLink>
+            </li>
           </ul>
         </NavLeft>
-        <NavRight>
-          <ul>
-          <li>
-              <NavLive to="/live/new">방송하기</NavLive>
-            </li>
-            <li>
-              <NavLink to="/login" active={location?.pathname.startsWith("/login") || ""}>로그인</NavLink>
-            </li>
-            <li>
-              <NavLink to="/terms">회원가입</NavLink>
-            </li>
-          </ul>
-        </NavRight>
+        {Token ? (
+          <NavRight>
+            <ul>
+              <li>
+                <NavLive to="/live/new">방송하기</NavLive>
+              </li>
+              <li>
+                <NavLink to="/mypage">마이페이지</NavLink>
+              </li>
+              <li>
+                <div
+                  onClick={() => {
+                    dispatch(userActions.userLogout())
+                  }}
+                >
+                  로그아웃
+                </div>
+              </li>
+            </ul>
+          </NavRight>
+        ) : (
+          <NavRight>
+            <ul>
+              <li>
+                <NavLive to="/live/new">방송하기</NavLive>
+              </li>
+              <li>
+                <NavLink
+                  to="/login"
+                  active={location?.pathname.startsWith("/login") || ""}
+                >
+                  로그인
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/terms">회원가입</NavLink>
+              </li>
+            </ul>
+          </NavRight>
+        )}
       </Navbar>
     </Wrap>
   );
@@ -48,7 +96,7 @@ const Wrap = styled.div`
   background-color: ${(props) => props.theme.white};
   box-shadow: ${(props) => props.theme.shadow_gray};
   font-weight: 500;
-  img{
+  img {
     width: 14.403rem;
   }
 `;
@@ -74,8 +122,9 @@ const NavLeft = styled.div`
 `;
 
 const NavLink = styled(Link)`
-  color: ${props => props.active ? props.theme.primary : props.theme.black} !important;
-`
+  color: ${(props) =>
+    props.active ? props.theme.primary : props.theme.black} !important;
+`;
 
 const NavRight = styled.div`
   display: flex;
@@ -87,15 +136,19 @@ const NavRight = styled.div`
     font-size: 1.6rem;
     line-height: 1.9rem;
     gap: 2.2rem;
-letter-spacing: -0.04em;
+    letter-spacing: -0.04em;
+
+    li div {
+      cursor: pointer;
+    }
   }
 `;
 
 const NavLive = styled(Link)`
-padding: .4rem 1.2rem;
-background-color: ${props => props.theme.bg_light_blue};
-font-size: 1.6rem;
-line-height: 1.9rem;
-border-radius: .4rem;
-color: ${props => props.theme.primary} !important;
-`
+  padding: 0.4rem 1.2rem;
+  background-color: ${(props) => props.theme.bg_light_blue};
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+  border-radius: 0.4rem;
+  color: ${(props) => props.theme.primary} !important;
+`;

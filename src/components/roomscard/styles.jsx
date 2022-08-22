@@ -6,12 +6,12 @@ export const CardWrapper = styled.div`
     height: fit-content;
     border-radius: 1rem;
     background-color: ${props => props.theme.white};
-    padding: 2rem;
+    /* padding: 2rem; */
     cursor: pointer;
     transition: all .2s ease-in-out;
     &:hover{
         transform: translateY(-0.5rem);
-        box-shadow: ${props => props.theme.shadow_gray};
+        /* box-shadow: ${props => props.theme.shadow_gray}; */
     }
     /* border: 1px solid black; */
     .cardUpperWrap{
@@ -27,7 +27,7 @@ export const CardWrapper = styled.div`
         margin-left: .8rem;
         width: calc(100% - 7.2rem);
     }
-    .tableTitle{
+    .roomTitle{
         font-size: 2.6rem;
         font-weight: 700;
         line-height: 3.1rem;
@@ -36,7 +36,7 @@ export const CardWrapper = styled.div`
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-    .tableUser{
+    .roomUser{
         font-size: 2rem;
         font-weight: 500;
         line-height: 2.4rem;

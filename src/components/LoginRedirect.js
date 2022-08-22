@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import QueryString from "qs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Spinner from "./spinner";
 
 const LoginRedirect = () => {
   const navigate = useNavigate();
@@ -28,11 +29,7 @@ const LoginRedirect = () => {
     axiosLoad();
   }, [axiosLoad]);
 
-  return (
-    <div>
-      <h1>아 너무 잘됨~~~~</h1>
-    </div>
-  );
+  return <Spinner />;
 };
 
 export default LoginRedirect;

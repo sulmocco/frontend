@@ -9,6 +9,8 @@ import {
   Separator,
   UserLevel,
 } from "../../styles/CommonStyles";
+import { Link } from "react-router-dom";
+import { getLevel } from "../../shared/modules";
 
 const Today = () => {
   const getToday = async () => {
@@ -34,6 +36,7 @@ const Today = () => {
                 <div className="crown">
                   <img src="/images/today_2ndcrown.svg" alt="second profile" />
                 </div>
+              <Link to={`tables/${today[1]?.tableId}`}>
                 <TableCardWrapper
                   src={today[1]?.thumbnail}
                   profile={today[1]?.profileimgurl}
@@ -52,7 +55,7 @@ const Today = () => {
                     <div className="username">
                       <p>{today[1]?.username}</p>
                       <UserLevel style={{ display: "inline-block" }}>
-                        {today[1]?.level}
+                        {getLevel(today[1]?.level)}
                       </UserLevel>
                     </div>
                     <div className="tags">
@@ -61,6 +64,7 @@ const Today = () => {
                     </div>
                   </div>
                 </TableCardWrapper>
+              </Link>
               </OneRankWrapper>
             )}
 
@@ -69,6 +73,7 @@ const Today = () => {
                 <div className="crown">
                   <img src="/images/today_1stcrown.svg" alt="first profile" />
                 </div>
+              <Link to={`tables/${today[0]?.tableId}`}>
                 <TableCardWrapper
                   first
                   src={today[0]?.thumbnail}
@@ -87,7 +92,7 @@ const Today = () => {
 
                     <div className="username">
                       {today[0]?.username}
-                      <UserLevel>{today[0]?.level}</UserLevel>
+                      <UserLevel>{getLevel(today[0]?.level)}</UserLevel>
                     </div>
                     <div className="tags">
                       <AlchholTag>{today[0]?.alcoholtag}</AlchholTag>
@@ -95,6 +100,7 @@ const Today = () => {
                     </div>
                   </div>
                 </TableCardWrapper>
+              </Link>
               </OneRankWrapper>
             )}
 
@@ -103,6 +109,7 @@ const Today = () => {
                 <div className="crown">
                   <img src="/images/today_3rdcrown.svg" alt="third profile" />
                 </div>
+                <Link to={`tables/${today[2]?.tableId}`}>
                 <TableCardWrapper
                   src={today[2]?.thumbnail}
                   profile={today[2]?.profileimgurl}
@@ -120,7 +127,7 @@ const Today = () => {
 
                     <div className="username">
                       {today[2]?.username}
-                      <UserLevel>{today[2]?.level}</UserLevel>
+                      <UserLevel>{getLevel(today[2]?.level)}</UserLevel>
                     </div>
                     <div className="tags">
                       <AlchholTag>{today[2]?.alcoholtag}</AlchholTag>
@@ -128,7 +135,9 @@ const Today = () => {
                     </div>
                   </div>
                 </TableCardWrapper>
+                  </Link>
               </OneRankWrapper>
+              
             )}
           </RankWrapper>
         )}

@@ -1,17 +1,51 @@
 import React from "react";
 import styled from "styled-components";
 import { Outlet, NavLink } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "../../components/spinner";
+import sulmoggoApi from "../../shared/apis";
 
 const Mypage = () => {
+  // 마이페이지 계정정보 불러오기 api
+  const getMyAccount = async () => {
+    try {
+      const res = await sulmoggoApi.getUser();
+      return res;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // 마이페이지 계정정보 불러오기 query
+  const { data: account_query, status } = useQuery(
+    ["my_account"],
+    getMyAccount,
+    {
+      onSuccess: (data) => {
+        console.log("쿼리 불러오기", data);
+      },
+    }
+  );
+
+  // 쿼리 데이터 로딩전에 스피너
+  if (status === "loading") {
+    return <Spinner />;
+  }
+
   return (
-    <div>
+    <>
       <Profile>
-        <div className="img"></div>
-        <div className="info">
-          <div className="level">술레벨</div>
-          <div>닉네임</div>
-        </div>
-        <button>수정하기</button>
+        <Wrap>
+          <h1>마이페이지</h1>
+          <ProfileBox>
+            <img src={account_query?.data.profile} alt="프로필 이미지" />
+            <div className="info">
+              <div className="level">{account_query?.data.level}</div>
+              <div>{account_query?.data.username}</div>
+            </div>
+            <button>수정하기</button>
+          </ProfileBox>
+        </Wrap>
       </Profile>
       <MypageNav>
         <ul>
@@ -33,7 +67,8 @@ const Mypage = () => {
         </ul>
       </MypageNav>
       <Outlet />
-    </div>
+      <div style={{ height: "100px" }}></div>
+    </>
   );
 };
 
@@ -41,64 +76,107 @@ export default Mypage;
 
 const Profile = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
   justify-content: center;
-  align-items: center;
-  margin-top: 50px;
+  height: 561px;
+  background: #eef3ff;
+  border-radius: 10px;
 
-  .img {
-    width: 182px;
-    height: 182px;
+  h1 {
+    margin-top: 144px;
+    font-weight: 700;
+    font-size: 34px;
+  }
+`;
+
+const Wrap = styled.div`
+  width: 1290px;
+  h1 {
+    font-weight: 700;
+    font-size: 34px;
+  }
+`;
+
+const ProfileBox = styled.div`
+  position: relative;
+  margin-top: 56px;
+  width: 1280px;
+  height: 208px;
+  background: #ffffff;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 88px;
+    height: 88px;
+    margin-left: 32px;
     border-radius: 50%;
-    background: #d9d9d9;
   }
 
   .info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 36px;
-    margin-top: 50px;
+    margin-left: 16px;
 
     .level {
-      margin-right: 20px;
-      background-color: #00c7ae;
-      font-size: 28px;
-      padding: 10px;
-      color: white;
-      border-radius: 20px;
+      font-weight: 500;
+      font-size: 12px;
+      width: 48px;
+      height: 18px;
+      background: #eef3ff;
+      border-radius: 4px;
+      color: #2459e0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    div {
+      font-weight: 700;
+      font-size: 32px;
     }
   }
 
   button {
-    margin-top: 50px;
-    width: 158px;
-    height: 62px;
+    position: absolute;
+    right: 32px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #7a7a80;
+
+    background: #f2f3f3;
     border: none;
-    font-weight: 700;
-    font-size: 2rem;
-    border-radius: 1rem;
-    background-color: ${(props) => props.theme.primary};
-    color: ${(props) => props.theme.white};
+    border-radius: 20px;
+    width: 86px;
+    height: 33px;
   }
 `;
 
 const MypageNav = styled.nav`
-  margin-top: 100px;
+  margin-top: 112px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    width: 1278px;
+    height: 80px;
+    background: #ffffff;
+    border: 2px solid #f2f3f3;
+    box-shadow: 0px 4px 24px rgba(184, 187, 192, 0.16);
+    border-radius: 10px;
   }
 
   li {
     div {
-      width: 400px;
-      height: 70px;
-      background: #d9d9d9;
-      font-size: 36px;
+      width: 426px;
+      height: 80px;
+      font-size: 26px;
+      color: #7a7a80;
+      font-weight: 700;
 
       display: flex;
       justify-content: center;
@@ -109,7 +187,8 @@ const MypageNav = styled.nav`
         font-weight: 700;
 
         div {
-          background: #f2f3f6;
+          background: #eef3ff;
+          color: #2459e0;
         }
       }
     }

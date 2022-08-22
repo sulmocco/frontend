@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import sulmoggoApi from "../../shared/apis";
 import { Alcohol, LiveVersion } from "../../shared/options";
+
 import { BlueButton } from "../../styles/CommonStyles";
 import { PageTitle } from "../tables/styles";
 import { OpenVidu } from "openvidu-browser";
@@ -122,7 +123,7 @@ const NewLive = (props) => {
                     />
                   </AlcoholButton>
                 );
-                return null
+              return null
             })}
           </AlcoholWrapper>
           <VideoWrapper>
@@ -146,14 +147,10 @@ const NewLive = (props) => {
           <StyledInput type="text" placeholder="테마를 입력해 주세요." />
 
           <SubmitWrapper>
-            <BlueButton
-              onClick={() => {
-                mutation.mutate(data);
-                navigate(`/chat/01`);
-              }}
-            >
-              시작하기
-            </BlueButton>
+            <BlueButton onClick={() => {
+              mutation.mutate(data);
+              navigate(`/chat/01`)
+            }}>시작하기</BlueButton>
           </SubmitWrapper>
         </form>
       </NewLiveContainer>

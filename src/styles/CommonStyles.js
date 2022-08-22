@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 // 로그인, 회원가입 등에 사용되는 큰 버튼
 // mt={"1rem"} 등으로 margin-top을 직접 지정해줄 수 있음. 디폴트는 2.4rem
-export const BigButton = styled.div`
-  width: 3.99rem;
+export const BigButton = styled.button`
+  /* width: 3.99rem; */
+  width: 40rem;
   max-width: 100%;
   height: 7.2rem;
   background-color: ${(props) => props.theme.primary};

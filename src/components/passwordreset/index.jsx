@@ -27,13 +27,16 @@ const PassWordInput = () => {
         formState: { errors, isDirty, isSubmitting },
     } = useForm();
     password.current = watch('password', '');
-    console.log(watch('password'))
     return (
         <PasswordWrap>
             <PasswordSection>
                 <h1>비밀번호 변경</h1>
                 {true && <>
-                    <form action="" onSubmit={handleSubmit((data) => console.log(data.password))}>
+                    <form action=""
+                        onSubmit={handleSubmit((data) => {
+                            console.log(data.password);
+                            navigate(`/render/password`);
+                        })}>
                         <InputWrapper
                             error={errors.password?.message}
                             title='비밀번호'

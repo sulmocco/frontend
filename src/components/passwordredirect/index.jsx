@@ -18,7 +18,7 @@ const PasswordRedirect = () => {
                 `${process.env.REACT_APP_API_SERVER_PW}/oauth2/redirect?code=${queryData.code}`
             );
             console.log("데이터확인", res.data);
-            navigate(`/signup?userId=${res.data.userId}`);
+            navigate(`/password?userId=${res.data.userId}`);
         } catch (err) {
             alert("회원이 아닙니다!");
             navigate("/loginrending");

@@ -4,9 +4,7 @@ import { BigButton } from "../../styles/CommonStyles"
 import { LoginSection, LoginWrap } from "./styles"
 
 const ResetPassword = ({ isAuth }) => {
-    const navigate = useNavigate()
     const AuthBbaton = () => window.location.href = process.env.REACT_APP_AUTH_PW;
-
     return (
         <LoginWrap>
             <LoginSection>

@@ -26,7 +26,7 @@ const Chat = () => {
     const [usercount, setUserCount] = useState(0)
     const [time, setTime] = useState(0)
     const chatRef = useRef();
-    const chatListRef = useRef();
+    const lastOne = useRef();
     const [createdAt, setCreatedAt] = useState(0)
     const { chatRoomId } = useParams();
     const token = localStorage.getItem('token');
@@ -54,6 +54,7 @@ const Chat = () => {
                     console.log("여기!!!!!!!!!!")
                     setContent((prevContent) => [...prevContent, newMessage])
                     // chatListRef.current.scro
+                    lastOne.current.scrollIntoView()
                 },headers);
                 // console.log(res);
             });
@@ -213,9 +214,9 @@ const Chat = () => {
                 <img src="/images/icon_out.svg"/>
             </button>
         </ChatHeader>
-        <ChatWrapper ref={chatListRef}>
-            {content.map(data => {
-                return <ChatContent key={Math.random().toString(36).substr(2,11)}>
+        <ChatWrapper>
+            {content.map((data, idx) => {
+                return <ChatContent key={Math.random().toString(36).substr(2,11)} ref={idx !== (content.length - 1) ? null : lastOne}>
                     <span className="chatuser">{data.sender}</span>
                     <span className="chattext">: {data.message}</span>
                 </ChatContent>

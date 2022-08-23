@@ -105,7 +105,7 @@ const Detail = () => {
                     <p>{data.createAt}</p>
                     {data.username === user && (
                         <span className='edit'>
-                            <p onClick={() => navigate(`/post/${tableId}`)}>수정</p>
+                            <p onClick={() => navigate(`/editpost/${tableId}`)}>수정</p>
                             <p onClick={() => {
                                 if (window.confirm('정말로 술상을 엎으시겠습니까?'))
                                     deleteMutation.mutate(tableId)

@@ -6,16 +6,16 @@ import sulmoggoApi from '../../shared/apis';
 import { ChatWrap } from './styles';
 import { AlchholTag, Separator, SnackTag, ThemeTag } from "../../styles/CommonStyles";
 import {
-  AddHostFriendButton,
-  ChatContent,
-  ChatHeader,
-  ChatInputWrapper,
-  ChatWrapper,
-  LiveWrapper,
-  ProfileCircle,
-  ProfileWrap,
-  VideoButton,
-  VideoContainer,
+    AddHostFriendButton,
+    ChatContent,
+    ChatHeader,
+    ChatInputWrapper,
+    ChatWrapper,
+    LiveWrapper,
+    ProfileCircle,
+    ProfileWrap,
+    VideoButton,
+    VideoContainer,
 } from "./styles";
 import moment from "moment"
 
@@ -75,7 +75,7 @@ const Chat = () => {
         }
     }
 
-    const quitChatroom = async() => {
+    const quitChatroom = async () => {
         const res = await client.send(`pub/chat/message`, headers, JSON.stringify({
             type: 'QUIT',
             chatRoomId: chatRoomId,
@@ -85,7 +85,7 @@ const Chat = () => {
         socketDisConnect()
     }
 
-    const enterChatroom = async() => {
+    const enterChatroom = async () => {
         const res = await client.send(`pub/chat/message`, headers, JSON.stringify({
             type: 'ENTER',
             chatRoomId: chatRoomId,
@@ -232,13 +232,34 @@ const Chat = () => {
                         sendMessage(chatRef.current.value);
                         // console.log("보내기버튼. 내용 : ", chatRef.current.value);
                     }}>
-                        <img src="/images/icon_send.svg"/>
+                        <img src="/images/icon_out.svg" />
                     </button>
-                </div>
-                </form>
-            </ChatInputWrapper>
-      </div>
-    </LiveWrapper>
+                </ChatHeader>
+                <ChatWrapper>
+                    {content.map(data => {
+                        return <ChatContent>
+                            <span className="chatuser">{data.sender}</span>
+                            <span className="chattext">: {data.message}</span>
+                        </ChatContent>
+                    })}
+
+                </ChatWrapper>
+                <ChatInputWrapper>
+                    <form action="">
+                        <div>
+                            <input type="text" placeholder="채팅을 입력해 주세요" ref={chat_ref} />
+                            <button onClick={(e) => {
+                                e.preventDefault();
+                                sendMessage(chat_ref.current.value);
+                                // console.log("보내기버튼. 내용 : ", chat_ref.current.value);
+                            }}>
+                                <img src="/images/icon_send.svg" />
+                            </button>
+                        </div>
+                    </form>
+                </ChatInputWrapper>
+            </div>
+        </LiveWrapper>
     );
 };
 

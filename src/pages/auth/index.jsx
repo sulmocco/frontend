@@ -1,4 +1,5 @@
 import React from "react";
+import ProgressBar from '../../components/progressbar';
 import { SignUpButton } from '../signup/styles';
 import { AuthSection, AuthWrap } from './styles';
 
@@ -9,6 +10,7 @@ const Auth = () => {
 
   return (
     <AuthWrap>
+      <ProgressBar />
       <AuthSection>
         <h3>본인 인증 하기</h3>
         <p>서비스 이용을 위해 비바톤 가입이 필요합니다.</p>

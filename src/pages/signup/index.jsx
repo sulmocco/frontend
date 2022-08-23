@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import InputWrapper from "../../components/inputwrapper";
+import ProgressBar from '../../components/progressbar';
 import sulmoggoApi from "../../shared/apis";
 import { AlcoholLevel } from "../../shared/options";
 import { SignUpButton, Container } from "./styles";
@@ -103,6 +104,7 @@ const SignUp = (props) => {
 
   return (
     <Container>
+      <ProgressBar />
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{ width: "400px", maxWidth: "100%" }}

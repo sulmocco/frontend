@@ -4,6 +4,7 @@ export const AuthWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.bg_light_gray};
@@ -16,6 +17,7 @@ export const AuthSection = styled.div`
     border-radius: 1rem;
     min-height: 40rem;
     text-align: center;
+    margin-bottom: 19rem;
     h3{
         font-size: 3.2rem;
         font-weight: 700;

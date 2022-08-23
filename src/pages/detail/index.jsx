@@ -11,9 +11,7 @@ import { Viewer } from '@toast-ui/react-editor';
 const Detail = () => {
     const user = localStorage.getItem('username');
     const { tableId } = useParams();
-    const { data, status } = useQuery(['table'], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data), {
-        cacheTime: 0,
-    });
+    const { data, status } = useQuery(['table'], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data));
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 

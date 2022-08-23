@@ -11,7 +11,9 @@ import { Viewer } from '@toast-ui/react-editor';
 const Detail = () => {
     const user = localStorage.getItem('username');
     const { tableId } = useParams();
-    const { data, status } = useQuery(['table'], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data));
+    const { data, status } = useQuery(['table'], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data), {
+        cacheTime: 0,
+    });
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
@@ -103,7 +105,7 @@ const Detail = () => {
                     <p>{data.createAt}</p>
                     {data.username === user && (
                         <span className='edit'>
-                            <p onClick={() => navigate(`/post/${tableId}`)}>수정</p>
+                            <p onClick={() => navigate(`/editpost/${tableId}`)}>수정</p>
                             <p onClick={() => {
                                 if (window.confirm('정말로 술상을 엎으시겠습니까?'))
                                     deleteMutation.mutate(tableId)

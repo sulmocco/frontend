@@ -12,6 +12,7 @@ import Mypost from "./components/mypage/Mypost";
 import PasswordRedirect from "./components/passwordredirect";
 import PasswordRending from "./components/passwordrending";
 import PassWordInput from "./components/passwordreset";
+import EditPost from "./pages/editpost";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/auth"));
@@ -53,7 +54,7 @@ function App() {
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
         <Routes>
-            <Route path="/chat/:chatRoomId" element={<Chat />} />
+          <Route path="/chat/:chatRoomId" element={<Chat />} />
           <Route path="/live" element={<Live />} />
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
@@ -65,7 +66,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/post" element={<Post />} />
-            <Route path="/post/:tableId" element={<Post />} />
+            <Route path="/editpost/:tableId" element={<EditPost />} />
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
             <Route path="/tables/:tableId" element={<Detail />} />

@@ -4,10 +4,10 @@ import { CardThumbnail, CardWrapper, ProfileCircle } from "./styles";
 import { Link } from "react-router-dom";
 
 const RoomCard = (props) => {
-    const {roomId, thumbnail, title, username, time, members, alcoholtag, theme, food, profileimgurl} = props
+    const {chatRoomId, thumbnail, title, username, time, members, alcoholtag, theme, food, profileimgurl} = props
     // console.log(props);
   return (
-    <Link to={`/rooms/${roomId}`}>
+    <Link to={`/chat/${chatRoomId}`}>
     <CardWrapper>
       <CardThumbnail src={thumbnail}/>
       <div className="cardUpperWrap">

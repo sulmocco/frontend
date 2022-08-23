@@ -69,6 +69,7 @@ const sulmoggoApi = {
   postChatRoom: (data) => api.post(`/chat/room`, data),
   enterChatRoom: (chatRoomId) => api.post(`/chat/room/enter/${chatRoomId}`),
   getRoomData: (chatRoomId) => api.get(`/chat/room/${chatRoomId}`),
+  removeChatRoom: (chatRoomId) => api.delete(`/room/delete/${chatRoomId}`)
 };
 
 export default sulmoggoApi;

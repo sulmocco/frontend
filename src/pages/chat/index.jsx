@@ -157,7 +157,11 @@ const Chat = () => {
         }
         foo();
         return (() => {
-            quitChatroom()
+            console.log("cleanup");
+            const bar = async() => {
+                await quitChatroom()
+            }
+            bar()
         })
     }, [])
     return (

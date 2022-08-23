@@ -139,20 +139,23 @@ const Chat = () => {
     // 메세지 받기
 
     //roomId가 바뀔때마다 다시 연결
-    useEffect(async() => {
+    useEffect(() => {
         socketConnect();
-        try{
-        sulmoggoApi.enterChatRoom(chatRoomId)
-        const data = await sulmoggoApi.getRoomData(chatRoomId)
-        console.log(data.data.body);
-        setRoomData(data.data.body)
-        setUserCount(data.data.body?.userCount + 1)
-        setCreatedAt(data.data.body.creadtedAt)
-        setTimeout(() => {}, 1000)
+        const foo = async() => {
+            try{
+                sulmoggoApi.enterChatRoom(chatRoomId)
+                const data = await sulmoggoApi.getRoomData(chatRoomId)
+                console.log(data.data.body);
+                setRoomData(data.data.body)
+                setUserCount(data.data.body?.userCount + 1)
+                setCreatedAt(data.data.body.creadtedAt)
+                setTimeout(() => {}, 1000)
+                }
+                catch{
+                    console.log("뭔가 잘못됨");
+                }
         }
-        catch{
-            console.log("뭔가 잘못됨");
-        }
+        foo();
         return (() => {
             quitChatroom()
         })

@@ -20,10 +20,10 @@ import {
 const data = {
   'version': '라이브 종류',
   "thumbnail": '/images/img.png',
-  "alcoholtag": "주종",
-  "food": '안주',
-  'theme': '테마',
-  "title": '제목123456789'
+  "alcoholtag": "맥주",
+  "food": '치킨',
+  'theme': '스몰토크',
+  "title": '치맥합시다!!'
 }
 
 const NewLive = (props) => {

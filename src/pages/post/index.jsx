@@ -27,22 +27,22 @@ const Post = () => {
   const username = useSelector((state) => state.user.username);
   const { tableId } = useParams();
   const [isEdit, setEdit] = useState(false);
-  // const { data, status } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data), {
-  //   cacheTime: 0,
-  // });
-  // console.log(data);
+  const { data, status } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data), {
+    cacheTime: 0,
+  });
+  console.log(data);
 
-  // 게시글 수정일때
-  // useEffect(() => {
-  //   if (tableId !== undefined) {
-  //     setEdit(true)
-  //     setTagList(data?.alcoholtag);
-  //     setTagColor(tag.findIndex((el) => el == data?.alcoholtag));
-  //   } else {
-  //     setEdit(false)
-  //   }
-  // }, []);
-  // 태그 선택
+  //게시글 수정일때
+  useEffect(() => {
+    if (tableId !== undefined) {
+      setEdit(true)
+      setTagList(data?.alcoholtag);
+      setTagColor(tag.findIndex((el) => el == data?.alcoholtag));
+    } else {
+      setEdit(false)
+    }
+  }, []);
+  //태그 선택
   const addTag = (e) => {
     setTagColor(e.target.value);
     setTagList(tag[e.target.value]);
@@ -104,9 +104,9 @@ const Post = () => {
   //   SetThumbnailImg(imgList[thumbnail]);
   // }, [imgList, thumbnail]);
 
-  // if (status === 'loading') {
-  //   return <Spinner />
-  // }
+  if (status === 'loading') {
+    return <Spinner />
+  }
 
   return (
     <Wrap>
@@ -117,7 +117,7 @@ const Post = () => {
           <input
             type="text"
             placeholder="제목을 입력해주세요."
-            // defaultValue={isEdit && data?.title}
+            defaultValue={isEdit && data?.title || ''}
             autoComplete="off"
             {...register("title", {
               required: true,
@@ -180,7 +180,7 @@ const Post = () => {
           <Editor
             ref={editorRef} // DOM 선택용 useRef
             placeholder="내용을 입력해주세요."
-            // defaultValue={isEdit && data.content}
+            defaultValue={isEdit && data.content || ''}
             previewStyle="vertical" // 미리보기 스타일 지정
             height="600px" // 에디터 창 높이
             initialEditType="wysiwyg" // 초기 입력모드 설정
@@ -235,7 +235,7 @@ const Post = () => {
           <input
             type="text"
             placeholder="자유태그 입력(한개만 입력 가능, 띄어쓰기 포함 10글자까지)"
-            // defaultValue={isEdit && data?.freetag}
+            defaultValue={isEdit && data?.freetag || ''}
             autoComplete="off"
             {...register("freetag", {
               required: "자유태그를 입력해주세요.",

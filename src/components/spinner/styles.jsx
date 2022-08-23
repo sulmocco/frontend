@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const SpinnerWrap = styled.div`
     width: 100%;
@@ -16,7 +16,7 @@ export const SpinnerWrap = styled.div`
         animation: rotate360 1s linear Infinite;
     } */
     img {
-        width: 20rem;
+        width: ${props => props.size || '20rem'};
         height: auto;
         animation: rotate360 1s linear Infinite;
     }

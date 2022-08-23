@@ -4,6 +4,19 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import sulmoggoApi from '../../shared/apis';
 import { ChatWrap } from './styles';
+import { AlchholTag, Separator, SnackTag, ThemeTag } from "../../styles/CommonStyles";
+import {
+  AddHostFriendButton,
+  ChatContent,
+  ChatHeader,
+  ChatInputWrapper,
+  ChatWrapper,
+  LiveWrapper,
+  ProfileCircle,
+  ProfileWrap,
+  VideoButton,
+  VideoContainer,
+} from "./styles";
 
 const Chat = () => {
     const [message, setMessage] = useState('');
@@ -120,34 +133,97 @@ const Chat = () => {
         catch{
             console.log("뭔가 잘못됨");
         }
-        // return (() => {
-        //     socketDisConnect()
-        // })
+        return (() => {
+            quitChatroom()
+        })
     }, [])
     return (
-        <ChatWrap>
-            <div className="message-wrap">
-               {content.map(data => {
-                return <div style={{display: "block"}}>--*{data.sender} : {data.message}*--</div>
-               })}
+        <LiveWrapper>
+      <div className="live_left_box">
+        <div className="upper">
+          <ProfileWrap>
+            <ProfileCircle />
+            <div>
+              <h1>방제목목목방제목목목방제목목목</h1>
+              <div className="userWrap">
+                <div className="username">dnflxlaghkxlsld_99</div>
+                <AddHostFriendButton>
+                  <img src="/images/icon_addfriend.svg" />
+                  <span>친구추가</span>
+                </AddHostFriendButton>
+              </div>
             </div>
-            <form action="">
-                <input type="text" placeholder='채팅치시오' ref={chat_ref} />
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    sendMessage(chat_ref.current.value);
-                    // console.log("보내기버튼. 내용 : ", chat_ref.current.value);
-                }}>보내기</button>
-                <button onClick={(e) => {
+          </ProfileWrap>
+          <div className="infoWrap">
+            <div className="tagWrap">
+              <AlchholTag>주종</AlchholTag>
+              <SnackTag>안주</SnackTag>
+              <ThemeTag>테마</ThemeTag>
+            </div>
+            <div className="statWrap">
+              <img src="/images/icon_clock_grey_02.svg"/>
+              <span>24h 00:00</span>
+              <Separator />
+              <img src="/images/icon_people_grey_02.svg"/>
+              <span>100,000</span>
+            </div>
+          </div>
+        </div>
+        <VideoContainer>
+            <div className="videoWrap">
+            </div>
+            <div className="videoButtonWrap">
+            <VideoButton>
+                <img src ="/images/icon_video_available.svg"/>
+            </VideoButton>
+            <VideoButton>
+                <img src ="/images/icon_audio_available.svg"/>
+            </VideoButton>
+            </div>
+        </VideoContainer>
+      </div>
+      <div className="live_right_box">
+        <ChatHeader>
+            <div>
+            <img src="/images/icon_chat.svg"/>
+            <span>채팅</span>
+            </div>
+            <button onClick={(e) => {
                     e.preventDefault();
                     if(window.confirm("채팅방을 나가시겠습니까?")){
                     quitChatroom();
                     // console.log("나가기버튼. 내용 : ", chat_ref.current.value);
                     naviagte("/rooms")
                 }
-                }}>나가기</button>
-            </form>
-        </ChatWrap>
+                }}>
+                <img src="/images/icon_out.svg"/>
+            </button>
+        </ChatHeader>
+        <ChatWrapper>
+            {content.map(data => {
+                return <ChatContent>
+                    <span className="chatuser">{data.sender}</span>
+                    <span className="chattext">: {data.message}</span>
+                </ChatContent>
+            })}
+            
+        </ChatWrapper>
+        <ChatInputWrapper>
+            <form action="">
+                <div>
+                    <input type="text" placeholder="채팅을 입력해 주세요" ref={chat_ref}/>
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        sendMessage(chat_ref.current.value);
+                        // console.log("보내기버튼. 내용 : ", chat_ref.current.value);
+                    }}>
+                        <img src="/images/icon_send.svg"/>
+                    </button>
+                </div>
+                </form>
+            </ChatInputWrapper>
+      </div>
+    </LiveWrapper>
     );
 };
 

@@ -52,7 +52,7 @@ const Chat = () => {
         try {
             client.send(`/pub/chat`, JSON.stringify({
                 type: 'TALK',
-                roomId: roomId,
+                // roomId: roomId,
                 sender: username,
                 message: chat_ref.current.value
             }));
@@ -68,7 +68,7 @@ const Chat = () => {
 
     // 메세지 받기
 
-    // roomId가 바뀔때마다 다시 연결
+    //roomId가 바뀔때마다 다시 연결
     useEffect(() => {
         socketConnect();
     }, [roomId])

@@ -22,7 +22,8 @@ const data = {
   "thumbnail": '/images/img.png',
   "alcoholtag": "주종",
   "food": '안주',
-  'theme': '테마'
+  'theme': '테마',
+  "title": '제목'
 }
 
 const NewLive = (props) => {
@@ -37,7 +38,11 @@ const NewLive = (props) => {
   const navigate = useNavigate();
   const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
     onSuccess: (data) => {
-      console.log(data);
+      alert(data);
+      navigate(`/chat`, { state: data.data })
+    },
+    onError: (error)=>{
+      alert(error);
     }
   });
 
@@ -84,11 +89,9 @@ const NewLive = (props) => {
           <StyledInput type="text" placeholder="안주를 입력해 주세요." />
           <SubTitle mt={"4.4rem"}>테마</SubTitle>
           <StyledInput type="text" placeholder="테마를 입력해 주세요." />
-
           <SubmitWrapper>
             <BlueButton onClick={() => {
               mutation.mutate(data);
-              navigate(`/chat/01`)
             }}>시작하기</BlueButton>
           </SubmitWrapper>
         </form>

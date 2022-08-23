@@ -23,7 +23,7 @@ api.interceptors.response.use(
   res => {return res},
   err => {
     console.log("sadasd");
-    alert("응답이 뭔가 잘못됨!!" + err.resonse.status)
+    // alert("응답이 뭔가 잘못됨!!")
   }
 )
 

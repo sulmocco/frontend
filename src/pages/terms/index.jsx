@@ -3,6 +3,7 @@ import { Termsection, TermsWrap } from './styles';
 import { SignUpButton } from '../signup/styles';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import ProgressBar from '../../components/progressbar';
 
 const Terms = () => {
     const [check1, setCheck1] = useState(false);
@@ -23,6 +24,7 @@ const Terms = () => {
     const navigate = useNavigate();
     return (
         <TermsWrap>
+            <ProgressBar />
             <Termsection>
                 <h2>회원가입에 필요한 약관에 동의해주세요.</h2>
                 <form>

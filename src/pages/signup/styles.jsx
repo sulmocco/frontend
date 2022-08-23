@@ -28,6 +28,7 @@ export const Container = styled.div`
     margin: 0;
     padding: 0;
     padding-top: 13.6rem;
+    flex-direction: column;
     /* overflow: auto; */
     /* width: 100vw; */
 `

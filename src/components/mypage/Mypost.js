@@ -6,33 +6,10 @@ import { useInView } from "react-intersection-observer";
 import { AlchholTag, FreeTag, Separator } from "../../styles/CommonStyles";
 import Loading from "../common/Loading";
 import TableCard from "../tablecard";
+import Spinner from "../spinner";
 
 const Mypost = () => {
   const { ref, inView } = useInView();
-
-  // 본인이 작성한 술상 불러오기 api
-  // const getMyTable = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       `https://d68cd834-2edf-4bc3-b4ff-069d5bc2b347.mock.pstmn.io/api/mypage/tables?page=${0}&size=${0}`
-  //     );
-  //     return res;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  //본인이 작성한 술상 불러오기 query
-  // const { data: my_table_query, status } = useQuery(["my_table"], getMyTable, {
-  //   onSuccess: (data) => {
-  //     console.log("본인이작성술상", data.data.tables);
-  //   },
-  // });
-
-  // 쿼리 데이터 로딩전에 스피너
-  // if (status === "loading") {
-  //   return null;
-  // }
 
   // 본인이 작성한 술상 불러오기 api
   const getMyTable = async (pageParam) => {
@@ -70,7 +47,7 @@ const Mypost = () => {
   console.log("찍어봄", my_table_query);
 
   if (status === "loading") {
-    return <Loading />;
+    return <Spinner size="7rem" />;
   }
 
   return (
@@ -83,9 +60,7 @@ const Mypost = () => {
                 return (
                   <React.Fragment key={idx}>
                     {page.data.map((v, i) => {
-                      return (
-                        <TableCard {...v}/>
-                      );
+                      return <TableCard {...v} />;
                     })}
                   </React.Fragment>
                 );
@@ -123,12 +98,10 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const Wrap = styled.div`
   width: 1290px;
   margin: 0 auto;
 `;
-
 export const TablesGrid = styled.div`
   width: 100%;
   margin-top: 3.2rem;

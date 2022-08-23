@@ -64,11 +64,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/post" element={<Post />} />
-            <Route path="/post" element={<Post />} />
+            <Route path="/post/:tableId" element={<Post />} />
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
             <Route path="/tables/:tableId" element={<Detail />} />
-            <Route path="/profile" element={<ProfileEdit />} />
             <Route path="/live/new" element={<NewLive />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/password" element={<PassWordInput />} />
@@ -81,6 +80,7 @@ function App() {
               <Route path="/mypage/mypost" element={<Mypost />} />
               <Route path="/mypage/friends" element={<Friends />} />
             </Route>
+            <Route path="/mypage/edit" element={<ProfileEdit />} />
           </Route>
         </Routes>
       </ThemeProvider>

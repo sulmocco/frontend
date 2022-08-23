@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../components/spinner";
 import sulmoggoApi from "../../shared/apis";
 
 const Mypage = () => {
+  const navigate = useNavigate();
   // 마이페이지 계정정보 불러오기 api
   const getMyAccount = async () => {
     try {
@@ -38,12 +39,12 @@ const Mypage = () => {
         <Wrap>
           <h1>마이페이지</h1>
           <ProfileBox>
-            <img src={account_query?.data.profile} alt="프로필 이미지" />
+            <img src={account_query?.data.profile || 'images/profile_default.svg'} alt="프로필 이미지" />
             <div className="info">
               <div className="level">{account_query?.data.level}</div>
               <div>{account_query?.data.username}</div>
             </div>
-            <button>수정하기</button>
+            <button onClick={() => navigate(`/mypage/edit`)}>수정하기</button>
           </ProfileBox>
         </Wrap>
       </Profile>

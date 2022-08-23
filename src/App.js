@@ -73,7 +73,7 @@ function App() {
             <Route path="/password" element={<PassWordInput />} />
             <Route path="/render/:params" element={<PasswordRending />} />
             <Route path="/comment" element={<Comment />} />
-            <Route path="/chat/:roomId" element={<Chat />} />
+            <Route path="/chat/:chatRoomId" element={<Chat />} />
             <Route path="/rooms" element={<Rooms />} />
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />

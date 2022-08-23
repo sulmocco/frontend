@@ -148,7 +148,7 @@ const SignUp = (props) => {
           error={errors.password?.message}
           title="비밀번호"
           guide={`비밀번호는 영문자,숫자,특수문자(!@#$%^&*)를 1개 이상 조합하여
-        8~16자로 입력부탁`}
+        8~16자로 입력해주세요.`}
         >
           <input
             id="password"

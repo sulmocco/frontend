@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledInput = styled.input`
   padding: ${(props) => (props.small ? "1.6rem 2rem" : "2rem")};
-  border: none;
+  border: ${props => props.error ? ".2rem solid "+props.theme.error : "none"};
   outline: none;
   background-color: ${(props) => props.theme.grey_04};
   margin-top: 1.6rem;
@@ -162,3 +162,7 @@ export const SubmitWrapper = styled.div`
   gap: 2.4rem;
   margin-top: 9.6rem;
 `;
+
+export const VideoDevicesDropdownWrapper = styled.div`
+  
+`

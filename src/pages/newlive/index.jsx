@@ -34,10 +34,16 @@ const NewLive = (props) => {
   const alcohol = useRef({});
   const videoPreview = useRef();
   const [versionOpen, setVersionOpen] = useState(false);
-  const [cameraDevices, setCameraDevices] = useState([])
-  const [audioDevices, setAudioDevices] = useState([])
-  const [camera, setCamera] = useState(null)
-  const { register, watch, handleSubmit, setValue } = useForm();
+  const [cameraDevices, setCameraDevices] = useState([]);
+  const [audioDevices, setAudioDevices] = useState([]);
+  const [camera, setCamera] = useState(null);
+  const {
+    register,
+    watch,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
   alcohol.current = watch("alcohol", "맥주");
 
   const navigate = useNavigate();
@@ -57,24 +63,28 @@ const NewLive = (props) => {
     });
     if (cameraPermission !== "denied" && micPermission !== "denied") {
       devices = await navigator.mediaDevices.enumerateDevices();
-      setCameraDevices(devices.filter(x => x.kind === 'videoinput'))
-      setAudioDevices(devices.filter(x => x.king === 'audioinput'))
+      setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
+      setAudioDevices(devices.filter((x) => x.king === "audioinput"));
       await navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-        videoPreview.current.srcObject = stream
-      })
+        videoPreview.current.srcObject = stream;
+      });
     }
   };
 
   useEffect(() => {
-    getUserMedia({video: camera ? {deviceId:camera.deviceId} : true});
+    getUserMedia({ video: camera ? { 
+      deviceId: camera.deviceId,
+      width: 837,
+      height: 552
+    } : true });
     console.log(cameraDevices, audioDevices);
     console.log("this..");
   }, [camera]);
 
   useEffect(() => {
-    // setCamera(cameraDevices ? cameraDevices[1] : null)
+    setCamera(cameraDevices ? cameraDevices[0] : null);
     console.log("how..");
-  }, [])
+  }, []);
   return (
     <>
       <NewLiveContainer>
@@ -124,7 +134,12 @@ const NewLive = (props) => {
 
           {/* TODO: 옆에 버전 선택 드롭다운 있어야 함 */}
           <SubTitle mt={"2.7rem"}>제목</SubTitle>
-          <StyledInput type="text" placeholder="제목을 입력해 주세요." />
+          <StyledInput
+            type="text"
+            placeholder="제목을 입력해 주세요."
+            error={errors.title}
+            {...register("title", { required: "제목을 입력해달라" })}
+          />
           {/* TODO: 열심히 만들고 보니 여기 텍스트로 직접 입력하기로 했었다 */}
           <SubTitle mt={"5.6rem"}>추천술 선택</SubTitle>
           <AlcoholWrapper>
@@ -149,7 +164,7 @@ const NewLive = (props) => {
             <div>
               <SubTitle>방송화면</SubTitle>
               <div className="video">
-                <video autoPlay ref={videoPreview}/>
+                <video autoPlay ref={videoPreview} />
               </div>
             </div>
             <div>
@@ -157,7 +172,7 @@ const NewLive = (props) => {
               <SubTitle>썸네일 이미지</SubTitle>
               <div className="thumbnail" />
               <SubTitle mt={"4rem"}>비디오</SubTitle>
-              <StyledInput type="text" placeholder="없음" small />
+              <StyledInput type="text" placeholder="-- 비디오 선택 --" small disabled/>
               <SubTitle mt={"4rem"}>오디오</SubTitle>
               <StyledInput type="text" placeholder="없음" small />
             </div>

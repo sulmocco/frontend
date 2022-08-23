@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const StyledInput = styled.input`
   padding: ${(props) => (props.small ? "1.6rem 2rem" : "2rem")};
-  border: ${props => props.error ? ".2rem solid "+props.theme.error : "none"};
+  border: ${(props) =>
+    props.error ? ".2rem solid " + props.theme.error : "none"};
   outline: none;
   background-color: ${(props) => props.theme.grey_04};
   margin-top: 1.6rem;
@@ -51,8 +52,7 @@ export const VersionInputWrap = styled.div`
   }
   .versionsWrap {
     position: absolute;
-    /* padding: .6rem 0; */
-    height: ${(props) => (props.open ? 3*props.count : 0)}rem;
+    height: ${(props) => (props.open ? 3 * props.count : 0)}rem;
     background-color: ${(props) => props.theme.white};
     transition: all 0.3s ease-in-out;
     border: none;
@@ -92,7 +92,7 @@ export const AlcoholWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 2.4rem;
-  gap: .8rem;
+  gap: 0.8rem;
 `;
 
 export const AlcoholButton = styled.div`
@@ -128,6 +128,11 @@ export const VideoWrapper = styled.div`
   justify-content: flex-start;
   margin-top: 5.3rem;
   gap: 4.3rem;
+  h1{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
   div {
     flex-grow: 1;
   }
@@ -139,10 +144,10 @@ export const VideoWrapper = styled.div`
     margin-top: 1.6rem;
     border-radius: 1rem;
     overflow: hidden;
-    video{
+    video {
       width: 100%;
       height: 100%;
-      background-color: ${props => props.theme.black};
+      background-color: ${(props) => props.isInput ? props.theme.black : "#d9d9d9"};
     }
   }
   .thumbnail {
@@ -164,16 +169,48 @@ export const SubmitWrapper = styled.div`
 `;
 
 export const VideoDevicesDropdownWrapper = styled.div`
-  .devicesWrap{
+  /* display: flex;
+flex-direction: row; */
+  position: relative;
+  .inputWrap {
+    display: flex;
+    flex-direction: row;
+    padding: 1.6rem 2rem;
+    cursor: pointer;
+    outline: none;
+    background-color: ${(props) => props.theme.grey_04};
+    margin-top: 1.6rem;
+    border-radius: 1rem;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    width: 100%;
+    &::placeholder {
+      color: ${(props) => props.theme.grey_02};
+    }
+    input {
+      flex-grow: 1;
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+  img {
+    /* position: absolute; */
+  }
+  .devicesWrap {
     background-color: aliceblue;
     position: absolute;
-    /* padding: .6rem 0; */
-    height: ${(props) => (props.open ? 5.6*props.count : 0)}rem;
+    height: ${(props) => (props.open ? 5.6 * props.count : 0)}rem;
     background-color: ${(props) => props.theme.white};
     transition: all 0.3s ease-in-out;
     border: none;
     border-radius: 0.4rem;
-    /* width: 12rem; */
+    width: 40rem;
     color: ${(props) => props.theme.grey_03};
     font-weight: 500;
     margin-top: 1.2rem;
@@ -181,18 +218,24 @@ export const VideoDevicesDropdownWrapper = styled.div`
     flex-direction: column;
     box-shadow: ${(props) => props.theme.shadow_gray};
     overflow: hidden;
+    z-index: 200;
   }
-  .device{
+  .device {
     /* background-color: antiquewhite; */
     box-sizing: border-box;
     font-size: 2rem;
     line-height: 2.4rem;
     padding: 1.6rem 2rem;
     letter-spacing: -0.04em;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
     &:hover {
       box-sizing: border-box;
       color: ${(props) => props.theme.primary};
       background-color: ${(props) => props.theme.bg_light_blue};
     }
   }
-`
+`;

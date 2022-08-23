@@ -34,11 +34,17 @@ const data = {
 const NewLive = (props) => {
   const alcohol = useRef({});
   const videoPreview = useRef();
+
   const [versionOpen, setVersionOpen] = useState(false);
   const [camerasOpen, setCamerasOpen] = useState(false);
+  const [audiosOpen, setAudiosOpen] = useState(false);
+
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
+
   const [camera, setCamera] = useState(null);
+  const [audio, setAudio] = useState(null);
+  const [constraints, setConstraints] = useState({});
   const {
     register,
     watch,
@@ -66,35 +72,57 @@ const NewLive = (props) => {
     if (cameraPermission !== "denied" && micPermission !== "denied") {
       devices = await navigator.mediaDevices.enumerateDevices();
       setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
-      setAudioDevices(devices.filter((x) => x.king === "audioinput"));
-      await navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-        videoPreview.current.srcObject = stream;
-      });
+      setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
+      if (!constraints.video && !constraints.audio) {
+        videoPreview.current.srcObject = null;
+      } else {
+        await navigator.mediaDevices
+          .getUserMedia(constraints)
+          .then((stream) => {
+            videoPreview.current.srcObject = stream;
+          });
+      }
     }
   };
 
   const handleCameraDeviceChange = (device) => {
-    setValue("video", device.label)
-    setCamera(device)
-  }
+    setValue("video", device ? device.label : "없음");
+    setConstraints({
+      ...constraints,
+      video: device
+        ? { ...constraints.video, deviceId: device.deviceId }
+        : false,
+    });
+    // setCamera(device);
+  };
+  const handleAudioDeviceChange = (device) => {
+    setValue("audio", device ? device.label : "없음");
+    setConstraints({
+      ...constraints,
+      audio: device
+        ? { ...constraints.audio, deviceId: device.deviceId }
+        : false,
+    });
+    // setAudio(device);
+  };
 
   useEffect(() => {
-    getUserMedia({ video: camera ? { 
-      deviceId: camera.deviceId,
-      width: 837,
-      height: 552
-    } : true });
+    getUserMedia(constraints);
     console.log(cameraDevices, audioDevices);
     console.log("this..");
-  }, [camera]);
+  }, [constraints]);
 
   useEffect(() => {
-    setCamera(cameraDevices ? cameraDevices[0] : null);
+    // handleCameraDeviceChange(c)
     console.log("how..");
   }, []);
   return (
     <>
-      <NewLiveContainer>
+      <NewLiveContainer onClick={() => {
+        camerasOpen(false)
+        audiosOpen(false)
+        versionOpen(false)
+      }}>
         <form onSubmit={handleSubmit}>
           <div className="titleWrap">
             <PageTitle>술약속 잡기</PageTitle>
@@ -167,10 +195,11 @@ const NewLive = (props) => {
               return null;
             })}
           </AlcoholWrapper>
-          <VideoWrapper>
+          <VideoWrapper isInput={videoPreview.current.srcObject}>
             <div>
               <SubTitle>방송화면</SubTitle>
               <div className="video">
+                {!videoPreview.current.srcObject && <h1>영상이 없습니다!</h1>}
                 <video autoPlay ref={videoPreview} />
               </div>
             </div>
@@ -179,16 +208,82 @@ const NewLive = (props) => {
               <SubTitle>썸네일 이미지</SubTitle>
               <div className="thumbnail" />
               <SubTitle mt={"4rem"}>비디오</SubTitle>
-              <VideoDevicesDropdownWrapper open={camerasOpen} onClick={() => setCamerasOpen(!camerasOpen)}>
-              <StyledInput type="text" placeholder="-- 비디오 선택 --" small disabled {...register("video")} defaultValue={cameraDevices[0]?.label}/>
-              <div className="devicesWrap">
-                {cameraDevices && cameraDevices.map(x => {
-                  return <div className="device" onClick={() => handleCameraDeviceChange(x)}>{x.label}</div>
-                })}
-              </div>
+              <VideoDevicesDropdownWrapper
+                open={camerasOpen}
+                count={cameraDevices.length + 1}
+                onClick={() => setCamerasOpen(!camerasOpen)}
+              >
+                <div className="inputWrap">
+                  <input
+                    type="text"
+                    placeholder="-- 비디오 선택 --"
+                    small
+                    disabled
+                    {...register("video")}
+                    defaultValue={cameraDevices[0]?.label}
+                  />
+                  <img src="/images/icon_dropdown_grey_02.svg" />
+                </div>
+                <div className="devicesWrap">
+                  {cameraDevices &&
+                    cameraDevices.map((x) => {
+                      return (
+                        <div
+                          className="device"
+                          onClick={() => handleCameraDeviceChange(x)}
+                        >
+                          {x.label}
+                        </div>
+                      );
+                    })}
+                  <div
+                    className="device"
+                    onClick={() => handleCameraDeviceChange(null)}
+                  >
+                    없음
+                  </div>
+                </div>
               </VideoDevicesDropdownWrapper>
               <SubTitle mt={"4rem"}>오디오</SubTitle>
-              <StyledInput type="text" placeholder="없음" small />
+              <VideoDevicesDropdownWrapper
+                open={audiosOpen}
+                count={audioDevices.length + 1}
+                onClick={() => setAudiosOpen(!audiosOpen)}
+              >
+                <div className="inputWrap">
+                  <input
+                    type="text"
+                    placeholder="-- 오디오 선택 --"
+                    small
+                    disabled
+                    {...register("audio")}
+                    defaultValue={audioDevices[0]?.label}
+                  />
+                  <img src="/images/icon_dropdown_grey_02.svg" />
+                </div>
+                <div className="devicesWrap">
+                  {audioDevices &&
+                    audioDevices.map((x) => {
+                      return (
+                        <div
+                          className="device"
+                          onClick={() => handleAudioDeviceChange(x)}
+                        >
+                          {x.label}
+                        </div>
+                      );
+                    })}
+                  <div
+                    className="device"
+                    onClick={() => {
+                      setValue("audio", "없음");
+                      setAudio(null);
+                    }}
+                  >
+                    없음
+                  </div>
+                </div>
+              </VideoDevicesDropdownWrapper>
             </div>
           </VideoWrapper>
           <SubTitle mt={"7rem"}>안주</SubTitle>

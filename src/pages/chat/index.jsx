@@ -17,11 +17,17 @@ import {
     VideoButton,
     VideoContainer,
 } from "./styles";
+import moment from "moment"
 
 const Chat = () => {
     const [message, setMessage] = useState('');
     const [content, setContent] = useState([]);
-    const chat_ref = useRef();
+    const [roomData, setRoomData] = useState({})
+    const [usercount, setUserCount] = useState(0)
+    const [time, setTime] = useState(0)
+    const chatRef = useRef();
+    const chatListRef = useRef();
+    const [createdAt, setCreatedAt] = useState(0)
     const { chatRoomId } = useParams();
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
@@ -40,25 +46,14 @@ const Chat = () => {
     const socketConnect = () => {
         try {
             client.connect(headers, () => {
+                // enterChatroom()
                 const res = client.subscribe(`/sub/chat/room/${chatRoomId}`, (data) => {
-                    // console.log("데이터라도 보여줘: ", data);
                     const newMessage = JSON.parse(data.body);
-                    // console.log("--- 메시지 내용 ---");
-                    // console.log(data.body);
-                    // if(content.length>0){
-                    // console.log("콘텐트 길이가 0보다 큼 ");
-                    // const newContent = [...content]
-                    // newContent.push(newMessage.message)
-                    // console.log(newContent);
-                    // setContent(newContent);
-                    // }else{
-                    //     setContent([newMessage.message])
-                    //     console.log("콘텐트 길이가 0보다 안큼");
-                    //     console.log([newMessage.message]);
-                    // }
+                    setUserCount(JSON.parse(data.body).userCount)
+                    console.log(JSON.parse(data.body));
                     console.log("여기!!!!!!!!!!")
                     setContent((prevContent) => [...prevContent, newMessage])
-                }, headers);
+                },headers);
                 // console.log(res);
             });
         }
@@ -83,8 +78,9 @@ const Chat = () => {
             type: 'QUIT',
             chatRoomId: chatRoomId,
             sender: username,
-            message: chat_ref.current.value
+            message: chatRef.current.value
         }))
+        socketDisConnect()
     }
 
     const enterChatroom = async () => {
@@ -92,46 +88,63 @@ const Chat = () => {
             type: 'ENTER',
             chatRoomId: chatRoomId,
             sender: username,
-            message: chat_ref.current.value
+            message: chatRef.current.value
         }))
     }
 
     // 메세지 보내기
     const sendMessage = async () => {
-        // try {
-        console.log({
-            type: 'TALK',
-            chatRoomId: chatRoomId,
-            sender: username,
-            message: chat_ref.current.value
-        });
-        const res = await client.send(`/pub/chat/message`, headers, JSON.stringify({
-            type: 'TALK',
-            chatRoomId: chatRoomId,
-            sender: username,
-            message: chat_ref.current.value
-        }))
-        // console.log("SEND가 끝남. res : "+ res);
-        // if (chat_ref === '') {
-        //     return
-        // }
-        // }
-        // catch (error) {
-        //     console.log('메세지 보내기 실패', error)
-        // }
-        // setMessage('');
+        try {
+            console.log({
+                type: 'TALK',
+                chatRoomId: chatRoomId,
+                sender: username,
+                message: chatRef.current.value
+            });
+            const res = await client.send(`/pub/chat/message`,headers, JSON.stringify({
+                type: 'TALK',
+                chatRoomId: chatRoomId,
+                sender: username,
+                message: chatRef.current.value
+            }))
+            console.log("SEND가 끝남. res : "+ res);
+            if (chatRef === '') {
+                return
+            }
+        }
+        catch (error) {
+            console.log('메세지 보내기 실패', error)
+        }
     }
+
+    // 1초마다 시간 갱신
+    (function loop() {
+        setTimeout(function () {
+          loop()
+          if(createdAt){
+          console.log("loop : ", createdAt);
+            var date1 = moment(createdAt);
+            var date2 = moment();
+            var diff = date2.diff(date1, 'seconds');
+            setTime(moment.utc(diff*1000).format('HH:mm:ss'))}
+        }, 1000);
+      }());
 
     // 메세지 받기
 
     //roomId가 바뀔때마다 다시 연결
-    useEffect(() => {
+    useEffect(async() => {
         socketConnect();
-        try {
-            sulmoggoApi.enterChatRoom(chatRoomId)
-            sulmoggoApi.getRoomData(chatRoomId)
+        try{
+        sulmoggoApi.enterChatRoom(chatRoomId)
+        const data = await sulmoggoApi.getRoomData(chatRoomId)
+        console.log(data.data.body);
+        setRoomData(data.data.body)
+        setUserCount(data.data.body?.userCount + 1)
+        setCreatedAt(data.data.body.creadtedAt)
+        setTimeout(() => {}, 1000)
         }
-        catch {
+        catch{
             console.log("뭔가 잘못됨");
         }
         return (() => {
@@ -139,63 +152,83 @@ const Chat = () => {
         })
     }, [])
     return (
-        <LiveWrapper>
-            <div className="live_left_box">
-                <div className="upper">
-                    <ProfileWrap>
-                        <ProfileCircle />
-                        <div>
-                            <h1>방제목목목방제목목목방제목목목</h1>
-                            <div className="userWrap">
-                                <div className="username">dnflxlaghkxlsld_99</div>
-                                <AddHostFriendButton>
-                                    <img src="/images/icon_addfriend.svg" />
-                                    <span>친구추가</span>
-                                </AddHostFriendButton>
-                            </div>
-                        </div>
-                    </ProfileWrap>
-                    <div className="infoWrap">
-                        <div className="tagWrap">
-                            <AlchholTag>주종</AlchholTag>
-                            <SnackTag>안주</SnackTag>
-                            <ThemeTag>테마</ThemeTag>
-                        </div>
-                        <div className="statWrap">
-                            <img src="/images/icon_clock_grey_02.svg" />
-                            <span>24h 00:00</span>
-                            <Separator />
-                            <img src="/images/icon_people_grey_02.svg" />
-                            <span>100,000</span>
-                        </div>
-                    </div>
-                </div>
-                <VideoContainer>
-                    <div className="videoWrap">
-                    </div>
-                    <div className="videoButtonWrap">
-                        <VideoButton>
-                            <img src="/images/icon_video_available.svg" />
-                        </VideoButton>
-                        <VideoButton>
-                            <img src="/images/icon_audio_available.svg" />
-                        </VideoButton>
-                    </div>
-                </VideoContainer>
+    <LiveWrapper>
+      <div className="live_left_box">
+        <div className="upper">
+          <ProfileWrap>
+            <ProfileCircle />
+            <div>
+              <h1>{roomData?.title || "방제목이 없습니다."}</h1>
+              <div className="userWrap">
+                <div className="username">{roomData?.username || "사용자가 없습니다."}</div>
+                <AddHostFriendButton>
+                  <img src="/images/icon_addfriend.svg" />
+                  <span>친구추가</span>
+                </AddHostFriendButton>
+              </div>
             </div>
-            <div className="live_right_box">
-                <ChatHeader>
-                    <div>
-                        <img src="/images/icon_chat.svg" />
-                        <span>채팅</span>
-                    </div>
-                    <button onClick={async (e) => {
+          </ProfileWrap>
+          <div className="infoWrap">
+            <div className="tagWrap">
+              <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
+              <SnackTag>{roomData?.food || "안주"}</SnackTag>
+              <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
+            </div>
+            <div className="statWrap">
+              <img src="/images/icon_clock_grey_02.svg"/>
+              <span>{time || "00:00:00"}</span>
+              <Separator />
+              <img src="/images/icon_people_grey_02.svg"/>
+              <span>{usercount || 0}</span>
+            </div>
+          </div>
+        </div>
+        <VideoContainer>
+            <div className="videoWrap"></div>
+            <div className="videoButtonWrap">
+            <VideoButton>
+                <img src ="/images/icon_video_available.svg"/>
+            </VideoButton>
+            <VideoButton>
+                <img src ="/images/icon_audio_available.svg"/>
+            </VideoButton>
+            </div>
+        </VideoContainer>
+      </div>
+      <div className="live_right_box">
+        <ChatHeader>
+            <div>
+            <img src="/images/icon_chat.svg"/>
+            <span>채팅</span>
+            </div>
+            <button onClick={async (e) => {
+                    e.preventDefault();
+                    if(window.confirm("채팅방을 나가시겠습니까?")){
+                    await quitChatroom();
+                    // console.log("나가기버튼. 내용 : ", chatRef.current.value);
+                    naviagte("/rooms")
+                }
+                }}>
+                <img src="/images/icon_out.svg"/>
+            </button>
+        </ChatHeader>
+        <ChatWrapper ref={chatListRef}>
+            {content.map(data => {
+                return <ChatContent key={Math.random().toString(36).substr(2,11)}>
+                    <span className="chatuser">{data.sender}</span>
+                    <span className="chattext">: {data.message}</span>
+                </ChatContent>
+            })}
+            
+        </ChatWrapper>
+        <ChatInputWrapper>
+            <form action="">
+                <div className='sendInputWrapper'>
+                    <input type="text" placeholder="채팅을 입력해 주세요" ref={chatRef}/>
+                    <button onClick={(e) => {
                         e.preventDefault();
-                        if (window.confirm("채팅방을 나가시겠습니까?")) {
-                            await quitChatroom();
-                            // console.log("나가기버튼. 내용 : ", chat_ref.current.value);
-                            naviagte("/rooms")
-                        }
+                        sendMessage(chatRef.current.value);
+                        // console.log("보내기버튼. 내용 : ", chatRef.current.value);
                     }}>
                         <img src="/images/icon_out.svg" />
                     </button>

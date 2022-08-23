@@ -258,7 +258,10 @@ export const ChatInputWrapper = styled.div`
     align-items: center;
     padding: 4rem 2.4rem 4.8rem;
     /* box-sizing: border-box; */
-    &>div{
+    form{
+        width: 100%;
+    }
+    .sendInputWrapper{
         /* position: relative; */
         width: 100%;
         height: 100%;

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import sulmoggoApi from '../../shared/apis';
@@ -12,6 +12,7 @@ const Chat = () => {
     const { chatRoomId } = useParams();
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
+    const naviagte = useNavigate()
 
     // const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/chat`); // 서버주소 수정하기
     const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/ws-stomp`); // 서버주소 수정하기
@@ -20,28 +21,32 @@ const Chat = () => {
     const headers = { Authorization: token };
 
     // 웹소켓 연결시 stomp에서 자동으로 connect이 되었다는것을 console에 보여주는데 그것을 감추기 위한 debug
-    // client.debug = null;
+    client.debug = null;
 
     // 소켓연결
     const socketConnect = () => {
         try {
             client.connect(headers, () => {
                 const res = client.subscribe(`/sub/chat/room/${chatRoomId}`, (data) => {
-                    console.log("데이터라도 보여줘: ", data);
+                    // console.log("데이터라도 보여줘: ", data);
                     const newMessage = JSON.parse(data.body);
-                    console.log("--- 메시지 내용 ---");
-                    console.log(data.body);
-                    if(content.length>0){
-                    const newContent = [...content]
-                    newContent.push(newMessage.message)
-                    console.log([...newContent]);
-                    setContent(newContent);
-                    }else{
-                        setContent([newMessage.message])
-                        console.log([newMessage.message]);
-                    }
+                    // console.log("--- 메시지 내용 ---");
+                    // console.log(data.body);
+                    // if(content.length>0){
+                    // console.log("콘텐트 길이가 0보다 큼 ");
+                    // const newContent = [...content]
+                    // newContent.push(newMessage.message)
+                    // console.log(newContent);
+                    // setContent(newContent);
+                    // }else{
+                    //     setContent([newMessage.message])
+                    //     console.log("콘텐트 길이가 0보다 안큼");
+                    //     console.log([newMessage.message]);
+                    // }
+                    console.log("여기!!!!!!!!!!")
+                    setContent((prevContent) => [...prevContent, newMessage])
                 },headers);
-                console.log(res);
+                // console.log(res);
             });
         }
         catch (error) {
@@ -60,14 +65,14 @@ const Chat = () => {
         }
     }
 
-    // const quitChatroom = async() => {
-    //     const res = await client.send(`pub/chat/message`, headers, JSON.stringify({
-    //         type: 'QUIT',
-    //         chatRoomId: chatRoomId,
-    //         sender: username,
-    //         message: chat_ref.current.value
-    //     }))
-    // }
+    const quitChatroom = async() => {
+        const res = await client.send(`pub/chat/message`, headers, JSON.stringify({
+            type: 'QUIT',
+            chatRoomId: chatRoomId,
+            sender: username,
+            message: chat_ref.current.value
+        }))
+    }
 
     const enterChatroom = async() => {
         const res = await client.send(`pub/chat/message`, headers, JSON.stringify({
@@ -93,7 +98,7 @@ const Chat = () => {
                 sender: username,
                 message: chat_ref.current.value
             }))
-            console.log("SEND가 끝남. res : "+ res);
+            // console.log("SEND가 끝남. res : "+ res);
             // if (chat_ref === '') {
             //     return
             // }
@@ -123,7 +128,7 @@ const Chat = () => {
         <ChatWrap>
             <div className="message-wrap">
                {content.map(data => {
-                return <div style={{display: "block"}}>--*{data}*--</div>
+                return <div style={{display: "block"}}>--*{data.sender} : {data.message}*--</div>
                })}
             </div>
             <form action="">
@@ -131,13 +136,16 @@ const Chat = () => {
                 <button onClick={(e) => {
                     e.preventDefault();
                     sendMessage(chat_ref.current.value);
-                    console.log("보내기버튼. 내용 : ", chat_ref.current.value);
+                    // console.log("보내기버튼. 내용 : ", chat_ref.current.value);
                 }}>보내기</button>
-                {/* <button onClick={(e) => {
+                <button onClick={(e) => {
                     e.preventDefault();
+                    if(window.confirm("채팅방을 나가시겠습니까?")){
                     quitChatroom();
-                    console.log("나가기버튼. 내용 : ", chat_ref.current.value);
-                }}>나가기</button> */}
+                    // console.log("나가기버튼. 내용 : ", chat_ref.current.value);
+                    naviagte("/rooms")
+                }
+                }}>나가기</button>
             </form>
         </ChatWrap>
     );

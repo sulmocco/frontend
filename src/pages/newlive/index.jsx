@@ -22,7 +22,8 @@ const data = {
   "thumbnail": '/images/img.png',
   "alcoholtag": "주종",
   "food": '안주',
-  'theme': '테마'
+  'theme': '테마',
+  "title": '제목123456789'
 }
 
 const NewLive = (props) => {
@@ -36,8 +37,13 @@ const NewLive = (props) => {
 
   const navigate = useNavigate();
   const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (res) => {
+      alert(res, "요기");
+      console.log(res);
+      navigate(`/chat/`+res.data, {replace: true, state:{data: res.data}})
+    },
+    onError: (error)=>{
+      alert(error);
     }
   });
 
@@ -46,10 +52,8 @@ const NewLive = (props) => {
       <NewLiveContainer>
         <PageTitle>라이브 하기</PageTitle>
         <form onSubmit={handleSubmit}>
-          {/* TODO: 옆에 버전 선택 드롭다운 있어야 함 */}
           <SubTitle mt={"2.7rem"}>제목</SubTitle>
           <StyledInput type="text" placeholder="제목을 입력해 주세요." />
-          {/* TODO: 열심히 만들고 보니 여기 텍스트로 직접 입력하기로 했었다 */}
           <SubTitle mt={"5.6rem"}>추천술 선택</SubTitle>
           <AlcoholWrapper>
             {Alcohol.map((x, i) => {
@@ -84,11 +88,10 @@ const NewLive = (props) => {
           <StyledInput type="text" placeholder="안주를 입력해 주세요." />
           <SubTitle mt={"4.4rem"}>테마</SubTitle>
           <StyledInput type="text" placeholder="테마를 입력해 주세요." />
-
           <SubmitWrapper>
-            <BlueButton onClick={() => {
+            <BlueButton onClick={(e) => {
+              e.preventDefault();
               mutation.mutate(data);
-              navigate(`/chat/01`)
             }}>시작하기</BlueButton>
           </SubmitWrapper>
         </form>

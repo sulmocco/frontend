@@ -1,19 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import sulmoggoApi from '../../shared/apis';
 import { ChatWrap } from './styles';
 
 const Chat = () => {
     const [message, setMessage] = useState('');
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState([]);
     const chat_ref = useRef();
-    const { roomId } = useParams();
+    const { chatRoomId } = useParams();
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
+    const naviagte = useNavigate()
 
     // const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/chat`); // 서버주소 수정하기
-    const sock = new SockJS('http://13.209.8.162/ws-stomp'); // 서버주소 수정하기
+    const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/ws-stomp`); // 서버주소 수정하기
     const client = Stomp.over(sock);
 
     const headers = { Authorization: token };
@@ -25,10 +27,26 @@ const Chat = () => {
     const socketConnect = () => {
         try {
             client.connect(headers, () => {
-                client.subscribe(`/sub/chat/room/${roomId}`, (data) => {
+                const res = client.subscribe(`/sub/chat/room/${chatRoomId}`, (data) => {
+                    // console.log("데이터라도 보여줘: ", data);
                     const newMessage = JSON.parse(data.body);
-                    setContent(newMessage);
-                });
+                    // console.log("--- 메시지 내용 ---");
+                    // console.log(data.body);
+                    // if(content.length>0){
+                    // console.log("콘텐트 길이가 0보다 큼 ");
+                    // const newContent = [...content]
+                    // newContent.push(newMessage.message)
+                    // console.log(newContent);
+                    // setContent(newContent);
+                    // }else{
+                    //     setContent([newMessage.message])
+                    //     console.log("콘텐트 길이가 0보다 안큼");
+                    //     console.log([newMessage.message]);
+                    // }
+                    console.log("여기!!!!!!!!!!")
+                    setContent((prevContent) => [...prevContent, newMessage])
+                },headers);
+                // console.log(res);
             });
         }
         catch (error) {
@@ -47,43 +65,87 @@ const Chat = () => {
         }
     }
 
+    const quitChatroom = async() => {
+        const res = await client.send(`pub/chat/message`, headers, JSON.stringify({
+            type: 'QUIT',
+            chatRoomId: chatRoomId,
+            sender: username,
+            message: chat_ref.current.value
+        }))
+    }
+
+    const enterChatroom = async() => {
+        const res = await client.send(`pub/chat/message`, headers, JSON.stringify({
+            type: 'ENTER',
+            chatRoomId: chatRoomId,
+            sender: username,
+            message: chat_ref.current.value
+        }))
+    }
+
     // 메세지 보내기
-    const sendMessage = () => {
-        try {
-            client.send(`/pub/chat`, JSON.stringify({
+    const sendMessage = async () => {
+        // try {
+            console.log({
                 type: 'TALK',
-                roomId: roomId,
+                chatRoomId: chatRoomId,
                 sender: username,
                 message: chat_ref.current.value
-            }));
+            });
+            const res = await client.send(`/pub/chat/message`,headers, JSON.stringify({
+                type: 'TALK',
+                chatRoomId: chatRoomId,
+                sender: username,
+                message: chat_ref.current.value
+            }))
+            // console.log("SEND가 끝남. res : "+ res);
             // if (chat_ref === '') {
             //     return
             // }
-        }
-        catch (error) {
-            console.log('메세지 보내기 실패', error)
-        }
-        setMessage('');
+        // }
+        // catch (error) {
+        //     console.log('메세지 보내기 실패', error)
+        // }
+        // setMessage('');
     }
 
     // 메세지 받기
 
-    // roomId가 바뀔때마다 다시 연결
+    //roomId가 바뀔때마다 다시 연결
     useEffect(() => {
         socketConnect();
-    }, [roomId])
+        try{
+        sulmoggoApi.enterChatRoom(chatRoomId)
+        sulmoggoApi.getRoomData(chatRoomId)}
+        catch{
+            console.log("뭔가 잘못됨");
+        }
+        // return (() => {
+        //     socketDisConnect()
+        // })
+    }, [])
     return (
         <ChatWrap>
             <div className="message-wrap">
-                <span>{content}</span>
+               {content.map(data => {
+                return <div style={{display: "block"}}>--*{data.sender} : {data.message}*--</div>
+               })}
             </div>
             <form action="">
                 <input type="text" placeholder='채팅치시오' ref={chat_ref} />
                 <button onClick={(e) => {
                     e.preventDefault();
-                    console.log(chat_ref.current.value);
                     sendMessage(chat_ref.current.value);
+                    // console.log("보내기버튼. 내용 : ", chat_ref.current.value);
                 }}>보내기</button>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    if(window.confirm("채팅방을 나가시겠습니까?")){
+                    quitChatroom();
+                    // console.log("나가기버튼. 내용 : ", chat_ref.current.value);
+                    naviagte("/rooms")
+                }
+                }}>나가기</button>
             </form>
         </ChatWrap>
     );

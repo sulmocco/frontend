@@ -9,7 +9,6 @@ import Spinner from "./components/spinner";
 import Bookmark from "./components/mypage/Bookmark";
 import Friends from "./components/mypage/Friends";
 import Mypost from "./components/mypage/Mypost";
-import Live from "./pages/live";
 import PasswordRedirect from "./components/passwordredirect";
 import PasswordRending from "./components/passwordrending";
 import PassWordInput from "./components/passwordreset";
@@ -31,6 +30,7 @@ const NewLive = React.lazy(() => import("./pages/newlive"));
 const Mypage = React.lazy(() => import("./pages/mypage"));
 const Post = React.lazy(() => import("./pages/post"));
 const Rooms = React.lazy(() => import("./pages/rooms"));
+const Live = React.lazy(() => import("./pages/live"));
 
 function App() {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ function App() {
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
         <Routes>
-          <Route path="/live" element={<Live />}/>
+          <Route path="/live" element={<Live />} />
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<Auth />} />
@@ -68,19 +68,19 @@ function App() {
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
             <Route path="/tables/:tableId" element={<Detail />} />
-            <Route path="/profile" element={<ProfileEdit />} />
             <Route path="/live/new" element={<NewLive />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/password" element={<PassWordInput />} />
             <Route path="/render/:params" element={<PasswordRending />} />
             <Route path="/comment" element={<Comment />} />
-            <Route path="/chat/:roomId" element={<Chat />} />
+            <Route path="/chat/:chatRoomId" element={<Chat />} />
             <Route path="/rooms" element={<Rooms />} />
             <Route path="/mypage" element={<Mypage />}>
               <Route path="/mypage/bookmark" element={<Bookmark />} />
               <Route path="/mypage/mypost" element={<Mypost />} />
               <Route path="/mypage/friends" element={<Friends />} />
             </Route>
+            <Route path="/mypage/edit" element={<ProfileEdit />} />
           </Route>
         </Routes>
       </ThemeProvider>

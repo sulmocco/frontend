@@ -9,11 +9,6 @@ import Spinner from "./components/spinner";
 import Bookmark from "./components/mypage/Bookmark";
 import Friends from "./components/mypage/Friends";
 import Mypost from "./components/mypage/Mypost";
-import NewLive from "./pages/newlive";
-import ResetPassword from "./pages/resetpassword";
-import Chat from "./pages/chat";
-import Rooms from "./pages/rooms";
-import Live from "./pages/live";
 import PasswordRedirect from "./components/passwordredirect";
 import PasswordRending from "./components/passwordrending";
 import PassWordInput from "./components/passwordreset";
@@ -35,6 +30,7 @@ const NewLive = React.lazy(() => import("./pages/newlive"));
 const Mypage = React.lazy(() => import("./pages/mypage"));
 const Post = React.lazy(() => import("./pages/post"));
 const Rooms = React.lazy(() => import("./pages/rooms"));
+const Live = React.lazy(() => import("./pages/live"));
 
 function App() {
   const dispatch = useDispatch();
@@ -57,7 +53,7 @@ function App() {
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
         <Routes>
-          <Route path="/live" element={<Live />}/>
+          <Route path="/live" element={<Live />} />
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<Auth />} />
@@ -68,7 +64,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/post" element={<Post />} />
-            <Route path="/post/:tableId" element={<Post />} />
+            <Route path="/post" element={<Post />} />
             <Route path="/spinner" element={<Spinner />} />
             <Route path="/tables" element={<Tables />} />
             <Route path="/tables/:tableId" element={<Detail />} />

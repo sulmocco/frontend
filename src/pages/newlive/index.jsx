@@ -17,6 +17,7 @@ import {
   SubmitWrapper,
   SubTitle,
   VersionInputWrap,
+  VideoDevicesDropdownWrapper,
   VideoWrapper,
 } from "./styles";
 import { useEffect } from "react";
@@ -34,6 +35,7 @@ const NewLive = (props) => {
   const alcohol = useRef({});
   const videoPreview = useRef();
   const [versionOpen, setVersionOpen] = useState(false);
+  const [camerasOpen, setCamerasOpen] = useState(false);
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
   const [camera, setCamera] = useState(null);
@@ -70,6 +72,11 @@ const NewLive = (props) => {
       });
     }
   };
+
+  const handleCameraDeviceChange = (device) => {
+    setValue("video", device.label)
+    setCamera(device)
+  }
 
   useEffect(() => {
     getUserMedia({ video: camera ? { 
@@ -172,7 +179,14 @@ const NewLive = (props) => {
               <SubTitle>썸네일 이미지</SubTitle>
               <div className="thumbnail" />
               <SubTitle mt={"4rem"}>비디오</SubTitle>
-              <StyledInput type="text" placeholder="-- 비디오 선택 --" small disabled/>
+              <VideoDevicesDropdownWrapper open={camerasOpen} onClick={() => setCamerasOpen(!camerasOpen)}>
+              <StyledInput type="text" placeholder="-- 비디오 선택 --" small disabled {...register("video")} defaultValue={cameraDevices[0]?.label}/>
+              <div className="devicesWrap">
+                {cameraDevices && cameraDevices.map(x => {
+                  return <div className="device" onClick={() => handleCameraDeviceChange(x)}>{x.label}</div>
+                })}
+              </div>
+              </VideoDevicesDropdownWrapper>
               <SubTitle mt={"4rem"}>오디오</SubTitle>
               <StyledInput type="text" placeholder="없음" small />
             </div>

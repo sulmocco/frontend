@@ -164,5 +164,35 @@ export const SubmitWrapper = styled.div`
 `;
 
 export const VideoDevicesDropdownWrapper = styled.div`
-  
+  .devicesWrap{
+    background-color: aliceblue;
+    position: absolute;
+    /* padding: .6rem 0; */
+    height: ${(props) => (props.open ? 5.6*props.count : 0)}rem;
+    background-color: ${(props) => props.theme.white};
+    transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 0.4rem;
+    /* width: 12rem; */
+    color: ${(props) => props.theme.grey_03};
+    font-weight: 500;
+    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: ${(props) => props.theme.shadow_gray};
+    overflow: hidden;
+  }
+  .device{
+    /* background-color: antiquewhite; */
+    box-sizing: border-box;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    padding: 1.6rem 2rem;
+    letter-spacing: -0.04em;
+    &:hover {
+      box-sizing: border-box;
+      color: ${(props) => props.theme.primary};
+      background-color: ${(props) => props.theme.bg_light_blue};
+    }
+  }
 `

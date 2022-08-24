@@ -84,9 +84,9 @@ const NewLive = (props) => {
   const onSubmit = (data) => {
     console.log(data);
     const request = {
-      version: data.version + data.show === "공개" ? "" : "Private",
+      version: data.version + (data.show === "공개" ? "" : "Private"),
       thumbnail: thumbnail,
-      alcoholtag: alcohol,
+      alcoholtag: data.alcohol,
       food: data.food,
       theme: data.theme,
       title: data.title,
@@ -277,23 +277,27 @@ const NewLive = (props) => {
                 {...getRootProps()}
               >
                 <input {...getInputProps()} accept=".png, .jpg, .jpeg" />
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M21 17L17.7071 13.7071C17.3166 13.3166 16.6834 13.3166 16.2929 13.7071L15.7071 14.2929C15.3166 14.6834 14.6834 14.6834 14.2929 14.2929L11.4142 11.4142C10.6332 10.6332 9.36684 10.6332 8.58579 11.4142L3 17M21 5V19C21 19.5523 20.5523 20 20 20H4C3.44772 20 3 19.5523 3 19L3 5C3 4.44772 3.44772 4 4 4L20 4C20.5523 4 21 4.44772 21 5ZM16 8C16 8.55229 15.5523 9 15 9C14.4477 9 14 8.55229 14 8C14 7.44772 14.4477 7 15 7C15.5523 7 16 7.44772 16 8Z"
-                    stroke="#7A7A80"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <p>썸네일 이미지를 업로드하려면</p>
-                <p>드래그하거나 클릭해주세요</p>
+                {!thumbnail && (
+                  <>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21 17L17.7071 13.7071C17.3166 13.3166 16.6834 13.3166 16.2929 13.7071L15.7071 14.2929C15.3166 14.6834 14.6834 14.6834 14.2929 14.2929L11.4142 11.4142C10.6332 10.6332 9.36684 10.6332 8.58579 11.4142L3 17M21 5V19C21 19.5523 20.5523 20 20 20H4C3.44772 20 3 19.5523 3 19L3 5C3 4.44772 3.44772 4 4 4L20 4C20.5523 4 21 4.44772 21 5ZM16 8C16 8.55229 15.5523 9 15 9C14.4477 9 14 8.55229 14 8C14 7.44772 14.4477 7 15 7C15.5523 7 16 7.44772 16 8Z"
+                        stroke="#7A7A80"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <p>썸네일 이미지를 업로드하려면</p>
+                    <p>드래그하거나 클릭해주세요</p>
+                  </>
+                )}
               </ThumbnailDropzone>
               <SubtitleWrapper mt={"4rem"}>
                 <SubTitle>비디오</SubTitle>

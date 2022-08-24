@@ -51,8 +51,8 @@ export const ButtonBase = styled.button`
   border: none;
   &:disabled {
     background-color: ${(props) => props.theme.grey_04};
-    color: ${(props) => props.theme.black_02};
-    border: 1px solid #d6d6d6;
+    color: ${(props) => props.theme.grey_02} !important;
+    /* border: 1px solid #d6d6d6; */
   }
 `;
 // 계속하기
@@ -63,7 +63,7 @@ export const BlueButton = styled(ButtonBase)`
 // 취소하기
 export const WhiteButton = styled(ButtonBase)`
   background-color: ${(props) => props.theme.white};
-  color: ${(props) => props.theme.black_02};
+  color: ${(props) => props.theme.grey_02};
   border: 1px solid #d6d6d6;
 `;
 

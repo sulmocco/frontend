@@ -15,7 +15,7 @@ const Mypost = () => {
   const getMyTable = async (pageParam) => {
     try {
       const res = await sulmoggoApi.getMyPost(pageParam);
-      const data = res.data.tables;
+      const data = res.data.content;
       const last = res.data.last;
       return { data, last, nextPage: pageParam + 1 };
     } catch (e) {
@@ -31,7 +31,7 @@ const Mypost = () => {
     status,
   } = useInfiniteQuery(
     ["my_table"],
-    ({ pageParam = 0 }) => getMyTable(pageParam),
+    ({ pageParam = 1 }) => getMyTable(pageParam),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.last ? lastPage.nextPage : undefined,
@@ -52,7 +52,7 @@ const Mypost = () => {
 
   return (
     <>
-      {my_table_query.pages[0].data.length >= 1 ? (
+      {my_table_query.pages[0].data?.length >= 1 ? (
         <Wrap>
           <TablesGrid>
             {my_table_query &&

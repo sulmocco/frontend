@@ -74,7 +74,7 @@ const NewLive = (props) => {
       console.log(res);
       navigate(`/chat/` + res.data, {
         replace: true,
-        state: { data: res.data },
+        state: { data: res.data, selectedDevices: constraints },
       });
     },
     onError: (error) => {

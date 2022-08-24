@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BlueButton, WhiteButton } from "../../styles/CommonStyles";
 
 export const StyledInput = styled.input`
   padding: ${(props) => (props.small ? "1.6rem 2rem" : "2rem")};
@@ -79,13 +80,42 @@ export const VersionInputWrap = styled.div`
   }
 `;
 
+export const SubtitleWrapper = styled.div`
+  margin-top: 4rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.6rem;
+  .error {
+    color: ${(props) => props.theme.error};
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.6rem;
+    img {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+    label {
+      font-size: 1.4rem;
+      line-height: 1.7rem;
+      letter-spacing: -0.04em;
+      font-weight: 400;
+      color: inherit;
+    }
+  }
+`;
+
 export const SubTitle = styled.h2`
   font-size: 2.6rem;
   font-weight: 700;
   line-height: 3.1rem;
   letter-spacing: -0.02em;
   color: ${(props) => props.theme.black};
-  margin-top: ${(props) => props.mt};
 `;
 
 export const AlcoholWrapper = styled.div`
@@ -128,7 +158,7 @@ export const VideoWrapper = styled.div`
   justify-content: flex-start;
   margin-top: 5.3rem;
   gap: 4.3rem;
-  h1{
+  h1 {
     width: 100%;
     height: 100%;
     text-align: center;
@@ -136,26 +166,19 @@ export const VideoWrapper = styled.div`
   div {
     flex-grow: 1;
   }
-  // TODO: 이 영역이 대체 무엇인지 알아내기
   .video {
     width: 83.7rem;
     height: 55.2rem;
-    background: #d9d9d9;
+    background: ${(props) => props.theme.grey_04};
     margin-top: 1.6rem;
     border-radius: 1rem;
     overflow: hidden;
     video {
       width: 100%;
       height: 100%;
-      background-color: ${(props) => props.isInput ? props.theme.black : "#d9d9d9"};
+      background-color: ${(props) =>
+        props.isInput ? props.theme.black : "#d9d9d9"};
     }
-  }
-  .thumbnail {
-    margin-top: 1.6rem;
-    width: 40rem;
-    height: 26rem;
-    background-color: #d9d9d9;
-    border-radius: 1rem;
   }
 `;
 
@@ -237,5 +260,60 @@ flex-direction: row; */
       color: ${(props) => props.theme.primary};
       background-color: ${(props) => props.theme.bg_light_blue};
     }
+  }
+`;
+
+export const ThumbnailDropzone = styled.div`
+  margin-top: 1.6rem;
+  width: 40rem;
+  height: 26rem;
+  background-color: ${(props) => props.theme.grey_04};
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.grey_02};
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.7rem;
+  letter-spacing: -0.04em;
+  cursor: pointer;
+  background-image: ${(props) => "url(" + props.src + ")"};
+  background-size: cover;
+  background-position: center;
+  border: ${(props) =>
+    props.isDrop ? ".1rem solid " + props.theme.grey_03 : "none"};
+  svg {
+    margin-bottom: 0.8rem;
+  }
+  p {
+    cursor: inherit;
+  }
+`;
+
+export const StartLiveButton = styled(BlueButton)`
+  width: 36.8rem;
+  height: 8.8rem;
+  padding: 2.8rem 4.45rem;
+  font-size: 2.6rem;
+  line-height: 3.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+`;
+
+export const CancelButton = styled(WhiteButton)`
+  width: 36.8rem;
+  height: 8.8rem;
+  padding: 2.8rem 4.45rem;
+  font-size: 2.6rem;
+  line-height: 3.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+`;
+
+export const ShowHideDropdownWrapper = styled(VideoDevicesDropdownWrapper)`
+  .inputWrap {
+    padding: 2rem;
   }
 `;

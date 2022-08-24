@@ -1,21 +1,24 @@
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import sulmoggoApi from "../../shared/apis";
 import { Alcohol, LiveVersion } from "../../shared/options";
-
-import { BlueButton } from "../../styles/CommonStyles";
+import { useDropzone } from "react-dropzone";
 import { PageTitle } from "../tables/styles";
-import { OpenVidu } from "openvidu-browser";
 import {
   AlcoholButton,
   AlcoholWrapper,
+  CancelButton,
   NewLiveContainer,
+  ShowHideDropdownWrapper,
+  StartLiveButton,
   StyledInput,
   SubmitWrapper,
   SubTitle,
+  SubtitleWrapper,
+  ThumbnailDropzone,
   VersionInputWrap,
   VideoDevicesDropdownWrapper,
   VideoWrapper,
@@ -38,28 +41,53 @@ const NewLive = (props) => {
   const [versionOpen, setVersionOpen] = useState(false);
   const [camerasOpen, setCamerasOpen] = useState(false);
   const [audiosOpen, setAudiosOpen] = useState(false);
+  const [showOpen, setShowOpen] = useState(false);
 
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
 
   const [camera, setCamera] = useState(null);
   const [audio, setAudio] = useState(null);
-  const [constraints, setConstraints] = useState({});
+  const [constraints, setConstraints] = useState({ video: true });
+  const [thumbnail, setThumbnail] = useState(null);
   const {
     register,
     watch,
     handleSubmit,
     setValue,
-    formState: { errors },
-  } = useForm({ mode: "onChange" });
+    formState: { errors, isDirty, isValid },
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      version: LiveVersion[0].value,
+      version_text: LiveVersion[0].text,
+      show: "공개",
+    },
+  });
   alcohol.current = watch("alcohol", "맥주");
 
   const navigate = useNavigate();
   const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (res) => {
+      console.log(res);
+      navigate(`/chat/` + res.data, {
+        replace: true,
+        state: { data: res.data },
+      });
     },
   });
+  const onSubmit = (data) => {
+    console.log(data);
+    const request = {
+      version: data.version + data.show === "공개" ? "" : "Private",
+      thumbnail: thumbnail,
+      alcoholtag: alcohol,
+      food: data.food,
+      theme: data.theme,
+      title: data.title,
+    };
+    mutation.mutate(request);
+  };
 
   const getUserMedia = async (constraints) => {
     let devices = [];
@@ -69,7 +97,10 @@ const NewLive = (props) => {
     const micPermission = await navigator.permissions.query({
       name: "microphone",
     });
-    if (cameraPermission !== "denied" && micPermission !== "denied") {
+    if (
+      cameraPermission.state === "granted" ||
+      micPermission.state === "granted"
+    ) {
       devices = await navigator.mediaDevices.enumerateDevices();
       setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
       setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
@@ -107,23 +138,37 @@ const NewLive = (props) => {
   };
 
   useEffect(() => {
-    getUserMedia(constraints);
-    console.log(cameraDevices, audioDevices);
-    console.log("this..");
+    const foo = async () => {
+      console.log("permission?");
+      getUserMedia({ video: constraints.video });
+      console.log(cameraDevices, audioDevices);
+      console.log("this..");
+    };
+    foo();
   }, [constraints]);
 
+  const onDrop = useCallback(async (file) => {
+    const formData = new FormData();
+    formData.append("file", file[0]);
+    const url = await sulmoggoApi.img(formData);
+    console.log(url.data[0].url);
+    setThumbnail(url.data[0].url);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [".jpeg", ".png", ".gif", ".jpg"],
+    },
+  });
   useEffect(() => {
     // handleCameraDeviceChange(c)
     console.log("how..");
   }, []);
   return (
     <>
-      <NewLiveContainer onClick={() => {
-        camerasOpen(false)
-        audiosOpen(false)
-        versionOpen(false)
-      }}>
-        <form onSubmit={handleSubmit}>
+      <NewLiveContainer>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="titleWrap">
             <PageTitle>술약속 잡기</PageTitle>
             <VersionInputWrap
@@ -166,17 +211,30 @@ const NewLive = (props) => {
               </div>
             </VersionInputWrap>
           </div>
-
-          {/* TODO: 옆에 버전 선택 드롭다운 있어야 함 */}
-          <SubTitle mt={"2.7rem"}>제목</SubTitle>
+          <SubtitleWrapper mt={"2.7rem"}>
+            <SubTitle mt={0}>제목</SubTitle>
+            {errors.title && (
+              <div className="error">
+                <img src="/images/icon_information.svg" />
+                <label>{errors.title.message}</label>
+              </div>
+            )}
+          </SubtitleWrapper>
           <StyledInput
             type="text"
             placeholder="제목을 입력해 주세요."
             error={errors.title}
             {...register("title", { required: "제목을 입력해달라" })}
           />
-          {/* TODO: 열심히 만들고 보니 여기 텍스트로 직접 입력하기로 했었다 */}
-          <SubTitle mt={"5.6rem"}>추천술 선택</SubTitle>
+          <SubtitleWrapper mt={"5.6rem"}>
+            <SubTitle>추천술 선택</SubTitle>
+            {errors.alcohol && (
+              <div className="error">
+                <img src="/images/icon_information.svg" />
+                <label>{errors.alcohol.message}</label>
+              </div>
+            )}
+          </SubtitleWrapper>
           <AlcoholWrapper>
             {Alcohol.map((x, i) => {
               if (i !== 0)
@@ -184,30 +242,57 @@ const NewLive = (props) => {
                   <AlcoholButton checked={alcohol.current === x}>
                     {x}
                     <input
+                      key={x.text}
                       type="radio"
                       name="alcohol"
                       value={x}
                       defaultChecked={alcohol.current === x}
-                      {...register("alcohol")}
+                      {...register("alcohol", {
+                        required: "추천술을 입력해 주세요.",
+                      })}
                     />
                   </AlcoholButton>
                 );
               return null;
             })}
           </AlcoholWrapper>
-          <VideoWrapper isInput={videoPreview.current.srcObject}>
+          <VideoWrapper isInput={constraints.video}>
             <div>
               <SubTitle>방송화면</SubTitle>
               <div className="video">
-                {!videoPreview.current.srcObject && <h1>영상이 없습니다!</h1>}
-                <video autoPlay ref={videoPreview} />
+                {!constraints.video && <img src="/images/icon_clock.svg" />}
+                {constraints.video && <video autoPlay ref={videoPreview} />}
               </div>
             </div>
             <div>
-              {/* TODO: 비디오 오디오 선택 드롭다운이 될 예정 */}
               <SubTitle>썸네일 이미지</SubTitle>
-              <div className="thumbnail" />
-              <SubTitle mt={"4rem"}>비디오</SubTitle>
+              <ThumbnailDropzone
+                src={thumbnail}
+                isDrop={isDragActive}
+                {...getRootProps()}
+              >
+                <input {...getInputProps()} accept=".png, .jpg, .jpeg" />
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 17L17.7071 13.7071C17.3166 13.3166 16.6834 13.3166 16.2929 13.7071L15.7071 14.2929C15.3166 14.6834 14.6834 14.6834 14.2929 14.2929L11.4142 11.4142C10.6332 10.6332 9.36684 10.6332 8.58579 11.4142L3 17M21 5V19C21 19.5523 20.5523 20 20 20H4C3.44772 20 3 19.5523 3 19L3 5C3 4.44772 3.44772 4 4 4L20 4C20.5523 4 21 4.44772 21 5ZM16 8C16 8.55229 15.5523 9 15 9C14.4477 9 14 8.55229 14 8C14 7.44772 14.4477 7 15 7C15.5523 7 16 7.44772 16 8Z"
+                    stroke="#7A7A80"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <p>썸네일 이미지를 업로드하려면</p>
+                <p>드래그하거나 클릭해주세요</p>
+              </ThumbnailDropzone>
+              <SubtitleWrapper mt={"4rem"}>
+                <SubTitle>비디오</SubTitle>
+              </SubtitleWrapper>
               <VideoDevicesDropdownWrapper
                 open={camerasOpen}
                 count={cameraDevices.length + 1}
@@ -231,6 +316,7 @@ const NewLive = (props) => {
                         <div
                           className="device"
                           onClick={() => handleCameraDeviceChange(x)}
+                          title={x.label}
                         >
                           {x.label}
                         </div>
@@ -244,7 +330,9 @@ const NewLive = (props) => {
                   </div>
                 </div>
               </VideoDevicesDropdownWrapper>
-              <SubTitle mt={"4rem"}>오디오</SubTitle>
+              <SubtitleWrapper mt={"4rem"}>
+                <SubTitle>오디오</SubTitle>
+              </SubtitleWrapper>
               <VideoDevicesDropdownWrapper
                 open={audiosOpen}
                 count={audioDevices.length + 1}
@@ -268,6 +356,7 @@ const NewLive = (props) => {
                         <div
                           className="device"
                           onClick={() => handleAudioDeviceChange(x)}
+                          title={x.label}
                         >
                           {x.label}
                         </div>
@@ -276,8 +365,7 @@ const NewLive = (props) => {
                   <div
                     className="device"
                     onClick={() => {
-                      setValue("audio", "없음");
-                      setAudio(null);
+                      handleAudioDeviceChange(null);
                     }}
                   >
                     없음
@@ -286,20 +374,102 @@ const NewLive = (props) => {
               </VideoDevicesDropdownWrapper>
             </div>
           </VideoWrapper>
-          <SubTitle mt={"7rem"}>안주</SubTitle>
-          <StyledInput type="text" placeholder="안주를 입력해 주세요." />
-          <SubTitle mt={"4.4rem"}>테마</SubTitle>
-          <StyledInput type="text" placeholder="테마를 입력해 주세요." />
+          <SubtitleWrapper mt={"7rem"}>
+            <SubTitle>안주</SubTitle>
+            {errors.food && (
+              <div className="error">
+                <img src="/images/icon_information.svg" />
+                <label>{errors.food.message}</label>
+              </div>
+            )}
+          </SubtitleWrapper>
+          <StyledInput
+            type="text"
+            placeholder="안주를 입력해 주세요."
+            error={errors.food}
+            {...register("food", { required: "안주를 입력해 주세요." })}
+          />
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "4rem",
+            }}
+          >
+            <div style={{ flexGrow: "1" }}>
+              <SubtitleWrapper mt={"7rem"}>
+                <SubTitle>테마</SubTitle>
+                {errors.theme && (
+                  <div className="error">
+                    <img src="/images/icon_information.svg" />
+                    <label>{errors.theme.message}</label>
+                  </div>
+                )}
+              </SubtitleWrapper>
+              <StyledInput
+                type="text"
+                placeholder="테마를 입력해 주세요."
+                error={errors.theme}
+                {...register("theme", { required: "테마를 입력해 주세요." })}
+              />
+            </div>
+            <div style={{ width: "40rem" }}>
+              <SubtitleWrapper mt={"7rem"}>
+                <SubTitle>공개 / 비공개 설정</SubTitle>
+                {errors.theme && (
+                  <div className="error">
+                    <img src="/images/icon_information.svg" />
+                    <label>{errors.theme.message}</label>
+                  </div>
+                )}
+              </SubtitleWrapper>
+              <ShowHideDropdownWrapper
+                open={showOpen}
+                count={2}
+                onClick={() => setShowOpen(!showOpen)}
+              >
+                <div className="inputWrap">
+                  <input
+                    type="text"
+                    placeholder="-- 선택 --"
+                    small
+                    disabled
+                    {...register("show")}
+                    defaultValue={"공개"}
+                  />
+                  <img src="/images/icon_dropdown_grey_02.svg" />
+                </div>
+                <div className="devicesWrap">
+                  {["공개", "비공개"].map((x) => {
+                    return (
+                      <div
+                        className="device"
+                        onClick={() => setValue("show", x)}
+                      >
+                        {x}
+                      </div>
+                    );
+                  })}
+                </div>
+              </ShowHideDropdownWrapper>
+            </div>
+          </div>
 
           <SubmitWrapper>
-            <BlueButton
-              onClick={() => {
-                mutation.mutate(data);
-                navigate(`/chat/01`);
+            <CancelButton
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
               }}
             >
+              취소하기
+            </CancelButton>
+            <StartLiveButton type="submit" disabled={!isDirty || !isValid}>
               시작하기
-            </BlueButton>
+            </StartLiveButton>
           </SubmitWrapper>
         </form>
       </NewLiveContainer>

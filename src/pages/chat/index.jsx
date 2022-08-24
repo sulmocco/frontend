@@ -137,6 +137,7 @@ const Chat = (props) => {
         })
       );
       console.log("SEND가 끝남. res : " + res);
+      chatRef.current.value = ""
       if (chatRef === "") {
         return;
       }
@@ -181,6 +182,7 @@ const Chat = (props) => {
     foo();
     return () => {
       console.log("cleanup");
+      console.log(username, roomData?.username)
       const bar = async () => {
         await quitChatroom();
       };

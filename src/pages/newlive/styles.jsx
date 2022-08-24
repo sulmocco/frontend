@@ -316,4 +316,10 @@ export const ShowHideDropdownWrapper = styled(VideoDevicesDropdownWrapper)`
   .inputWrap {
     padding: 2rem;
   }
+  .devicesWrap {
+    height: ${(props) => (props.open ? 6.4 * props.count : 0)}rem;
+  }
+  .device {
+    padding: 2rem;
+  }
 `;

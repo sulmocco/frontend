@@ -137,16 +137,82 @@ export const AddHostFriendButton = styled.div`
 export const VideoContainer = styled.div`
     background-color: ${props => props.theme.bg_light_gray};
     width: 100%;
+    height: 100%;
     /* height: 100%; */
     flex-grow: 1;
-    padding: 6.4rem 8.8rem;
     position: relative;
     .videoWrap{
-        border-radius: 1rem;
         width: 100%;
         height: 100%;
-        background-color: ${props => props.theme.grey_03};
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #video-container{
+        width: 100%;
+        /* height: 100%; */
+        max-width: 124rem;
+        /* display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(40rem, 3fr));
+        grid-gap: 2rem; */
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+    .container, #session{
+        width: 100%;
+        height: 100%;
+    }
+    .container{
+        overflow: auto;
+    }
+    #session{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .stream-container{
+        border-radius: 1rem;
+        overflow: hidden;
+        /* width: 100%;
+        height: 100%; */
+        width: ${props => props.host ? "100%" : "40rem"};
+        height: ${props => props.host ? "100%" : "27.2rem"};
+    }
+    .streamcomponent{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background-color: ${props => props.theme.black};
+    }
+    .videousername{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        margin-bottom: 1.2rem;
+        margin-left: 1.2rem;
+        border-radius: 4rem;
+        display: ${props => props.host ? "none" : "flex"};
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: .4rem 1rem;
+        color: ${props => props.theme.white};
+        background-color: rgba(0,0,0,0.6);
+        gap: .8rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+        line-height: 1.4rem;
+        letter-spacing: -0.04em;
+        z-index: 999;
+        svg{
+            width: 2rem;
+            height: 2rem;
+        }
     }
     video{
         width: 100%;
@@ -167,7 +233,7 @@ export const VideoContainer = styled.div`
 
 export const VideoButton = styled.button`
     padding: 2rem;
-    background-color: ${props => props.theme.white};
+    background-color: ${props => props.play ? props.theme.white : props.theme.grey_04};
     border-radius: 2.4rem;
     box-shadow: ${props => props.theme.shadow_gray};
     border: none;

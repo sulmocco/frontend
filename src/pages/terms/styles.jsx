@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const TermsWrap = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -14,6 +15,7 @@ export const Termsection = styled.div`
     border-radius: 1rem;
     max-width: 71.2rem;
     max-height: 88.5rem;
+    margin-bottom: 13.6rem;
     h2 {
         font-weight: 700;
         font-size: 3.2rem;

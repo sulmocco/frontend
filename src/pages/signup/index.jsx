@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import InputWrapper from "../../components/inputwrapper";
+import ProgressBar from '../../components/progressbar';
 import sulmoggoApi from "../../shared/apis";
 import { AlcoholLevel } from "../../shared/options";
 import { SignUpButton, Container } from "./styles";
@@ -36,7 +37,7 @@ const SignUp = (props) => {
     await sulmoggoApi.signUp(data).then((res) => {
       alert(res.data);
     });
-    navigate('/login');
+    navigate('/render/signup');
   };
 
   // 나의 술 레벨 컨트롤
@@ -71,7 +72,7 @@ const SignUp = (props) => {
   id.current = watch("id", "");
   // eslint-disable-next-line
   const setId = useCallback(() => setValue("id", userIdParam.get("userId")), [userIdParam, setValue])
-  
+
 
   // 닉네임 중복체크
   const checkUsername = () => {
@@ -103,6 +104,7 @@ const SignUp = (props) => {
 
   return (
     <Container>
+      <ProgressBar />
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{ width: "400px", maxWidth: "100%" }}
@@ -146,7 +148,7 @@ const SignUp = (props) => {
           error={errors.password?.message}
           title="비밀번호"
           guide={`비밀번호는 영문자,숫자,특수문자(!@#$%^&*)를 1개 이상 조합하여
-        8~16자로 입력부탁`}
+        8~16자로 입력해주세요.`}
         >
           <input
             id="password"

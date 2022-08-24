@@ -2,16 +2,17 @@ import styled from 'styled-components';
 
 export const LoginWrap = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.bg_light_gray};
     min-height: calc(100vh - 72px - 120px);
+    padding-bottom: 13.6rem;
 `
 
 export const LoginSection = styled.div`
-    margin: 13.6rem 0;
     background-color: #fff;
     width: 712px;
     padding: 8.8rem 1.18rem;
@@ -20,6 +21,7 @@ export const LoginSection = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     h1 {
         font-size: 3.2rem;
         font-weight: 700;

@@ -18,8 +18,7 @@ const InputWrapper = (props) => {
   // needCheck  중복체크 필요 여부(있으면 버튼 출력)
   // onCheck    중복체크 버튼 클릭시 실행될 함수
 
-
-    const {error, title, dropdown, options, guide, open, needCheck, onCheck, success} = props;
+  const { error, title, dropdown, options, guide, open, needCheck, onCheck, success } = props;
   return (
     <>
       <Wrapper>
@@ -28,11 +27,11 @@ const InputWrapper = (props) => {
             {title}
           </label>
           {error && <div className="error">
-            {error && <img src="/images/icon_information.svg" alt="i"/>}
+            {error && <img src="/images/icon_information.svg" alt="i" />}
             {error}
           </div>}
           {success && <div className="success">
-            {success && <img src="/images/icon_information_blue.svg" alt="i"/>}
+            {success && <img src="/images/icon_information_blue.svg" alt="i" />}
             {"사용 가능한 닉네임입니다."}
           </div>}
         </UpperWrapper>

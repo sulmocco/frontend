@@ -29,9 +29,10 @@ import { useState } from "react";
 const data = {
   version: "라이브 종류",
   thumbnail: "/images/img.png",
-  alcoholtag: "주종",
-  food: "안주",
-  theme: "테마",
+  alcoholtag: "맥주",
+  food: "치킨",
+  theme: "스몰토크",
+  title: "치맥합시다!!",
 };
 
 const NewLive = (props) => {
@@ -69,11 +70,15 @@ const NewLive = (props) => {
   const navigate = useNavigate();
   const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
     onSuccess: (res) => {
+      alert(res, "요기");
       console.log(res);
       navigate(`/chat/` + res.data, {
         replace: true,
         state: { data: res.data },
       });
+    },
+    onError: (error) => {
+      alert(error);
     },
   });
   const onSubmit = (data) => {

@@ -62,9 +62,8 @@ export const TableCardWrapper = styled.div`
   overflow: hidden;
   /* align-items: center; */
   .img {
-    background-color: azure;
     height: ${(props) => (props.first ? 20.8 : 16.8)}rem;
-    background-image: ${(props) => "url(" + props.src + ")"};
+    background-image: ${(props) => "url(" + (props.src ? props.src : "/images/placeholder.png") + ")"};
     background-size: cover;
     background-position: center;
   }
@@ -79,10 +78,9 @@ export const TableCardWrapper = styled.div`
     width: 6.4rem;
     height: 6.4rem;
     border-radius: 6.4rem;
-    background-image: ${(props) => "url(" + props.profile + ")"};
+    background-image: ${(props) => "url(" + (props.profile ? props.profile : "/images/placeholder-profile.png") + ")"};
     background-size: cover;
     background-position: center;
-    background-color: aqua;
   }
   .counterWrap {
     width: 100%;

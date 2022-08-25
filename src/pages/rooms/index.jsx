@@ -90,7 +90,7 @@ const Rooms = (props) => {
     // isFetchingNextPage,
     // status,
   } = useInfiniteQuery(
-    ["tables", keyword, alcohol, sortBy, page, isAsc],
+    ["rooms", keyword, alcohol, sortBy, page, isAsc],
     ({ pageParam = page }) => getRooms(pageParam),
     {
       getNextPageParam: (currPage, allPages) => {

@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useRef, useCallback } from "react";
 import { useForm } from "react-hook-form";
@@ -38,6 +38,7 @@ const data = {
 const NewLive = (props) => {
   const alcohol = useRef({});
   const videoPreview = useRef();
+  const queryClient = useQueryClient()
 
   const [versionOpen, setVersionOpen] = useState(false);
   const [camerasOpen, setCamerasOpen] = useState(false);
@@ -72,7 +73,8 @@ const NewLive = (props) => {
     onSuccess: (res) => {
       alert(res, "요기");
       console.log(res);
-      navigate(`/chat/` + res.data, {
+        queryClient.invalidateQueries("rooms");
+        navigate(`/chat/` + res.data, {
         replace: true,
         state: { data: res.data, selectedDevices: constraints },
       });

@@ -6,7 +6,7 @@ import SearchBar from "../../components/searchbar";
 import TableCard from "../../components/tablecard";
 import sulmoggoApi from "../../shared/apis";
 import { Alcohol } from "../../shared/options";
-import { AlcoholButtons, Separator } from "../../styles/CommonStyles";
+import { AlcoholButtons, NoList, Separator } from "../../styles/CommonStyles";
 // import { Container } from "../signup/styles";
 import {
   AlcoholCategories,
@@ -22,7 +22,6 @@ import {
 
 const Tables = (props) => {
   const [queryParams, setQueryParams] = useSearchParams();
-  // const queryParams = new URLSearchParams();
   const keyword = queryParams.get("keyword") || null;
   const alcohol = keyword ? null : queryParams.get("alcohol") || "전체";
   const sortBy = queryParams.get("sortBy") || "id";
@@ -60,11 +59,10 @@ const Tables = (props) => {
 
       let res = null
       if(keyword) {
-      res = await sulmoggoApi.searchTables(newQuery);
-    }else{
-      res = await sulmoggoApi.getTables(newQuery)
-    }
-      setTotal(res.data.total);
+        res = await sulmoggoApi.searchTables(newQuery);
+      }else{
+        res = await sulmoggoApi.getTables(newQuery)
+      }
       console.log("search!", keyword);
       return {
         data: res.data,
@@ -103,7 +101,7 @@ const Tables = (props) => {
         return undefined;
       },
       onSuccess: (data) => {
-        // console.log(data);
+        setTotal(data.pages[0].data.totalElements);
       },
       onError: (data) => {
         alert("문제가 발생했습니다.", data);
@@ -232,8 +230,15 @@ const Tables = (props) => {
             });
           })}
         {console.log(data.pages)}
-        {/* {!total && isSuccess && data?.pages[0]?.content.length === 0 && <NoList>작성된 술상추천이 없습니다.</NoList>} */}
       </TablesGrid>
+      {isSuccess && !total && (
+        <NoList>
+          게시된 술상추천이 존재하지 않습니다.
+          <br />
+          좋아하는 술과 안주를 직접 추천해보시는 건 어떨까요?
+        </NoList>
+      )}
+      {!isSuccess && <NoList>문제가 발생했습니다.</NoList>}
       <WriteButton to="/post">
         <div className="absolute">
           <div className="fixed">

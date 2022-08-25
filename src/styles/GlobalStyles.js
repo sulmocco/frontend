@@ -23,7 +23,7 @@ const GlobalStyles = createGlobalStyle`
         vertical-align: middle;
     }
     html {
-        font-size: 8px;
+        font-size: 10px;
     }
     body {
         font-size: 1rem;

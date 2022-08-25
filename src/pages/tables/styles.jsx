@@ -21,7 +21,7 @@ export const TablesGrid = styled.div`
   width: 100%;
   margin-top: 3.2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40.5rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(40.5rem, 1fr));
   grid-gap: 3.2rem;
 `;
 

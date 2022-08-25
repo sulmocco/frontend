@@ -48,8 +48,8 @@ const sulmoggoApi = {
     }), // 술상 추천 게시글 작성 이미지 가로채기
   searchTables: (params) => api.get("/tables/search", { params }),
   tables: (newData) => api.post("/tables", newData),
-  getRooms: (params) => api.get("/rooms", { params }),
-  searchRooms: (params) => api.get("/rooms/search", { params }),
+  getRooms: (params) => api.get("/room", { params }),
+  searchRooms: (params) => api.get("/room/search", { params }),
   deletePost: (tableId) => api.delete(`tables/${tableId}`),
   postLike: (tableId) => api.post(`tables/${tableId}/like`),
   deleteLike: (tableId) => api.delete(`tables/${tableId}/like`),

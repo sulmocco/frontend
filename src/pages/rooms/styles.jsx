@@ -32,9 +32,9 @@ export const RoomsTopWrapper = styled.div`
 export const RoomsGrid = styled.div`
   max-width: ${(props) => props.theme.contentWidth};
   width: 100%;
-  margin-top: 3.2rem;
+  margin-top: 6.3rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
   grid-row-gap: 6.4rem;
   grid-column-gap: 4rem;
   margin-bottom: 16rem;
@@ -115,4 +115,39 @@ export const NoList = styled.div`
   text-align: center;
   font-weight: 700;
   color: ${(props) => props.theme.grey_03};
+`;
+
+export const RoomsTabs = styled.nav`
+  margin-top: 5.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: ${(props) => props.theme.contentWidth};
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 8rem;
+    border: 2px solid ${(props) => props.theme.grey_04};
+    box-shadow: ${(props) => props.theme.shadow_gray};
+    border-radius: 10px;
+  }
+`;
+
+export const VersionTab = styled.li`
+  flex-grow: 1;
+  width: calc(${(props) => "100% / " + props.count});
+  height: 100%;
+  font-size: 2.6rem;
+  cursor: pointer;
+  color: ${(props) =>
+    props.active ? props.theme.primary : props.theme.grey_02};
+  font-weight: 700;
+  background-color: ${(props) =>
+    props.active ? props.theme.bg_light_blue : "transparent"};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import sulmoggoApi from "../../shared/apis";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
-import { AlchholTag, FreeTag, Separator } from "../../styles/CommonStyles";
 import Loading from "../common/Loading";
 import TableCard from "../tablecard";
 import Spinner from "../spinner";
+import { TablesGrid } from "./styles";
 
 const Mypost = () => {
   const { ref, inView } = useInView();
@@ -60,7 +60,7 @@ const Mypost = () => {
                 return (
                   <React.Fragment key={idx}>
                     {page.data.map((v, i) => {
-                      return <TableCard {...v} />;
+                      return <TableCard {...v} key={i} />;
                     })}
                   </React.Fragment>
                 );
@@ -101,11 +101,4 @@ const Content = styled.div`
 const Wrap = styled.div`
   width: 1290px;
   margin: 0 auto;
-`;
-export const TablesGrid = styled.div`
-  width: 100%;
-  margin-top: 3.2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40.5rem, 1fr));
-  grid-gap: 3.2rem;
 `;

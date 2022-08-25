@@ -7,7 +7,6 @@ const LoginRending = () => {
     const navigate = useNavigate();
     return (
         <Login>
-
             <SignUpButton mt='71.9rem' onClick={() => navigate(`/login`)}>로그인</SignUpButton>
             <p onClick={() => navigate(`/terms`)}>회원가입</p>
         </Login>

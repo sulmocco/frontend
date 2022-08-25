@@ -73,7 +73,6 @@ const SignUp = (props) => {
   // eslint-disable-next-line
   const setId = useCallback(() => setValue("id", userIdParam.get("userId")), [userIdParam, setValue])
 
-
   // 닉네임 중복체크
   const checkUsername = () => {
     sulmoggoApi

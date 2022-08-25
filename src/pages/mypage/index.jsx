@@ -4,29 +4,35 @@ import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../components/spinner";
 import sulmoggoApi from "../../shared/apis";
+import { getLevel } from '../../shared/modules';
 
 const Mypage = () => {
   const navigate = useNavigate();
   // 마이페이지 계정정보 불러오기 api
-  const getMyAccount = async () => {
-    try {
-      const res = await sulmoggoApi.getUser();
-      return res;
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const getMyAccount = async () => {
+  //   try {
+  //     const res = await sulmoggoApi.getUser();
+  //     return res;
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
-  // 마이페이지 계정정보 불러오기 query
-  const { data: account_query, status } = useQuery(
-    ["my_account"],
-    getMyAccount,
-    {
-      onSuccess: (data) => {
-        console.log("쿼리 불러오기", data);
-      },
-    }
-  );
+  // // 마이페이지 계정정보 불러오기 query
+  // const { data: account_query, status } = useQuery(
+  //   ["my_account"],
+  //   getMyAccount,
+  //   {
+  //     onSuccess: (data) => {
+  //       console.log("쿼리 불러오기", data);
+  //     },
+  //   }
+  // );
+
+  const { data, status } = useQuery(['user'], () => sulmoggoApi.getUser().then(res => res.data), {
+    cacheTime: 0,
+  });
+  console.log(data);
 
   // 쿼리 데이터 로딩전에 스피너
   if (status === "loading") {
@@ -39,10 +45,10 @@ const Mypage = () => {
         <Wrap>
           <h1>마이페이지</h1>
           <ProfileBox>
-            <img src={account_query?.data.profile || 'images/profile_default.svg'} alt="프로필 이미지" />
+            <img src={data?.profile || 'images/profile_default.svg'} alt="프로필 이미지" />
             <div className="info">
-              <div className="level">{account_query?.data.level}</div>
-              <div>{account_query?.data.username}</div>
+              <div className="level">{getLevel(data?.level)}</div>
+              <div>{data?.username}</div>
             </div>
             <button onClick={() => navigate(`/mypage/edit`)}>수정하기</button>
           </ProfileBox>

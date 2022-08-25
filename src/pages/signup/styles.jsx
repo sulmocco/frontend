@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const SignUpButton = styled.button`
-    width: 100%;
+    width: ${props => props.width || '100%'};
     height: 7.2rem;
     background-color: ${props => props.background || props.theme.primary};
     color: ${props => props.color || props.theme.white};

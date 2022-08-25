@@ -35,8 +35,7 @@ const Rooms = (props) => {
   const page = queryParams.get("page") || 1;
   const isAsc = queryParams.get("isAsc") || null;
   const allParams = { keyword, alcohol, sortBy, isAsc };
-  const lastTableRef = useRef();
-  const [total, setTotal] = useState(null);
+  const lastRoomRef = useRef();
 
   console.log(alcohol);
   console.log("version: ", version);
@@ -100,7 +99,6 @@ const Rooms = (props) => {
       } else {
         res = await sulmoggoApi.getRooms(newQuery);
       }
-      setTotal(res.data.totalElements);
       console.log("search!", keyword);
       return {
         data: res.data,
@@ -148,7 +146,7 @@ const Rooms = (props) => {
       threshold: 0.8,
       root: null,
     });
-    lastTableRef.current && observer.observe(lastTableRef.current);
+    lastRoomRef.current && observer.observe(lastRoomRef.current);
     // console.log(data);
     return () => {
       observer.disconnect();
@@ -206,7 +204,7 @@ const Rooms = (props) => {
           <SearchBoxWrapper>
             <div className="leftWrapper">
               <p>
-                <span>{total || 0}개</span>의 술약속이 있습니다.
+                <span>{data?.pages[0]?.data?.totalElements || 0}개</span>의 술약속이 있습니다.
               </p>
               <SearchBar onSearch={(keyword) => searchRooms(keyword)} />
             </div>
@@ -252,10 +250,8 @@ const Rooms = (props) => {
           ))}
         </ul>
       </RoomsTabs>
-      {total && (
-        <RoomsGrid>
-          {isSuccess &&
-            data.pages.map((page, pageidx) => {
+      {isSuccess && data.pages[0].data.totalElements != 0 && <RoomsGrid>
+            {data.pages.map((page, pageidx) => {
               const content = page.data.content;
               return content?.map((room, idx) => {
                 if (
@@ -263,7 +259,7 @@ const Rooms = (props) => {
                   pageidx === data.pages.length - 1
                 )
                   return (
-                    <div ref={lastTableRef} key={room.chatRoomId}>
+                    <div ref={lastRoomRef} key={room.chatRoomId}>
                       <RoomCard {...room} />
                     </div>
                   );
@@ -271,9 +267,8 @@ const Rooms = (props) => {
               });
             })}
           {console.log(data.pages)}
-        </RoomsGrid>
-      )}
-      {isSuccess && total === 0 && (
+        </RoomsGrid>}
+      {isSuccess && (data.pages[0].data.totalElements == 0) && (
         <NoList>
           진행중인 술약속이 없습니다.
           <br />

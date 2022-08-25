@@ -259,31 +259,25 @@ class VideoViewer extends Component {
     render() {
         return (
             <div className="container">
-
                 {this.state.session !== undefined ? (
                     <div id="session">
-
-                        {/* {this.state.mainStreamManager !== undefined ? (
-                            <div id="main-video" className="col-md-6">
-                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
-                                <input
-                                    className="btn btn-large btn-success"
-                                    type="button"
-                                    id="buttonSwitchCamera"
-                                    onClick={this.switchCamera}
-                                    value="Switch Camera"
-                                />
-                            </div>
-                        ) : null} */}
-
                         <div id="video-container">
+                            {/* 친구 모드이거나 호스트 모드이고, 자신이 호스트일 때 자신의 화면을 스트리밍 */}
                             {(this.state.publisher !== undefined) && (String(this.props.version).startsWith("friend") || (String(this.props.version).startsWith("host")&&(this.props.username === this.props.host))) ? (
                                 <div className="stream-container" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                                     <UserVideoComponent
                                         streamManager={this.state.publisher} />
                                 </div>
                             ) : null}
-                            {this.props.version.startsWith("friend") && this.state.subscribers.map((sub, i) => (
+                            {/* 호스트 모드이고, 자신이 호스트가 아닐 때 호스트의 화면 스트리밍 */}
+                            {(String(this.props.version).startsWith("host")&&(this.props.username !== this.props.host)) ? (
+                                <div className="stream-container" onClick={() => this.handleMainVideoStream(this.state.subscribers.filter(x => JSON.parse(x.streamManager.stream.connection.data).clientData === this.props.host))}>
+                                    <UserVideoComponent
+                                        streamManager={this.state.subscribers.filter(x => JSON.parse(x.streamManager.stream.connection.data).clientData === this.props.host)} />
+                                </div>
+                            ) : null}
+                            {/* 친구 모드일 때 자신 이외의 화면 */}
+                            {this.props.version.startsWith("friend") && this.state.subscribers.filter(x => JSON.parse(x.streamManager.stream.connection.data).clientData === this.props.username).map((sub, i) => (
                                 <div key={i} className="stream-container" onClick={() => this.handleMainVideoStream(sub)}>
                                     <UserVideoComponent streamManager={sub} />
                                 </div>

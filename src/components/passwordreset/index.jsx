@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { SignUpButton } from '../../pages/signup/styles';
 import sulmoggoApi from '../../shared/apis';
 import { PasswordSection, PasswordWrap } from './styles';
@@ -9,35 +9,42 @@ import InputWrapper from '../inputwrapper';
 
 const PassWordInput = () => {
     const navigate = useNavigate();
-    // const mutation = useMutation((data) => sulmoggoApi.resetPassword(user, data), {
-    //     onSuccess: (data) => {
-    //         alert(data);
-    //     },
-    //     onError: (error) => {
-    //         alert(error)
-    //     }
-    // });
-    const passwordRegEx =
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
+    const mutation = useMutation((data) => sulmoggoApi.resetPassword(data), {
+        onSuccess: (data) => {
+            alert(data);
+        },
+        onError: (error) => {
+            alert(error)
+        }
+    });
+    const params = new URLSearchParams();
+    const userParam = params.get('userId');
+    console.log(userParam)
+    const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
     const password = useRef()
     const password_check = useRef()
     const {
         register,
         handleSubmit,
         watch,
+        setError,
         formState: { errors, isDirty, isSubmitting },
     } = useForm();
-    password.current = watch('password', '');
-    password_check.current = watch('password_check', '')
+
+    const handlePassword = () => {
+        const newData = {
+            id: null,
+            password: watch('password'),
+            password2: watch('password_check')
+        }
+        mutation.mutate(newData);
+    }
     return (
         <PasswordWrap>
             <PasswordSection>
                 <h1>비밀번호 변경</h1>
                 <form action=""
-                    onSubmit={handleSubmit((data) => {
-                        console.log(data.password);
-                        navigate(`/render/password`);
-                    })}>
+                    onSubmit={handleSubmit(handlePassword)}>
                     <InputWrapper
                         error={errors.password?.message}
                         title='비밀번호'
@@ -47,6 +54,10 @@ const PassWordInput = () => {
                             id='password'
                             type='password'
                             placeholder='비밀번호'
+                            autoComplete="off"
+                            aria-invalid={
+                                !isDirty ? undefined : errors.password ? "true" : "false"
+                            }
                             {...register('password', {
                                 required: '비밀번호는 필수 입력입니다.',
                                 pattern: {

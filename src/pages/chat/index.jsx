@@ -1,9 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import sulmoggoApi from "../../shared/apis";
-import { ChatWrap } from "./styles";
 import {
   AlchholTag,
   Separator,
@@ -26,7 +25,6 @@ import moment from "moment";
 import VideoViewer from "../../components/videoviewer";
 
 const Chat = (props) => {
-  const [message, setMessage] = useState("");
   const [content, setContent] = useState([]);
   const [roomData, setRoomData] = useState(null);
   const [usercount, setUserCount] = useState(0);
@@ -56,7 +54,7 @@ const Chat = (props) => {
     try {
       client.connect(headers, () => {
         // enterChatroom()
-        const res = client.subscribe(
+        client.subscribe(
           `/sub/chat/room/${chatRoomId}`,
           (data) => {
             const newMessage = JSON.parse(data.body);
@@ -90,7 +88,7 @@ const Chat = (props) => {
     if (roomData?.username === username) {
       await sulmoggoApi.removeChatRoom(chatRoomId);
     } else {
-      const res = await client.send(
+      await client.send(
         `pub/chat/message`,
         headers,
         JSON.stringify({
@@ -104,18 +102,18 @@ const Chat = (props) => {
     socketDisConnect();
   };
 
-  const enterChatroom = async () => {
-    const res = await client.send(
-      `pub/chat/message`,
-      headers,
-      JSON.stringify({
-        type: "ENTER",
-        chatRoomId: chatRoomId,
-        sender: username,
-        message: chatRef.current.value,
-      })
-    );
-  };
+//   const enterChatroom = async () => {
+//     const res = await client.send(
+//       `pub/chat/message`,
+//       headers,
+//       JSON.stringify({
+//         type: "ENTER",
+//         chatRoomId: chatRoomId,
+//         sender: username,
+//         message: chatRef.current.value,
+//       })
+//     );
+//   };
 
   // 메세지 보내기
   const sendMessage = async () => {
@@ -162,9 +160,10 @@ const Chat = (props) => {
 
   // 메세지 받기
 
+  
   //roomId가 바뀔때마다 다시 연결
   useEffect(() => {
-    console.log(props.selectedDevices);
+    // console.log(props.selectedDevices);
     socketConnect();
     const foo = async () => {
       try {
@@ -180,15 +179,20 @@ const Chat = (props) => {
       }
     };
     foo();
+    // eslint-disable-next-line
+  }, [chatRoomId]);
+  
+  useEffect(() => {
     return () => {
-      console.log("cleanup");
-      console.log(username, roomData?.username)
-      const bar = async () => {
-        await quitChatroom();
+        console.log("cleanup");
+      //   console.log(username, roomData?.username)
+        const bar = async () => {
+          await quitChatroom();
+        };
+        bar();
       };
-      bar();
-    };
-  }, []);
+      // eslint-disable-next-line
+  }, [])
   return (
     <LiveWrapper>
       <div className="live_left_box">
@@ -202,7 +206,7 @@ const Chat = (props) => {
                   {roomData?.username || "사용자가 없습니다."}
                 </div>
                 <AddHostFriendButton>
-                  <img src="/images/icon_addfriend.svg" />
+                  <img src="/images/icon_addfriend.svg" alt="add friend"/>
                   <span>친구추가</span>
                 </AddHostFriendButton>
               </div>
@@ -215,10 +219,10 @@ const Chat = (props) => {
               <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
             </div>
             <div className="statWrap">
-              <img src="/images/icon_clock_grey_02.svg" />
+              <img src="/images/icon_clock_grey_02.svg" alt="clock"/>
               <span>{time || "00:00:00"}</span>
               <Separator />
-              <img src="/images/icon_people_grey_02.svg" />
+              <img src="/images/icon_people_grey_02.svg" alt="people"/>
               <span>{usercount || 0}</span>
             </div>
           </div>
@@ -239,10 +243,10 @@ const Chat = (props) => {
           </div>
           <div className="videoButtonWrap">
             <VideoButton play={playvideo} onClick={() => setPlayvideo(!playvideo)}>
-              <img src={`/images/icon_video_${playvideo ? "available" : "disabled"}.svg`} />
+              <img src={`/images/icon_video_${playvideo ? "available" : "disabled"}.svg`} alt="video"/>
             </VideoButton>
             <VideoButton play={playaudio} onClick={() => setPlayaudio(!playaudio)}>
-              <img src={`/images/icon_audio_${playaudio ? "available" : "disabled"}.svg`} />
+              <img src={`/images/icon_audio_${playaudio ? "available" : "disabled"}.svg`} alt="audio"/>
             </VideoButton>
           </div>
         </VideoContainer>
@@ -250,7 +254,7 @@ const Chat = (props) => {
       <div className="live_right_box">
         <ChatHeader>
           <div>
-            <img src="/images/icon_chat.svg" />
+            <img src="/images/icon_chat.svg" alt="chat"/>
             <span>채팅</span>
           </div>
           <button
@@ -263,7 +267,7 @@ const Chat = (props) => {
               }
             }}
           >
-            <img src="/images/icon_out.svg" />
+            <img src="/images/icon_out.svg" alt="out"/>
           </button>
         </ChatHeader>
         <ChatWrapper>
@@ -294,7 +298,7 @@ const Chat = (props) => {
                   // console.log("보내기버튼. 내용 : ", chatRef.current.value);
                 }}
               >
-                <img src="/images/icon_send.svg" />
+                <img src="/images/icon_send.svg" alt="send airplane"/>
               </button>
             </div>
           </form>

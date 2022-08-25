@@ -186,8 +186,8 @@ class VideoViewer extends Component {
         this.setState({
             session: undefined,
             subscribers: [],
-            mySessionId: 'SessionA',
-            myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            mySessionId: this.props.chatRoomId,
+            myUserName: this.props.username,
             mainStreamManager: undefined,
             publisher: undefined
         });
@@ -228,9 +228,6 @@ class VideoViewer extends Component {
     }
 
     render() {
-        const mySessionId = this.state.mySessionId;
-        const myUserName = this.state.myUserName;
-
         return (
             <div className="container">
 

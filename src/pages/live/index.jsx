@@ -25,7 +25,7 @@ const Live = (props) => {
               <div className="userWrap">
                 <div className="username">dnflxlaghkxlsld_99</div>
                 <AddHostFriendButton>
-                  <img src="/images/icon_addfriend.svg" />
+                  <img src="/images/icon_addfriend.svg" alt="add friend"/>
                   <span>친구추가</span>
                 </AddHostFriendButton>
               </div>
@@ -38,10 +38,10 @@ const Live = (props) => {
               <ThemeTag>테마</ThemeTag>
             </div>
             <div className="statWrap">
-              <img src="/images/icon_clock_grey_02.svg"/>
+              <img src="/images/icon_clock_grey_02.svg" alt="clock"/>
               <span>24h 00:00</span>
               <Separator />
-              <img src="/images/icon_people_grey_02.svg"/>
+              <img src="/images/icon_people_grey_02.svg" alt="people"/>
               <span>100,000</span>
             </div>
           </div>
@@ -51,10 +51,10 @@ const Live = (props) => {
             </div>
             <div className="videoButtonWrap">
             <VideoButton>
-                <img src ="/images/icon_video_available.svg"/>
+                <img src ="/images/icon_video_available.svg" alt="play video"/>
             </VideoButton>
             <VideoButton>
-                <img src ="/images/icon_audio_available.svg"/>
+                <img src ="/images/icon_audio_available.svg" alt="play audio"/>
             </VideoButton>
             </div>
         </VideoContainer>
@@ -62,11 +62,11 @@ const Live = (props) => {
       <div className="live_right_box">
         <ChatHeader>
             <div>
-            <img src="/images/icon_chat.svg"/>
+            <img src="/images/icon_chat.svg" alt="chat"/>
             <span>채팅</span>
             </div>
             <button>
-                <img src="/images/icon_out.svg"/>
+                <img src="/images/icon_out.svg" alt="out"/>
             </button>
         </ChatHeader>
         <ChatWrapper>
@@ -82,7 +82,7 @@ const Live = (props) => {
                 <div>
                     <input type="text" placeholder="채팅을 입력해 주세요"/>
                     <button>
-                        <img src="/images/icon_send.svg"/>
+                        <img src="/images/icon_send.svg" alt="paper airplane"/>
                     </button>
                 </div>
             </ChatInputWrapper>

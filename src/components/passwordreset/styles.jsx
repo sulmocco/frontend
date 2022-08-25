@@ -24,6 +24,7 @@ export const PasswordSection = styled.div`
         font-size: 3.2rem;
         font-weight: 700;
         text-align: center;
+        margin-bottom: 5.6rem;
     }
     form {
         display: flex;

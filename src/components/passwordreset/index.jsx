@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { SignUpButton } from '../../pages/signup/styles';
 import sulmoggoApi from '../../shared/apis';
 import { PasswordSection, PasswordWrap } from './styles';
@@ -17,27 +17,33 @@ const PassWordInput = () => {
             alert(error)
         }
     });
-    const params = new URLSearchParams();
-    const userParam = params.get('userId');
-    console.log(userParam)
+    // const params = new URLSearchParams();
+    // const userParam = params.get('userId');
+    // console.log(userParam)
+
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const userId = params.get('userId');
+
     const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
-    const password = useRef()
-    const password_check = useRef()
+    const password = useRef();
     const {
         register,
-        handleSubmit,
         watch,
-        setError,
-        formState: { errors, isDirty, isSubmitting },
-    } = useForm();
+        handleSubmit,
+        formState: { isDirty, errors },
+    } = useForm({ mode: "onChange" });
+
+    password.current = watch('password', '')
 
     const handlePassword = () => {
         const newData = {
-            id: null,
+            id: userId,
             password: watch('password'),
             password2: watch('password_check')
         }
         mutation.mutate(newData);
+        navigate(`/login`)
     }
     return (
         <PasswordWrap>
@@ -46,20 +52,21 @@ const PassWordInput = () => {
                 <form action=""
                     onSubmit={handleSubmit(handlePassword)}>
                     <InputWrapper
+                        styles={{ marginBottom: '-4rem' }}
                         error={errors.password?.message}
-                        title='비밀번호'
+                        title="비밀번호"
                         guide={`비밀번호는 영문자,숫자,특수문자(!@#$%^&*)를 1개 이상 조합하여 8~16자로 입력해주세요.`}
                     >
                         <input
-                            id='password'
-                            type='password'
-                            placeholder='비밀번호'
+                            id="password"
+                            type="password"
                             autoComplete="off"
+                            placeholder='비밀번호를 입력해 주세요'
                             aria-invalid={
                                 !isDirty ? undefined : errors.password ? "true" : "false"
                             }
-                            {...register('password', {
-                                required: '비밀번호는 필수 입력입니다.',
+                            {...register("password", {
+                                required: "비밀번호 필수 입력입니다.",
                                 pattern: {
                                     value: passwordRegEx,
                                     message: "비밀번호 형식에 맞지 않습니다.",
@@ -69,28 +76,28 @@ const PassWordInput = () => {
                     </InputWrapper>
                     <InputWrapper
                         error={errors.password_check?.message}
-                        title='비밀번호 확인'
+                        title="비밀번호 확인"
                     >
                         <input
-                            id='password_check'
-                            type='password'
-                            placeholder='비밀번호 확인'
-                            autoComplete='off'
+                            id="password_check"
+                            type="password"
+                            placeholder='비밀번호를 입력해 주세요'
+                            autoComplete="off"
                             aria-invalid={
                                 !isDirty ? undefined : errors.password_check ? "true" : "false"
                             }
-                            {...register('password_check', {
-                                required: '비밀번호 확인은 필수 입력입니다',
+                            {...register("password_check", {
+                                required: "비밀번호 확인은 필수 입력입니다.",
                                 pattern: {
                                     value: passwordRegEx,
                                     message: "비밀번호 형식에 맞지 않습니다.",
                                 },
-                                validate: (value) => value == password.current || '비밀번호가 동일하지 않습니다'
-                            },
-                            )}
+                                validate: (value) =>
+                                    value === password.current || "비밀번호가 동일하지 않습니다.",
+                            })}
                         />
                     </InputWrapper>
-                    <SignUpButton disabled={isSubmitting} >변경하기</SignUpButton>
+                    <SignUpButton >변경하기</SignUpButton>
                 </form>
             </PasswordSection>
         </PasswordWrap >

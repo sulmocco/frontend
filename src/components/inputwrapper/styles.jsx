@@ -36,6 +36,7 @@ export const UpperWrapper = styled.div`
   .title{
     font-size: 2rem;
     font-weight: 700;
+    margin-top: 0rem !important;
   }
   .error {
     display: flex;

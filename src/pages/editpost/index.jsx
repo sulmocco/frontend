@@ -28,8 +28,9 @@ const EditPost = () => {
     const editorRef = useRef();
     const username = useSelector((state) => state.user.username);
     const { tableId } = useParams();
-    const { data, status } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data));
-    console.log(data);
+    const { data, status } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data), {
+        cacheTime: 0,
+    });
 
     // useForm hook
     const {

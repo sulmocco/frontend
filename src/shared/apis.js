@@ -58,6 +58,8 @@ const sulmoggoApi = {
   getUser: () => api.get("/mypage"),
   getMyPost: (pageParam) =>
     api.get(`/mypage/tables?page=${pageParam}&size=${9}`),
+  getMybookmark: (pageParam) =>
+    api.get(`/mypage/bookmark?page=${pageParam}&size=${9}`),
   putUser: (data) => api.put("/mypage", data),
   getDetail: (tableId) => api.get(`/tables/${tableId}`),
   updateDetail: (tableId, data) => api.put(`/tables/${tableId}`, data),
@@ -69,7 +71,7 @@ const sulmoggoApi = {
   postChatRoom: (data) => api.post(`/chat/room`, data),
   enterChatRoom: (chatRoomId) => api.post(`/chat/room/enter/${chatRoomId}`),
   getRoomData: (chatRoomId) => api.get(`/chat/room/${chatRoomId}`),
-  removeChatRoom: (chatRoomId) => api.delete(`/room/delete/${chatRoomId}`)
+  removeChatRoom: (chatRoomId) => api.delete(`/room/delete/${chatRoomId}`),
 };
 
 export default sulmoggoApi;

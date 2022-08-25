@@ -15,12 +15,12 @@ const PasswordRedirect = () => {
     const axiosLoad = useCallback(async () => {
         try {
             const res = await axios.get(
-                `${process.env.REACT_APP_API_SERVER_PW}/oauth2/redirect?code=${queryData.code}`
+                `${process.env.REACT_APP_API_SERVER}/oauth2/redirect_pw?code=${queryData.code}`
             );
             console.log("데이터확인", res.data);
             navigate(`/password?userId=${res.data.userId}`);
         } catch (err) {
-            alert("회원이 아닙니다!");
+            alert('여기에러', err);
             navigate("/loginrending");
         }
     }, [navigate, queryData.code]);

@@ -1,21 +1,42 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import InputWrapper from '../../components/inputwrapper';
 import Spinner from '../../components/spinner';
 import sulmoggoApi from '../../shared/apis';
-import { ProfileEditWrap } from './style';
+import { AlcoholLevel } from '../../shared/options';
+import { Button, MyImgSection, MyInfoSection, ProfileEditCont, ProfileEditSection, ProfileEditWrap } from './style';
+import { getLevel } from '../../shared/modules';
 
 const ProfileEdit = () => {
-    const username_ref = useRef();
-    const level_ref = useRef();
+    const navigate = useNavigate();
+    const username = useRef();
+    const levelText = useRef();
     const queryClient = useQueryClient();
-    const { data, status } = useQuery(['user'], () => sulmoggoApi.getUser().then(res => res.data));
-    console.log(data);
 
+    const [profileImg, setProfileImg] = useState('');
+
+    // 폼관리
+    const { register, watch, handleSubmit, setValue, setError, clearErrors, formState: { isDirty, errors } } = useForm();
+
+    // 드롭다운 열리면 true 닫히면 false
+    const [openDropdown, setOpenDropdown] = useState(false);
+
+    // 사용자 닉네임 중복체크 여부. true이면 중복 없음(사용 가능)
+    const [usernameOK, setUsernameOK] = useState(false);
+
+    // 데이터 받아오기
+    const { data, status } = useQuery(['user'], () => sulmoggoApi.getUser().then(res => res.data), {
+        cacheTime: 0,
+    });
+
+    console.log(data);
+    // 데이터 수정하기
     const mutation = useMutation((data) => sulmoggoApi.putUser(data), {
-        onMutate: (variables) => {
-            console.log('onMutate', variables);
-        },
         onSuccess: (data, variables, context) => {
             queryClient.invalidateQueries(['user']);
         },
@@ -23,9 +44,46 @@ const ProfileEdit = () => {
             alert('실패', error.message)
         }
     });
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        mutation.mutate({ username: username_ref.current.value, level: level_ref.current.value });
+
+    // 술 레벨 종류
+    const options = [...AlcoholLevel];
+
+    // 드롭다운 토글
+    const toggleDropdown = () => {
+        setOpenDropdown(!openDropdown);
+    };
+
+    //나의 술 레벨 컨트롤
+    const onDropdownChange = (e) => {
+        setValue("level", e.target.id);
+        setValue("level_text", e.target.innerText);
+        console.log(e.target.id, e.target.innerText);
+        toggleDropdown(); // 선택시 드롭다운 닫힘
+    };
+
+    // 이미지 업로드 관리
+    const imgUpload = async (e) => {
+        try {
+            setProfileImg(e.target.files[0]);
+            const formData = new FormData();
+            formData.append('file', profileImg);
+            for (const keyValue of formData) console.log(keyValue);
+            const response = await sulmoggoApi.img(formData);
+            setProfileImg(response.data[0].url);
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    // submit 이벤트
+    const onSubmit = () => {
+        const newData = {
+            username: username.current.value,
+            level: watch('level_text') || data?.level,
+            profileUrl: profileImg,
+        }
+        mutation.mutate(newData);
     }
 
     // 로딩스피너 적용
@@ -34,25 +92,69 @@ const ProfileEdit = () => {
     }
     return (
         <ProfileEditWrap>
-            <div className="profile_img">
-                <img src={data?.profile} alt='프로필이미지' />
-            </div>
-            <div className="profile-desc">
-                <h5>계정정보</h5>
-                <div className='input'>
-                    <label htmlFor="">ID</label>
-                    <input type="text" placeholder='아이디' defaultValue={data?.userId || ''} readOnly />
+            <ProfileEditSection>
+                <h1>수정페이지</h1>
+                <ProfileEditCont>
+                    <MyImgSection>
+                        <form className='section'>
+                            <span className='img'>
+                                {/* {data?.profileUrl === null ? (
+                                    <img src='/images/profile_default.svg' alt='기본이미지' />
+                                ) : (
+                                    <img src={profileImg || data?.profileUrl} alt='프로필 이미지' />
+                                )} */}
+                                <img src={profileImg || '/images/profile_default.svg'} alt="" />
+                            </span>
+                            <label className='button' htmlFor='image'>
+                                <i><img src='/images/icon_camera.svg' alt='카메라' /></i>
+                                <p>수정하기</p>
+                            </label>
+                            <input {...register('image')} type="file" id='image' name='image' accept='image/*' onChange={imgUpload} />
+                        </form>
+                    </MyImgSection>
+                    <MyInfoSection
+                        onSubmit={handleSubmit(onSubmit)}
+                    >
+                        <InputWrapper
+                            title='닉네임'
+                        >
+                            <input type='text' defaultValue={data?.username || ''} ref={username} />
+                        </InputWrapper>
+                        <InputWrapper
+                            error={errors.level_text?.message}
+                            title="나의 술 레벨"
+                            dropdown
+                            open={openDropdown}
+                            onOptionChange={onDropdownChange}
+                            options={options}
+                        >
+                            <input type="hidden" id="level" />
+                            <input
+                                id="level_text"
+                                type="text"
+                                ref={levelText}
+                                defaultValue={getLevel(data?.level)}
+                                placeholder="-- 레벨을 선택하세요 --"
+                                {...register("level_text", {
+                                    required: "나의 술 레벨을 선택해주세요.",
+                                    validate: (v) => v !== "" || "나의 술 레벨을 선택해주세요.",
+                                })}
+                                disabled
+                            />
+                            <div className="dropdownArrow" onClick={toggleDropdown}>
+                                <img src="/images/icon_dropdown.svg" alt="down_arrow" />
+                            </div>
+                        </InputWrapper>
+                    </MyInfoSection>
+                </ProfileEditCont>
+                <div className='buttons'>
+                    <Button
+                        onClick={() => navigate('/mypage')}
+                        width='36.8rem' background='#fff' color='#7A7A80' style={{ border: '1px solid #B8BBC0' }}
+                    >취소하기</Button>
+                    <Button width='36.8rem' type='submit' onClick={() => onSubmit()}>수정완료</Button>
                 </div>
-                <div className='input'>
-                    <label htmlFor="">닉네임</label>
-                    <input type="text" placeholder='닉네임' defaultValue={data?.username || ''} ref={username_ref} />
-                </div>
-                <div className='input'>
-                    <label htmlFor="">등급</label>
-                    <input type="text" placeholder='등급' defaultValue={data?.level || ''} ref={level_ref} />
-                </div>
-                <button onClick={handleSubmit}>수정하기</button>
-            </div>
+            </ProfileEditSection>
         </ProfileEditWrap>
     );
 };

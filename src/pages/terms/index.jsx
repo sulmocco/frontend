@@ -94,7 +94,6 @@ const Terms = () => {
                                 <label htmlFor='selectAll'></label>
                                 <p>약관 전체 동의</p>
                             </>}
-
                         </li>
                     </ul>
                     <div className='desc'>

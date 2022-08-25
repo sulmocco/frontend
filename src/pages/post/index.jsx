@@ -67,6 +67,7 @@ const Post = () => {
       console.log(url.data[0].url);
       callback(url.data[0].url, "alt text");
       SetImgList((state) => [...state, url.data[0].url]);
+      console.log(blob, callback)
     } catch (err) {
       console.log(err);
     }

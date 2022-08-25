@@ -8,26 +8,6 @@ import { getLevel } from '../../shared/modules';
 
 const Mypage = () => {
   const navigate = useNavigate();
-  // 마이페이지 계정정보 불러오기 api
-  // const getMyAccount = async () => {
-  //   try {
-  //     const res = await sulmoggoApi.getUser();
-  //     return res;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // // 마이페이지 계정정보 불러오기 query
-  // const { data: account_query, status } = useQuery(
-  //   ["my_account"],
-  //   getMyAccount,
-  //   {
-  //     onSuccess: (data) => {
-  //       console.log("쿼리 불러오기", data);
-  //     },
-  //   }
-  // );
 
   const { data, status } = useQuery(['user'], () => sulmoggoApi.getUser().then(res => res.data), {
     cacheTime: 0,
@@ -45,7 +25,7 @@ const Mypage = () => {
         <Wrap>
           <h1>마이페이지</h1>
           <ProfileBox>
-            <img src={data?.profile || 'images/profile_default.svg'} alt="프로필 이미지" />
+            <img src={data?.profileUrl || 'images/profile_default.svg'} alt="프로필 이미지" />
             <div className="info">
               <div className="level">{getLevel(data?.level)}</div>
               <div>{data?.username}</div>

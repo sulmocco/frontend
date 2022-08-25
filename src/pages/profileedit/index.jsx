@@ -64,12 +64,12 @@ const ProfileEdit = () => {
     // 이미지 업로드 관리
     const imgUpload = async (e) => {
         try {
-            setProfileImg(e.target.files[0]);
             const formData = new FormData();
-            formData.append('file', profileImg);
+            formData.append('file', e.target.files[0]);
             for (const keyValue of formData) console.log(keyValue);
             const response = await sulmoggoApi.img(formData);
             setProfileImg(response.data[0].url);
+            console.log(response.data[0].url)
         }
         catch (error) {
             console.log(error)
@@ -84,6 +84,8 @@ const ProfileEdit = () => {
             profileUrl: profileImg,
         }
         mutation.mutate(newData);
+        alert('수정이 완료되었습니다')
+        navigate('/mypage')
     }
 
     // 로딩스피너 적용
@@ -98,12 +100,11 @@ const ProfileEdit = () => {
                     <MyImgSection>
                         <form className='section'>
                             <span className='img'>
-                                {/* {data?.profileUrl === null ? (
+                                {data?.profileUrl === null ? (
                                     <img src='/images/profile_default.svg' alt='기본이미지' />
                                 ) : (
                                     <img src={profileImg || data?.profileUrl} alt='프로필 이미지' />
-                                )} */}
-                                <img src={profileImg || '/images/profile_default.svg'} alt="" />
+                                )}
                             </span>
                             <label className='button' htmlFor='image'>
                                 <i><img src='/images/icon_camera.svg' alt='카메라' /></i>

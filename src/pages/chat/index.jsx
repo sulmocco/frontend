@@ -241,14 +241,14 @@ const Chat = (props) => {
               />
             )}
           </div>
-          <div className="videoButtonWrap">
+          {(username === roomData?.username) && <div className="videoButtonWrap">
             <VideoButton play={playvideo} onClick={() => setPlayvideo(!playvideo)}>
               <img src={`/images/icon_video_${playvideo ? "available" : "disabled"}.svg`} alt="video"/>
             </VideoButton>
             <VideoButton play={playaudio} onClick={() => setPlayaudio(!playaudio)}>
               <img src={`/images/icon_audio_${playaudio ? "available" : "disabled"}.svg`} alt="audio"/>
             </VideoButton>
-          </div>
+          </div>}
         </VideoContainer>
       </div>
       <div className="live_right_box">

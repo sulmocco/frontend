@@ -39,6 +39,14 @@ class VideoViewer extends Component {
         window.removeEventListener('beforeunload', this.onbeforeunload);
     }
 
+    componentDidUpdate(prevProps){
+        console.log(prevProps);
+        console.log(this.props);
+        if((prevProps.playaudio !== this.props.playaudio) || (prevProps.playvideo !== this.props.playvideo)){
+            this.updatePublishState()
+        }
+    }
+
     onbeforeunload(event) {
         this.leaveSession();
     }
@@ -148,9 +156,10 @@ class VideoViewer extends Component {
                                 resolution: '400x272', // The resolution of your video
                                 frameRate: 30, // The frame rate of your video
                                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-                                mirror: false, // Whether to mirror your local video or not
+                                mirror: true, // Whether to mirror your local video or not
                             });
-
+                            console.log("🛑------publisher!!!------🛑");
+                            console.log(publisher);
                             // --- 6) Publish your stream ---
                             const version = this.props.version
                             if (String(version).startsWith("friend") || (String(version).startsWith("host")&&(this.props.username === this.props.host))){
@@ -191,6 +200,26 @@ class VideoViewer extends Component {
             mainStreamManager: undefined,
             publisher: undefined
         });
+    }
+
+    async updatePublishState() {
+        try{
+            if(this.state.publisher){
+            var properties = {...this.state.publisher.properties, publishAudio: this.props.playaudio, publishVideo: this.props.playvideo}
+            console.log(properties);
+            var newPublisher = this.OV.initPublisher(undefined, properties)
+            await this.state.session.unpublish(this.state.mainStreamManager)
+            await this.state.session.publish(newPublisher).then(res => {
+                console.log(res);
+            })
+            this.setState({
+                mainStreamManager: newPublisher,
+                publisher: newPublisher,
+            });
+            }
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     async switchCamera() {

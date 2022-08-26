@@ -173,6 +173,13 @@ export const VideoWrapper = styled.div`
     margin-top: 1.6rem;
     border-radius: 1rem;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+      width: 25rem;
+      height: 25rem;
+    }
     video {
       width: 100%;
       height: 100%;

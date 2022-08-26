@@ -21,7 +21,7 @@ const Login = () => {
                 dispatch(userActions.userLogin({ ...res.data, token: res.headers.authorization }))
                 navigate("/")
             }).catch(err => {
-                alert(err.data)
+                alert("로그인에 실패했습니다. 아이디 및 비밀번호를 확인해주세요.")
             })
     }
     return (

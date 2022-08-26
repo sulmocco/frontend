@@ -71,7 +71,7 @@ const NewLive = (props) => {
   const navigate = useNavigate();
   const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
     onSuccess: (res) => {
-      alert(res, "요기");
+      alert("술약속을 잡았습니다!")
       console.log(res);
         queryClient.invalidateQueries("rooms");
         navigate(`/chat/` + res.data, {
@@ -267,7 +267,7 @@ const NewLive = (props) => {
             <div>
               <SubTitle>방송화면</SubTitle>
               <div className="video">
-                {!constraints.video && <img src="/images/icon_clock.svg" />}
+                {!constraints.video && <img src="/images/icon_video_disabled.svg" />}
                 {constraints.video && <video autoPlay ref={videoPreview} />}
               </div>
             </div>

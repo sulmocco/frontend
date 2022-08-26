@@ -42,7 +42,7 @@ const Header = ({ location }) => {
           <NavRight>
             <ul>
               <li>
-                <NavLive to="/live/new">방송하기</NavLive>
+                <NavLive to="/live/new">술약속 잡기</NavLive>
               </li>
               <li>
                 <NavLink to="/mypage/bookmark">마이페이지</NavLink>
@@ -62,7 +62,7 @@ const Header = ({ location }) => {
           <NavRight>
             <ul>
               <li>
-                <NavLive to="/live/new">방송하기</NavLive>
+                <NavLive to="/live/new">술약속 잡기</NavLive>
               </li>
               <li>
                 <NavLink

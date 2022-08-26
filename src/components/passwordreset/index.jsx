@@ -11,7 +11,7 @@ const PassWordInput = () => {
     const navigate = useNavigate();
     const mutation = useMutation((data) => sulmoggoApi.resetPassword(data), {
         onSuccess: (data) => {
-            alert(data);
+            alert("비밀번호가 변경되었습니다.");
         },
         onError: (error) => {
             alert(error)

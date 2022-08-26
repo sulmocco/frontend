@@ -27,9 +27,9 @@ const Mypage = () => {
           <h1>마이페이지</h1>
           <ProfileBox>
             {data?.profileUrl === '' || null ? (
-              <img src='images/profile_default.svg' alt='기본이미지' />
+              <img src='/images/profile_default.svg' alt='기본이미지' />
             ) : (
-              <img src={data?.profileUrl || 'images/profile_default.svg'} alt="프로필 이미지" />
+              <img src={data?.profileUrl || '/images/profile_default.svg'} alt="프로필 이미지" />
             )}
             <div className="info">
               <div className="level">{getLevel(data?.level)}</div>

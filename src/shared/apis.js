@@ -60,7 +60,7 @@ const sulmoggoApi = {
     api.get(`/mypage/tables?page=${pageParam}&size=${9}`),
   getMybookmark: (pageParam) =>
     api.get(`/mypage/bookmark?page=${pageParam}&size=${9}`),
-  putUser: (data) => api.put("/mypage", data),
+  putUser: (data) => api.put(encodeURI("/mypage"), data),
   getDetail: (tableId) => api.get(`/tables/${tableId}`),
   updateDetail: (tableId, data) => api.put(`/tables/${tableId}`, data),
   resetPassword: (user) => api.put("/resetPw", user),
@@ -73,10 +73,10 @@ const sulmoggoApi = {
   getRoomData: (chatRoomId) => api.get(`/chat/room/${chatRoomId}`),
   removeChatRoom: (chatRoomId) => api.delete(`/room/delete/${chatRoomId}`),
   leaveChatRoom: (chatRoomId) => api.delete(`/chat/room/quit/${chatRoomId}`),
-  getSelectedUser: (username) => api.get(`/friends/${username}`),
-  addFriend: (username) => api.post(`/friends/${username}`),
+  getSelectedUser: (username) => api.get(encodeURI(`/friends/${username}`)),
+  addFriend: (username) => api.post(encodeURI(`/friends/${username}`)),
   getFriends: () => api.get("/friends/"),
-  deleteFriends: (username) => api.delete(`/friends/${username}`),
+  deleteFriends: (username) => api.delete(`encodeURI(/friends/${username})`),
 };
 
 export default sulmoggoApi;

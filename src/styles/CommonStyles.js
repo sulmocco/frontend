@@ -30,6 +30,7 @@ export const UserLevel = styled.div`
   height: 1.8rem;
   font-size: 1.2rem;
   line-height: 1.4rem;
+  font-weight: 500;
   padding: 0.2rem;
   background-color: ${(props) => props.theme.bg_light_blue};
   color: ${(props) => props.theme.primary};
@@ -48,6 +49,7 @@ export const ButtonBase = styled.button`
   border-radius: 1rem;
   font-weight: 700;
   font-size: 2rem;
+  letter-spacing: -0.02em;
   border: none;
   &:disabled {
     background-color: ${(props) => props.theme.grey_04};

@@ -62,6 +62,10 @@ const EditPost = () => {
         }
     });
 
+    useEffect(() => {
+        editorRef.current?.getInstance().setHTML(data?.content)
+    }, []);
+
     //게시글 수정일때
     useEffect(() => {
         setTagList(data?.alcoholtag);
@@ -111,6 +115,8 @@ const EditPost = () => {
     if (status === 'loading') {
         return <Spinner />
     }
+
+    console.log(data?.content)
 
     return (
         <Wrap>

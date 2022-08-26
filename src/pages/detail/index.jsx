@@ -90,7 +90,9 @@ const Detail = () => {
                     )}
                 </section>
                 <section className='user'>
-                    <img src={data?.profileimgurl || '/images/profile_default.svg'} alt='프로필 이미지' />
+                    <span className='img'>
+                        <img src={data?.profileimgurl || '/images/profile_default.svg'} alt='프로필 이미지' />
+                    </span>
                     <div className='desc'>
                         <p className='user-name'>{data.username}</p>
                         <div className='tag'>

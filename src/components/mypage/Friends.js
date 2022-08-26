@@ -13,8 +13,8 @@ const Friends = () => {
   console.log(data);
 
   return (
-    <TablesGrid>
-      {data !== null ? (
+    <Container>
+      {data?.length >= 1 ? (
         <ul>
           {data?.map((friend, index) => (
             <FriendList {...friend} key={index} />
@@ -36,7 +36,7 @@ const Friends = () => {
           </div>
         </Content>
       )}
-    </TablesGrid>
+    </Container>
   );
 };
 
@@ -52,10 +52,17 @@ const Content = styled.div`
 `;
 
 const Container = styled.div`
+  width: ${(props) => props.theme.contentWidth};
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 3.2rem 4rem;
+  margin: 0 auto;
   justify-content: center;
-  align-items: center;
+  ul {
+    width: 100%;
+    display: flex;
+    margin-top: 7.2rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4rem 3.2rem;
+    padding: 0 1.4rem;
+  }
 `;

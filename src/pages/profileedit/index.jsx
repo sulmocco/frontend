@@ -49,6 +49,8 @@ const ProfileEdit = () => {
     const mutation = useMutation((data) => sulmoggoApi.putUser(data), {
         onSuccess: (data, variables, context) => {
             queryClient.invalidateQueries(['user']);
+            localStorage.removeItem('username')
+            localStorage.setItem('username', username.current)
         },
         onError: (error) => {
             alert('실패', error.message)
@@ -96,7 +98,7 @@ const ProfileEdit = () => {
         }
         mutation.mutate(newData);
         alert('수정이 완료되었습니다')
-        navigate('/mypage');
+        navigate('/mypage/bookmark');
     }
 
     // 닉네임 중복체크

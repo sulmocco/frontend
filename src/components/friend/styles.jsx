@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
-export const FriendWrap = styled.ul`
+export const FriendWrap = styled.li`
     width: ${props => props.theme.contentWidth};
     margin: 0 auto;
     box-shadow: ${props => props.theme.shadow_gray};
     border-radius: 1rem;
 `
-export const FriendCont = styled.li`
+export const FriendCont = styled.div`
     padding: 3.2rem 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     .section {
         display: flex;
         flex-direction: row;
@@ -50,5 +53,14 @@ export const FriendCont = styled.li`
                 margin-top: .8rem;
             }
         }
+    }
+    button {
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: ${props => props.theme.grey_02};
+        line-height: 2rem;
+        letter-spacing: -0.04rem;
+        padding: .6rem 1.6rem;
+        border: none;
     }
 `

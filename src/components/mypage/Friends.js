@@ -10,7 +10,7 @@ const Friends = () => {
   );
 
   return (
-    <>
+    <ul>
       {data !== null ? (
         data?.map((friend, index) => <FriendList {...friend} key={index} />)
       ) : (
@@ -29,7 +29,7 @@ const Friends = () => {
           </div>
         </Content>
       )}
-    </>
+    </ul>
   );
 };
 

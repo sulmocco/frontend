@@ -1,4 +1,4 @@
-import { AlcoholLevel } from "./options"
+import { AlcoholLevel } from "./options";
 
 /**
  * 나의 술레벨 숫자를 이름으로 바꿔준다.

@@ -12,7 +12,6 @@ const Mypage = () => {
   const { data, status } = useQuery(['user'], () => sulmoggoApi.getUser().then(res => res.data), {
     cacheTime: 0,
   });
-  console.log(data);
 
   // 쿼리 데이터 로딩전에 스피너
   if (status === "loading") {
@@ -99,6 +98,8 @@ const ProfileBox = styled.div`
     height: 88px;
     margin-left: 32px;
     border-radius: 50%;
+    object-fit: cover;
+
   }
 
   .info {

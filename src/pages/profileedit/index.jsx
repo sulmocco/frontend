@@ -10,15 +10,13 @@ import Spinner from '../../components/spinner';
 import sulmoggoApi from '../../shared/apis';
 import { AlcoholLevel } from '../../shared/options';
 import { Button, MyImgSection, MyInfoSection, ProfileEditCont, ProfileEditSection, ProfileEditWrap } from './style';
-import { getLevel } from '../../shared/modules';
+import { getLevel, getLevelNumb } from '../../shared/modules';
 
 const ProfileEdit = () => {
     const navigate = useNavigate();
     const username = useRef();
     const levelText = useRef();
     const queryClient = useQueryClient();
-
-    const [profileImg, setProfileImg] = useState('');
 
     // 폼관리
     const { register, watch, handleSubmit, setValue, setError, clearErrors, formState: { isDirty, errors } } = useForm();
@@ -33,8 +31,19 @@ const ProfileEdit = () => {
     const { data, status } = useQuery(['user'], () => sulmoggoApi.getUser().then(res => res.data), {
         cacheTime: 0,
     });
-
     console.log(data);
+
+    // 프로필 이미지
+    const [profileImg, setProfileImg] = useState(data?.profileUrl);
+    // 술레벨
+    const [alcoholLevel, setAlcoholLevel] = useState(getLevel(data?.level));
+    const [alcoholLevelNum, setAlcoholLevelNum] = useState(data?.level);
+
+    useEffect(() => {
+        setValue("level", alcoholLevelNum);
+        setValue("level_text", alcoholLevel);
+    }, []);
+
     // 데이터 수정하기
     const mutation = useMutation((data) => sulmoggoApi.putUser(data), {
         onSuccess: (data, variables, context) => {
@@ -55,9 +64,11 @@ const ProfileEdit = () => {
 
     //나의 술 레벨 컨트롤
     const onDropdownChange = (e) => {
-        setValue("level", e.target.id);
-        setValue("level_text", e.target.innerText);
-        console.log(e.target.id, e.target.innerText);
+        setAlcoholLevelNum(e.target.id);
+        setAlcoholLevel(e.target.innerText);
+        console.log(alcoholLevel, alcoholLevelNum);
+        setValue("level", alcoholLevelNum);
+        setValue("level_text", alcoholLevel);
         toggleDropdown(); // 선택시 드롭다운 닫힘
     };
 
@@ -69,7 +80,6 @@ const ProfileEdit = () => {
             for (const keyValue of formData) console.log(keyValue);
             const response = await sulmoggoApi.img(formData);
             setProfileImg(response.data[0].url);
-            console.log(response.data[0].url)
         }
         catch (error) {
             console.log(error)
@@ -80,18 +90,19 @@ const ProfileEdit = () => {
     const onSubmit = () => {
         const newData = {
             username: username.current.value,
-            level: watch('level_text') || data?.level,
+            level: alcoholLevelNum,
             profileUrl: profileImg,
         }
         mutation.mutate(newData);
         alert('수정이 완료되었습니다')
-        navigate('/mypage')
+        navigate('/mypage');
     }
 
     // 로딩스피너 적용
     if (status === 'loading') {
         return (<Spinner />)
     }
+
     return (
         <ProfileEditWrap>
             <ProfileEditSection>
@@ -100,7 +111,7 @@ const ProfileEdit = () => {
                     <MyImgSection>
                         <form className='section'>
                             <span className='img'>
-                                {data?.profileUrl === null ? (
+                                {data?.profileUrl == null && profileImg == null ? (
                                     <img src='/images/profile_default.svg' alt='기본이미지' />
                                 ) : (
                                     <img src={profileImg || data?.profileUrl} alt='프로필 이미지' />
@@ -128,6 +139,7 @@ const ProfileEdit = () => {
                             open={openDropdown}
                             onOptionChange={onDropdownChange}
                             options={options}
+                            defaultValue={data?.level}
                         >
                             <input type="hidden" id="level" />
                             <input
@@ -153,7 +165,7 @@ const ProfileEdit = () => {
                         onClick={() => navigate('/mypage')}
                         width='36.8rem' background='#fff' color='#7A7A80' style={{ border: '1px solid #B8BBC0' }}
                     >취소하기</Button>
-                    <Button width='36.8rem' type='submit' onClick={() => onSubmit()}>수정완료</Button>
+                    <Button width='36.8rem' type='submit' onClick={handleSubmit(onSubmit)}>수정완료</Button>
                 </div>
             </ProfileEditSection>
         </ProfileEditWrap>

@@ -6,7 +6,7 @@ import { userActions } from "../../redux/userSlice";
 
 const Header = ({ location }) => {
   const Token = localStorage.getItem("token");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <Wrap>
       <Navbar>
@@ -21,7 +21,7 @@ const Header = ({ location }) => {
               </NavLink>
             </li>
             <li>
-            <NavLink
+              <NavLink
                 to="/rooms"
                 active={location?.pathname.startsWith("/rooms") || ""}
               >
@@ -50,7 +50,7 @@ const Header = ({ location }) => {
               <li>
                 <div
                   onClick={() => {
-                    dispatch(userActions.userLogout())
+                    dispatch(userActions.userLogout());
                   }}
                 >
                   로그아웃

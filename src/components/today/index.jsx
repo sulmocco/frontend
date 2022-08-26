@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   AlchholTag,
   FreeTag,
+  NoList,
   Separator,
   UserLevel,
 } from "../../styles/CommonStyles";
@@ -139,6 +140,7 @@ const Today = () => {
               </OneRankWrapper>
               
             )}
+            {!today && <NoList>게시된 술상추천이 존재하지 않습니다.<br/>좋아하는 술과 안주를 직접 추천해보시는 건 어떨까요?</NoList>}
           </RankWrapper>
         )}
       </Container>

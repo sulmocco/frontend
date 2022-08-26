@@ -256,7 +256,8 @@ const Chat = (props) => {
               />
             )}
           </div>
-          {(username === roomData?.username) && <div className="videoButtonWrap">
+          {((roomData?.version.startsWith("host") && (username === roomData?.username)) || roomData?.version.startsWith("friend"))
+          && <div className="videoButtonWrap">
             <VideoButton play={playvideo} onClick={() => setPlayvideo(!playvideo)}>
               <img src={`/images/icon_video_${playvideo ? "available" : "disabled"}.svg`} alt="video"/>
             </VideoButton>

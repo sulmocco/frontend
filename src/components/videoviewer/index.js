@@ -3,8 +3,8 @@ import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
 import UserVideoComponent from './UserVideoComponent';
 
-const OPENVIDU_SERVER_URL = 'https://choco-crumbs.shop';
-const OPENVIDU_SERVER_SECRET = 'moggo';
+const OPENVIDU_SERVER_URL = process.env.REACT_APP_OPENVIDU_SERVER_URL;
+const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_OPENVIDU_SERVER_SECRET;
 
 class VideoViewer extends Component {
     constructor(props) {
@@ -258,7 +258,7 @@ class VideoViewer extends Component {
 
     getNicknameTag(sub) {
         // Gets the nickName of the user
-        console.log("✅-----subsub-----✅", sub.stream);
+        console.log("✅-----GETNICKNAMETAG-----✅", sub.stream);
         console.log(sub);
         return JSON.parse(sub.stream.connection.data || "").clientData;
     }
@@ -273,7 +273,7 @@ class VideoViewer extends Component {
                             {(this.state.publisher !== undefined) && (String(this.props.version).startsWith("friend") || (String(this.props.version).startsWith("host")&&(this.props.username === this.props.host))) ? (
                                 <div className="stream-container" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                                     <UserVideoComponent
-                                        streamManager={this.state.publisher} />
+                                        streamManager={this.state.publisher}/>
                                 </div>
                             ) : null}
                             {/* 호스트 모드이고, 자신이 호스트가 아닐 때 호스트의 화면 스트리밍 */}
@@ -289,7 +289,7 @@ class VideoViewer extends Component {
                             {/* 친구 모드일 때 자신 이외의 화면 */}
                             {String(this.props.version).startsWith("friend")&&this.state.subscribers.map((sub, i) => (
                                 <div key={i} className="stream-container" onClick={() => this.handleMainVideoStream(sub)}>
-                                    <UserVideoComponent streamManager={sub} />
+                                    <UserVideoComponent streamManager={sub} openModal={this.props.openModal}/>
                                 </div>
                             ))}
                         </div>

@@ -23,6 +23,7 @@ import {
 } from "./styles";
 import moment from "moment";
 import VideoViewer from "../../components/videoviewer";
+import AddFriendModal from "../../components/addfriendmodal";
 
 const Chat = (props) => {
   const [content, setContent] = useState([]);
@@ -30,6 +31,8 @@ const Chat = (props) => {
   const [usercount, setUserCount] = useState(0);
   const [playvideo, setPlayvideo] = useState(true)
   const [playaudio, setPlayaudio] = useState(true)
+  const [selectedFriend, setSelectedFriend] = useState("")
+  const [openFriendModal, setOpenFriendModal] = useState(false)
   const [time, setTime] = useState(0);
   const chatRef = useRef();
   const lastOne = useRef();
@@ -146,6 +149,16 @@ const Chat = (props) => {
     }
   };
 
+  const onClickModalOpen = (username) => {
+    setSelectedFriend(username)
+    setOpenFriendModal(true)
+    console.log("🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️여기요 여기🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️");
+  }
+  const onClickModalClose = () => {
+    setSelectedFriend("")
+    setOpenFriendModal(false)
+  }
+
   // 1초마다 시간 갱신
   (function loop() {
     setTimeout(function () {
@@ -239,6 +252,7 @@ const Chat = (props) => {
                 selectedDevices={state?.selectedDevices ? state.selectedDevices : null}
                 playvideo={playvideo}
                 playaudio={playaudio}
+                openModal={onClickModalOpen}
               />
             )}
           </div>
@@ -305,6 +319,7 @@ const Chat = (props) => {
           </form>
         </ChatInputWrapper>
       </div>
+      {openFriendModal && <AddFriendModal username={selectedFriend} onClose={onClickModalClose}/>}
     </LiveWrapper>
   );
 };

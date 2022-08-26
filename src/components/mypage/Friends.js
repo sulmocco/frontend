@@ -3,14 +3,17 @@ import React from "react";
 import styled from "styled-components";
 import sulmoggoApi from "../../shared/apis";
 import FriendList from "../friend";
+import { TablesGrid } from "./styles";
 
 const Friends = () => {
   const { data } = useQuery(["friend"], () =>
     sulmoggoApi.getFriends().then((res) => res.data)
   );
 
+  console.log(data);
+
   return (
-    <Container>
+    <TablesGrid>
       {data !== null ? (
         <ul>
           {data?.map((friend, index) => (
@@ -33,7 +36,7 @@ const Friends = () => {
           </div>
         </Content>
       )}
-    </Container>
+    </TablesGrid>
   );
 };
 

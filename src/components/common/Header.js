@@ -45,7 +45,7 @@ const Header = ({ location }) => {
                 <NavLive to="/live/new">방송하기</NavLive>
               </li>
               <li>
-                <NavLink to="/mypage">마이페이지</NavLink>
+                <NavLink to="/mypage/bookmark">마이페이지</NavLink>
               </li>
               <li>
                 <div

@@ -76,6 +76,7 @@ const sulmoggoApi = {
   getSelectedUser: (username) => api.get(`/friends/${username}`),
   addFriend: (username) => api.post(`/friends/${username}`),
   getFriends: () => api.get("/friends/"),
+  deleteFriends: (username) => api.delete(`/friends/${username}`),
 };
 
 export default sulmoggoApi;

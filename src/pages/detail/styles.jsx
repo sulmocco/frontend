@@ -24,6 +24,17 @@ export const DetailHeader = styled.div`
         display: flex;
         flex-direction: row;
         padding: 1.8rem 0;
+        .img {
+            width: 6.4rem;
+            height: 6.4rem;
+            border-radius: 50%;
+            overflow: hidden;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
         .desc {
             padding: 0 1.2rem;
             display: flex;

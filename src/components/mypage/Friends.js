@@ -10,9 +10,13 @@ const Friends = () => {
   );
 
   return (
-    <ul>
+    <Container>
       {data !== null ? (
-        data?.map((friend, index) => <FriendList {...friend} key={index} />)
+        <ul>
+          {data?.map((friend, index) => (
+            <FriendList {...friend} key={index} />
+          ))}
+        </ul>
       ) : (
         <Content>
           <img src="/images/none.png" alt="북마크"></img>
@@ -29,7 +33,7 @@ const Friends = () => {
           </div>
         </Content>
       )}
-    </ul>
+    </Container>
   );
 };
 
@@ -42,4 +46,13 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 3.2rem 4rem;
+  justify-content: center;
+  align-items: center;
 `;

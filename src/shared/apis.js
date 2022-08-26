@@ -75,7 +75,7 @@ const sulmoggoApi = {
   leaveChatRoom: (chatRoomId) => api.delete(`/chat/room/quit/${chatRoomId}`),
   getSelectedUser: (username) => api.get(`/friends/${username}`),
   addFriend: (username) => api.post(`/friends/${username}`),
-  getFriends: () => api.get("/friends"),
+  getFriends: () => api.get("/friends/"),
 };
 
 export default sulmoggoApi;

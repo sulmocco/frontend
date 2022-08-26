@@ -1,5 +1,6 @@
 import React from 'react';
 import sulmoggoApi from '../../shared/apis';
+import { getLevel } from '../../shared/modules';
 import { FriendCont, FriendWrap } from './styles';
 
 const FriendList = (props) => {
@@ -19,7 +20,7 @@ const FriendList = (props) => {
                         )}
                     </div>
                     <div className='desc'>
-                        <span>{level}</span>
+                        <span>{getLevel(level)}</span>
                         <h4>{username}</h4>
                     </div>
                 </div>

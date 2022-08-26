@@ -1,17 +1,15 @@
 import styled from 'styled-components';
 
 export const FriendWrap = styled.li`
-    width: ${props => props.theme.contentWidth};
-    margin: 0 auto;
     box-shadow: ${props => props.theme.shadow_gray};
     border-radius: 1rem;
 `
 export const FriendCont = styled.div`
-    margin-top: 7.2rem;
     padding: 3.2rem 2.4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-width: 61rem;
     .section {
         display: flex;
         flex-direction: row;

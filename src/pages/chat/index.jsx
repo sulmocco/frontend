@@ -54,7 +54,7 @@ const Chat = (props) => {
   const socketConnect = () => {
     try {
       client.connect(headers, () => {
-        enterChatroom()
+        // enterChatroom()
         client.subscribe(
           `/sub/chat/room/${chatRoomId}`,
           (data) => {
@@ -88,7 +88,9 @@ const Chat = (props) => {
   const quitChatroom = async (explode) => {
     if (explode) {
       await sulmoggoApi.removeChatRoom(chatRoomId);
-    } 
+    }else {
+      await sulmoggoApi.leaveChatRoom(chatRoomId);
+    }
     // await client.send(
     //   `pub/chat/message`,
     //   headers,
@@ -102,18 +104,18 @@ const Chat = (props) => {
     // socketDisConnect();
   };
 
-  const enterChatroom = async () => {
-    const res = await client.send(
-      `pub/chat/message`,
-      headers,
-      JSON.stringify({
-        type: "ENTER",
-        chatRoomId: chatRoomId,
-        sender: username,
-        message: chatRef.current.value,
-      })
-    );
-  };
+  // const enterChatroom = async () => {
+  //   const res = await client.send(
+  //     `pub/chat/message`,
+  //     headers,
+  //     JSON.stringify({
+  //       type: "ENTER",
+  //       chatRoomId: chatRoomId,
+  //       sender: username,
+  //       message: chatRef.current.value,
+  //     })
+  //   );
+  // };
 
   // 메세지 보내기
   const sendMessage = async () => {

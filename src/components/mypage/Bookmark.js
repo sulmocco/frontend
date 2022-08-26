@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";

@@ -14,13 +14,13 @@ const PasswordRending = () => {
     console.log(params);
 
     useEffect(() => {
-        if (params == 'signup') {
+        if (params === 'signup') {
             setSignup(true)
         }
-        if (params == 'password') {
+        if (params === 'password') {
             setSignup(false)
         }
-    }, []);
+    }, [params]);
     return (
         <LoginWrap padding='signup'>
             {signup ? <ProgressBar /> : <div style={{ marginTop: '13.6rem' }}></div>}

@@ -26,7 +26,7 @@ const Mypage = () => {
         <Wrap>
           <h1>마이페이지</h1>
           <ProfileBox>
-            {data?.profileUrl == '' || null ? (
+            {data?.profileUrl === '' || null ? (
               <img src='images/profile_default.svg' alt='기본이미지' />
             ) : (
               <img src={data?.profileUrl || 'images/profile_default.svg'} alt="프로필 이미지" />

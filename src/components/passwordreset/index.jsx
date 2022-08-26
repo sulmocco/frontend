@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SignUpButton } from '../../pages/signup/styles';
 import sulmoggoApi from '../../shared/apis';
 import { PasswordSection, PasswordWrap } from './styles';

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
-import Spinner from '../../components/spinner';
 
 // 웹 에디터 관리
 import { useRef } from "react";

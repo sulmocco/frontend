@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
 import Spinner from '../../components/spinner';
@@ -64,12 +64,14 @@ const EditPost = () => {
 
     useEffect(() => {
         editorRef.current?.getInstance().setHTML(data?.content)
+        // eslint-disable-next-line
     }, []);
 
     //게시글 수정일때
     useEffect(() => {
         setTagList(data?.alcoholtag);
-        setTagColor(tag.findIndex((el) => el == data?.alcoholtag));
+        setTagColor(tag.findIndex((el) => el === data?.alcoholtag));
+        // eslint-disable-next-line
     }, []);
 
     //태그 선택

@@ -1,5 +1,4 @@
 import React from "react"
-import { useNavigate } from "react-router-dom"
 import { BigButton } from "../../styles/CommonStyles"
 import { LoginSection, LoginWrap } from "./styles"
 

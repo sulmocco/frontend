@@ -26,15 +26,6 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 
-const data = {
-  version: "라이브 종류",
-  thumbnail: "/images/img.png",
-  alcoholtag: "맥주",
-  food: "치킨",
-  theme: "스몰토크",
-  title: "치맥합시다!!",
-};
-
 const NewLive = (props) => {
   const alcohol = useRef({});
   const videoPreview = useRef();
@@ -48,8 +39,6 @@ const NewLive = (props) => {
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
 
-  const [camera, setCamera] = useState(null);
-  const [audio, setAudio] = useState(null);
   const [constraints, setConstraints] = useState({ video: true });
   const [thumbnail, setThumbnail] = useState(null);
   const {
@@ -152,6 +141,7 @@ const NewLive = (props) => {
       console.log("this..");
     };
     foo();
+    // eslint-disable-next-line
   }, [constraints]);
 
   const onDrop = useCallback(async (file) => {
@@ -222,7 +212,7 @@ const NewLive = (props) => {
             <SubTitle mt={0}>제목</SubTitle>
             {errors.title && (
               <div className="error">
-                <img src="/images/icon_information.svg" />
+                <img src="/images/icon_information.svg" alt="information"/>
                 <label>{errors.title.message}</label>
               </div>
             )}
@@ -237,7 +227,7 @@ const NewLive = (props) => {
             <SubTitle>추천술 선택</SubTitle>
             {errors.alcohol && (
               <div className="error">
-                <img src="/images/icon_information.svg" />
+                <img src="/images/icon_information.svg" alt="information"/>
                 <label>{errors.alcohol.message}</label>
               </div>
             )}
@@ -267,7 +257,7 @@ const NewLive = (props) => {
             <div>
               <SubTitle>방송화면</SubTitle>
               <div className="video">
-                {!constraints.video && <img src="/images/icon_video_disabled.svg" />}
+                {!constraints.video && <img src="/images/icon_video_disabled.svg" alt="video off"/>}
                 {constraints.video && <video autoPlay ref={videoPreview} />}
               </div>
             </div>
@@ -318,7 +308,7 @@ const NewLive = (props) => {
                     {...register("video")}
                     defaultValue={cameraDevices[0]?.label}
                   />
-                  <img src="/images/icon_dropdown_grey_02.svg" />
+                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
                 </div>
                 <div className="devicesWrap">
                   {cameraDevices &&
@@ -358,7 +348,7 @@ const NewLive = (props) => {
                     {...register("audio")}
                     defaultValue={audioDevices[0]?.label}
                   />
-                  <img src="/images/icon_dropdown_grey_02.svg" />
+                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
                 </div>
                 <div className="devicesWrap">
                   {audioDevices &&
@@ -389,7 +379,7 @@ const NewLive = (props) => {
             <SubTitle>안주</SubTitle>
             {errors.food && (
               <div className="error">
-                <img src="/images/icon_information.svg" />
+                <img src="/images/icon_information.svg" alt="information"/>
                 <label>{errors.food.message}</label>
               </div>
             )}
@@ -415,7 +405,7 @@ const NewLive = (props) => {
                 <SubTitle>테마</SubTitle>
                 {errors.theme && (
                   <div className="error">
-                    <img src="/images/icon_information.svg" />
+                    <img src="/images/icon_information.svg" alt="information"/>
                     <label>{errors.theme.message}</label>
                   </div>
                 )}
@@ -432,7 +422,7 @@ const NewLive = (props) => {
                 <SubTitle>공개 / 비공개 설정</SubTitle>
                 {errors.theme && (
                   <div className="error">
-                    <img src="/images/icon_information.svg" />
+                    <img src="/images/icon_information.svg" alt="information"/>
                     <label>{errors.theme.message}</label>
                   </div>
                 )}
@@ -451,7 +441,7 @@ const NewLive = (props) => {
                     {...register("show")}
                     defaultValue={"공개"}
                   />
-                  <img src="/images/icon_dropdown_grey_02.svg" />
+                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
                 </div>
                 <div className="devicesWrap">
                   {["공개", "비공개"].map((x) => {

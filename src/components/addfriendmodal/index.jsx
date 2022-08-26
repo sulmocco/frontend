@@ -29,7 +29,7 @@ const AddFriendModal = ({username, onClose}) => {
     
     return (
         <ModalWrapper onClick={e =>{
-            if(e.target == e.currentTarget){
+            if(e.target === e.currentTarget){
                 e.stopPropagation()
             }else{
                 onClose()

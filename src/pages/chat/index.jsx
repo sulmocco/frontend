@@ -78,15 +78,15 @@ const Chat = (props) => {
     }
   };
   // 소켓연결 해제
-  const socketDisConnect = () => {
-    try {
-      client.disconnect(() => {
-        client.unsubscribe("sub-0");
-      });
-    } catch (error) {
-      console.log("연결해제 실패", error);
-    }
-  };
+  // const socketDisConnect = () => {
+  //   try {
+  //     client.disconnect(() => {
+  //       client.unsubscribe("sub-0");
+  //     });
+  //   } catch (error) {
+  //     console.log("연결해제 실패", error);
+  //   }
+  // };
 
   const quitChatroom = async (explode) => {
     if (explode) {
@@ -206,6 +206,7 @@ const Chat = (props) => {
       window.removeEventListener('beforeunload', bar)
       window.addEventListener('unload', bar)
     }
+    // eslint-disable-next-line
   }, [username, roomData?.username])
   return (
     <LiveWrapper>

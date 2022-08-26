@@ -10,7 +10,7 @@ import Spinner from '../../components/spinner';
 import sulmoggoApi from '../../shared/apis';
 import { AlcoholLevel } from '../../shared/options';
 import { Button, MyImgSection, MyInfoSection, ProfileEditCont, ProfileEditSection, ProfileEditWrap } from './style';
-import { getLevel, getLevelNumb } from '../../shared/modules';
+import { getLevel } from '../../shared/modules';
 
 const ProfileEdit = () => {
     const navigate = useNavigate();
@@ -43,6 +43,7 @@ const ProfileEdit = () => {
     useEffect(() => {
         setValue("level", alcoholLevelNum);
         setValue("level_text", alcoholLevel);
+        // eslint-disable-next-line
     }, []);
 
     // 데이터 수정하기

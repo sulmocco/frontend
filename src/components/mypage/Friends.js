@@ -3,7 +3,6 @@ import React from "react";
 import styled from "styled-components";
 import sulmoggoApi from "../../shared/apis";
 import FriendList from "../friend";
-import { TablesGrid } from "./styles";
 
 const Friends = () => {
   const { data } = useQuery(["friend"], () =>

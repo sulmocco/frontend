@@ -162,9 +162,9 @@ class VideoViewer extends Component {
                             console.log(publisher);
                             // --- 6) Publish your stream ---
                             const version = this.props.version
-                            // if (String(version).startsWith("friend") || (String(version).startsWith("host")&&(this.props.username === this.props.host))){
+                            if (String(version).startsWith("friend") || (String(version).startsWith("host")&&(this.props.username === this.props.host))){
                             mySession.publish(publisher);
-                            // }
+                            }
                             // Set the main video in the page to display our webcam and store our Publisher
                             this.setState({
                                 currentVideoDevice: videoDevices[0],
@@ -256,6 +256,13 @@ class VideoViewer extends Component {
           }
     }
 
+    getNicknameTag(sub) {
+        // Gets the nickName of the user
+        console.log("✅-----subsub-----✅", sub.stream);
+        console.log(sub);
+        return JSON.parse(sub.stream.connection.data || "").clientData;
+    }
+
     render() {
         return (
             <div className="container">
@@ -270,20 +277,21 @@ class VideoViewer extends Component {
                                 </div>
                             ) : null}
                             {/* 호스트 모드이고, 자신이 호스트가 아닐 때 호스트의 화면 스트리밍 */}
-                            {/* {(String(this.props.version).startsWith("host")&&(this.props.username !== this.props.host)) ? (
+                            {(String(this.props.version).startsWith("host")&&(this.props.username !== this.props.host)) ? (
                                 <div className="stream-container" onClick={() => this.handleMainVideoStream(this.state.subscribers.filter(x => JSON.parse(x.streamManager?.stream?.connection?.data)?.clientData === this.props.host))}>
                                     <UserVideoComponent
-                                        streamManager={this.state.subscribers.filter(x => JSON.parse(x.streamManager.stream.connection.data).clientData === this.props.host)} />
+                                        streamManager={this.state.subscribers.filter(x => {
+                                            console.log(this.getNicknameTag(x));
+                                            return true
+                                            })[0]} />
                                 </div>
-                            ) : null} */}
+                            ) : null}
                             {/* 친구 모드일 때 자신 이외의 화면 */}
-                            {/* {this.props.version.startsWith("friend") && this.state.subscribers.filter(x => JSON.parse(x.streamManager?.stream?.connection?.data)?.clientData === this.props.username).map((sub, i) => ( */}
-                            {this.state.subscribers.map((sub, i) => (
+                            {String(this.props.version).startsWith("friend")&&this.state.subscribers.map((sub, i) => (
                                 <div key={i} className="stream-container" onClick={() => this.handleMainVideoStream(sub)}>
                                     <UserVideoComponent streamManager={sub} />
                                 </div>
                             ))}
-                            {/* ))} */}
                         </div>
                     </div>
                 ) : null}

@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 import sulmoggoApi from '../../shared/apis';
 import { getLevel } from '../../shared/modules';
@@ -6,6 +7,19 @@ import { FriendCont, FriendWrap } from './styles';
 const FriendList = (props) => {
 
     const { profile, level, username, isOnair } = props;
+    console.log(username)
+
+    const mutation = useMutation(async (username) => await sulmoggoApi.deleteFriends(username), {
+        onSuccess: () => {
+            alert('친구삭제 완료!');
+        },
+    });
+
+    const deleteFriend = () => {
+        if (window.confirm('친구를 삭제하시겠습니까?')) {
+        }
+        mutation.mutate(username);
+    }
 
     return (
         <FriendWrap>
@@ -24,7 +38,7 @@ const FriendList = (props) => {
                         <h4>{username}</h4>
                     </div>
                 </div>
-                <button>삭제하기</button>
+                <button onClick={() => deleteFriend}>삭제하기</button>
             </FriendCont>
         </FriendWrap>
     );

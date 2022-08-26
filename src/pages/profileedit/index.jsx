@@ -90,7 +90,7 @@ const ProfileEdit = () => {
     // submit 이벤트
     const onSubmit = () => {
         const newData = {
-            username: username.current.value,
+            username: username.current,
             level: alcoholLevelNum,
             profileUrl: profileImg,
         }
@@ -104,6 +104,7 @@ const ProfileEdit = () => {
         sulmoggoApi
             .usernameCheck(username.current)
             .then((res) => {
+                console.log(res.data)
                 alert("사용 가능한 닉네임입니다.");
                 setUsernameOK(true);
                 clearErrors("username");

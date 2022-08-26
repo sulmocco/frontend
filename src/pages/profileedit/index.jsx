@@ -182,7 +182,6 @@ const ProfileEdit = () => {
                             open={openDropdown}
                             onOptionChange={onDropdownChange}
                             options={options}
-                            defaultValue={data?.level}
                         >
                             <input type="hidden" id="level" />
                             <input

@@ -7,6 +7,7 @@ export const FriendWrap = styled.li`
     border-radius: 1rem;
 `
 export const FriendCont = styled.div`
+    margin-top: 7.2rem;
     padding: 3.2rem 2.4rem;
     display: flex;
     align-items: center;
@@ -20,8 +21,11 @@ export const FriendCont = styled.div`
             position: relative;
             width: 7.2rem;
             height: 7.2rem;
-            overflow: hidden;
+            border-radius: 50%;
             img{
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
                 object-fit: cover;
             }
             span{
@@ -62,5 +66,6 @@ export const FriendCont = styled.div`
         letter-spacing: -0.04rem;
         padding: .6rem 1.6rem;
         border: none;
+        border-radius: 2rem;
     }
 `

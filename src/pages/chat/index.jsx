@@ -39,6 +39,7 @@ const Chat = (props) => {
   const username = localStorage.getItem("username");
   const naviagte = useNavigate();
   const {state} = useLocation()
+  let explode = username === roomData?.username
 
   // const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/chat`); // 서버주소 수정하기
   const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/ws-stomp`); // 서버주소 수정하기
@@ -53,7 +54,7 @@ const Chat = (props) => {
   const socketConnect = () => {
     try {
       client.connect(headers, () => {
-        // enterChatroom()
+        enterChatroom()
         client.subscribe(
           `/sub/chat/room/${chatRoomId}`,
           (data) => {
@@ -63,7 +64,7 @@ const Chat = (props) => {
             console.log("여기!!!!!!!!!!");
             setContent((prevContent) => [...prevContent, newMessage]);
             // chatListRef.current.scro
-            lastOne.current.scrollIntoView();
+            lastOne.current?.scrollIntoView();
           },
           headers
         );
@@ -84,36 +85,35 @@ const Chat = (props) => {
     }
   };
 
-  const quitChatroom = async () => {
-    if (roomData?.username === username) {
+  const quitChatroom = async (explode) => {
+    if (explode) {
       await sulmoggoApi.removeChatRoom(chatRoomId);
-    } else {
-      await client.send(
-        `pub/chat/message`,
-        headers,
-        JSON.stringify({
-          type: "QUIT",
-          chatRoomId: chatRoomId,
-          sender: username,
-          message: chatRef.current.value,
-        })
-      );
-    }
-    socketDisConnect();
+    } 
+    // await client.send(
+    //   `pub/chat/message`,
+    //   headers,
+    //   JSON.stringify({
+    //     type: "QUIT",
+    //     chatRoomId: chatRoomId,
+    //     sender: username,
+    //     message: chatRef.current.value,
+    //   })
+    // );
+    // socketDisConnect();
   };
 
-//   const enterChatroom = async () => {
-//     const res = await client.send(
-//       `pub/chat/message`,
-//       headers,
-//       JSON.stringify({
-//         type: "ENTER",
-//         chatRoomId: chatRoomId,
-//         sender: username,
-//         message: chatRef.current.value,
-//       })
-//     );
-//   };
+  const enterChatroom = async () => {
+    const res = await client.send(
+      `pub/chat/message`,
+      headers,
+      JSON.stringify({
+        type: "ENTER",
+        chatRoomId: chatRoomId,
+        sender: username,
+        message: chatRef.current.value,
+      })
+    );
+  };
 
   // 메세지 보내기
   const sendMessage = async () => {
@@ -183,16 +183,15 @@ const Chat = (props) => {
   }, [chatRoomId]);
   
   useEffect(() => {
+    const foo = username === roomData?.username
+    const bar = () => quitChatroom(foo)
+    window.addEventListener('beforeunload',bar);
+    window.addEventListener('unload', bar)
     return () => {
-        console.log("cleanup");
-      //   console.log(username, roomData?.username)
-        const bar = async () => {
-          await quitChatroom();
-        };
-        bar();
-      };
-      // eslint-disable-next-line
-  }, [])
+      window.removeEventListener('beforeunload', bar)
+      window.addEventListener('unload', bar)
+    }
+  }, [username, roomData?.username])
   return (
     <LiveWrapper>
       <div className="live_left_box">
@@ -261,7 +260,7 @@ const Chat = (props) => {
             onClick={async (e) => {
               e.preventDefault();
               if (window.confirm("채팅방을 나가시겠습니까?")) {
-                await quitChatroom();
+                await quitChatroom(explode);
                 // console.log("나가기버튼. 내용 : ", chatRef.current.value);
                 naviagte("/rooms");
               }

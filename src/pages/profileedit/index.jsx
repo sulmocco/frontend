@@ -19,7 +19,8 @@ const ProfileEdit = () => {
     const queryClient = useQueryClient();
 
     // 폼관리
-    const { register, watch, handleSubmit, setValue, setError, clearErrors, formState: { isDirty, errors } } = useForm();
+    const { register, watch, handleSubmit, setValue, setError, clearErrors, formState: { isDirty, errors } } = useForm({ mode: "onChange" });
+    username.current = watch("username", "");
 
     // 드롭다운 열리면 true 닫히면 false
     const [openDropdown, setOpenDropdown] = useState(false);
@@ -98,6 +99,30 @@ const ProfileEdit = () => {
         navigate('/mypage');
     }
 
+    // 닉네임 중복체크
+    const checkUsername = () => {
+        sulmoggoApi
+            .usernameCheck(username.current)
+            .then((res) => {
+                alert("사용 가능한 닉네임입니다.");
+                setUsernameOK(true);
+                clearErrors("username");
+            })
+            .catch((e) => {
+                alert("사용할 수 없는 닉네임입니다.");
+                setError("username", {
+                    type: "custom",
+                    message: "사용할 수 없는 닉네임입니다.",
+                });
+            });
+    };
+
+    // 닉네임 변경시(onChange 핸들러)
+    const onUserNameChange = () => {
+        setUsernameOK(false);
+        return false;
+    };
+
     // 로딩스피너 적용
     if (status === 'loading') {
         return (<Spinner />)
@@ -129,8 +154,25 @@ const ProfileEdit = () => {
                     >
                         <InputWrapper
                             title='닉네임'
+                            error={errors.username?.message}
+                            needCheck
+                            onCheck={checkUsername}
+                            success={usernameOK}
                         >
-                            <input type='text' defaultValue={data?.username || ''} ref={username} />
+                            <input
+                                id="username"
+                                type="text"
+                                placeholder='닉네임을 입력해주세요'
+                                defaultValue={data?.username}
+                                aria-invalid={
+                                    !isDirty ? undefined : errors.username ? "true" : "false"
+                                }
+                                {...register("username", {
+                                    required: "닉네임은 필수 입력입니다.",
+                                    onChange: onUserNameChange,
+                                    validate: () => usernameOK || "중복확인이 필요합니다.",
+                                })}
+                            />
                         </InputWrapper>
                         <InputWrapper
                             error={errors.level_text?.message}

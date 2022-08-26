@@ -1,6 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef } from "react";
-import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import RoomCard from "../../components/roomscard";
 import SearchBar from "../../components/searchbar";
@@ -250,6 +249,7 @@ const Rooms = (props) => {
           ))}
         </ul>
       </RoomsTabs>
+      {/* eslint-disable-next-line */}
       {isSuccess && data.pages[0].data.totalElements != 0 && <RoomsGrid>
             {data.pages.map((page, pageidx) => {
               const content = page.data.content;
@@ -268,6 +268,7 @@ const Rooms = (props) => {
             })}
           {console.log(data.pages)}
         </RoomsGrid>}
+      {/* eslint-disable-next-line */}
       {isSuccess && (data.pages[0].data.totalElements == 0) && (
         <NoList>
           진행중인 술약속이 없습니다.

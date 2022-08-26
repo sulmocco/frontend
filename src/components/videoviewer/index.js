@@ -39,6 +39,14 @@ class VideoViewer extends Component {
         window.removeEventListener('beforeunload', this.onbeforeunload);
     }
 
+    componentDidUpdate(prevProps){
+        console.log(prevProps);
+        console.log(this.props);
+        if((prevProps.playaudio !== this.props.playaudio) || (prevProps.playvideo !== this.props.playvideo)){
+            this.updatePublishState()
+        }
+    }
+
     onbeforeunload(event) {
         this.leaveSession();
     }
@@ -148,9 +156,10 @@ class VideoViewer extends Component {
                                 resolution: '400x272', // The resolution of your video
                                 frameRate: 30, // The frame rate of your video
                                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-                                mirror: false, // Whether to mirror your local video or not
+                                mirror: true, // Whether to mirror your local video or not
                             });
-
+                            console.log("🛑------publisher!!!------🛑");
+                            console.log(publisher);
                             // --- 6) Publish your stream ---
                             const version = this.props.version
                             if (String(version).startsWith("friend") || (String(version).startsWith("host")&&(this.props.username === this.props.host))){
@@ -186,11 +195,31 @@ class VideoViewer extends Component {
         this.setState({
             session: undefined,
             subscribers: [],
-            mySessionId: 'SessionA',
-            myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            mySessionId: this.props.chatRoomId,
+            myUserName: this.props.username,
             mainStreamManager: undefined,
             publisher: undefined
         });
+    }
+
+    async updatePublishState() {
+        try{
+            if(this.state.publisher){
+            var properties = {...this.state.publisher.properties, publishAudio: this.props.playaudio, publishVideo: this.props.playvideo}
+            console.log(properties);
+            var newPublisher = this.OV.initPublisher(undefined, properties)
+            await this.state.session.unpublish(this.state.mainStreamManager)
+            await this.state.session.publish(newPublisher).then(res => {
+                console.log(res);
+            })
+            this.setState({
+                mainStreamManager: newPublisher,
+                publisher: newPublisher,
+            });
+            }
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     async switchCamera() {
@@ -228,36 +257,27 @@ class VideoViewer extends Component {
     }
 
     render() {
-        const mySessionId = this.state.mySessionId;
-        const myUserName = this.state.myUserName;
-
         return (
             <div className="container">
-
                 {this.state.session !== undefined ? (
                     <div id="session">
-
-                        {/* {this.state.mainStreamManager !== undefined ? (
-                            <div id="main-video" className="col-md-6">
-                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
-                                <input
-                                    className="btn btn-large btn-success"
-                                    type="button"
-                                    id="buttonSwitchCamera"
-                                    onClick={this.switchCamera}
-                                    value="Switch Camera"
-                                />
-                            </div>
-                        ) : null} */}
-
                         <div id="video-container">
+                            {/* 친구 모드이거나 호스트 모드이고, 자신이 호스트일 때 자신의 화면을 스트리밍 */}
                             {(this.state.publisher !== undefined) && (String(this.props.version).startsWith("friend") || (String(this.props.version).startsWith("host")&&(this.props.username === this.props.host))) ? (
                                 <div className="stream-container" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                                     <UserVideoComponent
                                         streamManager={this.state.publisher} />
                                 </div>
                             ) : null}
-                            {this.props.version.startsWith("friend") && this.state.subscribers.map((sub, i) => (
+                            {/* 호스트 모드이고, 자신이 호스트가 아닐 때 호스트의 화면 스트리밍 */}
+                            {(String(this.props.version).startsWith("host")&&(this.props.username !== this.props.host)) ? (
+                                <div className="stream-container" onClick={() => this.handleMainVideoStream(this.state.subscribers.filter(x => JSON.parse(x.streamManager.stream.connection.data).clientData === this.props.host))}>
+                                    <UserVideoComponent
+                                        streamManager={this.state.subscribers.filter(x => JSON.parse(x.streamManager.stream.connection.data).clientData === this.props.host)} />
+                                </div>
+                            ) : null}
+                            {/* 친구 모드일 때 자신 이외의 화면 */}
+                            {this.props.version.startsWith("friend") && this.state.subscribers.filter(x => JSON.parse(x.streamManager.stream.connection.data).clientData === this.props.username).map((sub, i) => (
                                 <div key={i} className="stream-container" onClick={() => this.handleMainVideoStream(sub)}>
                                     <UserVideoComponent streamManager={sub} />
                                 </div>

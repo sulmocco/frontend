@@ -14,7 +14,7 @@ import {
   ProfileImage,
   Profile,
 } from "./styles";
-
+import { useNavigate } from 'react-router-dom';
 import {
   AlchholTag,
   SnackTag,
@@ -25,6 +25,7 @@ import sulmoggoApi from "../../shared/apis";
 
 const Live = () => {
   const [list, setList] = useState([]);
+  const navigate = useNavigate()
 
   // Live 목록 불러오기
   const getLiveList = async () => {
@@ -60,6 +61,10 @@ const Live = () => {
             top: "30px",
             right: "0",
             fontSize: "16px",
+            cursor: "pointer"
+          }}
+          onClick={()=>{
+            navigate("/rooms")
           }}
         >
           더보기 &gt;

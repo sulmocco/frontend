@@ -10,7 +10,6 @@ import Spinner from '../../components/spinner';
 import { useRef } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import { useSelector } from "react-redux";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
@@ -26,7 +25,7 @@ const EditPost = () => {
     const freetag_ref = useRef();
     const navigate = useNavigate();
     const editorRef = useRef();
-    const username = useSelector((state) => state.user.username);
+    const username = localStorage.getItem("username")
     const { tableId } = useParams();
     const { data, status } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data), {
         cacheTime: 0,

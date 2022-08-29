@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import sulmoggoApi from "../../shared/apis";
 import { Separator } from "../../styles/CommonStyles";
 import {
@@ -13,7 +12,7 @@ import {
 
 const Comment = ({ postId }) => {
   const [content, setContent] = useState("");
-  const username = useSelector((state) => state.user.username);
+  const username = localStorage.getItem("username")
   const queryClient = useQueryClient();
   const [onModify, setOnModify] = useState(null);
   const [modifyContent, setModifyContent] = useState(null);

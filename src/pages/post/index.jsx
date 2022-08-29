@@ -9,7 +9,6 @@ import sulmoggoApi from "../../shared/apis";
 import { useRef } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import { useSelector } from "react-redux";
 
 const Post = () => {
   const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주"];
@@ -21,7 +20,7 @@ const Post = () => {
   const [thumbnailImg, SetThumbnailImg] = useState("");
   const navigate = useNavigate();
   const editorRef = useRef();
-  const username = useSelector((state) => state.user.username);
+  const username = localStorage.getItem("username")
 
   //태그 선택
   const addTag = (e) => {

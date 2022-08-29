@@ -17,3 +17,14 @@ export const getLevel = (value) => {
 export const getLevelValue = (text) => {
     return(AlcoholLevel.find(e => e.text === text)?.text)
 }
+
+export const userLogin = ({username, id, token}) => {
+    localStorage.setItem("username", username)
+    localStorage.setItem("id", id)
+    localStorage.setItem("token", token)
+}
+export const userLogout = () => {
+    localStorage.removeItem("username")
+    localStorage.removeItem("id")
+    localStorage.removeItem("token")
+}

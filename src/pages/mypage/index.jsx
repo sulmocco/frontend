@@ -9,7 +9,7 @@ import { getLevel } from '../../shared/modules';
 const Mypage = () => {
   const navigate = useNavigate();
 
-  const { data, status } = useQuery(['user'], () => sulmoggoApi.getUser().then(res => res.data), {
+  const { data, status } = useQuery(['user'], () => sulmoggoApi.getUserDetail().then(res => res.data), {
     cacheTime: 0,
   });
 

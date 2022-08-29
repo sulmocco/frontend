@@ -27,12 +27,12 @@ api.interceptors.response.use(
     return res;
   },
   (err) => {
-    console.log("sadasd");
-    // alert("응답이 뭔가 잘못됨!!")
+    return Promise.reject(err)
   }
 );
 
 const sulmoggoApi = {
+  getUser: () => api.get("/getUser"),
   signUp: (user) => api.post("/signup", user),
   usernameCheck: (username) => api.get(`/checkUser/${username}`),
   login: (user) => api.post("/login", user),
@@ -55,7 +55,7 @@ const sulmoggoApi = {
   deleteLike: (tableId) => api.delete(`tables/${tableId}/like`),
   postBookmark: (tableId) => api.post(`tables/${tableId}/bookmark`),
   deleteBookmark: (tableId) => api.delete(`tables/${tableId}/bookmark`),
-  getUser: () => api.get("/mypage"),
+  getUserDetail: () => api.get("/mypage"),
   getMyPost: (pageParam) =>
     api.get(`/mypage/tables?page=${pageParam}&size=${9}`),
   getMybookmark: (pageParam) =>

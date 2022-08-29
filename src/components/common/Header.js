@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { userActions } from "../../redux/userSlice";
+import { userLogout } from "../../shared/modules";
 
 const Header = ({ location }) => {
   const Token = localStorage.getItem("token");
-  const dispatch = useDispatch();
   return (
     <Wrap>
       <Navbar>
@@ -50,7 +48,8 @@ const Header = ({ location }) => {
               <li>
                 <div
                   onClick={() => {
-                    dispatch(userActions.userLogout());
+                    userLogout();
+                    window.location.href = "/"
                   }}
                 >
                   로그아웃

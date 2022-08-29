@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
-import { userActions } from "./redux/userSlice";
+import { useQuery } from "@tanstack/react-query";
 import Theme from "./styles/Theme";
 import Layout from "./components/common/Layout";
 import Spinner from "./components/spinner";
@@ -13,6 +12,8 @@ import PasswordRedirect from "./components/passwordredirect";
 import PasswordRending from "./components/passwordrending";
 import PassWordInput from "./components/passwordreset";
 import EditPost from "./pages/editpost";
+import sulmoggoApi from "./shared/apis";
+import { userLogin, userLogout } from "./shared/modules";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Auth = React.lazy(() => import("./pages/auth"));
@@ -34,22 +35,17 @@ const Rooms = React.lazy(() => import("./pages/rooms"));
 const Live = React.lazy(() => import("./pages/live"));
 
 function App() {
-  const dispatch = useDispatch();
-  const isLogin = useSelector((state) => state.user.isLogin);
-  const refreshLogin = useCallback(() => {
-    if (localStorage.getItem("token")) {
-      // TODO: 토큰으로 로그인 정보 가져오는 api 필요할 것 같습니다.
-      dispatch(
-        userActions.userLogin({
-          username: localStorage.getItem("username"),
-          token: localStorage.getItem("token"),
-        })
-      );
+  useQuery(['user'], () => sulmoggoApi.getUser().then(res => {
+    if(res.data.response){
+      const token = localStorage.getItem("token")
+      userLogin({username: res.data.username, id: res.data.id, token})
     }
-  }, [dispatch]);
-  useEffect(() => {
-    refreshLogin();
-  }, [isLogin, refreshLogin]);
+  }).catch(err => {
+    console.log(err);
+    userLogout();
+  })
+  );
+
   return (
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
@@ -57,13 +53,13 @@ function App() {
           <Route path="/chat/:chatRoomId" element={<Chat />} />
           <Route path="/live" element={<Live />} />
           <Route path="/" element={<Layout />}>
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/oauth2/redirect" element={<LoginRedirect />} />
             <Route path="/oauth2/redirect_pw" element={<PasswordRedirect />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/loginrending" element={<LoginRending />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/post" element={<Post />} />
             <Route path="/editpost/:tableId" element={<EditPost />} />

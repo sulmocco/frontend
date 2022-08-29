@@ -29,7 +29,7 @@ const ProfileEdit = () => {
     const [usernameOK, setUsernameOK] = useState(false);
 
     // 데이터 받아오기
-    const { data, status } = useQuery(['user'], () => sulmoggoApi.getUser().then(res => res.data), {
+    const { data, status } = useQuery(['user'], () => sulmoggoApi.getUserDetail().then(res => res.data), {
         cacheTime: 0,
     });
     console.log(data);

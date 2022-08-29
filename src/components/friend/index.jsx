@@ -26,7 +26,7 @@ const FriendList = (props) => {
             <FriendCont>
                 <div className='section'>
                     <div className="img">
-                        <img src={profile} alt='프로필 이미지' />
+                        <img src={profile || '/images/profile_default.svg'} alt='프로필 이미지' />
                         {isOnair ? (
                             <span style={{ backgroundColor: '#FDC250' }}></span>
                         ) : (

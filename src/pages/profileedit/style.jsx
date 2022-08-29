@@ -29,6 +29,7 @@ export const ProfileEditCont = styled.div`
     gap: 4rem;
 `
 export const MyImgSection = styled.div`
+    position: relative;
     background-color: #fff;
     min-width: 40rem;
     height: 29.6rem;
@@ -78,6 +79,22 @@ export const MyImgSection = styled.div`
                 cursor: pointer;
             }
         }
+    }
+    button {
+        position: absolute;
+        right: 0;
+        bottom: -4.8rem;
+        border: none;
+        font-size: 1.6rem;
+        font-weight: 700;
+        line-height: 1.909rem;
+        letter-spacing: -0.04rem;
+        text-align: center;
+        padding: .6rem 1.6rem;
+        color: ${props => props.theme.grey_03};
+        background-color: #fff;
+        border-radius: 2rem;
+        cursor: pointer;
     }
 `
 export const MyInfoSection = styled.form`

@@ -11,9 +11,12 @@ const api = axios.create({
 api.interceptors.request.use(
   function (config) {
     const accessToken = localStorage.getItem("token"); // localStorage에 TOKEN 저장
-    console.log(accessToken);
-    if (accessToken) {
+    const refreshToken = localStorage.getItem("refreshToken");
+    // console.log(accessToken);
+    console.log(refreshToken);
+    if (config.headers) {
       config.headers.common.authorization = accessToken;
+      config.headers.common.RefreshToken = refreshToken;
     } // Header에 토큰을 넣어서 보내준다.
     return config;
   },
@@ -26,8 +29,38 @@ api.interceptors.response.use(
   (res) => {
     return res;
   },
-  (err) => {
-    return Promise.reject(err)
+  async (error) => {
+    //response 에서 error 가 발생했을 경우 catch로 넘어가기 전에 처리
+    try {
+      const errorStatus = error.response.status;
+      const errorData = error.response.data;
+      const prevRequst = error.config;
+      // 토큰이 만료되어 발생하는 에러인 경우
+      if (errorStatus === 401 || errorData === "만료된 토큰입니다.") {
+        // 새로운 토큰 발행 요청
+        const result = await axios.put(
+          `${process.env.REACT_APP_API_SERVER}/api/refreshToken`,
+          {},
+          {
+            headers: {
+              authorization: localStorage.getItem("token"),
+              RefreshToken: localStorage.getItem("refreshToken"),
+            },
+          }
+        );
+        // 새로받은 토큰 저장
+        localStorage.setItem("token", result.data.accessToken);
+        localStorage.setItem("refreshToken", result.data.refreshToken);
+        // 헤더에 새로운 token으로 설정
+        prevRequst.headers.authorization = localStorage.getItem("token");
+        prevRequst.headers.RefreshToken = localStorage.getItem("refreshToken");
+        // 실패했던 기존 request 재시도
+        return await axios(prevRequst);
+      }
+    } catch (e) {
+      //오류내용 출력 후 요청 거절
+      return Promise.reject(e);
+    }
   }
 );
 

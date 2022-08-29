@@ -35,15 +35,25 @@ const Rooms = React.lazy(() => import("./pages/rooms"));
 const Live = React.lazy(() => import("./pages/live"));
 
 function App() {
-  useQuery(['user'], () => sulmoggoApi.getUser().then(res => {
-    if(res.data.response){
-      const token = localStorage.getItem("token")
-      userLogin({username: res.data.username, id: res.data.id, token})
-    }
-  }).catch(err => {
-    console.log(err);
-    userLogout();
-  })
+  useQuery(["user"], () =>
+    sulmoggoApi
+      .getUser()
+      .then((res) => {
+        if (res.data.response) {
+          const token = localStorage.getItem("token");
+          const refreshToken = localStorage.getItem("refreshToken");
+          userLogin({
+            username: res.data.username,
+            id: res.data.id,
+            token,
+            refreshToken,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        userLogout();
+      })
   );
 
   return (

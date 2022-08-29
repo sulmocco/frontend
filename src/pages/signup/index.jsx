@@ -78,6 +78,7 @@ const SignUp = (props) => {
     sulmoggoApi
       .usernameCheck(username.current)
       .then((res) => {
+        console.log(res.data)
         alert("사용 가능한 닉네임입니다.");
         setUsernameOK(true);
         clearErrors("username");

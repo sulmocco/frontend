@@ -44,7 +44,7 @@ const Bookmark = () => {
 
   return (
     <>
-      {data.pages.length >= 1 ? (
+      {data.pages[0].length >= 1 ? (
         <MypageWrap>
           <TablesGrid>
             {data &&

@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -40,12 +39,6 @@ const ProfileEdit = () => {
     const [alcoholLevel, setAlcoholLevel] = useState(getLevel(data?.level));
     const [alcoholLevelNum, setAlcoholLevelNum] = useState(data?.level);
 
-    useEffect(() => {
-        setValue("level", alcoholLevelNum);
-        setValue("level_text", alcoholLevel);
-        // eslint-disable-next-line
-    }, []);
-
     // 데이터 수정하기
     const mutation = useMutation((data) => sulmoggoApi.putUser(data), {
         onSuccess: (data, variables, context) => {
@@ -68,11 +61,10 @@ const ProfileEdit = () => {
 
     //나의 술 레벨 컨트롤
     const onDropdownChange = (e) => {
-        setAlcoholLevelNum(e.target.id);
-        setAlcoholLevel(e.target.innerText);
-        console.log(alcoholLevel, alcoholLevelNum);
-        setValue("level", alcoholLevelNum);
-        setValue("level_text", alcoholLevel);
+        setValue("level", e.target.id);
+        setValue("level_text", e.target.innerText);
+        setAlcoholLevelNum(watch('level'));
+        setAlcoholLevel(watch('level_text'));
         toggleDropdown(); // 선택시 드롭다운 닫힘
     };
 
@@ -127,6 +119,10 @@ const ProfileEdit = () => {
         return false;
     };
 
+    const deleteAccount = () => {
+        console.log('탈퇴하기')
+    }
+
     // 로딩스피너 적용
     if (status === 'loading') {
         return (<Spinner />)
@@ -152,6 +148,7 @@ const ProfileEdit = () => {
                             </label>
                             <input {...register('image')} type="file" id='image' name='image' accept='image/*' onChange={imgUpload} />
                         </form>
+                        <button onClick={() => deleteAccount}>탈퇴하기</button>
                     </MyImgSection>
                     <MyInfoSection
                         onSubmit={handleSubmit(onSubmit)}

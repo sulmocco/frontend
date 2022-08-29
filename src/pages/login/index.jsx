@@ -14,7 +14,7 @@ const Login = () => {
         console.log(id_ref.current.value, pw_ref.current.value);
         await sulmoggoApi.login({ id: id_ref.current.value, password: pw_ref.current.value })
             .then(res => {
-                userLogin({username: res.data.username, token: res.headers.authorization, id: res?.data?.id})
+                userLogin({ username: res.data.username, token: res.headers.authorization, id: res?.data?.id, refreshToken: res.data.refreshToken })
                 navigate("/")
             }).catch(err => {
                 alert("로그인에 실패했습니다. 아이디 및 비밀번호를 확인해주세요.")

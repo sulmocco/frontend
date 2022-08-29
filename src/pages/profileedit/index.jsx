@@ -36,7 +36,6 @@ const ProfileEdit = () => {
     // 프로필 이미지
     const [profileImg, setProfileImg] = useState(data?.profileUrl);
     // 술레벨
-    const [alcoholLevel, setAlcoholLevel] = useState(getLevel(data?.level));
     const [alcoholLevelNum, setAlcoholLevelNum] = useState(data?.level);
 
     // 데이터 수정하기
@@ -71,7 +70,6 @@ const ProfileEdit = () => {
         setValue("level", e.target.id);
         setValue("level_text", e.target.innerText);
         setAlcoholLevelNum(watch('level'));
-        setAlcoholLevel(watch('level_text'));
         toggleDropdown(); // 선택시 드롭다운 닫힘
     };
 

@@ -9,7 +9,7 @@ import Spinner from '../../components/spinner';
 import sulmoggoApi from '../../shared/apis';
 import { AlcoholLevel } from '../../shared/options';
 import { Button, MyImgSection, MyInfoSection, ProfileEditCont, ProfileEditSection, ProfileEditWrap } from './style';
-import { getLevel } from '../../shared/modules';
+import { getLevel, userLogout } from '../../shared/modules';
 
 const ProfileEdit = () => {
     const navigate = useNavigate();
@@ -48,6 +48,13 @@ const ProfileEdit = () => {
         },
         onError: (error) => {
             alert('실패', error.message)
+        }
+    });
+
+    const deleteUserMutation = useMutation(() => sulmoggoApi.deleteUser(), {
+        onSuccess: () => {
+            navigate('/loginrending');
+            userLogout();
         }
     });
 
@@ -120,7 +127,9 @@ const ProfileEdit = () => {
     };
 
     const deleteAccount = () => {
-        console.log('탈퇴하기')
+        if (window.confirm('정말로 탈퇴하시겠습니까?'))
+            deleteUserMutation.mutate();
+        alert('탈퇴가 완료되었습니다');
     }
 
     // 로딩스피너 적용
@@ -148,7 +157,7 @@ const ProfileEdit = () => {
                             </label>
                             <input {...register('image')} type="file" id='image' name='image' accept='image/*' onChange={imgUpload} />
                         </form>
-                        <button onClick={() => deleteAccount}>탈퇴하기</button>
+                        <button onClick={() => deleteAccount()}>탈퇴하기</button>
                     </MyImgSection>
                     <MyInfoSection
                         onSubmit={handleSubmit(onSubmit)}

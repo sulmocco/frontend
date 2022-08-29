@@ -66,6 +66,7 @@ api.interceptors.response.use(
 
 const sulmoggoApi = {
   getUser: () => api.get("/getUser"),
+  deleteUser: () => api.delete("/deleteUser"),
   signUp: (user) => api.post("/signup", user),
   usernameCheck: (username) => api.get(`/checkUser/${username}`),
   login: (user) => api.post("/login", user),

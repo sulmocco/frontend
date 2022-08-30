@@ -279,7 +279,7 @@ export const ChatWrapper = styled.div`
     /* background: red; */
     width: 100%;
     height: 100%;
-    padding: 3.2rem 3.3rem 15.2rem;
+    padding: 3.2rem 3.3rem 0rem;
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
@@ -298,6 +298,9 @@ export const ChatContent = styled.div`
     position: relative;
     &:first-child{
         margin-top: 0;
+    }
+    &:last-child{
+        padding-bottom: 15.2rem;
     }
     .chatuser{
         width: fit-content;

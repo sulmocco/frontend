@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
-import Stomp from "stompjs";
+import { Stomp, Client, Message } from '@stomp/stompjs';
 import sulmoggoApi from "../../shared/apis";
 import {
   AlchholTag,
@@ -44,48 +44,47 @@ const Chat = (props) => {
   const {state} = useLocation()
   let explode = username === roomData?.username
 
-  // const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/chat`); // 서버주소 수정하기
-  const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/ws-stomp`); // 서버주소 수정하기
-  const client = Stomp.over(sock);
 
   const headers = { Authorization: token };
 
-  // 웹소켓 연결시 stomp에서 자동으로 connect이 되었다는것을 console에 보여주는데 그것을 감추기 위한 debug
-  client.debug = null;
+  // const sock = new SockJS(`${process.env.REACT_APP_API_SERVER}/ws-stomp`)
+  // const client = Stomp.over(sock)
+
+  let client = new Client({
+    brokerURL: `ws://api.sulmoggo.live/ws-stomp`,
+    connectHeaders: headers,
+  })
+  // if(typeof WebSocket !== 'function'){
+    console.log("WEBSOCKET IS NOT FUNCTION");
+    client.webSocketFactory = function () {
+      return new SockJS(`${process.env.REACT_APP_API_SERVER}/ws-stomp`)
+    }
+  // }
+
+  client.onConnect = function (frame){
+    client.subscribe(
+      `/sub/chat/room/${chatRoomId}`,
+      (data) => {
+        const newMessage = JSON.parse(data.body);
+        setUserCount(JSON.parse(data.body).userCount);
+        console.log(JSON.parse(data.body));
+        console.log("여기!!!!!!!!!!");
+        setContent((prevContent) => [...prevContent, newMessage]);
+        lastOne.current?.scrollIntoView();
+      },
+      headers
+    );
+    console.log(frame);
+  }
+
+  client.onStompError = function (frame) {
+    console.log(frame);
+  }
 
   // 소켓연결
   const socketConnect = () => {
-    try {
-      client.connect(headers, () => {
-        enterChatroom()
-        client.subscribe(
-          `/sub/chat/room/${chatRoomId}`,
-          (data) => {
-            const newMessage = JSON.parse(data.body);
-            setUserCount(JSON.parse(data.body).userCount);
-            console.log(JSON.parse(data.body));
-            console.log("여기!!!!!!!!!!");
-            setContent((prevContent) => [...prevContent, newMessage]);
-            lastOne.current?.scrollIntoView();
-          },
-          headers
-        );
-        // console.log(res);
-      });
-    } catch (error) {
-      console.log("연결실패", error);
-    }
+    
   };
-  // 소켓연결 해제
-  // const socketDisConnect = () => {
-  //   try {
-  //     client.disconnect(() => {
-  //       client.unsubscribe("sub-0");
-  //     });
-  //   } catch (error) {
-  //     console.log("연결해제 실패", error);
-  //   }
-  // };
 
   const quitChatroom = async (explode) => {
     if (explode) {
@@ -94,84 +93,63 @@ const Chat = (props) => {
       await sulmoggoApi.leaveChatRoom(chatRoomId);
     }
       await sulmoggoApi.removeChatRoom(chatRoomId);
-      await client.send(
-      `pub/chat/message`,
-      headers,
-      JSON.stringify({
-        type: "QUIT",
-        chatRoomId: chatRoomId,
-        sender: username,
-        message: chatRef.current.value,
-      })
-    );
-    // socketDisConnect();
-  };
-
-  const enterChatroom = async () => {
-    await client.send(
-      `pub/chat/message`,
-      headers,
-      JSON.stringify({
-        type: "ENTER",
-        chatRoomId: chatRoomId,
-        sender: username,
-        message: chatRef.current.value,
-      })
-    );
   };
 
   // 메세지 보내기
-  const sendMessage = async () => {
-    try {
+  const sendMessage = () => {
       console.log({
         type: "TALK",
         chatRoomId: chatRoomId,
         sender: username,
         message: chatRef.current.value,
       });
-      const res = await client.send(
-        `/pub/chat/message`,
-        headers,
-        JSON.stringify({
-          type: "TALK",
-          chatRoomId: chatRoomId,
-          sender: username,
-          message: chatRef.current.value,
-        })
-      );
-      console.log("SEND가 끝남. res : " + res);
+
+      console.log("🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎", client);
+      // if(client?.connected) {
+        console.log("🍊🍊🍊🍊🍊🍊🍊🍊🍊🍊🍊🍊🍊🍊");
+        client.publish(
+          {destination: `/pub/chat/message`,
+          headers,
+          body: JSON.stringify({
+            type: "TALK",
+            chatRoomId: chatRoomId,
+            sender: username,
+            message: chatRef.current.value,
+          })}
+        );
+      // }
+      
+
+      console.log("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏");
       chatRef.current.value = ""
       if (chatRef === "") {
         return;
       }
-    } catch (error) {
-      console.log("메세지 보내기 실패", error);
-    }
   };
 
   const onClickModalOpen = (username) => {
     setSelectedFriend(username)
     setOpenFriendModal(true)
-    console.log("🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️여기요 여기🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️");
   }
   const onClickModalClose = () => {
     setSelectedFriend("")
     setOpenFriendModal(false)
   }
 
+
   // 1초마다 시간 갱신
-  (function loop() {
-    setTimeout(function () {
-      loop();
-      if (createdAt) {
-        console.log("loop : ", createdAt);
-        var date1 = moment(createdAt);
-        var date2 = moment();
-        var diff = date2.diff(date1, "seconds");
-        setTime(moment.utc(diff * 1000).format("HH:mm:ss"));
-      }
-    }, 1000);
-  })();
+  // (function loop() {
+  //   setTimeout(function () {
+  //   console.log("🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️여기요 여기🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️");
+  //   loop()
+  //     if(createdAt){
+  //     console.log("loop : ", createdAt);
+  //       var date1 = moment(createdAt);
+  //       var date2 = moment();
+  //       var diff = date2.diff(date1, 'seconds');
+  //       setTime(moment.utc(diff*1000).format('HH:mm:ss'))}
+  //   }, 1000);
+  // }());
 
   // 메세지 받기
 
@@ -179,7 +157,8 @@ const Chat = (props) => {
   //roomId가 바뀔때마다 다시 연결
   useEffect(() => {
     // console.log(props.selectedDevices);
-    socketConnect();
+    client.activate();
+    console.log(client?.connected);
     const foo = async () => {
       try {
         sulmoggoApi.enterChatRoom(chatRoomId);
@@ -194,17 +173,34 @@ const Chat = (props) => {
       }
     };
     foo();
+    return() => {
+      console.log("❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥");
+      client.deactivate()
+      // socketDisConnect()
+      // if(client.connected){
+      //   console.log("❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥");
+      //   try {
+      //     client.disconnect(() => {
+      //       client.unsubscribe("sub-0");
+      //     });
+      //   } catch (error) {
+      //     console.log("연결해제 실패", error);
+      //   }
+      // }
+    }
     // eslint-disable-next-line
   }, [chatRoomId]);
   
   useEffect(() => {
     const foo = username === roomData?.username
-    const bar = () => quitChatroom(foo)
+    const bar = () => {
+      quitChatroom(foo)
+    }
     window.addEventListener('beforeunload',bar);
     window.addEventListener('unload', bar)
     return () => {
       window.removeEventListener('beforeunload', bar)
-      window.addEventListener('unload', bar)
+      window.removeEventListener('unload', bar)
     }
     // eslint-disable-next-line
   }, [username, roomData?.username])
@@ -220,10 +216,10 @@ const Chat = (props) => {
                 <div className="username">
                   {roomData?.username || "사용자가 없습니다."}
                 </div>
-                <AddHostFriendButton>
+                {!explode && <AddHostFriendButton>
                   <img src="/images/icon_addfriend.svg" alt="add friend"/>
                   <span>친구추가</span>
-                </AddHostFriendButton>
+                </AddHostFriendButton>}
               </div>
             </div>
           </ProfileWrap>
@@ -299,6 +295,7 @@ const Chat = (props) => {
               </ChatContent>
             );
           })}
+          <ChatContent />
         </ChatWrapper>
         <ChatInputWrapper>
           <form action="">
@@ -311,7 +308,7 @@ const Chat = (props) => {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  sendMessage(chatRef.current.value);
+                  if(chatRef.current.value !== "") sendMessage(chatRef.current.value);
                   // console.log("보내기버튼. 내용 : ", chatRef.current.value);
                 }}
               >

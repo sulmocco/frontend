@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,7 @@ const ProfileEdit = () => {
     const navigate = useNavigate();
     const username = useRef();
     const levelText = useRef();
+    const level = useRef();
     const queryClient = useQueryClient();
 
     // 폼관리
@@ -52,6 +53,7 @@ const ProfileEdit = () => {
 
     const deleteUserMutation = useMutation(() => sulmoggoApi.deleteUser(), {
         onSuccess: () => {
+            alert('탈퇴가 완료되었습니다');
             navigate('/loginrending');
             userLogout();
         }
@@ -127,8 +129,13 @@ const ProfileEdit = () => {
     const deleteAccount = () => {
         if (window.confirm('정말로 탈퇴하시겠습니까?'))
             deleteUserMutation.mutate();
-        alert('탈퇴가 완료되었습니다');
     }
+
+    // 술레벨 초기값 설정 
+    useEffect(() => {
+        setValue('level', data?.level);
+        setValue('level_text', getLevel(data?.level));
+    }, []);
 
     // 로딩스피너 적용
     if (status === 'loading') {
@@ -186,6 +193,8 @@ const ProfileEdit = () => {
                             error={errors.level_text?.message}
                             title="나의 술 레벨"
                             dropdown
+                            ref={level}
+                            defaultValue={data?.level}
                             open={openDropdown}
                             onOptionChange={onDropdownChange}
                             options={options}

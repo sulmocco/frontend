@@ -30,8 +30,6 @@ const Bookmark = () => {
       },
     }
   );
-  console.log(data);
-  console.log(data?.pages.length);
 
   // 맨 마지막 요소를 보고있으면 다음 데이터를 가져온다.
   useEffect(() => {
@@ -44,7 +42,7 @@ const Bookmark = () => {
 
   return (
     <>
-      {data.pages[0].length >= 1 ? (
+      {data.pages[0].data?.length >= 1 ? (
         <MypageWrap>
           <TablesGrid>
             {data &&

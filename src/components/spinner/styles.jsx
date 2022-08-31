@@ -3,26 +3,27 @@ import styled from 'styled-components';
 export const SpinnerWrap = styled.div`
     width: 100%;
     height: 100vh;
-    max-height: calc(100vh - 262px);
+    min-height: calc(100vh - 28.8rem);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* span{
-        width: 30rem;
-        height: 30rem;
-        border: 1rem solid ${props => props.theme.grey_03};
-        border-radius: 50%;
-        border-top: 1rem solid ${props => props.theme.secondary};
-        animation: rotate360 1s linear Infinite;
-    } */
+    gap: 5.6rem;
     img {
-        width: ${props => props.size || '20rem'};
+        width: ${props => props.size || '22.1rem'};
         height: auto;
         animation: rotate360 1s linear Infinite;
     }
-    @keyframes rotate360 {
+    p{
+        font-size: 2.6rem;
+        font-weight: 700;
+        letter-spacing: -0.02rem;
+        color: ${props => props.theme.grey_01};
+        line-height: 3.103rem;
+    }
+    /* @keyframes rotate360 {
         100% {
             transform: rotate(360deg);
         }
-    }
+    } */
 `

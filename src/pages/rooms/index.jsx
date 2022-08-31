@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
+import Nodata from '../../components/nodatalending/styles';
 import RoomCard from "../../components/roomscard";
 import SearchBar from "../../components/searchbar";
 import sulmoggoApi from "../../shared/apis";
@@ -251,30 +252,26 @@ const Rooms = (props) => {
       </RoomsTabs>
       {/* eslint-disable-next-line */}
       {isSuccess && data.pages[0].data.totalElements != 0 && <RoomsGrid>
-            {data.pages.map((page, pageidx) => {
-              const content = page.data.content;
-              return content?.map((room, idx) => {
-                if (
-                  idx === content.length - 1 &&
-                  pageidx === data.pages.length - 1
-                )
-                  return (
-                    <div ref={lastRoomRef} key={room.chatRoomId}>
-                      <RoomCard {...room} />
-                    </div>
-                  );
-                else return <RoomCard {...room} key={room.chatRoomId} />;
-              });
-            })}
-          {console.log(data.pages)}
-        </RoomsGrid>}
+        {data.pages.map((page, pageidx) => {
+          const content = page.data.content;
+          return content?.map((room, idx) => {
+            if (
+              idx === content.length - 1 &&
+              pageidx === data.pages.length - 1
+            )
+              return (
+                <div ref={lastRoomRef} key={room.chatRoomId}>
+                  <RoomCard {...room} />
+                </div>
+              );
+            else return <RoomCard {...room} key={room.chatRoomId} />;
+          });
+        })}
+        {console.log(data.pages)}
+      </RoomsGrid>}
       {/* eslint-disable-next-line */}
       {isSuccess && (data.pages[0].data.totalElements == 0) && (
-        <NoList>
-          진행중인 술약속이 없습니다.
-          <br />
-          직접 술약속을 잡아보세요!
-        </NoList>
+        <Nodata />
       )}
       {!isSuccess && <NoList>문제가 발생했습니다.</NoList>}
     </RoomsWrapper>

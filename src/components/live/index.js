@@ -214,7 +214,7 @@ const Next = styled.button`
 `;
 
 const Listbox = styled.div`
-  margin-right: 20px;
+  margin-right: 10px;
   width: 420px;
 
   transform: ${(props) => (props.slide ? "translateX(-900px)" : "0")};

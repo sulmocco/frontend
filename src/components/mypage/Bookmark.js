@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import styled from "styled-components";
 import sulmoggoApi from "../../shared/apis";
+import Nodata from "../nodatalending/styles";
 import Spinner from "../spinner";
 import TableCard from "../tablecard";
 import { MypageWrap, TablesGrid } from "./styles";
@@ -58,18 +59,7 @@ const Bookmark = () => {
         </MypageWrap>
       ) : (
         <Content>
-          <img src="/images/none.png" alt="북마크"></img>
-          <div style={{ fontSize: "28px" }}>북마크한 술상이 없습니다!</div>
-          <div
-            style={{
-              color: "#b5b5b5",
-              marginTop: "5px",
-              textAlign: "center",
-              fontSize: "18px",
-            }}
-          >
-            마음에 드는 술상을 북마크해보세요!
-          </div>
+          <Nodata />
         </Content>
       )}
     </>

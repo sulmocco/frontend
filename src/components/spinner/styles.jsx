@@ -10,9 +10,9 @@ export const SpinnerWrap = styled.div`
     align-items: center;
     gap: 5.6rem;
     img {
-        width: ${props => props.size || '22.1rem'};
+        width: ${props => props.size || '40rem'};
         height: auto;
-        animation: rotate360 1s linear Infinite;
+        margin-top: -10rem;
     }
     p{
         font-size: 2.6rem;
@@ -21,9 +21,4 @@ export const SpinnerWrap = styled.div`
         color: ${props => props.theme.grey_01};
         line-height: 3.103rem;
     }
-    /* @keyframes rotate360 {
-        100% {
-            transform: rotate(360deg);
-        }
-    } */
 `

@@ -61,10 +61,10 @@ const Live = () => {
             {list.map((v, i) => {
               return (
                 <Listbox key={i} slide={slide}>
-                  <Image src={v.thumbnail} alt="썸네일"></Image>
+                  <Image src={v.thumbnail || '/images/placeholder.png'} alt="썸네일"></Image>
                   <ProfileBox>
                     <ProfileImage
-                      src="/images/icon-all.png"
+                      src={v.profileimgurl || '/images/profile_default.svg'}
                       alt="프로필사진"
                     ></ProfileImage>
                     <Profile>
@@ -86,8 +86,8 @@ const Live = () => {
                   </ProfileBox>
                   <Desc>
                     <div style={{ fontSize: "16px", fontWeight: "400" }}>
-                      <img src="/images/live-clock.svg" alt="프로필사진" />
-                      <span>{v.time}</span>
+                      <img src="/images/icon_clock.svg" alt="clock" />
+                      <span>{new Date(v.createdAt).toLocaleString() || 0}</span>
                     </div>
                     <div style={{ margin: "0 10px", fontSize: "16px" }}>|</div>
                     <div
@@ -96,8 +96,8 @@ const Live = () => {
                         fontWeight: "400",
                       }}
                     >
-                      <img src="/images/live-people.svg" alt="프로필사진" />
-                      <span>{v.members}</span>
+                      <img src="/images/icon_people_black.svg" alt="people" />
+                      <span>{v.userCount}</span>
                     </div>
                   </Desc>
                   <div style={{ display: "flex", marginTop: "40px" }}>
@@ -105,7 +105,7 @@ const Live = () => {
                       {v.theme}
                     </AlchholTag>
                     <SnackTag style={{ marginRight: "10px" }}>
-                      {v.alcohol}
+                      {v.alcoholtag}
                     </SnackTag>
                     <ThemeTag>{v.food}</ThemeTag>
                   </div>
@@ -225,6 +225,7 @@ const Image = styled.img`
   width: 420px;
   height: 260px;
   border-radius: 10px;
+  object-fit: cover;
 `;
 
 const ProfileBox = styled.div`
@@ -243,6 +244,7 @@ const Desc = styled.div`
 
     span {
       margin-left: 5px;
+      color: ${props => props.theme.grey_02};
     }
   }
 `;
@@ -251,7 +253,6 @@ const ProfileImage = styled.img`
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 1px solid black;
 `;
 
 const Profile = styled.div`

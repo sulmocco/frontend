@@ -20,6 +20,7 @@ export const RecommendWrap = styled.div`
     }
 `
 export const RecommendItem = styled.li`
+    cursor: pointer;
     margin-bottom: 2.4rem;
     max-width: 29.6rem;
     img{

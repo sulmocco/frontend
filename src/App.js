@@ -15,13 +15,13 @@ import EditPost from "./pages/editpost";
 import sulmoggoApi from "./shared/apis";
 import { userLogin, userLogout } from "./shared/modules";
 
-const Home = React.lazy(() => import("./pages/Home"));
+const Home = React.lazy(() => import("./pages/home"));
 const Auth = React.lazy(() => import("./pages/auth"));
 const SignUp = React.lazy(() => import("./pages/signup"));
 const Login = React.lazy(() => import("./pages/login"));
 const Terms = React.lazy(() => import("./pages/terms"));
 const Tables = React.lazy(() => import("./pages/tables"));
-const LoginRending = React.lazy(() => import("./pages/loginrending"));
+const LoginRending = React.lazy(() => import("./components/loginrending"));
 const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
 const ProfileEdit = React.lazy(() => import("./pages/profileedit"));
 const Detail = React.lazy(() => import("./pages/detail"));
@@ -88,6 +88,7 @@ function App() {
               <Route path="/mypage/friends" element={<Friends />} />
             </Route>
             <Route path="/mypage/edit" element={<ProfileEdit />} />
+            <Route path="/loading" element={<Spinner />} />
           </Route>
         </Routes>
       </ThemeProvider>

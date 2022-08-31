@@ -18,22 +18,26 @@ const Header = ({ location }) => {
                 <img src="/images/logo.svg" alt="술모꼬 로고" />
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/rooms"
-                active={location?.pathname.startsWith("/rooms") || ""}
-              >
-                술약속
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/tables"
-                active={location?.pathname.startsWith("/tables") || ""}
-              >
-                술상추천
-              </NavLink>
-            </li>
+            {Token ? (
+              <>
+                <li>
+                  <NavLink
+                    to="/rooms"
+                    active={location?.pathname.startsWith("/rooms") || ""}
+                  >
+                    술약속
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/tables"
+                    active={location?.pathname.startsWith("/tables") || ""}
+                  >
+                    술상추천
+                  </NavLink>
+                </li>
+              </>
+            ) : null}
           </ul>
         </NavLeft>
         {Token ? (

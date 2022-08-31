@@ -35,7 +35,7 @@ const SignUp = (props) => {
   const onSubmit = async (data) => {
     console.log(JSON.stringify(data));
     await sulmoggoApi.signUp(data).then((res) => {
-      alert(res.data);
+      alert('회원가입 완료');
     });
     navigate('/render/signup');
   };

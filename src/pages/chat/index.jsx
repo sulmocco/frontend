@@ -312,7 +312,9 @@ const Chat = (props) => {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  sendMessage();
+                  if (chatRef.current.value !== "") {
+                    sendMessage();
+                  }
                 }}
               >
                 <img src="/images/icon_send.svg" alt="send airplane" />

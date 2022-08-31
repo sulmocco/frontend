@@ -49,7 +49,7 @@ const Header = ({ location }) => {
                 <div
                   onClick={() => {
                     userLogout();
-                    window.location.href = "/"
+                    window.location.href = "/";
                   }}
                 >
                   로그아웃
@@ -60,9 +60,6 @@ const Header = ({ location }) => {
         ) : (
           <NavRight>
             <ul>
-              <li>
-                <NavLive to="/live/new">술약속 잡기</NavLive>
-              </li>
               <li>
                 <NavLink
                   to="/login"

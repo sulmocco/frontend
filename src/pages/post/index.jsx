@@ -11,7 +11,7 @@ import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
 const Post = () => {
-  const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주"];
+  const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주", "기타"];
   const [tagList, setTagList] = useState("맥주");
   const [tagColor, setTagColor] = useState(0);
   const [imgList, SetImgList] = useState([]);

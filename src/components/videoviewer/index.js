@@ -1,354 +1,20 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
-import React, { Component } from "react";
+import React, { Component, useEffect, useRef, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
 
 const OPENVIDU_SERVER_URL = process.env.REACT_APP_OPENVIDU_SERVER_URL;
 const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_OPENVIDU_SERVER_SECRET;
 
-class VideoViewer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      mySessionId: this.props.chatRoomId,
-      myUserName: this.props.username,
-      session: undefined,
-      mainStreamManager: undefined,
-      publisher: undefined,
-      subscribers: [],
-    };
-
-    this.joinSession = this.joinSession.bind(this);
-    this.leaveSession = this.leaveSession.bind(this);
-    this.switchCamera = this.switchCamera.bind(this);
-    this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
-    this.handleChangeUserName = this.handleChangeUserName.bind(this);
-    this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
-    this.onbeforeunload = this.onbeforeunload.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener("beforeunload", this.onbeforeunload);
-    if (this.state.session === undefined) {
-      this.joinSession();
-    }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onbeforeunload);
-  }
-
-  componentDidUpdate(prevProps) {
-    console.log(prevProps);
-    console.log(this.props);
-    if (
-      prevProps.playaudio !== this.props.playaudio ||
-      prevProps.playvideo !== this.props.playvideo
-    ) {
-      this.updatePublishState();
-    }
-  }
-
-  onbeforeunload(event) {
-    this.leaveSession();
-  }
-
-  handleChangeSessionId(e) {
-    this.setState({
-      mySessionId: e.target.value,
-    });
-  }
-
-  handleChangeUserName(e) {
-    this.setState({
-      myUserName: e.target.value,
-    });
-  }
-
-  handleMainVideoStream(stream) {
-    if (this.state.mainStreamManager !== stream) {
-      this.setState({
-        mainStreamManager: stream,
-      });
-    }
-  }
-
-  deleteSubscriber(streamManager) {
-    let subscribers = this.state.subscribers;
-    let index = subscribers.indexOf(streamManager, 0);
-    if (index > -1) {
-      subscribers.splice(index, 1);
-      this.setState({
-        subscribers: subscribers,
-      });
-    }
-  }
-
-  joinSession() {
-    // --- 1) Get an OpenVidu object ---
-
-    this.OV = new OpenVidu();
-
-    // --- 2) Init a session ---
-
-    this.setState(
-      {
-        session: this.OV.initSession(),
-      },
-      () => {
-        var mySession = this.state.session;
-
-        // --- 3) Specify the actions when events take place in the session ---
-
-        // On every new Stream received...
-        mySession.on("streamCreated", (event) => {
-          // Subscribe to the Stream to receive it. Second parameter is undefined
-          // so OpenVidu doesn't create an HTML video by its own
-          var subscriber = mySession.subscribe(event.stream, undefined);
-          var subscribers = this.state.subscribers;
-          subscribers.push(subscriber);
-
-          // Update the state with the new subscribers
-          this.setState({
-            subscribers: subscribers,
-          });
-        });
-
-        // On every Stream destroyed...
-        mySession.on("streamDestroyed", (event) => {
-          // Remove the stream from 'subscribers' array
-          this.deleteSubscriber(event.stream.streamManager);
-        });
-
-        // On every asynchronous exception...
-        mySession.on("exception", (exception) => {
-          console.warn(exception);
-        });
-
-        // --- 4) Connect to the session with a valid user token ---
-
-        // 'getToken' method is simulating what your server-side should do.
-        // 'token' parameter should be retrieved and returned by your own backend
-        this.getToken().then((token) => {
-          // First param is the token got from OpenVidu Server. Second param can be retrieved by every user on event
-          // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
-          mySession
-            .connect(token, { clientData: this.state.myUserName })
-            .then(async () => {
-              var devices = await this.OV.getDevices();
-              var videoDevices = devices.filter(
-                (device) => device.kind === "videoinput"
-              );
-              var audioDevices = devices.filter(
-                (device) => device.kind === "audioinput"
-              );
-              console.log(videoDevices);
-
-              // --- 5) Get your own camera stream ---
-              console.log(this.props?.selectedDevices);
-              let camera =
-                this.props?.selectedDevices?.video?.deviceId ||
-                videoDevices[0].deviceId;
-              let microphone =
-                this.props?.selectedDevices?.audio?.deviceId ||
-                audioDevices[0].deviceId;
-              // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
-              // element: we will manage it on our own) and with the desired properties
-              let publisher = this.OV.initPublisher(undefined, {
-                audioSource: microphone, // The source of audio. If undefined default microphone
-                videoSource: camera, // The source of video. If undefined default webcam
-                publishAudio: this.props.playaudio || true, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: this.props.playvideo || true, // Whether you want to start publishing with your video enabled or not
-                resolution: "400x272", // The resolution of your video
-                frameRate: 30, // The frame rate of your video
-                insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-                mirror: true, // Whether to mirror your local video or not
-              });
-              console.log("🛑------publisher!!!------🛑");
-              console.log(publisher);
-              // --- 6) Publish your stream ---
-              const version = this.props.version;
-              if (
-                String(version).startsWith("friend") ||
-                (String(version).startsWith("host") &&
-                  this.props.username === this.props.host)
-              ) {
-                mySession.publish(publisher);
-              }
-              // Set the main video in the page to display our webcam and store our Publisher
-              this.setState({
-                currentVideoDevice: videoDevices[0],
-                mainStreamManager: publisher,
-                publisher: publisher,
-              });
-            })
-            .catch((error) => {
-              console.log(
-                "There was an error connecting to the session:",
-                error.code,
-                error.message
-              );
-            });
-        });
-      }
-    );
-  }
-
-  leaveSession() {
-    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-
-    const mySession = this.state.session;
-
-    if (mySession) {
-      mySession.disconnect();
-    }
-
-    // Empty all properties...
-    this.OV = null;
-    this.setState({
-      session: undefined,
-      subscribers: [],
-      mySessionId: this.props.chatRoomId,
-      myUserName: this.props.username,
-      mainStreamManager: undefined,
-      publisher: undefined,
-    });
-  }
-
-  async updatePublishState() {
-    try {
-      if (this.state.publisher) {
-        var properties = {
-          ...this.state.publisher.properties,
-          publishAudio: this.props.playaudio,
-          publishVideo: this.props.playvideo,
-        };
-        console.log(properties);
-        var newPublisher = this.OV.initPublisher(undefined, properties);
-        await this.state.session.unpublish(this.state.mainStreamManager);
-        await this.state.session.publish(newPublisher).then((res) => {
-          console.log(res);
-        });
-        this.setState({
-          mainStreamManager: newPublisher,
-          publisher: newPublisher,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  async switchCamera() {
-    try {
-      const devices = await this.OV.getDevices();
-      var videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
-      );
-      if (videoDevices && videoDevices.length > 1) {
-        var newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== this.state.currentVideoDevice.deviceId
-        );
-
-        if (newVideoDevice.length > 0) {
-          // Creating a new publisher with specific videoSource
-          // In mobile devices the default and first camera is the front one
-          var newPublisher = this.OV.initPublisher(undefined, {
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: true,
-            publishVideo: true,
-            mirror: true,
-          });
-
-          //newPublisher.once("accessAllowed", () => {
-          await this.state.session.unpublish(this.state.mainStreamManager);
-
-          await this.state.session.publish(newPublisher);
-          this.setState({
-            currentVideoDevice: newVideoDevice,
-            mainStreamManager: newPublisher,
-            publisher: newPublisher,
-          });
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  getNicknameTag(sub) {
-    // Gets the nickName of the user
-    console.log("✅-----GETNICKNAMETAG-----✅", sub.stream);
-    console.log(sub);
-    return JSON.parse(sub.stream.connection.data || "").clientData;
-  }
-
-  render() {
-    return (
-      <div className="container">
-        {this.state.session !== undefined ? (
-          <div id="session">
-            <div id="video-container">
-              {/* 친구 모드이거나 호스트 모드이고, 자신이 호스트일 때 자신의 화면을 스트리밍 */}
-              {this.state.publisher !== undefined &&
-              (String(this.props.version).startsWith("friend") ||
-                (String(this.props.version).startsWith("host") &&
-                  this.props.username === this.props.host)) ? (
-                <div
-                  className="stream-container"
-                  onClick={() =>
-                    this.handleMainVideoStream(this.state.publisher)
-                  }
-                >
-                  <UserVideoComponent streamManager={this.state.publisher} />
-                </div>
-              ) : null}
-              {/* 호스트 모드이고, 자신이 호스트가 아닐 때 호스트의 화면 스트리밍 */}
-              {String(this.props.version).startsWith("host") &&
-              this.props.username !== this.props.host ? (
-                <div
-                  className="stream-container"
-                  onClick={() =>
-                    this.handleMainVideoStream(
-                      this.state.subscribers.filter(
-                        (x) =>
-                          JSON.parse(x.streamManager?.stream?.connection?.data)
-                            ?.clientData === this.props.host
-                      )
-                    )
-                  }
-                >
-                  <UserVideoComponent
-                    streamManager={
-                      this.state.subscribers.filter((x) => {
-                        console.log(this.getNicknameTag(x));
-                        return true;
-                      })[0]
-                    }
-                  />
-                </div>
-              ) : null}
-              {/* 친구 모드일 때 자신 이외의 화면 */}
-              {String(this.props.version).startsWith("friend") &&
-                this.state.subscribers.map((sub, i) => (
-                  <div
-                    key={i}
-                    className="stream-container"
-                    onClick={() => this.handleMainVideoStream(sub)}
-                  >
-                    <UserVideoComponent
-                      streamManager={sub}
-                      openModal={this.props.openModal}
-                    />
-                  </div>
-                ))}
-            </div>
-          </div>
-        ) : null}
-      </div>
-    );
-  }
+const VideoViewer = (props) => {
+  const [mySessionId, setMySessionId] = useState(props.chatRoomId)
+  const [myUserName, setMyUserName] = useState(props.username)
+  const [session, setSession] = useState(undefined)
+  const [mainStreamManager, setMainStreamManager] = useState(undefined)
+  const [publisher, setPublisher] = useState(undefined)
+  const [subscribers, setSubscribers] = useState([])
+  const OVRef = useRef(null)
+  const sessionRef = useRef(null)
 
   /**
    * --------------------------
@@ -362,13 +28,13 @@ class VideoViewer extends Component {
    *   3) The Connection.token must be consumed in Session.connect() method
    */
 
-  getToken() {
-    return this.createSession(this.state.mySessionId).then((sessionId) =>
-      this.createToken(sessionId)
+   const getToken = () => {
+    return createSession(mySessionId).then((sessionId) =>
+      createToken(sessionId)
     );
   }
 
-  createSession(sessionId) {
+  const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {
       var data = JSON.stringify({ customSessionId: sessionId });
       axios
@@ -412,7 +78,7 @@ class VideoViewer extends Component {
     });
   }
 
-  createToken(sessionId) {
+  const createToken = (sessionId) => {
     return new Promise((resolve, reject) => {
       var data = {};
       axios
@@ -437,6 +103,263 @@ class VideoViewer extends Component {
         .catch((error) => reject(error));
     });
   }
+
+  const leaveSession = () => {
+    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
+    console.log("🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨");
+    const mySession = sessionRef.current;
+
+    if (mySession) {
+      mySession.disconnect();
+    }
+
+    // Empty all properties...
+    OVRef.current = null;
+    setSession(undefined)
+    sessionRef.current = null
+    setSubscribers([])
+    setMySessionId(props.chatRoomId)
+    setMyUserName(props.username)
+    setMainStreamManager(undefined)
+    setPublisher(undefined)
+  }
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", leaveSession);
+    window.addEventListener("unload", leaveSession);
+    if (session === undefined) {
+      joinSession();
+    }
+    return () => {
+      window.removeEventListener("beforeunload", leaveSession);
+      window.removeEventListener("unload", leaveSession);
+      sessionRef.current.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    updatePublishState()
+  }, [props.playaudio, props.playvideo])
+
+  const handleMainVideoStream = (stream) => {
+    if (mainStreamManager !== stream) {
+      setMainStreamManager(stream)
+    }
+  }
+
+  const deleteSubscriber = (streamManager) => {
+    let newSubscribers = subscribers;
+    let index = newSubscribers.indexOf(streamManager, 0);
+    if (index > -1) {
+      newSubscribers.splice(index, 1);
+      setSubscribers(newSubscribers)
+    }
+  }
+
+  const joinSession = () => {
+    // --- 1) Get an OpenVidu object ---
+
+    OVRef.current = new OpenVidu();
+
+    // --- 2) Init a session ---
+
+    const newSession = OVRef.current.initSession()
+    setSession(
+      newSession
+    );
+    sessionRef.current = newSession
+  }
+
+  useEffect(() => {
+    if(sessionRef.current){
+    var mySession = sessionRef.current;
+
+        // --- 3) Specify the actions when events take place in the session ---
+
+        // On every new Stream received...
+        mySession.on("streamCreated", (event) => {
+          // Subscribe to the Stream to receive it. Second parameter is undefined
+          // so OpenVidu doesn't create an HTML video by its own
+          var subscriber = mySession.subscribe(event.stream, undefined);
+          var newSubscribers = subscribers;
+          newSubscribers.push(subscriber);
+
+          // Update the state with the new subscribers
+          setSubscribers(newSubscribers)
+        });
+
+        // On every Stream destroyed...
+        mySession.on("streamDestroyed", (event) => {
+          // Remove the stream from 'subscribers' array
+          deleteSubscriber(event.stream.streamManager);
+        });
+
+        // On every asynchronous exception...
+        mySession.on("exception", (exception) => {
+          console.warn(exception);
+        });
+
+        // --- 4) Connect to the session with a valid user token ---
+
+        // 'getToken' method is simulating what your server-side should do.
+        // 'token' parameter should be retrieved and returned by your own backend
+        getToken().then((token) => {
+          // First param is the token got from OpenVidu Server. Second param can be retrieved by every user on event
+          // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
+          mySession
+            .connect(token, { clientData: myUserName })
+            .then(async () => {
+              var devices = await OVRef.current.getDevices();
+              var videoDevices = devices.filter(
+                (device) => device.kind === "videoinput"
+              );
+              var audioDevices = devices.filter(
+                (device) => device.kind === "audioinput"
+              );
+              console.log(videoDevices);
+
+              // --- 5) Get your own camera stream ---
+              console.log(props.selectedDevices);
+              let camera =
+                props?.selectedDevices?.video?.deviceId ||
+                videoDevices[0].deviceId;
+              let microphone =
+                props?.selectedDevices?.audio?.deviceId ||
+                audioDevices[0].deviceId;
+              // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
+              // element: we will manage it on our own) and with the desired properties
+              let newPublisher = OVRef.current.initPublisher(undefined, {
+                audioSource: microphone, // The source of audio. If undefined default microphone
+                videoSource: camera, // The source of video. If undefined default webcam
+                publishAudio: props.playaudio || true, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: props.playvideo || true, // Whether you want to start publishing with your video enabled or not
+                resolution: "400x272", // The resolution of your video
+                frameRate: 30, // The frame rate of your video
+                insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+                mirror: true, // Whether to mirror your local video or not
+              });
+              console.log("🛑------newPublisher!!!------🛑");
+              console.log(newPublisher);
+              // --- 6) Publish your stream ---
+              const version = props.version;
+              if (
+                String(version).startsWith("friend") ||
+                (String(version).startsWith("host") &&
+                  props.username === props.host)
+              ) {
+                mySession.publish(newPublisher);
+              }
+              // Set the main video in the page to display our webcam and store our Publisher
+              setMainStreamManager(newPublisher)
+              setPublisher(newPublisher)
+            })
+            .catch((error) => {
+              console.log(
+                "There was an error connecting to the session:",
+                error.code,
+                error.message
+              );
+            });
+        });}
+  }, [sessionRef.current])
+
+
+
+  const updatePublishState = async() => {
+    try {
+      if (publisher) {
+        var properties = {
+          ...publisher.properties,
+          publishAudio: props.playaudio,
+          publishVideo: props.playvideo,
+        };
+        console.log(properties);
+        var newPublisher = OVRef.current.initPublisher(undefined, properties);
+        await sessionRef.current.unpublish(mainStreamManager);
+        await sessionRef.current.publish(newPublisher).then((res) => {
+          console.log(res);
+        });
+
+        setMainStreamManager(newPublisher)
+        setPublisher(newPublisher)
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  const getNicknameTag = (sub) => {
+    // Gets the nickName of the user
+    console.log("✅-----GETNICKNAMETAG-----✅", sub.stream);
+    console.log(sub);
+    return JSON.parse(sub.stream.connection.data || "").clientData;
+  }
+
+    return (
+      <div className="container">
+        {session !== undefined ? (
+          <div id="session">
+            <div id="video-container">
+              {/* 친구 모드이거나 호스트 모드이고, 자신이 호스트일 때 자신의 화면을 스트리밍 */}
+              {publisher !== undefined &&
+              (String(props.version).startsWith("friend") ||
+                (String(props.version).startsWith("host") &&
+                  props.username === props.host)) ? (
+                <div
+                  className="stream-container"
+                  onClick={() =>
+                    handleMainVideoStream(publisher)
+                  }
+                >
+                  <UserVideoComponent streamManager={publisher} />
+                </div>
+              ) : null}
+              {/* 호스트 모드이고, 자신이 호스트가 아닐 때 호스트의 화면 스트리밍 */}
+              {String(props.version).startsWith("host") &&
+              props.username !== props.host ? (
+                <div
+                  className="stream-container"
+                  onClick={() =>
+                    handleMainVideoStream(
+                      subscribers.filter(
+                        (x) =>
+                          JSON.parse(x.streamManager?.stream?.connection?.data)
+                            ?.clientData === props.host
+                      )
+                    )
+                  }
+                >
+                  <UserVideoComponent
+                    streamManager={
+                      subscribers.filter((x) => {
+                        console.log(getNicknameTag(x));
+                        return true;
+                      })[0]
+                    }
+                  />
+                </div>
+              ) : null}
+              {/* 친구 모드일 때 자신 이외의 화면 */}
+              {String(props.version).startsWith("friend") &&
+                subscribers.map((sub, i) => (
+                  <div
+                    key={i}
+                    className="stream-container"
+                    onClick={() => handleMainVideoStream(sub)}
+                  >
+                    <UserVideoComponent
+                      streamManager={sub}
+                      openModal={props.openModal}
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    );
+
+  
 }
 
 export default VideoViewer;

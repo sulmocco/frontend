@@ -7,6 +7,7 @@ import Loading from "../common/Loading";
 import TableCard from "../tablecard";
 import Spinner from "../spinner";
 import { TablesGrid } from "./styles";
+import Nodata from "../nodatalending/styles";
 
 const Mypost = () => {
   const { ref, inView } = useInView();
@@ -70,18 +71,7 @@ const Mypost = () => {
         </Wrap>
       ) : (
         <Content>
-          <img src="/images/none.png" alt="북마크"></img>
-          <div style={{ fontSize: "28px" }}>작성한 술상 목록이 없습니다!</div>
-          <div
-            style={{
-              color: "#b5b5b5",
-              marginTop: "5px",
-              textAlign: "center",
-              fontSize: "18px",
-            }}
-          >
-            자신만의 술상을 공유해주세요!
-          </div>
+          <Nodata />
         </Content>
       )}
     </>

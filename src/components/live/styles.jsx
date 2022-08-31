@@ -102,6 +102,7 @@ export const Image = styled.img`
 export const ProfileBox = styled.div`
   display: flex;
   margin-top: 30px;
+  backgroud-color: red;
 `;
 
 export const Desc = styled.div`
@@ -132,7 +133,7 @@ export const Profile = styled.div`
 
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  
   justify-content: center;
 `;
 

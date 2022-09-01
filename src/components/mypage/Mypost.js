@@ -7,7 +7,7 @@ import Loading from "../common/Loading";
 import TableCard from "../tablecard";
 import Spinner from "../spinner";
 import { TablesGrid } from "./styles";
-import Nodata from "../nodatalending/styles";
+import Nodata from "../nodatalending";
 
 const Mypost = () => {
   const { ref, inView } = useInView();

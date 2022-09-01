@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import Nodata from '../../components/nodatalending/styles';
+import Nodata from '../../components/nodatalending';
 import RoomCard from "../../components/roomscard";
 import SearchBar from "../../components/searchbar";
 import sulmoggoApi from "../../shared/apis";

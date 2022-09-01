@@ -5,10 +5,10 @@ import {
   AlchholTag,
   SnackTag,
   ThemeTag,
-  NoList,
 } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
 import styled from "styled-components";
+import Nodata from '../nodatalending';
 
 const Live = () => {
   const [list, setList] = useState([]);
@@ -115,11 +115,7 @@ const Live = () => {
           </Container>
         )}
         {list.length === 0 && (
-          <NoList>
-            진행중인 술약속이 없습니다.
-            <br />
-            직접 술약속을 잡아보세요!
-          </NoList>
+          <Nodata />
         )}
       </LiveWrap>
     </Wrap>

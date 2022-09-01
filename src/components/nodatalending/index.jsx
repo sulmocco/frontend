@@ -1,16 +1,13 @@
-import styled from 'styled-components';
+import React from 'react';
+import { NodataWrap } from './styles';
 
-export const NodataWrap = styled.div`
-    padding: 14.8rem 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5.6rem;
-    p{
-        font-size: 2.6rem;
-        font-weight: 700;
-        letter-spacing: -0.02rem;
-        color: ${props => props.theme.grey_01};
-    }
-`
+const Nodata = () => {
+    return (
+        <NodataWrap>
+            <img src='/images/icon_nodata.svg' alt='nodata' />
+            <p>검색 결과가 없습니다.</p>
+        </NodataWrap>
+    );
+};
+
+export default Nodata;

@@ -26,7 +26,7 @@ const ProfileEdit = () => {
     const [openDropdown, setOpenDropdown] = useState(false);
 
     // 사용자 닉네임 중복체크 여부. true이면 중복 없음(사용 가능)
-    const [usernameOK, setUsernameOK] = useState(false);
+    const [usernameOK, setUsernameOK] = useState(true);
 
     // 데이터 받아오기
     const { data, status } = useQuery(['user'], () => sulmoggoApi.getUserDetail().then(res => res.data), {

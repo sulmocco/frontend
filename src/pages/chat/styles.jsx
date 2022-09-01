@@ -232,6 +232,7 @@ export const VideoContainer = styled.div`
 `
 
 export const VideoButton = styled.button`
+    position: relative;
     padding: 1.6rem 1.6rem 1.6rem 2.4rem;
     background-color: ${props => props.play ? props.theme.white : props.theme.grey_04};
     border-radius: 1rem;
@@ -250,6 +251,53 @@ export const VideoButton = styled.button`
         width: 4rem;
         height: 4rem;
     }
+    .devicesWrap {
+    background-color: aliceblue;
+    position: absolute;
+    bottom: 8.8rem;
+    left: 0;
+    height: ${(props) => (props.open ? 5.6 * props.count : 0)}rem;
+    background-color: ${(props) => props.theme.white};
+    transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 1rem;
+    width: 31.2rem;
+    color: ${(props) => props.theme.grey_03};
+    font-weight: 500;
+    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: ${(props) => props.theme.shadow_gray};
+    overflow: hidden;
+    z-index: 200;
+  }
+  .device {
+    /* background-color: antiquewhite; */
+    box-sizing: border-box;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    padding: 1.6rem 2rem;
+    letter-spacing: -0.04em;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    &:hover {
+      box-sizing: border-box;
+      color: ${(props) => props.theme.primary};
+      background-color: ${(props) => props.theme.bg_light_blue};
+    }
+  }
+  .deviceKind{
+    padding: 1.6rem 1.6rem 1.2rem 1.6rem;
+    font-size: 2rem;
+    line-height: 2.8rem;
+    font-weight: 700;
+    color: ${props => props.theme.black};
+    text-align: left;
+    cursor: default;
+  }
 `
 
 export const ChatHeader = styled.div`

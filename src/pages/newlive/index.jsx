@@ -41,6 +41,8 @@ const NewLive = (props) => {
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
   const [speakerDevices, setSpeakerDevices] = useState([])
+  const [playaudio, setPlayaudio] = useState([])
+  const [playvideo, setPlayvideo] = useState([])
 
   const [constraints, setConstraints] = useState({ video: true });
   const [thumbnail, setThumbnail] = useState(null);
@@ -68,7 +70,7 @@ const NewLive = (props) => {
         queryClient.invalidateQueries("rooms");
         navigate(`/chat/` + res.data, {
         replace: true,
-        state: { data: res.data, selectedDevices: constraints },
+        state: { data: res.data, selectedDevices: constraints, playaudio, playvideo },
       });
     },
     onError: (error) => {
@@ -122,8 +124,9 @@ const NewLive = (props) => {
       ...constraints,
       video: device
         ? { ...constraints.video, deviceId: device.deviceId }
-        : false,
+        : cameraDevices[0].deviceId,
     });
+    device ? setPlayvideo(true) : setPlayvideo(false)
     // setCamera(device);
   };
   const handleAudioDeviceChange = (device) => {
@@ -132,8 +135,9 @@ const NewLive = (props) => {
       ...constraints,
       audio: device
         ? { ...constraints.audio, deviceId: device.deviceId }
-        : false,
+        : audioDevices[0].deviceId,
     });
+    device ? setPlayaudio(true) : setPlayaudio(false)
     // setAudio(device);
   };
   const handleSpeakerDeviceChange = (device) => {
@@ -146,7 +150,7 @@ const NewLive = (props) => {
   useEffect(() => {
     const foo = async () => {
       console.log("permission?");
-      await getUserMedia({ video: constraints.video });
+      await getUserMedia({ video: playvideo ? constraints.video : false });
       console.log(cameraDevices, audioDevices);
       console.log("this..");
     };
@@ -198,6 +202,7 @@ const NewLive = (props) => {
                 disabled
                 {...register("version_text")}
                 defaultValue={LiveVersion[0].text}
+                onBlur={() => setVersionOpen(false)}
               />
               <input
                 type="text"

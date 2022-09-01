@@ -29,10 +29,6 @@ const Chat = (props) => {
   const [content, setContent] = useState([]);
   const [roomData, setRoomData] = useState(null);
   const [usercount, setUserCount] = useState(0);
-  const [playvideo, setPlayvideo] = useState(true);
-  const [playaudio, setPlayaudio] = useState(true);
-
-  
 
   const [selectedFriend, setSelectedFriend] = useState("");
   const [openFriendModal, setOpenFriendModal] = useState(false);
@@ -48,9 +44,15 @@ const Chat = (props) => {
   const naviagte = useNavigate();
 
   const { state } = useLocation();
-  const [selectedDevices, setSelectedDevices] = useState(state.selectedDevices)
+  const [selectedDevices, setSelectedDevices] = useState(state?.selectedDevices)
+  const [playvideo, setPlayvideo] = useState(Boolean(state?.playvideo));
+  const [playaudio, setPlayaudio] = useState(Boolean(state?.playaudio));
   const [camerasOpen, setCamerasOpen] = useState(false);
   const [audiosOpen, setAudiosOpen] = useState(false);
+  const [cameraDevices, setCameraDevices] = useState([]);
+  const [audioDevices, setAudioDevices] = useState([]);
+  const [speakerDevices, setSpeakerDevices] = useState([])
+  const speakerRef = useRef()
 
   let isHost = username === roomData?.username;
   const timer = useRef(null);
@@ -94,6 +96,7 @@ const Chat = (props) => {
     }
   };
 
+  // 방장일 경우 방 삭제 api 호출
   const quitChatroom = async (isHost) => {
     if (isHost) {
       await sulmoggoApi.removeChatRoom(chatRoomId);
@@ -125,6 +128,51 @@ const Chat = (props) => {
     }
   };
 
+  // 카메라, 마이크, 스피커 목록 가져오기
+  const getDevices = async () => {
+    let devices = []
+    const cameraPermission = await navigator.permissions.query({
+      name: "camera",
+    });
+    const micPermission = await navigator.permissions.query({
+      name: "microphone",
+    });
+    if (
+      cameraPermission.state === "granted" ||
+      micPermission.state === "granted"
+    ) {
+      devices = await navigator.mediaDevices.enumerateDevices();
+      setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
+      setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
+      setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
+    }
+  }
+
+
+  const handleCameraDeviceChange = (device) => {
+    setSelectedDevices({
+      ...selectedDevices,
+      video: device
+        ? { ...selectedDevices.video, deviceId: device.deviceId }
+        : false,
+    });
+    setCamerasOpen(false)
+  };
+  const handleAudioDeviceChange = (device) => {
+    setSelectedDevices({
+      ...selectedDevices,
+      audio: device
+        ? { ...selectedDevices.audio, deviceId: device.deviceId }
+        : false,
+    });
+    setAudiosOpen(false)
+  };
+  const handleSpeakerDeviceChange = (device) => {
+    speakerRef.current.setSinkId(device.deviceId)
+    setAudiosOpen(false)
+  }
+
+  // 친구추가 모달
   const onClickModalOpen = (username) => {
     setSelectedFriend(username);
     setOpenFriendModal(true);
@@ -134,7 +182,13 @@ const Chat = (props) => {
     setOpenFriendModal(false);
   };
 
-  //roomId가 바뀔때마다 다시 연결
+  // 기기 목록 가져오기
+  useEffect(() => {
+    getDevices();
+  }, [])
+
+  // 소켓 연결 및 방 데이터 로드
+  // roomId가 바뀔때마다 다시 연결.
   useEffect(() => {
     connect();
     console.log(clientRef.current.connected);
@@ -158,12 +212,10 @@ const Chat = (props) => {
     // eslint-disable-next-line
   }, [chatRoomId]);
 
+  // 방 생성 이후 시간 계산(1초마다)
   useEffect(() => {
-    // 1초마다 시간 갱신
     const updateTime = () => {
       if (createdAt) {
-        // console.log("🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐");
-        // console.log("loop : ", createdAt);
         var date1 = moment(createdAt);
         var date2 = moment();
         var diff = date2.diff(date1, "seconds");
@@ -176,16 +228,16 @@ const Chat = (props) => {
     };
   }, [createdAt]);
 
+  // 방장이 방을 떠날 경우 방 삭제
   useEffect(() => {
-    const foo = username === roomData?.username;
-    const bar = () => {
-      quitChatroom(foo);
+    const leaveRoom = () => {
+      quitChatroom(isHost);
     };
-    window.addEventListener("beforeunload", bar);
-    window.addEventListener("unload", bar);
+    window.addEventListener("beforeunload", leaveRoom);
+    window.addEventListener("unload", leaveRoom);
     return () => {
-      window.removeEventListener("beforeunload", bar);
-      window.removeEventListener("unload", bar);
+      window.removeEventListener("beforeunload", leaveRoom);
+      window.removeEventListener("unload", leaveRoom);
     };
     // eslint-disable-next-line
   }, [username, roomData?.username]);
@@ -226,6 +278,7 @@ const Chat = (props) => {
           </div>
         </div>
         <VideoContainer host={roomData?.version?.startsWith("host")}>
+          <audio ref={speakerRef} hidden />
           <div className="videoWrap">
             {roomData && (
               <VideoViewer
@@ -234,7 +287,7 @@ const Chat = (props) => {
                 chatRoomId={chatRoomId}
                 version={roomData.version}
                 selectedDevices={
-                  state?.selectedDevices ? state.selectedDevices : null
+                  selectedDevices
                 }
                 playvideo={playvideo}
                 playaudio={playaudio}
@@ -248,7 +301,27 @@ const Chat = (props) => {
             <div className="videoButtonWrap">
               <VideoButton
                 play={playvideo}
+                open={camerasOpen}
+                count={cameraDevices.length + 1}
+                onBlur={() => setCamerasOpen(false)}
               >
+                <div className="devicesWrap">
+                  <div className="deviceKind">
+                    비디오 설정
+                  </div>
+                  {cameraDevices &&
+                    cameraDevices.map((x) => {
+                      return (
+                        <div
+                          className="device"
+                          onClick={() => handleCameraDeviceChange(x)}
+                          title={x.label}
+                        >
+                          {x.label}
+                        </div>
+                      );
+                    })}
+                </div>
                 <img
                   src={`/images/icon_video_${
                     playvideo ? "available" : "disabled"
@@ -256,14 +329,49 @@ const Chat = (props) => {
                   alt="video"
                   onClick={() => setPlayvideo(!playvideo)}
                 />
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => setCamerasOpen(!camerasOpen)}>
                 <rect width="32" height="32" rx="10" fill="#F2F3F3"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z" fill="#7A7A80"/>
                 </svg>
               </VideoButton>
               <VideoButton
                 play={playaudio}
+                open={audiosOpen}
+                count={audioDevices.length + speakerDevices.length + 2}
+                onBlur={() => setAudiosOpen(false)}
               >
+                <div className="devicesWrap">
+                  <div className="deviceKind">
+                    마이크 설정
+                  </div>
+                  {audioDevices &&
+                    audioDevices.map((x) => {
+                      return (
+                        <div
+                          className="device"
+                          onClick={() => handleAudioDeviceChange(x)}
+                          title={x.label}
+                        >
+                          {x.label}
+                        </div>
+                      );
+                    })}
+                    <div className="deviceKind">
+                    스피커 설정
+                  </div>
+                  {speakerDevices &&
+                    speakerDevices.map((x) => {
+                      return (
+                        <div
+                          className="device"
+                          onClick={() => handleSpeakerDeviceChange(x)}
+                          title={x.label}
+                        >
+                          {x.label}
+                        </div>
+                      );
+                    })}
+                </div>
                 <img
                   src={`/images/icon_audio_${
                     playaudio ? "available" : "disabled"
@@ -271,7 +379,7 @@ const Chat = (props) => {
                   alt="audio"
                   onClick={() => setPlayaudio(!playaudio)}
                 />
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => setAudiosOpen(!audiosOpen)}>
                 <rect width="32" height="32" rx="10" fill="#F2F3F3"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z" fill="#7A7A80"/>
                 </svg>

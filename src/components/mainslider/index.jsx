@@ -7,13 +7,21 @@ import "swiper/css/navigation";
 import {
   Carousel, Image
 } from "./styles";
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 const MainSlider = () => {
   const [isAuto, setAuto] = useState(true);
   const pause = document.querySelector('.swiper-pagination');
-  window.onload = function () {
-    pause.addEventListener('click', () => alert('눌러짐'));
-  }
+  console.log(pause)
+
+  useEffect(() => {
+    pause?.addEventListener('click', () => {
+      alert('여기');
+      setAuto(!isAuto)
+    });
+  }, [isAuto]);
+
   return (
     <Carousel>
       <Swiper
@@ -23,7 +31,7 @@ const MainSlider = () => {
         navigation
         pagination={{ clickable: true, type: 'fraction' }}
         loop={true}
-        autoplay={isAuto}
+        autoplay={true}
       >
         <SwiperSlide>
           <Image src="/images/banner-1.png" alt="" />

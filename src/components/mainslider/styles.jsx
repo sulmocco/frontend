@@ -38,6 +38,7 @@ export const Carousel = styled.section`
     background-color: #4e4e56;
     border-radius: 2.4rem;
     letter-spacing: -0.04rem;
+    z-index: 99;
     &::before {
       content: '';
       display: block;

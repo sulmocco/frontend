@@ -33,6 +33,7 @@ const Mypage = React.lazy(() => import("./pages/mypage"));
 const Post = React.lazy(() => import("./pages/post"));
 const Rooms = React.lazy(() => import("./pages/rooms"));
 const Live = React.lazy(() => import("./pages/live"));
+const LiveRending = React.lazy(() => import("./pages/liverending"));
 
 function App() {
   useQuery(["user"], () =>
@@ -77,6 +78,7 @@ function App() {
             <Route path="/tables" element={<Tables />} />
             <Route path="/tables/:tableId" element={<Detail />} />
             <Route path="/live/new" element={<NewLive />} />
+            <Route path="/render/live" element={<LiveRending />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/password" element={<PassWordInput />} />
             <Route path="/render/:params" element={<PasswordRending />} />

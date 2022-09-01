@@ -7,6 +7,7 @@ import Spinner from '../../components/spinner';
 import Comment from '../../components/comment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
+import { useEffect } from 'react';
 
 const Detail = () => {
     const user = localStorage.getItem('username');
@@ -75,6 +76,12 @@ const Detail = () => {
             postLikeMutation.mutate(tableId)
         }
     }
+
+    //처음 들어왔을때 스크롤 최상단위치
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     if (status === 'loading') {
         return <Spinner />
     }

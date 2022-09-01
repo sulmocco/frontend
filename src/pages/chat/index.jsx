@@ -31,9 +31,14 @@ const Chat = (props) => {
   const [usercount, setUserCount] = useState(0);
   const [playvideo, setPlayvideo] = useState(true);
   const [playaudio, setPlayaudio] = useState(true);
+
+  
+
   const [selectedFriend, setSelectedFriend] = useState("");
   const [openFriendModal, setOpenFriendModal] = useState(false);
+
   const [time, setTime] = useState(0);
+
   const chatRef = useRef();
   const lastOne = useRef();
   const [createdAt, setCreatedAt] = useState(0);
@@ -41,12 +46,15 @@ const Chat = (props) => {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
   const naviagte = useNavigate();
+
   const { state } = useLocation();
+  const [selectedDevices, setSelectedDevices] = useState(state.selectedDevices)
+  const [camerasOpen, setCamerasOpen] = useState(false);
+  const [audiosOpen, setAudiosOpen] = useState(false);
+
   let isHost = username === roomData?.username;
   const timer = useRef(null);
-
   const clientRef = useRef(null);
-
   const headers = { Authorization: token };
 
   const connect = () => {
@@ -89,10 +97,7 @@ const Chat = (props) => {
   const quitChatroom = async (isHost) => {
     if (isHost) {
       await sulmoggoApi.removeChatRoom(chatRoomId);
-    } else {
-      await sulmoggoApi.leaveChatRoom(chatRoomId);
     }
-    await sulmoggoApi.removeChatRoom(chatRoomId);
   };
 
   // 메세지 보내기
@@ -135,7 +140,6 @@ const Chat = (props) => {
     console.log(clientRef.current.connected);
     const foo = async () => {
       try {
-        sulmoggoApi.enterChatRoom(chatRoomId);
         const data = await sulmoggoApi.getRoomData(chatRoomId);
         console.log(data.data.body);
         setRoomData(data.data.body);
@@ -198,7 +202,7 @@ const Chat = (props) => {
                   {roomData?.username || "사용자가 없습니다."}
                 </div>
                 {!isHost && (
-                  <AddHostFriendButton>
+                  <AddHostFriendButton onClick={() => onClickModalOpen(roomData?.username)}>
                     <img src="/images/icon_addfriend.svg" alt="add friend" />
                     <span>친구추가</span>
                   </AddHostFriendButton>
@@ -244,25 +248,33 @@ const Chat = (props) => {
             <div className="videoButtonWrap">
               <VideoButton
                 play={playvideo}
-                onClick={() => setPlayvideo(!playvideo)}
               >
                 <img
                   src={`/images/icon_video_${
                     playvideo ? "available" : "disabled"
                   }.svg`}
                   alt="video"
+                  onClick={() => setPlayvideo(!playvideo)}
                 />
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" rx="10" fill="#F2F3F3"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z" fill="#7A7A80"/>
+                </svg>
               </VideoButton>
               <VideoButton
                 play={playaudio}
-                onClick={() => setPlayaudio(!playaudio)}
               >
                 <img
                   src={`/images/icon_audio_${
                     playaudio ? "available" : "disabled"
                   }.svg`}
                   alt="audio"
+                  onClick={() => setPlayaudio(!playaudio)}
                 />
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" rx="10" fill="#F2F3F3"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z" fill="#7A7A80"/>
+                </svg>
               </VideoButton>
             </div>
           )}

@@ -219,7 +219,7 @@ export const VideoContainer = styled.div`
         height: 100%;
     }
     .videoButtonWrap{
-        gap: 5.6rem;
+        gap: 2.4rem;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -232,18 +232,23 @@ export const VideoContainer = styled.div`
 `
 
 export const VideoButton = styled.button`
-    padding: 2rem;
+    padding: 1.6rem 1.6rem 1.6rem 2.4rem;
     background-color: ${props => props.play ? props.theme.white : props.theme.grey_04};
-    border-radius: 2.4rem;
+    border-radius: 1rem;
     box-shadow: ${props => props.theme.shadow_gray};
     border: none;
     transition: all .2s ease-in-out;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4rem;
     &:hover{
         transform: translateY(-0.5rem);
     }
     img{
-        width: 4.8rem;
-        height: 4.8rem;
+        width: 4rem;
+        height: 4rem;
     }
 `
 

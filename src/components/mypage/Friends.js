@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import sulmoggoApi from "../../shared/apis";
 import FriendList from "../friend";
-import Nodata from "../nodatalending/styles";
+import Nodata from "../nodatalending";
 
 const Friends = () => {
   const { data } = useQuery(["friend"], () =>

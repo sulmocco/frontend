@@ -134,13 +134,13 @@ export const PageTitle = styled.h1`
 // 정보가 없을 때 표시하는 컴포넌트
 export const NoList = styled.div`
   width: 100%;
-  /* max-width: ${props => props.theme.contentWidth}; */
+  /* max-width: ${(props) => props.theme.contentWidth}; */
   height: 40rem;
   font-size: 4rem;
   font-weight: 700;
-  color: ${props => props.theme.grey_03};
+  color: ${(props) => props.theme.grey_03};
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-`
+`;

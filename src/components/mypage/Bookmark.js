@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import styled from "styled-components";
 import sulmoggoApi from "../../shared/apis";
-import Nodata from "../nodatalending/styles";
+import Nodata from "../nodatalending";
 import Spinner from "../spinner";
 import TableCard from "../tablecard";
 import { MypageWrap, TablesGrid } from "./styles";

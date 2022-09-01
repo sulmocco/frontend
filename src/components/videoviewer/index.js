@@ -139,7 +139,7 @@ const VideoViewer = (props) => {
 
   useEffect(() => {
     updatePublishState()
-  }, [props.playaudio, props.playvideo])
+  }, [props.playaudio, props.playvideo, props.selectedDevices])
 
   const handleMainVideoStream = (stream) => {
     if (mainStreamManager !== stream) {
@@ -272,6 +272,8 @@ const VideoViewer = (props) => {
           ...publisher.properties,
           publishAudio: props.playaudio,
           publishVideo: props.playvideo,
+          videoSource: props?.selectedDevices?.video?.deviceId,
+          audioSource: props?.selectedDevices?.audio?.deviceId
         };
         console.log(properties);
         var newPublisher = OVRef.current.initPublisher(undefined, properties);

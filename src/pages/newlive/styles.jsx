@@ -81,7 +81,7 @@ export const VersionInputWrap = styled.div`
 `;
 
 export const SubtitleWrapper = styled.div`
-  margin-top: 4rem;
+  margin-top: ${props => props.mt ? props.mt : "4rem"};
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -157,7 +157,7 @@ export const VideoWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   margin-top: 5.3rem;
-  gap: 4.3rem;
+  gap: 4rem;
   h1 {
     width: 100%;
     height: 100%;

@@ -18,6 +18,7 @@ const Post = () => {
   const [content, SetContent] = useState("");
   const [thumbnail, SetThumbnail] = useState("");
   const [thumbnailImg, SetThumbnailImg] = useState("");
+  const [submittable, setSubmittable] = useState(true)
   const navigate = useNavigate();
   const editorRef = useRef();
   const username = localStorage.getItem("username")
@@ -75,6 +76,11 @@ const Post = () => {
 
   // 웹 에디터 content영역 확인하기
   const onChange = () => {
+    const content = editorRef.current?.getInstance().getHTML()
+    if(content.length > 60000){
+      alert("내용이 너무 많습니다.")
+      setSubmittable(false)
+    }
     console.log(editorRef.current?.getInstance().getHTML());
     console.log("이미지리스트확인", imgList);
     SetContent(editorRef.current?.getInstance().getHTML());
@@ -96,6 +102,7 @@ const Post = () => {
             type="text"
             placeholder="제목을 입력해주세요."
             autoComplete="off"
+            maxLength={50}
             {...register("title", {
               required: true,
             })}
@@ -212,6 +219,7 @@ const Post = () => {
             type="text"
             placeholder="자유태그 입력(한개만 입력 가능, 띄어쓰기 포함 10글자까지)"
             autoComplete="off"
+            maxLength={10}
             {...register("freetag", {
               required: "자유태그를 입력해주세요.",
             })}
@@ -227,7 +235,7 @@ const Post = () => {
             <Link to="/tables">
               <WhiteButton className="whitebutton">취소하기</WhiteButton>
             </Link>
-            <button className="bluebutton">작성완료</button>
+            <button className="bluebutton" disabled={submittable}>작성완료</button>
           </div>
         </Button>
       </form>

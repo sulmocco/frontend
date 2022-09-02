@@ -29,15 +29,20 @@ import { useState } from "react";
 const NewLive = (props) => {
   const alcohol = useRef({});
   const videoPreview = useRef();
+  const speakerRef = useRef()
   const queryClient = useQueryClient()
 
   const [versionOpen, setVersionOpen] = useState(false);
   const [camerasOpen, setCamerasOpen] = useState(false);
   const [audiosOpen, setAudiosOpen] = useState(false);
+  const [speakersOpen, setSpeakersOpen] = useState(false)
   const [showOpen, setShowOpen] = useState(false);
 
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
+  const [speakerDevices, setSpeakerDevices] = useState([])
+  const [playaudio, setPlayaudio] = useState([])
+  const [playvideo, setPlayvideo] = useState([])
 
   const [constraints, setConstraints] = useState({ video: true });
   const [thumbnail, setThumbnail] = useState(null);
@@ -65,7 +70,7 @@ const NewLive = (props) => {
       queryClient.invalidateQueries("rooms");
       navigate(`/render/live/` + res.data, {
         replace: true,
-        state: { data: res.data, selectedDevices: constraints },
+        state: { data: res.data, selectedDevices: constraints, playaudio, playvideo },
       });
     },
     onError: (error) => {
@@ -100,6 +105,7 @@ const NewLive = (props) => {
       devices = await navigator.mediaDevices.enumerateDevices();
       setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
       setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
+      setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
       if (!constraints.video && !constraints.audio) {
         videoPreview.current.srcObject = null;
       } else {
@@ -118,8 +124,9 @@ const NewLive = (props) => {
       ...constraints,
       video: device
         ? { ...constraints.video, deviceId: device.deviceId }
-        : false,
+        : cameraDevices[0].deviceId,
     });
+    device ? setPlayvideo(true) : setPlayvideo(false)
     // setCamera(device);
   };
   const handleAudioDeviceChange = (device) => {
@@ -128,19 +135,32 @@ const NewLive = (props) => {
       ...constraints,
       audio: device
         ? { ...constraints.audio, deviceId: device.deviceId }
-        : false,
+        : audioDevices[0].deviceId,
     });
+    device ? setPlayaudio(true) : setPlayaudio(false)
     // setAudio(device);
   };
+  const handleSpeakerDeviceChange = (device) => {
+    setValue("speaker", device ? device.label : "없음");
+    speakerRef.current.setSinkId(device.deviceId)
+  }
+  const stopStream = () => {
+    videoPreview.current.srcObject.getVideoTracks()[0].stop();}
 
   useEffect(() => {
     const foo = async () => {
       console.log("permission?");
-      getUserMedia({ video: constraints.video });
+      await getUserMedia({ video: playvideo ? constraints.video : false });
       console.log(cameraDevices, audioDevices);
       console.log("this..");
     };
     foo();
+    window.addEventListener("beforeunload", stopStream)
+    return() => {
+      console.log(videoPreview.current);
+      videoPreview.current?.srcObject.getVideoTracks()[0].stop();
+      window.removeEventListener("beforeunload", stopStream)
+    }
     // eslint-disable-next-line
   }, [constraints]);
 
@@ -182,6 +202,7 @@ const NewLive = (props) => {
                 disabled
                 {...register("version_text")}
                 defaultValue={LiveVersion[0].text}
+                onBlur={() => setVersionOpen(false)}
               />
               <input
                 type="text"
@@ -221,6 +242,7 @@ const NewLive = (props) => {
             type="text"
             placeholder="제목을 입력해 주세요."
             error={errors.title}
+            maxLength={50}
             {...register("title", { required: "제목을 입력해달라" })}
           />
           <SubtitleWrapper mt={"5.6rem"}>
@@ -260,6 +282,7 @@ const NewLive = (props) => {
                 {!constraints.video && <img src="/images/icon_video_disabled.svg" alt="video off" />}
                 {constraints.video && <video autoPlay ref={videoPreview} />}
               </div>
+              <audio ref={speakerRef} hidden/>
             </div>
             <div>
               <SubTitle>썸네일 이미지</SubTitle>
@@ -291,7 +314,7 @@ const NewLive = (props) => {
                   </>
                 )}
               </ThumbnailDropzone>
-              <SubtitleWrapper mt={"4rem"}>
+              <SubtitleWrapper mt={"2.4rem"}>
                 <SubTitle>비디오</SubTitle>
               </SubtitleWrapper>
               <VideoDevicesDropdownWrapper
@@ -331,7 +354,7 @@ const NewLive = (props) => {
                   </div>
                 </div>
               </VideoDevicesDropdownWrapper>
-              <SubtitleWrapper mt={"4rem"}>
+              <SubtitleWrapper mt={"2.4rem"}>
                 <SubTitle>오디오</SubTitle>
               </SubtitleWrapper>
               <VideoDevicesDropdownWrapper
@@ -373,6 +396,48 @@ const NewLive = (props) => {
                   </div>
                 </div>
               </VideoDevicesDropdownWrapper>
+              <SubtitleWrapper mt={"2.4rem"}>
+                <SubTitle>스피커</SubTitle>
+              </SubtitleWrapper>
+              <VideoDevicesDropdownWrapper
+                open={speakersOpen}
+                count={speakerDevices.length + 1}
+                onClick={() => setSpeakersOpen(!speakersOpen)}
+              >
+                <div className="inputWrap">
+                  <input
+                    type="text"
+                    placeholder="-- 스피커 선택 --"
+                    small
+                    disabled
+                    {...register("speaker")}
+                    defaultValue={speakerDevices[0]?.label}
+                  />
+                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
+                </div>
+                <div className="devicesWrap">
+                  {speakerDevices &&
+                    speakerDevices.map((x) => {
+                      return (
+                        <div
+                          className="device"
+                          onClick={() => handleSpeakerDeviceChange(x)}
+                          title={x.label}
+                        >
+                          {x.label}
+                        </div>
+                      );
+                    })}
+                  <div
+                    className="device"
+                    onClick={() => {
+                      handleSpeakerDeviceChange(null);
+                    }}
+                  >
+                    없음
+                  </div>
+                </div>
+              </VideoDevicesDropdownWrapper>
             </div>
           </VideoWrapper>
           <SubtitleWrapper mt={"7rem"}>
@@ -388,6 +453,7 @@ const NewLive = (props) => {
             type="text"
             placeholder="안주를 입력해 주세요."
             error={errors.food}
+            maxLength={10}
             {...register("food", { required: "안주를 입력해 주세요." })}
           />
           <div
@@ -414,6 +480,7 @@ const NewLive = (props) => {
                 type="text"
                 placeholder="테마를 입력해 주세요."
                 error={errors.theme}
+                maxLength={10}
                 {...register("theme", { required: "테마를 입력해 주세요." })}
               />
             </div>

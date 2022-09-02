@@ -78,7 +78,7 @@ function App() {
             <Route path="/tables" element={<Tables />} />
             <Route path="/tables/:tableId" element={<Detail />} />
             <Route path="/live/new" element={<NewLive />} />
-            <Route path="/render/live" element={<LiveRending />} />
+            <Route path="/render/live/:chatRoomId" element={<LiveRending />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/password" element={<PassWordInput />} />
             <Route path="/render/:params" element={<PasswordRending />} />

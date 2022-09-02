@@ -9,6 +9,7 @@ export const LiveRendingWrap = styled.div`
 `
 
 export const LiveRendingCont = styled.div`
+    position: relative;
     background-color: #fff;
     border-radius: 1rem;
     padding: 9.6rem;
@@ -23,7 +24,7 @@ export const LiveRendingCont = styled.div`
         letter-spacing: -0.02rem;
         text-align: center;
     }
-    img{
+    .mainimg{
         max-width:32.9rem;
         max-height:32.9rem;
         margin: 4.8rem 0 6.4rem 0;

@@ -79,14 +79,43 @@ export const LiveWrapper = styled.div`
 export const ProfileWrap = styled.div`
     display: flex;
     flex-direction: row;
-
     gap: 1.2rem;
     align-items: flex-end;
     height: fit-content;
-    h1{
+    width: 100%;
+    .shareWrap {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        h1{
         font-size: 2.6rem;
         font-weight: 700;
         line-height: 3.1rem;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            border: .1rem solid ${props => props.theme.primary};
+            border-radius: 2rem;
+            padding: 0.5rem 1.2rem;
+            background-color: #fff;
+            color: ${props => props.theme.primary};
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            letter-spacing: -0.04rem;
+            gap: .8rem;
+            &:after {
+                content: '';
+                width: 2.4rem;
+                height: 2.4rem;
+                background: url('/images/icon_share.svg') no-repeat center;
+                background-size: 1.4rem 1.5rem;
+            }
+        }
     }
     .userWrap{
         margin-top: 1rem;

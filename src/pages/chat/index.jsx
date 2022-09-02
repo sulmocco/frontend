@@ -24,6 +24,7 @@ import {
 import moment from "moment";
 import VideoViewer from "../../components/videoviewer";
 import AddFriendModal from "../../components/addfriendmodal";
+import ShareModal from '../../components/sharemodal';
 
 const Chat = (props) => {
   const [content, setContent] = useState([]);
@@ -58,6 +59,20 @@ const Chat = (props) => {
   const timer = useRef(null);
   const clientRef = useRef(null);
   const headers = { Authorization: token };
+
+  // 공유모달 관련
+  const [isOpen, setOpen] = useState();
+  const onClose = () => {
+    setOpen(false)
+  }
+  const copy = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('링크가 복사되었습니다')
+    } catch (error) {
+      alert(error, '복사실패')
+    }
+  }
 
   const connect = () => {
     clientRef.current = new Client({
@@ -199,7 +214,7 @@ const Chat = (props) => {
         setRoomData(data.data.body);
         setUserCount(data.data.body?.userCount + 1);
         setCreatedAt(data.data.body.createdAt);
-        setTimeout(() => {}, 1000);
+        setTimeout(() => { }, 1000);
       } catch {
         console.log("뭔가 잘못됨");
       }
@@ -247,8 +262,12 @@ const Chat = (props) => {
         <div className="upper">
           <ProfileWrap>
             <ProfileCircle />
-            <div>
-              <h1>{roomData?.title || "방제목이 없습니다."}</h1>
+            <div style={{ width: '100%' }}>
+              <span className='shareWrap'>
+                <h1>{roomData?.title || "방제목이 없습니다."}</h1>
+                <button className='share' onClick={() => setOpen(true)}>공유하기</button>
+                <ShareModal isOpen={isOpen} onClose={onClose} copy={copy} right='0' top='4.8rem' onair chatRoomId={chatRoomId} />
+              </span>
               <div className="userWrap">
                 <div className="username">
                   {roomData?.username || "사용자가 없습니다."}

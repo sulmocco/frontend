@@ -67,8 +67,8 @@ const NewLive = (props) => {
     onSuccess: (res) => {
       alert("술약속을 잡았습니다!")
       console.log(res);
-        queryClient.invalidateQueries("rooms");
-        navigate(`/chat/` + res.data, {
+      queryClient.invalidateQueries("rooms");
+      navigate(`/render/live/` + res.data, {
         replace: true,
         state: { data: res.data, selectedDevices: constraints, playaudio, playvideo },
       });
@@ -233,7 +233,7 @@ const NewLive = (props) => {
             <SubTitle mt={0}>제목</SubTitle>
             {errors.title && (
               <div className="error">
-                <img src="/images/icon_information.svg" alt="information"/>
+                <img src="/images/icon_information.svg" alt="information" />
                 <label>{errors.title.message}</label>
               </div>
             )}
@@ -249,7 +249,7 @@ const NewLive = (props) => {
             <SubTitle>추천술 선택</SubTitle>
             {errors.alcohol && (
               <div className="error">
-                <img src="/images/icon_information.svg" alt="information"/>
+                <img src="/images/icon_information.svg" alt="information" />
                 <label>{errors.alcohol.message}</label>
               </div>
             )}
@@ -279,7 +279,7 @@ const NewLive = (props) => {
             <div>
               <SubTitle>방송화면</SubTitle>
               <div className="video">
-                {!constraints.video && <img src="/images/icon_video_disabled.svg" alt="video off"/>}
+                {!constraints.video && <img src="/images/icon_video_disabled.svg" alt="video off" />}
                 {constraints.video && <video autoPlay ref={videoPreview} />}
               </div>
               <audio ref={speakerRef} hidden/>
@@ -331,7 +331,7 @@ const NewLive = (props) => {
                     {...register("video")}
                     defaultValue={cameraDevices[0]?.label}
                   />
-                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
+                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown" />
                 </div>
                 <div className="devicesWrap">
                   {cameraDevices &&
@@ -371,7 +371,7 @@ const NewLive = (props) => {
                     {...register("audio")}
                     defaultValue={audioDevices[0]?.label}
                   />
-                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
+                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown" />
                 </div>
                 <div className="devicesWrap">
                   {audioDevices &&
@@ -444,7 +444,7 @@ const NewLive = (props) => {
             <SubTitle>안주</SubTitle>
             {errors.food && (
               <div className="error">
-                <img src="/images/icon_information.svg" alt="information"/>
+                <img src="/images/icon_information.svg" alt="information" />
                 <label>{errors.food.message}</label>
               </div>
             )}
@@ -471,7 +471,7 @@ const NewLive = (props) => {
                 <SubTitle>테마</SubTitle>
                 {errors.theme && (
                   <div className="error">
-                    <img src="/images/icon_information.svg" alt="information"/>
+                    <img src="/images/icon_information.svg" alt="information" />
                     <label>{errors.theme.message}</label>
                   </div>
                 )}
@@ -489,7 +489,7 @@ const NewLive = (props) => {
                 <SubTitle>공개 / 비공개 설정</SubTitle>
                 {errors.theme && (
                   <div className="error">
-                    <img src="/images/icon_information.svg" alt="information"/>
+                    <img src="/images/icon_information.svg" alt="information" />
                     <label>{errors.theme.message}</label>
                   </div>
                 )}
@@ -508,7 +508,7 @@ const NewLive = (props) => {
                     {...register("show")}
                     defaultValue={"공개"}
                   />
-                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
+                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown" />
                 </div>
                 <div className="devicesWrap">
                   {["공개", "비공개"].map((x) => {

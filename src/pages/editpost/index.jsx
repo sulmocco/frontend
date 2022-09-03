@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { WhiteButton } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
 import Spinner from '../../components/spinner';
@@ -17,20 +17,24 @@ const EditPost = () => {
     const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주"];
     const [tagList, setTagList] = useState("맥주");
     const [tagColor, setTagColor] = useState(0);
-    const [imgList, SetImgList] = useState([]);
     const [content, SetContent] = useState("");
     const [thumbnail, SetThumbnail] = useState("");
-    const [thumbnailImg, SetThumbnailImg] = useState("");
+    const [thumbnailImg, SetThumbnailImg] = useState();
+    const [submittable, setSubmittable] = useState(true);
+    const [imgList, SetImgList] = useState([]);
     const title_ref = useRef();
     const freetag_ref = useRef();
     const navigate = useNavigate();
     const editorRef = useRef();
-    const username = localStorage.getItem("username")
+    const username = localStorage.getItem("username");
     const { tableId } = useParams();
     const { data, status } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data), {
+        onSuccess: () => {
+            SetImgList(editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g))
+        },
         cacheTime: 0,
     });
-
+    console.log(data?.content)
     // useForm hook
     const {
         register,
@@ -61,17 +65,18 @@ const EditPost = () => {
         }
     });
 
-    useEffect(() => {
-        editorRef.current?.getInstance().setHTML(data?.content)
-        // eslint-disable-next-line
-    }, []);
-
     //게시글 수정일때
     useEffect(() => {
+        editorRef.current?.getInstance().setHTML(data?.content)
         setTagList(data?.alcoholtag);
-        setTagColor(tag.findIndex((el) => el === data?.alcoholtag));
-        // eslint-disable-next-line
+        setTagColor(tag.findIndex((el) => el == data?.alcoholtag));
+        window.scrollTo(0, 0);
+        // setImgList(editorRef.current?.getInstance().getHTML().match(imgReg));
+        //이미지가 있으면 썸네일 지정
+        // SetImgList();
+        // console.log(imgList)
     }, []);
+
 
     //태그 선택
     const addTag = (e) => {
@@ -103,21 +108,17 @@ const EditPost = () => {
 
     // 웹 에디터 content영역 확인하기
     const onChange = () => {
-        console.log(editorRef.current?.getInstance().getHTML());
-        console.log("이미지리스트확인", imgList);
-        SetContent(editorRef.current?.getInstance().getHTML());
+        const content = editorRef.current?.getInstance().getHTML()
+        if (content.length > 60000) {
+            alert("내용이 너무 많습니다.")
+            setSubmittable(false)
+        }
+        SetContent(content);
     };
-
-    // 최초 이미지 업로드 및 대표 이미지 선택시 썸네일 지정
-    // useEffect(() => {
-    //   SetThumbnailImg(imgList[thumbnail]);
-    // }, [imgList, thumbnail]);
 
     if (status === 'loading') {
         return <Spinner />
     }
-
-    console.log(data?.content)
 
     return (
         <Wrap>
@@ -228,7 +229,6 @@ const EditPost = () => {
                                             onClick={(e) => {
                                                 SetThumbnail(i);
                                                 SetThumbnailImg(v);
-                                                console.log("썸네일 이미지 설정");
                                             }}
                                         >
                                             <img src={v} alt="img" />
@@ -368,7 +368,7 @@ const Image = styled.div`
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      /* background-size: cover; */
+      object-fit: cover;
     }
 
     .border {

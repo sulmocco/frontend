@@ -25,12 +25,17 @@ import {
 } from "./styles";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { audioinputState, audiooutputState, playaudioState, playvideoState, videoinputState } from "../../recoil/mediaDevices";
 
 const NewLive = (props) => {
   const alcohol = useRef({});
   const videoPreview = useRef();
   const speakerRef = useRef()
   const queryClient = useQueryClient()
+  const [videoinput, setVideoinput] = useRecoilState(videoinputState)
+  const [audioinput, setAudioinput] = useRecoilState(audioinputState)
+  const [audiooutput, setAudiooutput] = useRecoilState(audiooutputState)
 
   const [versionOpen, setVersionOpen] = useState(false);
   const [camerasOpen, setCamerasOpen] = useState(false);
@@ -41,10 +46,9 @@ const NewLive = (props) => {
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
   const [speakerDevices, setSpeakerDevices] = useState([])
-  const [playaudio, setPlayaudio] = useState([])
-  const [playvideo, setPlayvideo] = useState([])
+  const [, setPlayaudio] = useRecoilState(playaudioState)
+  const [playvideo, setPlayvideo] = useRecoilState(playvideoState)
 
-  const [constraints, setConstraints] = useState({ video: true });
   const [thumbnail, setThumbnail] = useState(null);
   const {
     register,
@@ -70,7 +74,7 @@ const NewLive = (props) => {
       queryClient.invalidateQueries("rooms");
       navigate(`/render/live/` + res.data, {
         replace: true,
-        state: { data: res.data, selectedDevices: constraints, playaudio, playvideo },
+        state: { data: res.data },
       });
     },
     onError: (error) => {
@@ -92,77 +96,52 @@ const NewLive = (props) => {
 
   const getUserMedia = async (constraints) => {
     let devices = [];
-    const cameraPermission = await navigator.permissions.query({
-      name: "camera",
-    });
-    const micPermission = await navigator.permissions.query({
-      name: "microphone",
-    });
-    if (
-      cameraPermission.state === "granted" ||
-      micPermission.state === "granted"
-    ) {
-      devices = await navigator.mediaDevices.enumerateDevices();
-      setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
-      setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
-      setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
-      if (!constraints.video && !constraints.audio) {
-        videoPreview.current.srcObject = null;
-      } else {
-        await navigator.mediaDevices
-          .getUserMedia(constraints)
-          .then((stream) => {
-            videoPreview.current.srcObject = stream;
-          });
-      }
-    }
+    devices = await navigator.mediaDevices.enumerateDevices();
+    setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
+    setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
+    setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
+    await navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then((stream) => {
+        videoPreview.current.srcObject = stream;
+      });
   };
 
   const handleCameraDeviceChange = (device) => {
     setValue("video", device ? device.label : "없음");
-    setConstraints({
-      ...constraints,
-      video: device
-        ? { ...constraints.video, deviceId: device.deviceId }
-        : cameraDevices[0].deviceId,
-    });
+    setVideoinput(device ? device : cameraDevices[0])
     device ? setPlayvideo(true) : setPlayvideo(false)
-    // setCamera(device);
   };
   const handleAudioDeviceChange = (device) => {
     setValue("audio", device ? device.label : "없음");
-    setConstraints({
-      ...constraints,
-      audio: device
-        ? { ...constraints.audio, deviceId: device.deviceId }
-        : audioDevices[0].deviceId,
-    });
+    setAudioinput(device ? device : audioDevices[0])
     device ? setPlayaudio(true) : setPlayaudio(false)
     // setAudio(device);
   };
   const handleSpeakerDeviceChange = (device) => {
     setValue("speaker", device ? device.label : "없음");
+    setAudiooutput(device ? device : speakerDevices[0])
     speakerRef.current.setSinkId(device.deviceId)
   }
-  const stopStream = () => {
-    videoPreview.current.srcObject.getVideoTracks()[0].stop();}
 
   useEffect(() => {
     const foo = async () => {
-      console.log("permission?");
-      await getUserMedia({ video: playvideo ? constraints.video : false });
-      console.log(cameraDevices, audioDevices);
+      if(playvideo){
+        await getUserMedia({ video: playvideo ? {deviceId: videoinput.deviceId} : false });
+      }
+      console.log(videoinput, audioinput, audiooutput);
       console.log("this..");
     };
     foo();
+    const stopStream = () => {
+      console.log(videoPreview.current.srcObject.getVideoTracks()[0].stop())
+    }
     window.addEventListener("beforeunload", stopStream)
     return() => {
-      console.log(videoPreview.current);
-      videoPreview.current?.srcObject.getVideoTracks()[0].stop();
       window.removeEventListener("beforeunload", stopStream)
     }
     // eslint-disable-next-line
-  }, [constraints]);
+  }, [videoinput]);
 
   const onDrop = useCallback(async (file) => {
     const formData = new FormData();
@@ -178,10 +157,6 @@ const NewLive = (props) => {
       "image/*": [".jpeg", ".png", ".gif", ".jpg"],
     },
   });
-  useEffect(() => {
-    // handleCameraDeviceChange(c)
-    console.log("how..");
-  }, []);
   return (
     <>
       <NewLiveContainer>
@@ -275,12 +250,12 @@ const NewLive = (props) => {
               return null;
             })}
           </AlcoholWrapper>
-          <VideoWrapper isInput={constraints.video}>
+          <VideoWrapper isInput={playvideo}>
             <div>
               <SubTitle>방송화면</SubTitle>
               <div className="video">
-                {!constraints.video && <img src="/images/icon_video_disabled.svg" alt="video off" />}
-                {constraints.video && <video autoPlay ref={videoPreview} />}
+                {!playvideo && <img src="/images/icon_video_disabled.svg" alt="video off" />}
+                <video autoPlay ref={videoPreview} hidden={!playvideo}/>
               </div>
               <audio ref={speakerRef} hidden/>
             </div>

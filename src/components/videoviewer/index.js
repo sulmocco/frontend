@@ -1,6 +1,8 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component, useEffect, useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { audioinputState, playaudioState, playvideoState, videoinputState } from "../../recoil/mediaDevices";
 import UserVideoComponent from "./UserVideoComponent";
 
 const OPENVIDU_SERVER_URL = process.env.REACT_APP_OPENVIDU_SERVER_URL;
@@ -16,6 +18,11 @@ const VideoViewer = (props) => {
   const OVRef = useRef(null)
   const sessionRef = useRef(null)
 
+  const videoinput = useRecoilValue(videoinputState)
+  const audioinput = useRecoilValue(audioinputState)
+  const playvideo = useRecoilValue(playvideoState)
+  const playaudio = useRecoilValue(playaudioState)
+
   /**
    * --------------------------
    * SERVER-SIDE RESPONSIBILITY
@@ -28,8 +35,8 @@ const VideoViewer = (props) => {
    *   3) The Connection.token must be consumed in Session.connect() method
    */
 
-   const getToken = () => {
-    return createSession(mySessionId).then((sessionId) =>
+   const getToken = async () => {
+    return await createSession(mySessionId).then((sessionId) =>
       createToken(sessionId)
     );
   }
@@ -139,7 +146,7 @@ const VideoViewer = (props) => {
 
   useEffect(() => {
     updatePublishState()
-  }, [props.playaudio, props.playvideo, props.selectedDevices])
+  }, [playaudio, playvideo, videoinput, audioinput])
 
   const handleMainVideoStream = (stream) => {
     if (mainStreamManager !== stream) {
@@ -221,18 +228,18 @@ const VideoViewer = (props) => {
               // --- 5) Get your own camera stream ---
               console.log(props.selectedDevices);
               let camera =
-                props?.selectedDevices?.video?.deviceId ||
+                videoinput.deviceId ||
                 videoDevices[0].deviceId;
               let microphone =
-                props?.selectedDevices?.audio?.deviceId ||
+                audioinput.deviceId ||
                 audioDevices[0].deviceId;
               // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
               // element: we will manage it on our own) and with the desired properties
               let newPublisher = OVRef.current.initPublisher(undefined, {
                 audioSource: microphone, // The source of audio. If undefined default microphone
                 videoSource: camera, // The source of video. If undefined default webcam
-                publishAudio: props.playaudio || true, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: props.playvideo || true, // Whether you want to start publishing with your video enabled or not
+                publishAudio: playaudio || true, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: playvideo || true, // Whether you want to start publishing with your video enabled or not
                 resolution: "400x272", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
@@ -270,10 +277,10 @@ const VideoViewer = (props) => {
       if (publisher) {
         var properties = {
           ...publisher.properties,
-          publishAudio: props.playaudio,
-          publishVideo: props.playvideo,
-          videoSource: props?.selectedDevices?.video?.deviceId,
-          audioSource: props?.selectedDevices?.audio?.deviceId
+          publishAudio: playaudio,
+          publishVideo: playvideo,
+          videoSource: videoinput.deviceId,
+          audioSource: audioinput.deviceId
         };
         console.log(properties);
         var newPublisher = OVRef.current.initPublisher(undefined, properties);

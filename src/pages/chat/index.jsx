@@ -25,6 +25,8 @@ import moment from "moment";
 import VideoViewer from "../../components/videoviewer";
 import AddFriendModal from "../../components/addfriendmodal";
 import ShareModal from '../../components/sharemodal';
+import { useRecoilState } from "recoil";
+import { playvideoState, playaudioState, videoinputState, audioinputState, audiooutputState } from "../../recoil/mediaDevices";
 
 const Chat = (props) => {
   const [content, setContent] = useState([]);
@@ -44,10 +46,12 @@ const Chat = (props) => {
   const username = localStorage.getItem("username");
   const naviagte = useNavigate();
 
-  const { state } = useLocation();
-  const [selectedDevices, setSelectedDevices] = useState(state?.selectedDevices)
-  const [playvideo, setPlayvideo] = useState(Boolean(state?.playvideo));
-  const [playaudio, setPlayaudio] = useState(Boolean(state?.playaudio));
+  const [, setVideoinput] = useRecoilState(videoinputState)
+  const [, setAudioinput] = useRecoilState(audioinputState)
+  const [, setAudiooutput] = useRecoilState(audiooutputState)
+  const [playvideo, setPlayvideo] = useRecoilState(playvideoState);
+  const [playaudio, setPlayaudio] = useRecoilState(playaudioState);
+
   const [camerasOpen, setCamerasOpen] = useState(false);
   const [audiosOpen, setAudiosOpen] = useState(false);
   const [cameraDevices, setCameraDevices] = useState([]);
@@ -146,43 +150,23 @@ const Chat = (props) => {
   // 카메라, 마이크, 스피커 목록 가져오기
   const getDevices = async () => {
     let devices = []
-    const cameraPermission = await navigator.permissions.query({
-      name: "camera",
-    });
-    const micPermission = await navigator.permissions.query({
-      name: "microphone",
-    });
-    if (
-      cameraPermission.state === "granted" ||
-      micPermission.state === "granted"
-    ) {
-      devices = await navigator.mediaDevices.enumerateDevices();
-      setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
-      setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
-      setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
-    }
+    devices = await navigator.mediaDevices.enumerateDevices();
+    setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
+    setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
+    setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
   }
 
 
   const handleCameraDeviceChange = (device) => {
-    setSelectedDevices({
-      ...selectedDevices,
-      video: device
-        ? { ...selectedDevices.video, deviceId: device.deviceId }
-        : false,
-    });
+    setVideoinput(device)
     setCamerasOpen(false)
   };
   const handleAudioDeviceChange = (device) => {
-    setSelectedDevices({
-      ...selectedDevices,
-      audio: device
-        ? { ...selectedDevices.audio, deviceId: device.deviceId }
-        : false,
-    });
+    setAudioinput(device)
     setAudiosOpen(false)
   };
   const handleSpeakerDeviceChange = (device) => {
+    setAudiooutput(device)
     speakerRef.current.setSinkId(device.deviceId)
     setAudiosOpen(false)
   }
@@ -305,11 +289,6 @@ const Chat = (props) => {
                 username={username ? username : "anonymous"}
                 chatRoomId={chatRoomId}
                 version={roomData.version}
-                selectedDevices={
-                  selectedDevices
-                }
-                playvideo={playvideo}
-                playaudio={playaudio}
                 openModal={onClickModalOpen}
               />
             )}

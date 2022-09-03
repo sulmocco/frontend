@@ -13,7 +13,7 @@ const ShareModal = ({ chatRoomId, onair, isOpen, onClose, copy, right, bottom, l
         script.async = true;
         document.body.appendChild(script);
 
-        return document.body.removeChild(script)
+        return () => document.body.removeChild(script)
     }, []);
 
     // 카카오 공유하기

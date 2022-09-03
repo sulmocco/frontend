@@ -22,7 +22,7 @@ const Login = React.lazy(() => import("./pages/login"));
 const Terms = React.lazy(() => import("./pages/terms"));
 const Tables = React.lazy(() => import("./pages/tables"));
 const LoginRending = React.lazy(() => import("./components/loginrending"));
-const LoginRedirect = React.lazy(() => import("./components/LoginRedirect"));
+const LoginRedirect = React.lazy(() => import("./pages/loginredirect"));
 const ProfileEdit = React.lazy(() => import("./pages/profileedit"));
 const Detail = React.lazy(() => import("./pages/detail"));
 const Comment = React.lazy(() => import("./components/comment"));

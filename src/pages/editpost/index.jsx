@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import styled from "styled-components";
-import { set, useForm } from "react-hook-form";
-import { WhiteButton } from "../../styles/CommonStyles";
+import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import sulmoggoApi from "../../shared/apis";
 import Spinner from '../../components/spinner';
 
@@ -12,7 +10,8 @@ import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-
+import { ButtonWrapper, FriendAddButton, FriendCancelButton } from '../../components/addfriendmodal/styles';
+import { PostWrap, Title, Subtitle, Content, Image, Tag } from '../post/styles'
 const EditPost = () => {
     const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주"];
     const [tagList, setTagList] = useState("맥주");
@@ -34,7 +33,6 @@ const EditPost = () => {
         },
         cacheTime: 0,
     });
-    console.log(data?.content)
     // useForm hook
     const {
         register,
@@ -117,7 +115,7 @@ const EditPost = () => {
     }
 
     return (
-        <Wrap>
+        <PostWrap>
             <h2>게시글 수정</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Title>
@@ -259,185 +257,13 @@ const EditPost = () => {
                         </div>
                     )}
                 </Tag>
-                <Button>
-                    <div>
-                        <Link to="/tables">
-                            <WhiteButton className="whitebutton">취소하기</WhiteButton>
-                        </Link>
-                        <button className="bluebutton">작성완료</button>
-                    </div>
-                </Button>
+                <ButtonWrapper style={{ margin: '14.4rem 0 16rem 0' }}>
+                    <FriendCancelButton className="whitebutton" onClick={() => navigate(-1)}>취소하기</FriendCancelButton>
+                    <FriendAddButton className="bluebutton">작성완료</FriendAddButton>
+                </ButtonWrapper>
             </form>
-        </Wrap>
+        </PostWrap>
     );
 };
 
 export default EditPost;
-
-const Wrap = styled.section`
-  h2 {
-    font-size: 32px;
-    margin-top: 100px;
-  }
-`;
-
-const Title = styled.div`
-  div {
-    font-weight: 700;
-    margin-top: 50px;
-    font-size: 26px;
-  }
-
-  input {
-    width: 100%;
-    height: 64px;
-    background: #f2f3f3;
-    border-radius: 10px;
-    border: none;
-    font-size: 20px;
-    padding: 20px;
-    margin-top: 10px;
-  }
-`;
-
-const Subtitle = styled.div`
-  div {
-    margin-top: 25px;
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  ul {
-    display: flex;
-    gap: 10px;
-    li {
-      cursor: pointer;
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 73px;
-      height: 33px;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 20px;
-
-      &.fill {
-        background: #2459e0;
-        border-radius: 20px;
-        color: white;
-      }
-    }
-  }
-`;
-
-const Content = styled.div`
-  margin-top: 40px;
-`;
-
-const Image = styled.div`
-  margin-top: 40px;
-
-  .pre_image {
-    font-size: 14px;
-    color: #bcbcbc;
-  }
-
-  div {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .upload {
-    margin-top: 20px;
-    display: flex;
-  }
-
-  .Img {
-    width: 180px;
-    height: 180px;
-    background: #f2f3f3;
-    border-radius: 10px;
-    position: relative;
-    margin-right: 20px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-    .border {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-
-      &:hover {
-        border: 3px solid #2459e0;
-        border-radius: 10px;
-      }
-    }
-    .main {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      background-color: #2459e0;
-      border-radius: 5px;
-      color: white;
-      padding: 10px;
-    }
-  }
-`;
-
-const Tag = styled.div`
-  margin-top: 30px;
-  div {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  input {
-    width: 100%;
-    height: 64px;
-    background: #f2f3f3;
-    border-radius: 10px;
-    border: none;
-    font-size: 20px;
-    padding: 20px;
-    margin-top: 10px;
-  }
-`;
-
-const Button = styled.div`
-  display: flex;
-  width: 100%;
-  margin-top: 80px;
-
-  div {
-    display: flex;
-    margin: 0 auto;
-  }
-
-  .whitebutton {
-    margin-right: 60px;
-    width: 368px;
-    height: 88px;
-    cursor: pointer;
-  }
-
-  button {
-    width: 368px;
-    height: 88px;
-    border: none;
-    font-weight: 700;
-    font-size: 2rem;
-    border-radius: 1rem;
-    background-color: ${(props) => props.theme.primary};
-    color: ${(props) => props.theme.white};
-  }
-`;

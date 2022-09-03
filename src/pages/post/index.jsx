@@ -21,7 +21,7 @@ const Post = () => {
   const [submittable, setSubmittable] = useState(true)
   const navigate = useNavigate();
   const editorRef = useRef();
-  const username = localStorage.getItem("username")
+  const username = localStorage.getItem("username");
 
   //태그 선택
   const addTag = (e) => {
@@ -63,12 +63,9 @@ const Post = () => {
       const formData = new FormData();
       formData.append("file", blob);
       const url = await sulmoggoApi.img(formData);
-      console.log(url.data[0].url);
       callback(url.data[0].url, "alt text");
       SetImgList((state) => [...state, url.data[0].url]);
-      console.log(blob, callback)
     } catch (err) {
-      console.log(err);
     }
 
     return false;
@@ -77,13 +74,11 @@ const Post = () => {
   // 웹 에디터 content영역 확인하기
   const onChange = () => {
     const content = editorRef.current?.getInstance().getHTML()
-    if(content.length > 60000){
+    if (content.length > 60000) {
       alert("내용이 너무 많습니다.")
       setSubmittable(false)
     }
-    console.log(editorRef.current?.getInstance().getHTML());
-    console.log("이미지리스트확인", imgList);
-    SetContent(editorRef.current?.getInstance().getHTML());
+    SetContent(content);
   };
 
   // 최초 이미지 업로드 및 대표 이미지 선택시 썸네일 지정
@@ -235,7 +230,7 @@ const Post = () => {
             <Link to="/tables">
               <WhiteButton className="whitebutton">취소하기</WhiteButton>
             </Link>
-            <button className="bluebutton" disabled={submittable}>작성완료</button>
+            <button className="bluebutton">작성완료</button>
           </div>
         </Button>
       </form>
@@ -337,7 +332,7 @@ const Image = styled.div`
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      /* background-size: cover; */
+      object-fit: cover;
     }
 
     .border {

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import QueryString from "qs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Spinner from "./spinner";
+import Spinner from "../../components/spinner";
 
 const LoginRedirect = () => {
   const navigate = useNavigate();

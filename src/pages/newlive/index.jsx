@@ -49,6 +49,8 @@ const NewLive = (props) => {
   const [, setPlayaudio] = useRecoilState(playaudioState)
   const [playvideo, setPlayvideo] = useRecoilState(playvideoState)
 
+  const track = videoPreview.current?.srcObject?.getVideoTracks()[0]
+
   const [thumbnail, setThumbnail] = useState(null);
   const {
     register,
@@ -127,14 +129,14 @@ const NewLive = (props) => {
   useEffect(() => {
     const foo = async () => {
       if(playvideo){
-        await getUserMedia({ video: playvideo ? {deviceId: videoinput.deviceId} : false });
+        await getUserMedia({ video: {deviceId: videoinput.deviceId}});
       }
       console.log(videoinput, audioinput, audiooutput);
       console.log("this..");
     };
     foo();
     const stopStream = () => {
-      console.log(videoPreview.current.srcObject.getVideoTracks()[0].stop())
+      track.stop()
     }
     window.addEventListener("beforeunload", stopStream)
     return() => {
@@ -142,6 +144,18 @@ const NewLive = (props) => {
     }
     // eslint-disable-next-line
   }, [videoinput]);
+
+  useEffect(() => {
+    if(!videoinput.deviceId && (cameraDevices.length > 0)){
+      handleCameraDeviceChange(cameraDevices[0])
+    }
+    if(!audioinput.deviceId && (audioDevices.length > 0)){
+      handleAudioDeviceChange(audioDevices[0])
+    }
+    if(!audiooutput.deviceId && (speakerDevices.length > 0)){
+      handleSpeakerDeviceChange(speakerDevices[0])
+    }
+  }, [cameraDevices, audioDevices, speakerDevices])
 
   const onDrop = useCallback(async (file) => {
     const formData = new FormData();
@@ -304,7 +318,7 @@ const NewLive = (props) => {
                     small
                     disabled
                     {...register("video")}
-                    defaultValue={cameraDevices[0]?.label}
+                    defaultValue={videoinput.label}
                   />
                   <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown" />
                 </div>
@@ -344,7 +358,7 @@ const NewLive = (props) => {
                     small
                     disabled
                     {...register("audio")}
-                    defaultValue={audioDevices[0]?.label}
+                    defaultValue={audioinput.label}
                   />
                   <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown" />
                 </div>
@@ -386,7 +400,7 @@ const NewLive = (props) => {
                     small
                     disabled
                     {...register("speaker")}
-                    defaultValue={speakerDevices[0]?.label}
+                    defaultValue={audiooutput.label}
                   />
                   <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
                 </div>

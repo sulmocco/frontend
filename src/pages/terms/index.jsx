@@ -29,7 +29,10 @@ const Terms = () => {
                 <h2>회원가입에 필요한 약관에 동의해주세요.</h2>
                 <form>
                     <ul>
-                        <li>
+                        <li onClick={() => {
+                            setCheck1(!check1)
+                            setfullCheck(false)
+                        }}>
                             <input type='checkbox' id='adult' value='adult' checked={check1}
                                 onClick={() => {
                                     setCheck1(!check1)
@@ -44,7 +47,10 @@ const Terms = () => {
                             <label htmlFor='adult' ></label>
                             <p>20세 이상 성인입니다.</p>
                         </li>
-                        <li>
+                        <li onClick={() => {
+                            setCheck2(!check2)
+                            setfullCheck(false)
+                        }}>
                             <input type='checkbox' id='service' value='sevice' checked={check2}
                                 onClick={() => {
                                     setCheck2(!check2)
@@ -59,7 +65,10 @@ const Terms = () => {
                             <label htmlFor='service'></label>
                             <p>서비스 이용 필수 약관 동의 (필수)</p>
                         </li>
-                        <li>
+                        <li onClick={() => {
+                            setCheck3(!check3)
+                            setfullCheck(false)
+                        }}>
                             <input type='checkbox' id='privacy' value='privacy' checked={check3}
                                 onClick={() => {
                                     setCheck3(!check3)

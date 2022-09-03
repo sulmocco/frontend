@@ -74,6 +74,7 @@ export const Termsection = styled.div`
                 font-weight: 400;
                 size: 2rem;
                 color: #4e4e56;
+                cursor: pointer;
             }
         }
         .selectAll {

@@ -7,7 +7,7 @@ const LoginRending = () => {
     const navigate = useNavigate();
     return (
         <Rending>
-            <RendingSection>
+            <RendingSection color='#fff'>
                 <RendingCont>
                     <div className="desc">
                         <span>건강한 언텍트 음주 플렛폼</span>
@@ -19,36 +19,34 @@ const LoginRending = () => {
                     <p className='signup' onClick={() => navigate(`/terms`)}>회원가입</p>
                 </RendingCont>
             </RendingSection>
-            <RendingSection color='#343437'>
-                <RendingContRow>
-                    <div className="left">
-                        <div className="box">
-                            <p>
-                                친구들과 영상으로 집안이 술모임으로 바뀐다!<br />
-                                함께있는것처럼 먹고 마시자!
-                            </p>
-                        </div>
-                        <div className="box">
-                            <p>
-                                친구가 없어도 OK!<br />
-                                술모꼬에서 새로운 술친구 만들자!
-                            </p>
-                        </div>
-                    </div>
-                    <div className="right">
-                        <p>혼술도 외롭지 않아!</p>
-                        <h4>외로운 혼술은 이제 그만<br />멀리서도 친구와 함께 술모꼬</h4>
+            <RendingSection>
+                <RendingContRow style={{ paddingBottom: '13.6rem' }}>
+                    <img src='/images/img_rending_01.svg' alt='이미지' />
+                    <div className='desc'>
+                        <span>혼술도 외롭지 않아!</span>
+                        <h3>외로운 혼술은<br />이제 그만!</h3>
+                        <p>친구들과 영상으로 집안이 술 모임으로 바뀐다!<br />함께 있는 것처럼 먹고 마시자!</p>
                     </div>
                 </RendingContRow>
             </RendingSection>
-            <RendingSection color='#F2F3F6'>
-                <RendingCont>
+            <RendingSection>
+                <RendingContRow style={{ paddingTop: '0' }}>
+                    <div className='desc'>
+                        <span>혼술도 외롭지 않아!</span>
+                        <h3>멀리서도 친구와<br />함께 술모꼬</h3>
+                        <p>친구가 없어도 OK!<br />술모꼬에서 새로운 술친구 만들자!</p>
+                    </div>
+                    <img src='/images/img_rending_02.svg' alt='이미지' />
+                </RendingContRow>
+            </RendingSection>
+            <RendingSection color='#fff'>
+                <RendingContRow>
                     <div className="desc">
                         <span>안주 고민도 끝!</span>
                         <h3>감성 음주 커뮤니티</h3>
                         <p>많은 사람들은 어떤 안주를 먹을까?<br />사람들이 찐으로 올리는 후기<br />술상추천을 만나보세요!</p>
                     </div>
-                </RendingCont>
+                </RendingContRow>
             </RendingSection>
         </Rending>
     );

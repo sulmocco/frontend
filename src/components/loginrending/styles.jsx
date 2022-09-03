@@ -12,7 +12,6 @@ export const RendingSection = styled.section`
     justify-content: center;
 `
 export const RendingCont = styled.div`
-    /* width: ${props => props.theme.contentWidth}; */
     width: 129.6rem;
     padding: 26.4rem 0 6.2rem 0;
     position: relative;
@@ -60,43 +59,35 @@ export const RendingCont = styled.div`
     }
 `
 export const RendingContRow = styled.div`
-        padding: 14.8rem 0 12.6rem 0;
+        width: ${props => props.theme.contentWidth};
+        padding: 16rem 0;
         display: flex;
         align-items: center;
-        .left{
-            .box{
-                padding: 2.4rem;
-                background-color: #fff;
-                border-radius: 1rem;
-                margin-right: 23.5rem;
-                p{
-                    color: ${props => props.theme.grey_01};
-                    line-height: 3.4rem;
-                    font-size: 2.2rem;
-                    font-weight: 700;
-                    letter-spacing: -0.04rem;
-                    display: inline;
-                }
-            &:last-child {
-                margin: 4.3rem 0 0 33rem;
-            }
-            }
+        flex-direction: row;
+        justify-content: space-between;
+        img{
         }
-        .right{
-            margin-left: 12.6rem;
-            p{
-                font-size: 2.6rem;
-                color: ${props => props.theme.grey_03};
-                line-height: 3.4rem;
-                letter-spacing: -0.04rem;
-                font-weight: 700;
-            }
-            h4{
-                font-size: 4.8rem;
-                color: #fff;
-                line-height: 7.2rem;
-                letter-spacing: -0.02rem;
-                font-weight: 700;
-            }
+        span{
+            font-weight: 700;
+            color: ${props => props.theme.primary};
+            font-size: 2.4rem;
+            line-height: 3.4rem;
+            letter-spacing: -0.04rem;
+        }
+        h3 {
+            font-size: 4.8rem;
+            line-height: 6.683rem;
+            font-weight: 800;
+            letter-spacing: -0.02rem;
+            margin-top: 1.2rem;
+            color: ${props => props.theme.black_02};
+        }
+        p{
+            font-size: 2.2rem;
+            line-height: 3.3rem;
+            font-weight: 500;
+            color: ${props => props.theme.grey_01};
+            letter-spacing: -0.04rem;
+            margin-top: 3.2rem;
         }
 `

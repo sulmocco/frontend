@@ -71,10 +71,6 @@ const EditPost = () => {
         setTagList(data?.alcoholtag);
         setTagColor(tag.findIndex((el) => el == data?.alcoholtag));
         window.scrollTo(0, 0);
-        // setImgList(editorRef.current?.getInstance().getHTML().match(imgReg));
-        //이미지가 있으면 썸네일 지정
-        // SetImgList();
-        // console.log(imgList)
     }, []);
 
 
@@ -133,6 +129,7 @@ const EditPost = () => {
                         placeholder="제목을 입력해주세요."
                         defaultValue={data?.title}
                         autoComplete="off"
+                        maxLength={50}
                         {...register("title", {
                             required: true,
                         })}
@@ -251,6 +248,7 @@ const EditPost = () => {
                         placeholder="자유태그 입력(한개만 입력 가능, 띄어쓰기 포함 10글자까지)"
                         defaultValue={data?.freetag}
                         autoComplete="off"
+                        maxLength={10}
                         {...register("freetag", {
                             required: "자유태그를 입력해주세요.",
                         })}

@@ -20,6 +20,10 @@ export const playaudioState = atom({
     key: 'playaudio',
     default: true
 })
+export const setDeviceForState = atom({
+    key: 'devicefor',
+    default: undefined
+})
 
 export const mediaDevices = selector({
     key: 'mediaDevices',

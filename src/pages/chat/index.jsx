@@ -25,13 +25,15 @@ import moment from "moment";
 import VideoViewer from "../../components/videoviewer";
 import AddFriendModal from "../../components/addfriendmodal";
 import ShareModal from '../../components/sharemodal';
-import { useRecoilState } from "recoil";
-import { playvideoState, playaudioState, videoinputState, audioinputState, audiooutputState } from "../../recoil/mediaDevices";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { playvideoState, playaudioState, videoinputState, audioinputState, audiooutputState, setDeviceForState } from "../../recoil/mediaDevices";
+import DeviceSetup from "../../components/devicesetup";
 
 const Chat = (props) => {
   const [content, setContent] = useState([]);
   const [roomData, setRoomData] = useState(null);
   const [usercount, setUserCount] = useState(0);
+  const [deviceFor, setDeviceFor] = useRecoilState(setDeviceForState)
 
   const [selectedFriend, setSelectedFriend] = useState("");
   const [openFriendModal, setOpenFriendModal] = useState(false);
@@ -240,6 +242,9 @@ const Chat = (props) => {
     };
     // eslint-disable-next-line
   }, [username, roomData?.username]);
+
+
+  if((deviceFor || false) === chatRoomId){
   return (
     <LiveWrapper>
       <div className="live_left_box">
@@ -445,7 +450,9 @@ const Chat = (props) => {
         <AddFriendModal username={selectedFriend} onClose={onClickModalClose} />
       )}
     </LiveWrapper>
-  );
+  )}else{
+    return <DeviceSetup deviceFor={deviceFor} setDeviceFor={setDeviceFor}/>
+  }
 };
 
 export default Chat;

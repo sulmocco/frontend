@@ -105,8 +105,12 @@ const NewLive = (props) => {
     await navigator.mediaDevices
       .getUserMedia(constraints)
       .then((stream) => {
-        videoPreview.current.srcObject = stream;
-      });
+        if("srcObject" in videoPreview.current){
+          videoPreview.current.srcObject = stream;
+        }else{
+          videoPreview.current.src = window.URL.createObjectURL(stream)
+        }
+    });
   };
 
   const handleCameraDeviceChange = (device) => {

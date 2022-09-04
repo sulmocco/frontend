@@ -350,7 +350,9 @@ const VideoViewer = (props) => {
               ) : null}
               {/* 친구 모드일 때 자신 이외의 화면 */}
               {String(props.version).startsWith("friend") &&
-                subscribers.map((sub, i) => (
+                subscribers.map((sub, i) => {
+                  if(getNicknameTag(sub) !== props.username){
+                    return(
                   <div
                     key={i}
                     className="stream-container"
@@ -360,8 +362,9 @@ const VideoViewer = (props) => {
                       streamManager={sub}
                       openModal={props.openModal}
                     />
-                  </div>
-                ))}
+                  </div>)
+                }
+              })}
             </div>
           </div>
         ) : null}

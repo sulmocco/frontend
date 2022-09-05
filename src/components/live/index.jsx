@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AlchholTag,
   SnackTag,
@@ -38,6 +38,8 @@ const Live = () => {
     setSlide(!slide);
   };
 
+  console.log(list)
+
   return (
     <Wrap>
       <LiveWrap>
@@ -60,56 +62,58 @@ const Live = () => {
           <Container>
             {list.map((v, i) => {
               return (
-                <Listbox key={i} slide={slide}>
-                  <Image src={v.thumbnail || '/images/placeholder.png'} alt="썸네일"></Image>
-                  <ProfileBox>
-                    <ProfileImage
-                      src={v.profileimgurl || '/images/profile_default.svg'}
-                      alt="프로필사진"
-                    ></ProfileImage>
-                    <Profile>
-                      <p style={{ fontSize: "26px", fontWeight: "700" }}>
-                        {v.title.length <= 12
-                          ? v.title
-                          : v.title.slice(0, 12) + "..."}
-                      </p>
-                      <p
+                <Link to={`/chat/${v.chatRoomId}`}>
+                  <Listbox key={i} slide={slide}>
+                    <Image src={v.thumbnail || '/images/placeholder.png'} alt="썸네일"></Image>
+                    <ProfileBox>
+                      <ProfileImage
+                        src={v.profileimgurl || '/images/profile_default.svg'}
+                        alt="프로필사진"
+                      ></ProfileImage>
+                      <Profile>
+                        <p style={{ fontSize: "26px", fontWeight: "700" }}>
+                          {v.title.length <= 12
+                            ? v.title
+                            : v.title.slice(0, 12) + "..."}
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "20px",
+                            fontWeight: "400",
+                            color: "#2459E0",
+                          }}
+                        >
+                          {v.username}
+                        </p>
+                      </Profile>
+                    </ProfileBox>
+                    <Desc>
+                      <div style={{ fontSize: "16px", fontWeight: "400" }}>
+                        <img src="/images/icon_clock.svg" alt="clock" />
+                        <span>{new Date(v.createdAt).toLocaleString() || 0}</span>
+                      </div>
+                      <div style={{ margin: "0 10px", fontSize: "16px" }}>|</div>
+                      <div
                         style={{
-                          fontSize: "20px",
+                          fontSize: "16px",
                           fontWeight: "400",
-                          color: "#2459E0",
                         }}
                       >
-                        {v.username}
-                      </p>
-                    </Profile>
-                  </ProfileBox>
-                  <Desc>
-                    <div style={{ fontSize: "16px", fontWeight: "400" }}>
-                      <img src="/images/icon_clock.svg" alt="clock" />
-                      <span>{new Date(v.createdAt).toLocaleString() || 0}</span>
+                        <img src="/images/icon_people_black.svg" alt="people" />
+                        <span>{v.userCount}</span>
+                      </div>
+                    </Desc>
+                    <div style={{ display: "flex", marginTop: "40px" }}>
+                      <AlchholTag style={{ marginRight: "10px" }}>
+                        {v.theme}
+                      </AlchholTag>
+                      <SnackTag style={{ marginRight: "10px" }}>
+                        {v.alcoholtag}
+                      </SnackTag>
+                      <ThemeTag>{v.food}</ThemeTag>
                     </div>
-                    <div style={{ margin: "0 10px", fontSize: "16px" }}>|</div>
-                    <div
-                      style={{
-                        fontSize: "16px",
-                        fontWeight: "400",
-                      }}
-                    >
-                      <img src="/images/icon_people_black.svg" alt="people" />
-                      <span>{v.userCount}</span>
-                    </div>
-                  </Desc>
-                  <div style={{ display: "flex", marginTop: "40px" }}>
-                    <AlchholTag style={{ marginRight: "10px" }}>
-                      {v.theme}
-                    </AlchholTag>
-                    <SnackTag style={{ marginRight: "10px" }}>
-                      {v.alcoholtag}
-                    </SnackTag>
-                    <ThemeTag>{v.food}</ThemeTag>
-                  </div>
-                </Listbox>
+                  </Listbox>
+                </Link>
               );
             })}
           </Container>
@@ -210,9 +214,9 @@ const Next = styled.button`
 `;
 
 const Listbox = styled.div`
+  cursor: pointer;
   margin-right: 10px;
   width: 420px;
-
   transform: ${(props) => (props.slide ? "translateX(-900px)" : "0")};
   transition: 1s;
 `;

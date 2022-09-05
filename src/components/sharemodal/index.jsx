@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useState } from 'react';
 import { ModalWrap } from './styles';
 const ShareModal = ({ chatRoomId, onair, isOpen, onClose, copy, right, bottom, left, top }) => {
     const sendText = '언텍트 음주 커뮤니티 술모꼬';

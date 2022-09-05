@@ -38,7 +38,7 @@ const FriendList = (props) => {
                         <h4>{username}</h4>
                     </div>
                 </div>
-                <button onClick={() => deleteFriend}>삭제하기</button>
+                <button onClick={() => deleteFriend()}>삭제하기</button>
             </FriendCont>
         </FriendWrap>
     );

@@ -65,10 +65,6 @@ const ShareModal = ({ chatRoomId, onair, isOpen, onClose, copy, right, bottom, l
                     <img src='/images/icon_logo_twitter.svg' alt='카카오톡' />
                     <p>트위터</p>
                 </li>
-                <li>
-                    <img src='/images/icon_logo_instagram.svg' alt='카카오톡' />
-                    <p>인스타그램</p>
-                </li>
             </ul>
             {onair && (
                 <div className='url_copy'>

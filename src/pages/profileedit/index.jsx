@@ -9,7 +9,7 @@ import Spinner from '../../components/spinner';
 import sulmoggoApi from '../../shared/apis';
 import { AlcoholLevel } from '../../shared/options';
 import { Button, MyImgSection, MyInfoSection, ProfileEditCont, ProfileEditSection, ProfileEditWrap } from './style';
-import { getLevel, userLogout } from '../../shared/modules';
+import { getLevel } from '../../shared/modules';
 
 const ProfileEdit = () => {
     const navigate = useNavigate();
@@ -48,14 +48,6 @@ const ProfileEdit = () => {
         },
         onError: (error) => {
             alert('실패', error.message)
-        }
-    });
-
-    const deleteUserMutation = useMutation(() => sulmoggoApi.deleteUser(), {
-        onSuccess: () => {
-            alert('탈퇴가 완료되었습니다');
-            navigate('/loginrending');
-            userLogout();
         }
     });
 
@@ -126,11 +118,6 @@ const ProfileEdit = () => {
         return false;
     };
 
-    const deleteAccount = () => {
-        if (window.confirm('정말로 탈퇴하시겠습니까?'))
-            deleteUserMutation.mutate();
-    }
-
     // 술레벨 초기값 설정 
     useEffect(() => {
         setValue('level', data?.level);
@@ -162,7 +149,7 @@ const ProfileEdit = () => {
                             </label>
                             <input {...register('image')} type="file" id='image' name='image' accept='image/*' onChange={imgUpload} />
                         </form>
-                        <button onClick={() => deleteAccount()}>탈퇴하기</button>
+                        <button onClick={() => navigate('/render/deleteAccount')}>탈퇴하기</button>
                     </MyImgSection>
                     <MyInfoSection
                         onSubmit={handleSubmit(onSubmit)}

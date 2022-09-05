@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
 export const Carousel = styled.section`
-  .swiper{
-    position: relative;
-    display: flex;
-  }
   .swiper-button-prev,
   .swiper-button-next {
     width: 2.1rem;
@@ -25,35 +21,16 @@ export const Carousel = styled.section`
     background-repeat: no-repeat;
     background-size: contain;
   }
-  .swiper-pagination {
-    position: absolute;
-    left: 135.8rem;
-    bottom: 4rem;
-    display: flex;
-    align-items: center;
-    width: 11.7rem;
-    height: 3.4rem;
-    color: #fff;
-    font-size: 1.6rem;
-    background-color: #4e4e56;
-    border-radius: 2.4rem;
-    letter-spacing: -0.04rem;
-    z-index: 99;
-    &::before {
-      content: '';
-      display: block;
-      background-image: url('/images/icon_pause.svg');
-      width: .8rem;
-      height: 1.4rem;
-      margin: 0 1.9rem 0 1.7rem;
-      cursor: pointer;
-    }
-    span {
-      padding: 0 .8rem;
-    }
-    .swiper-pagination-total {
-      color: ${props => props.theme.grey_03};
-    }
+  .swiper-pagination-bullet {
+    margin: 0 1.2rem!important;
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .swiper-pagination-bullet-active{
+      background: ${props => props.theme.primary};
+  }
+  .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: 2.4rem;
   }
 `;
 

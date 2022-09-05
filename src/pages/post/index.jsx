@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { ButtonWrapper, FriendAddButton, FriendCancelButton } from '../../components/addfriendmodal/styles';
 import sulmoggoApi from "../../shared/apis";
@@ -19,7 +18,7 @@ const Post = () => {
   const [content, SetContent] = useState("");
   const [thumbnail, SetThumbnail] = useState("");
   const [thumbnailImg, SetThumbnailImg] = useState("");
-  const [submittable, setSubmittable] = useState(true)
+  // const [submittable, setSubmittable] = useState(true)
   const navigate = useNavigate();
   const editorRef = useRef();
   const username = localStorage.getItem("username");
@@ -77,16 +76,10 @@ const Post = () => {
     const content = editorRef.current?.getInstance().getHTML()
     if (content.length > 60000) {
       alert("내용이 너무 많습니다.")
-      setSubmittable(false)
+      // setSubmittable(false)
     }
     SetContent(content);
   };
-
-  // 최초 이미지 업로드 및 대표 이미지 선택시 썸네일 지정
-  // useEffect(() => {
-  //   SetThumbnailImg(imgList[thumbnail]);
-  // }, [imgList, thumbnail]);
-
 
   return (
     <PostWrap>

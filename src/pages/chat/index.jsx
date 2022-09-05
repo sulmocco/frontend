@@ -401,9 +401,8 @@ const Chat = (props) => {
             onClick={async (e) => {
               e.preventDefault();
               if (window.confirm("채팅방을 나가시겠습니까?")) {
-                await quitChatroom(isHost);
                 // console.log("나가기버튼. 내용 : ", chatRef.current.value);
-                naviagte("/rooms");
+                window.location.href = "/rooms"
               }
             }}
           >

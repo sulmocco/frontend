@@ -26,7 +26,7 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { audioinputState, audiooutputState, playaudioState, playvideoState, videoinputState } from "../../recoil/mediaDevices";
+import { audioinputState, audiooutputState, playaudioState, playvideoState, setDeviceForState, videoinputState } from "../../recoil/mediaDevices";
 
 const NewLive = (props) => {
   const alcohol = useRef({});
@@ -36,6 +36,7 @@ const NewLive = (props) => {
   const [videoinput, setVideoinput] = useRecoilState(videoinputState)
   const [audioinput, setAudioinput] = useRecoilState(audioinputState)
   const [audiooutput, setAudiooutput] = useRecoilState(audiooutputState)
+  const [,setDeviceFor] = useRecoilState(setDeviceForState)
 
   const [versionOpen, setVersionOpen] = useState(false);
   const [camerasOpen, setCamerasOpen] = useState(false);
@@ -74,6 +75,7 @@ const NewLive = (props) => {
       alert("술약속을 잡았습니다!")
       console.log(res);
       queryClient.invalidateQueries("rooms");
+      setDeviceFor(res.data)
       navigate(`/render/live/` + res.data, {
         replace: true,
         state: { data: res.data },

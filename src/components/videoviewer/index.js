@@ -112,14 +112,7 @@ const VideoViewer = (props) => {
   }
 
   const leaveSession = () => {
-    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-    console.log("🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨");
-    const mySession = sessionRef.current;
-
-    if (mySession) {
-      mySession.disconnect();
-    }
-
+    sessionRef.current.disconnect()
     // Empty all properties...
     OVRef.current = null;
     setSession(undefined)
@@ -180,19 +173,19 @@ const VideoViewer = (props) => {
   useEffect(() => {
     if(sessionRef.current){
     var mySession = sessionRef.current;
-
-        // --- 3) Specify the actions when events take place in the session ---
+    // --- 3) Specify the actions when events take place in the session ---
 
         // On every new Stream received...
         mySession.on("streamCreated", (event) => {
           // Subscribe to the Stream to receive it. Second parameter is undefined
           // so OpenVidu doesn't create an HTML video by its own
           var subscriber = mySession.subscribe(event.stream, undefined);
+          if(!(getNicknameTag(subscriber) in subscribers.map(x => getNicknameTag(x)))){
           var newSubscribers = subscribers;
           newSubscribers.push(subscriber);
 
           // Update the state with the new subscribers
-          setSubscribers(newSubscribers)
+          setSubscribers(newSubscribers)}
         });
 
         // On every Stream destroyed...
@@ -216,6 +209,7 @@ const VideoViewer = (props) => {
           mySession
             .connect(token, { clientData: myUserName })
             .then(async () => {
+              if(!mainStreamManager){
               var devices = await OVRef.current.getDevices();
               var videoDevices = devices.filter(
                 (device) => device.kind === "videoinput"
@@ -258,7 +252,7 @@ const VideoViewer = (props) => {
               }
               // Set the main video in the page to display our webcam and store our Publisher
               setMainStreamManager(newPublisher)
-              setPublisher(newPublisher)
+              setPublisher(newPublisher)}
             })
             .catch((error) => {
               console.log(
@@ -267,8 +261,9 @@ const VideoViewer = (props) => {
                 error.message
               );
             });
-        });}
-  }, [sessionRef.current])
+        }
+        );}
+  }, [])
 
 
 

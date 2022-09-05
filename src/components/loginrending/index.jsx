@@ -32,7 +32,7 @@ const LoginRending = () => {
             <RendingSection>
                 <RendingContRow style={{ paddingTop: '0' }}>
                     <div className='desc'>
-                        <span>혼술도 외롭지 않아!</span>
+                        <span>같이 있는 것처럼</span>
                         <h3>멀리서도 친구와<br />함께 술모꼬</h3>
                         <p>친구가 없어도 OK!<br />술모꼬에서 새로운 술친구 만들자!</p>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay, Pagination, Controller } from "swiper";
 import "swiper/css";
@@ -7,20 +7,8 @@ import "swiper/css/navigation";
 import {
   Carousel, Image
 } from "./styles";
-import { useEffect } from 'react';
-import { useRef } from 'react';
 
 const MainSlider = () => {
-  const [isAuto, setAuto] = useState(true);
-  const pause = document.querySelector('.swiper-pagination');
-  console.log(pause)
-
-  useEffect(() => {
-    pause?.addEventListener('click', () => {
-      alert('여기');
-      setAuto(!isAuto)
-    });
-  }, [isAuto]);
 
   return (
     <Carousel>
@@ -29,7 +17,7 @@ const MainSlider = () => {
         spaceBetween={50}
         slidesPerView={1}
         navigation
-        pagination={{ clickable: true, type: 'fraction' }}
+        pagination={{ clickable: true }}
         loop={true}
         autoplay={true}
       >

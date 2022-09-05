@@ -44,22 +44,24 @@ const EditPost = () => {
     const title = watch('title');
     const freetag = watch('freetag');
 
+    console.log(imgList)
+
     const newData = {
         title: title,
         content: editorRef.current?.getInstance().getHTML(),
         alcoholtag: tagList,
         freetag: freetag,
-        thumbnail: thumbnailImg || imgList[0],
+        thumbnail: thumbnailImg || imgList && imgList[0],
         imgUrlList: imgList,
         username,
     };
 
+
     const queryClient = useQueryClient();
     const mutation = useMutation((tableId) => sulmoggoApi.updateDetail(tableId, newData).then(() => {
-        alert('수정이 완료되었습니다.')
     }), {
         onSuccess: () => {
-            queryClient.invalidateQueries('table')
+            queryClient.invalidateQueries('table');
         }
     });
 
@@ -81,7 +83,7 @@ const EditPost = () => {
     // 게시글 수정 요청
     const onSubmit = () => {
         mutation.mutate(tableId);
-        navigate('/tables')
+        navigate('/tables');
     };
 
     // 업로드 이미지 관리
@@ -90,7 +92,6 @@ const EditPost = () => {
             const formData = new FormData();
             formData.append("file", blob);
             const url = await sulmoggoApi.img(formData);
-            console.log(url.data[0].url);
             callback(url.data[0].url, "alt text");
             SetImgList((state) => [...state, url.data[0].url]);
         } catch (err) {
@@ -215,7 +216,7 @@ const EditPost = () => {
                         대표이미지로 설정이 가능합니다.
                     </div>
                     <div className="upload">
-                        {imgList.map((v, i) => {
+                        {imgList?.map((v, i) => {
                             return (
                                 <div key={i}>
                                     {content.includes(v) ? (

@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { ModalWrap } from './styles';
-import Kakao from '/'
 const ShareModal = ({ chatRoomId, onair, isOpen, onClose, copy, right, bottom, left, top }) => {
     const sendText = '언텍트 음주 커뮤니티 술모꼬';
     const sendUrl = `https://www.sulmoggo.live/chat/${chatRoomId}`;
@@ -17,25 +16,27 @@ const ShareModal = ({ chatRoomId, onair, isOpen, onClose, copy, right, bottom, l
     }, []);
 
     // 카카오 공유하기
-    if (window.Kakao) {
-        const kakao = window.Kakao;
+    const kakaoShare = () => {
+        if (window.Kakao) {
+            const kakao = window.Kakao;
 
-        if (!kakao.isInitialized()) {
-            kakao.init(process.env.REACT_APP_API_KAKAO_KEY)
+            if (!kakao.isInitialized()) {
+                kakao.init(process.env.REACT_APP_API_KAKAO_KEY)
+            }
+            kakao.Link.createDefaultButton({
+                container: '#kakaobnt',
+                objectType: 'feed',
+                content: {
+                    title: '술모꼬',
+                    description: '언텍트 음주 커뮤니티 술모꼬',
+                    imageUrl: '/images/img_meta.svg',
+                    link: {
+                        mobileWebUrl: sendUrl,
+                        webUrl: sendUrl
+                    }
+                },
+            });
         }
-        kakao.Link.createDefaultButton({
-            container: '#kakaobnt',
-            objectType: 'feed',
-            content: {
-                title: '술모꼬',
-                description: '언텍트 음주 커뮤니티 술모꼬',
-                imageUrl: '/images/img_meta.svg',
-                link: {
-                    mobileWebUrl: sendUrl,
-                    webUrl: sendUrl
-                }
-            },
-        });
     }
     // 페이스북 공유하기
     const facebookShare = () => {
@@ -53,7 +54,7 @@ const ShareModal = ({ chatRoomId, onair, isOpen, onClose, copy, right, bottom, l
                 <i onClick={onClose}></i>
             </span>
             <ul className='sns'>
-                <li>
+                <li onClick={() => kakaoShare()}>
                     <img src='/images/icon_logo_kakaotalk.svg' id='kakaobnt' alt='카카오톡' />
                     <p>카카오톡</p>
                 </li>

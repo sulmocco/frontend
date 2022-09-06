@@ -26,13 +26,10 @@ const Terms = () => {
         <TermsWrap>
             <ProgressBar />
             <Termsection>
-                <h2>회원가입에 필요한 약관에 동의해주세요.</h2>
+                <h2>회원가입에 필요한 약관에 동의해 주세요.</h2>
                 <form>
                     <ul>
-                        <li onClick={() => {
-                            setCheck1(!check1)
-                            setfullCheck(false)
-                        }}>
+                        <li>
                             <input type='checkbox' id='adult' value='adult' checked={check1}
                                 onClick={() => {
                                     setCheck1(!check1)
@@ -45,12 +42,12 @@ const Terms = () => {
                                 })}
                             />
                             <label htmlFor='adult' ></label>
-                            <p>20세 이상 성인입니다.</p>
+                            <p onClick={() => {
+                                setCheck1(!check1)
+                                setfullCheck(false)
+                            }}>20세 이상 성인입니다.</p>
                         </li>
-                        <li onClick={() => {
-                            setCheck2(!check2)
-                            setfullCheck(false)
-                        }}>
+                        <li>
                             <input type='checkbox' id='service' value='sevice' checked={check2}
                                 onClick={() => {
                                     setCheck2(!check2)
@@ -63,12 +60,12 @@ const Terms = () => {
                                 })}
                             />
                             <label htmlFor='service'></label>
-                            <p>서비스 이용 필수 약관 동의 (필수)</p>
+                            <p onClick={() => {
+                                setCheck2(!check2)
+                                setfullCheck(false)
+                            }}>서비스 이용 필수 약관 동의 (필수)</p>
                         </li>
-                        <li onClick={() => {
-                            setCheck3(!check3)
-                            setfullCheck(false)
-                        }}>
+                        <li >
                             <input type='checkbox' id='privacy' value='privacy' checked={check3}
                                 onClick={() => {
                                     setCheck3(!check3)
@@ -81,7 +78,10 @@ const Terms = () => {
                                 })}
                             />
                             <label htmlFor='privacy'></label>
-                            <p>개인정보 수집 및 이용 동의 (필수)</p>
+                            <p onClick={() => {
+                                setCheck3(!check3)
+                                setfullCheck(false)
+                            }}>개인 정보 수집 및 이용 동의 (필수)</p>
                         </li>
                         <li className='selectAll'>
                             {allCheck ? <>
@@ -106,7 +106,7 @@ const Terms = () => {
                         </li>
                     </ul>
                     <div className='desc'>
-                        <p>술모꼬는 만 19세(만19세가 되는 해의 1월 1일) 이상부터 이용가능 하며, 타인의 계정으로 본 서비스를 사용하는 경우 정보통신망 이용촉진 및 정보보호 등에 관한 법률에 의거 처벌을 받을 수 있습니다.</p>
+                        <p>술모꼬는 만 19세(만 19세가 되는 해의 1월 1일) 이상부터 이용 가능하며, 타인의 계정으로 본 서비스를 사용하는 경우 정보통신망 이용 촉진 및 정보보호 등에 관한 법률에 의거 처벌을 받을 수 있습니다.</p>
                     </div>
                     <div className="button">
                         <SignUpButton mt='4.5rem' type='submit' background='#d6d6d6' color='black'

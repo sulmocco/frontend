@@ -7,8 +7,13 @@ import "swiper/css/navigation";
 import {
   Carousel, Image
 } from "./styles";
+import { useQuery } from '@tanstack/react-query';
+import sulmoggoApi from '../../shared/apis';
+import { useNavigate } from 'react-router-dom';
 
 const MainSlider = () => {
+  const { data } = useQuery(['banner'], () => sulmoggoApi.getBanner().then(res => res.data));
+  console.log(data)
 
   return (
     <Carousel>
@@ -21,15 +26,11 @@ const MainSlider = () => {
         loop={true}
         autoplay={true}
       >
-        <SwiperSlide>
-          <Image src="/images/banner-1.png" alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="/images/banner-2.png" alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="/images/banner-3.png" alt="" />
-        </SwiperSlide>
+        {data?.map(banner => (
+          <SwiperSlide key={banner.id} onClick={() => window.open((`${data.redirectUrl}`), '_blank')} >
+            <Image src={banner.imageUrl} alt='배너이미지' />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </Carousel>
   );

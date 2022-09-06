@@ -7,164 +7,77 @@ export const Wrap = styled.div`
 
 export const LiveWrap = styled.div`
   position: relative;
-  width: 1280px;
-  text-align: center;
+  width: ${props => props.theme.contentWidth};
   margin: 0 auto; 
 `;
 
 export const Title = styled.div`
-  font-size: 32px;
+  font-size: 3.2rem;
   font-weight: 700;
-  margin-top: 70px;
+  margin-top: 7rem;
+  text-align: center;
 `;
 
 export const Container = styled.div`
   display: flex;
-  margin: 70px 0;
-  overflow: hidden;
+  margin: 7rem 0;
   svg {
-    font-size: 24px;
-  }
-`;
-
-export const Pre = styled.button`
-  position: absolute;
-  background: white;
-  width: 48px;
-  height: 48px;
-
-  outline: none;
-  border: none;
-  border-radius: 50%;
-  box-shadow: 1px 1px 1px 1px gray;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  left: -25px;
-  top: 220px;
-  z-index: 100;
-
-  svg {
-    fill: gray;
-    font-size: 28px;
-  }
-
-  @media (max-width: 1200px) {
-    display: none;
-  }
-`;
-
-export const Next = styled.button`
-  position: absolute;
-  background: white;
-  width: 48px;
-  height: 48px;
-
-  outline: none;
-  border: none;
-  border-radius: 50%;
-  box-shadow: 1px 1px 1px 1px gray;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  right: -25px;
-  top: 220px;
-  z-index: 100;
-
-  svg {
-    fill: gray;
-    font-size: 28px;
-  }
-
-  @media (max-width: 1200px) {
-    display: none;
+    font-size: 2.4rem;
   }
 `;
 
 export const Listbox = styled.div`
-  margin-right: 20px;
-  width: 100%;
-
-  transform: ${(props) => (props.slide ? "translateX(-900px)" : "0")};
-  transition: 1s;
+  cursor: pointer;
+  margin-right: 1rem;
+  width: 42rem;
+  transform: ${(props) => (props.slide ? "translateX(-90rem)" : "0")};
+  transition: all .2s ease-in-out;
+  &:hover{
+        transform: translateY(-0.5rem);
+    }
 `;
 
 export const Image = styled.img`
-  width: 420px;
-  height: 260px;
-  border-radius: 10px;
+  width: 42rem;
+  height: 26rem;
+  border-radius: 1rem;
+  object-fit: cover;
 `;
 
 export const ProfileBox = styled.div`
   display: flex;
-  margin-top: 30px;
-  backgroud-color: red;
+  margin-top: 3rem;
 `;
 
 export const Desc = styled.div`
   display: flex;
-  margin-top: 10px;
+  margin-top: 1rem;
 
   div {
     display: flex;
     justify-content: center;
     align-items: center;
-
     span {
-      margin-left: 5px;
+      margin-left: .5rem;
+      color: ${props => props.theme.grey_02};
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+      letter-spacing: -.04rem;
     }
   }
 `;
 
 export const ProfileImage = styled.img`
-  width: 64px;
-  height: 64px;
+  width: 6.4rem;
+  height: 6.4rem;
   border-radius: 50%;
-  border: 1px solid black;
 `;
 
 export const Profile = styled.div`
-  width: 264px;
-  height: 64px;
-
+  width: 26.4rem;
+  height: 6.4rem;
+  margin-left: 1rem;
   display: flex;
   flex-direction: column;
-  
   justify-content: center;
-`;
-
-export const Tag1 = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  margin-top: 40px;
-  margin-right: 10px;
-
-  background: #ffda93;
-  border-radius: 20px;
-  padding: 5px 12px 4px;
-`;
-
-export const Tag2 = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  margin-top: 40px;
-  margin-right: 10px;
-
-  background: #ffefb7;
-  border-radius: 20px;
-  padding: 5px 12px 4px;
-`;
-
-export const Tag3 = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  margin-top: 40px;
-
-  background: #eef3ff;
-  border-radius: 20px;
-  padding: 5px 12px 4px;
 `;

@@ -11,9 +11,9 @@ import Mypost from "./components/mypage/Mypost";
 import PasswordRedirect from "./components/passwordredirect";
 import PasswordRending from "./components/passwordrending";
 import PassWordInput from "./components/passwordreset";
-import EditPost from "./pages/editpost";
 import sulmoggoApi from "./shared/apis";
 import { userLogin, userLogout } from "./shared/modules";
+import DeleteAccount from "./components/deleteaccountrending";
 
 const Home = React.lazy(() => import("./pages/home"));
 const Auth = React.lazy(() => import("./pages/auth"));
@@ -34,6 +34,7 @@ const Post = React.lazy(() => import("./pages/post"));
 const Rooms = React.lazy(() => import("./pages/rooms"));
 const Live = React.lazy(() => import("./pages/live"));
 const LiveRending = React.lazy(() => import("./pages/liverending"));
+const EditPost = React.lazy(() => import("./pages/editpost"));
 
 function App() {
     sulmoggoApi
@@ -80,6 +81,7 @@ function App() {
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/password" element={<PassWordInput />} />
             <Route path="/render/:params" element={<PasswordRending />} />
+            <Route path="/render/deleteAccount" element={<DeleteAccount />} />
             <Route path="/comment" element={<Comment />} />
             <Route path="/rooms" element={<Rooms />} />
             <Route path="/mypage" element={<Mypage />}>

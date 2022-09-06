@@ -21,7 +21,6 @@ export const Title = styled.div`
 export const Container = styled.div`
   display: flex;
   margin: 7rem 0;
-  overflow: hidden;
   svg {
     font-size: 2.4rem;
   }
@@ -32,7 +31,10 @@ export const Listbox = styled.div`
   margin-right: 1rem;
   width: 42rem;
   transform: ${(props) => (props.slide ? "translateX(-90rem)" : "0")};
-  transition: 1s;
+  transition: all .2s ease-in-out;
+  &:hover{
+        transform: translateY(-0.5rem);
+    }
 `;
 
 export const Image = styled.img`
@@ -55,10 +57,12 @@ export const Desc = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     span {
       margin-left: .5rem;
       color: ${props => props.theme.grey_02};
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+      letter-spacing: -.04rem;
     }
   }
 `;

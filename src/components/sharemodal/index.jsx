@@ -65,14 +65,10 @@ const ShareModal = ({ chatRoomId, onair, isOpen, onClose, copy, right, bottom, l
                     <img src='/images/icon_logo_twitter.svg' alt='카카오톡' />
                     <p>트위터</p>
                 </li>
-                <li>
-                    <img src='/images/icon_logo_instagram.svg' alt='카카오톡' />
-                    <p>인스타그램</p>
-                </li>
             </ul>
             {onair && (
                 <div className='url_copy'>
-                    <p>{`https://www.sulmoggo.live/chat/${chatRoomId}`}</p>
+                    <div className='box'><p>{`https://www.sulmoggo.live/chat/${chatRoomId}`}</p></div>
                     <span onClick={() => copy(`https://www.sulmoggo.live/chat/${chatRoomId}`)}>URL 복사</span>
                 </div>
             )}

@@ -17,7 +17,7 @@ export const LiveRendingCont = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    p {
+    .subtitle {
         font-size: 2.6rem;
         font-weight: 400;
         line-height: 3.1rem;

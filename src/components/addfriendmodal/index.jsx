@@ -7,7 +7,8 @@ const AddFriendModal = ({username, onClose}) => {
     const [userdata, setUserdata] = useState({
         username,
         profile: "",
-        level: 0   
+        level: 0,
+        isfriend: false   
     })
     const addFriend = async() => {
         await sulmoggoApi.addFriend(username).then(() => {
@@ -36,16 +37,21 @@ const AddFriendModal = ({username, onClose}) => {
             }
         }}>
             <ModalContainer>
-                <h1>{username}님을 친구추가 하시겠습니까?</h1>
+                {userdata.isfriend ? <h1>{username}님과 친구입니다!</h1> : <h1>{username}님을 친구추가 하시겠습니까?</h1>}
                 <div className="friendProfileWrapper">
                     <ProfileCircle src={userdata.profile}/>
                     <AlcoholLevel>{getLevel(userdata.level)}</AlcoholLevel>
                     <p className="friendUsername">{username}</p>
                 </div>
+                {userdata.isfriend ? 
+                <ButtonWrapper>
+                    <FriendCancelButton onClick={onClose}>닫기</FriendCancelButton>
+                </ButtonWrapper>
+                : 
                 <ButtonWrapper>
                     <FriendCancelButton onClick={onClose}>취소하기</FriendCancelButton>
                     <FriendAddButton onClick={addFriend}>추가하기</FriendAddButton>
-                </ButtonWrapper>
+                </ButtonWrapper>}
             </ModalContainer>
         </ModalWrapper>
     )

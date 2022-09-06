@@ -38,7 +38,7 @@ export const ModalWrap = styled.div`
         gap: 3.2rem;
         padding: 0 1.6rem;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         li {
             display: flex;
             flex-direction: column;
@@ -73,22 +73,24 @@ export const ModalWrap = styled.div`
             margin-top: 2.4rem;
             max-width: 32.8rem;
             overflow: hidden;
+            width: 60rem;
             .box {
-                min-width: 60rem;
+                width: 100%;
                 display: flex;
                 flex-wrap: nowrap;
                 overflow: scroll;
                     ::-webkit-scrollbar {
                         display: none;
                         }
-                p{
                 line-height: 1.9rem;
                 font-size: 1.6rem;
                 color: ${props => props.theme.black_02};
                 letter-spacing: -0.04rem;
                 font-weight: 500;
                 cursor: text;
-                }
+                background-color: transparent;
+                outline: none;
+                border: none;
             }
             span {
                 position: absolute;

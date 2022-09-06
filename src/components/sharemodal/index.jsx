@@ -68,7 +68,7 @@ const ShareModal = ({ chatRoomId, onair, isOpen, onClose, copy, right, bottom, l
             </ul>
             {onair && (
                 <div className='url_copy'>
-                    <div className='box'><p>{`https://www.sulmoggo.live/chat/${chatRoomId}`}</p></div>
+                    <input type="text" readOnly className='box' value={`https://www.sulmoggo.live/chat/${chatRoomId}`}/>
                     <span onClick={() => copy(`https://www.sulmoggo.live/chat/${chatRoomId}`)}>URL 복사</span>
                 </div>
             )}

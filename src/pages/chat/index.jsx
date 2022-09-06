@@ -191,8 +191,6 @@ const Chat = (props) => {
   // 소켓 연결 및 방 데이터 로드
   // roomId가 바뀔때마다 다시 연결.
   useEffect(() => {
-    connect();
-    console.log(clientRef.current.connected);
     const foo = async () => {
       try {
         const data = await sulmoggoApi.getRoomData(chatRoomId);
@@ -200,9 +198,12 @@ const Chat = (props) => {
         setRoomData(data.data.body);
         setUserCount(data.data.body?.userCount + 1);
         setCreatedAt(data.data.body.createdAt);
-        setTimeout(() => { }, 1000);
-      } catch {
-        console.log("뭔가 잘못됨");
+        connect();
+        console.log(clientRef.current.connected);
+      } catch (err) {
+        console.log(err);
+        alert("이미 입장한 방입니다!")
+        window.location.href = "/rooms"
       }
     };
     foo();

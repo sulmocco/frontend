@@ -19,22 +19,26 @@ export const CardWrapper = styled.div`
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        margin-top: 1.7rem;
+        margin-top: 1.6rem;
     }
     .cardTitleWrap{
         display: flex;
         flex-direction: column;
-        margin-left: .8rem;
+        margin-left: 1.2rem;
         width: calc(100% - 7.2rem);
+        gap: .8rem;
     }
     .roomTitle{
+        margin-top: .8rem;
         font-size: 2.6rem;
         font-weight: 700;
         line-height: 3.1rem;
         color: #101010;
         overflow: hidden;
-        white-space: nowrap;
         text-overflow: ellipsis;
+        display:-webkit-box;
+        -webkit-line-clamp:2;
+        -webkit-box-orient:vertical;
     }
     .roomUser{
         font-size: 2rem;
@@ -48,7 +52,7 @@ export const CardWrapper = styled.div`
     }
     .counterWrap{
         width: 100%;
-        margin-top: 1.2rem;
+        margin-top: 1.6rem;
         font-size: 1.6rem;
         line-height: 1.9rem;
         letter-spacing: -0.04em;

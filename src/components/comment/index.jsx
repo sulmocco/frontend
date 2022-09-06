@@ -110,10 +110,17 @@ const Comment = ({ postId }) => {
                 ) : (
                   <div>
                     <button onClick={() => {
-                        if(window.confirm("댓글을 수정하시겠습니까?")){
-                            updateComment.mutate(x.replyId)
+                        if(modifyContent === ""){
+                          alert("내용을 입력해주세요.")
+                        }else if(modifyContent === x.content){
+                          setModifyContent("")
+                          setOnModify(null)
+                        }else{
+                          if(window.confirm("댓글을 수정하시겠습니까?")){
+                              updateComment.mutate(x.replyId)
+                          }
                         }
-                    }}>수정완료</button>
+                    }}>수정완료</button> 
                   </div>
                 ))}
             </div>

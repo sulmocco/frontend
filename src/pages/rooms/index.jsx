@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import Nodata from '../../components/nodatalending';
+import Nodata from "../../components/nodatalending";
 import RoomCard from "../../components/roomscard";
 import SearchBar from "../../components/searchbar";
 import sulmoggoApi from "../../shared/apis";
@@ -19,6 +19,7 @@ import {
   RoomsTopWrapper,
   RoomsTabs,
   VersionTab,
+  RoomsHeaderWrapper,
 } from "./styles";
 
 /**
@@ -155,121 +156,142 @@ const Rooms = (props) => {
       <RoomsTopWrapper>
         <div>
           <PageTitle>술약속</PageTitle>
-          {alcohol && (
-            <>
-              <AlcoholCategories>
-                {Alcohol.map((x, i) => (
-                  <AlcoholCategory
-                    key={x}
-                    checked={alcohol.includes(x)}
-                    onClick={() => {
-                      if (i !== 0 && !alcohol.includes(x)) {
-                        // console.log(alcohol.replace(Alcohol[0], "").replace(/^,/, ""));
-                        filterRooms({
-                          type: "alcohol",
-                          value: (
-                            alcohol.replace(Alcohol[0], "") +
-                            "," +
-                            x
-                          ).replace(/^,/, ""),
-                        });
-                      } else if (alcohol.includes(x)) {
-                        let newAlcohols = alcohol.split(",");
-                        const idx = newAlcohols.indexOf(x);
-                        console.log(idx);
-                        newAlcohols.splice(idx, 1);
-                        filterRooms({
-                          type: "alcohol",
-                          value: newAlcohols.join(","),
-                        });
-                      } else {
-                        filterRooms();
-                      }
-                    }}
-                  >
-                    {x}
-                  </AlcoholCategory>
-                ))}
-              </AlcoholCategories>
-              <div className="checkedAlcoholWrapper">
-                {alcohol.split(",").map((x) => (
-                  <AlcoholButtons>{x}</AlcoholButtons>
-                ))}
-              </div>
-            </>
-          )}
           <SearchBoxWrapper>
             <div className="leftWrapper">
               <p>
-                <span>{data?.pages[0]?.data?.totalElements || 0}개</span>의 술약속이 있습니다.
+                <span>{data?.pages[0]?.data?.totalElements || 0}개</span>의
+                술약속이 있습니다.
               </p>
               <SearchBar onSearch={(keyword) => searchRooms(keyword)} />
-            </div>
-            <div className="rightWrapper">
-              <SortButton
-                checked={sortBy === "userCount"}
-                onClick={() => {
-                  console.log(allParams);
-                  filterRooms({ type: "sortBy", value: "userCount" });
-                }}
-              >
-                인기순
-              </SortButton>
-              <Separator />
-              <SortButton
-                checked={sortBy === "id"}
-                onClick={() => {
-                  console.log(allParams);
-                  filterRooms({ type: "sortBy", value: "id" });
-                }}
-              >
-                최신순
-              </SortButton>
             </div>
           </SearchBoxWrapper>
         </div>
       </RoomsTopWrapper>
-      <RoomsTabs>
-        <ul>
-          {[{ value: null, text: "전체" }, ...LiveVersion].map((v) => (
-            <VersionTab
-              count={LiveVersion.length}
-              key={v.value}
+      <RoomsHeaderWrapper>
+        <RoomsTabs>
+          <ul>
+            {[{ value: null, text: "전체" }, ...LiveVersion].map((v) => (
+              <VersionTab
+                count={LiveVersion.length}
+                key={v.value}
+                onClick={() => {
+                  v.value
+                    ? filterRooms({ type: "version", value: v.value })
+                    : filterRooms();
+                }}
+                active={v.value ? v.value === version : version === null}
+              >
+                {v.text}
+              </VersionTab>
+            ))}
+          </ul>
+          <div className="rightWrapper">
+            <SortButton
+              checked={sortBy === "userCount"}
               onClick={() => {
-                v.value
-                  ? filterRooms({ type: "version", value: v.value })
-                  : filterRooms();
+                console.log(allParams);
+                filterRooms({ type: "sortBy", value: "userCount" });
               }}
-              active={v.value ? v.value === version : version === null}
             >
-              {v.text}
-            </VersionTab>
-          ))}
-        </ul>
-      </RoomsTabs>
-      {/* eslint-disable-next-line */}
-      {isSuccess && data.pages[0].data.totalElements != 0 && <RoomsGrid>
-        {data.pages.map((page, pageidx) => {
-          const content = page.data.content;
-          return content?.map((room, idx) => {
-            if (
-              idx === content.length - 1 &&
-              pageidx === data.pages.length - 1
-            )
-              return (
-                <div ref={lastRoomRef} key={room.chatRoomId}>
-                  <RoomCard {...room} />
-                </div>
-              );
-            else return <RoomCard {...room} key={room.chatRoomId} />;
-          });
-        })}
-        {console.log(data.pages)}
-      </RoomsGrid>}
-      {/* eslint-disable-next-line */}
-      {isSuccess && (data.pages[0].data.totalElements == 0) && (
-        <Nodata />
+              인기순
+            </SortButton>
+            <Separator />
+            <SortButton
+              checked={sortBy === "id"}
+              onClick={() => {
+                console.log(allParams);
+                filterRooms({ type: "sortBy", value: "id" });
+              }}
+            >
+              최신순
+            </SortButton>
+          </div>
+        </RoomsTabs>
+      </RoomsHeaderWrapper>
+      {alcohol && (
+        <>
+          <AlcoholCategories>
+            {Alcohol.map((x, i) => (
+              <AlcoholCategory
+                key={x}
+                checked={alcohol.includes(x)}
+                onClick={() => {
+                  if (i !== 0 && !alcohol.includes(x)) {
+                    // console.log(alcohol.replace(Alcohol[0], "").replace(/^,/, ""));
+                    filterRooms({
+                      type: "alcohol",
+                      value: (
+                        alcohol.replace(Alcohol[0], "") +
+                        "," +
+                        x
+                      ).replace(/^,/, ""),
+                    });
+                  } else if (alcohol.includes(x)) {
+                    let newAlcohols = alcohol.split(",");
+                    const idx = newAlcohols.indexOf(x);
+                    console.log(idx);
+                    newAlcohols.splice(idx, 1);
+                    filterRooms({
+                      type: "alcohol",
+                      value: newAlcohols.join(","),
+                    });
+                  } else {
+                    filterRooms();
+                  }
+                }}
+              >
+                {x}
+              </AlcoholCategory>
+            ))}
+          </AlcoholCategories>
+          <div className="checkedAlcoholWrapper">
+            {alcohol.split(",").map((x) => (
+              <div
+                className="checkedAlcohol"
+                onClick={() => {
+                  if (alcohol.includes(x)) {
+                    let newAlcohols = alcohol.split(",");
+                    const idx = newAlcohols.indexOf(x);
+                    console.log(idx);
+                    newAlcohols.splice(idx, 1);
+                    filterRooms({
+                      type: "alcohol",
+                      value: newAlcohols.join(","),
+                    });
+                  }
+                }}
+              >
+                {x}
+                <img src="/images/icon_remove_tags.svg" alt="remove" />
+              </div>
+            ))}
+          </div>
+        </>
       )}
+
+      {/* eslint-disable-next-line */}
+      {isSuccess && data.pages[0].data.totalElements != 0 && (
+        <RoomsGrid>
+          {data.pages.map((page, pageidx) => {
+            const content = page.data.content;
+            return content?.map((room, idx) => {
+              if (
+                idx === content.length - 1 &&
+                pageidx === data.pages.length - 1
+              )
+                return (
+                  <div ref={lastRoomRef} key={room.chatRoomId}>
+                    <RoomCard {...room} />
+                  </div>
+                );
+              else return <RoomCard {...room} key={room.chatRoomId} />;
+            });
+          })}
+          {console.log(data.pages)}
+        </RoomsGrid>
+      )}
+      {/* eslint-disable-next-line */}
+      {isSuccess && data.pages[0].data.totalElements == 0 && <Nodata />}
       {!isSuccess && <NoList>문제가 발생했습니다.</NoList>}
     </RoomsWrapper>
   );

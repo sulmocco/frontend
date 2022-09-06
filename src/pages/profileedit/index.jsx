@@ -9,7 +9,7 @@ import Spinner from '../../components/spinner';
 import sulmoggoApi from '../../shared/apis';
 import { AlcoholLevel } from '../../shared/options';
 import { Button, MyImgSection, MyInfoSection, ProfileEditCont, ProfileEditSection, ProfileEditWrap } from './style';
-import { getLevel } from '../../shared/modules';
+import { getLevel, userLogout } from '../../shared/modules';
 
 const ProfileEdit = () => {
     const navigate = useNavigate();
@@ -89,8 +89,9 @@ const ProfileEdit = () => {
             profileUrl: profileImg,
         }
         mutation.mutate(newData);
-        alert('수정이 완료되었습니다')
-        navigate('/mypage/bookmark');
+        alert('수정이 완료되었습니다 재 로그인해 주세요')
+        userLogout();
+        navigate('/')
     }
 
     // 닉네임 중복체크

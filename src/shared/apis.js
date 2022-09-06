@@ -59,7 +59,7 @@ api.interceptors.response.use(
       }
     } catch (e) {
       //오류내용 출력 후 요청 거절
-      window.location.href = "/"
+      window.location.href = "/";
       return Promise.reject(e);
     }
   }
@@ -112,6 +112,7 @@ const sulmoggoApi = {
   addFriend: (username) => api.post(encodeURI(`/friends/${username}`)),
   getFriends: () => api.get("/friends/"),
   deleteFriends: (username) => api.delete(encodeURI(`/friends/${username}`)),
+  getBanner: () => api.get("/banners"),
 };
 
 export default sulmoggoApi;

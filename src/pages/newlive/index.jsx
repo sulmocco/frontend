@@ -67,7 +67,7 @@ const NewLive = (props) => {
       show: "공개",
     },
   });
-  alcohol.current = watch("alcohol", "맥주");
+  alcohol.current = watch("alcohol", "");
 
   const navigate = useNavigate();
   const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
@@ -242,6 +242,9 @@ const NewLive = (props) => {
           />
           <SubtitleWrapper mt={"5.6rem"}>
             <SubTitle>추천술 선택</SubTitle>
+            <div className="guidebubble">
+                술을 선택해 주세요
+            </div>
             {errors.alcohol && (
               <div className="error">
                 <img src="/images/icon_information.svg" alt="information" />

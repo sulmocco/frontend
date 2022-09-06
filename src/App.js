@@ -11,9 +11,9 @@ import Mypost from "./components/mypage/Mypost";
 import PasswordRedirect from "./components/passwordredirect";
 import PasswordRending from "./components/passwordrending";
 import PassWordInput from "./components/passwordreset";
+import DeleteAccount from "./components/deleteaccountrending";
 import sulmoggoApi from "./shared/apis";
 import { userLogin, userLogout } from "./shared/modules";
-import DeleteAccount from "./components/deleteaccountrending";
 
 const Home = React.lazy(() => import("./pages/home"));
 const Auth = React.lazy(() => import("./pages/auth"));

@@ -13,6 +13,7 @@ export const ModalWrap = styled.div`
     padding-bottom: 2.6rem;
     border-radius: 1rem;
     border: .1rem solid ${props => props.theme.grey_03};
+    max-width: 36rem;
     .title{
         display: flex;
         flex-direction: row;
@@ -58,6 +59,7 @@ export const ModalWrap = styled.div`
         }
     }
     .url_copy{
+            position: relative;
             background-color: ${props => props.theme.grey_04};
             border-radius: 1rem;
             padding: 1.4rem .8rem;
@@ -69,16 +71,30 @@ export const ModalWrap = styled.div`
             max-height: 4.8rem;
             width: 100%;
             margin-top: 2.4rem;
-            p{
+            max-width: 32.8rem;
+            overflow: hidden;
+            .box {
+                min-width: 60rem;
+                display: flex;
+                flex-wrap: nowrap;
+                overflow: scroll;
+                    ::-webkit-scrollbar {
+                        display: none;
+                        }
+                p{
                 line-height: 1.9rem;
                 font-size: 1.6rem;
                 color: ${props => props.theme.black_02};
                 letter-spacing: -0.04rem;
                 font-weight: 500;
                 cursor: text;
-
+                }
             }
             span {
+                position: absolute;
+                right: .8rem;
+                top: 50%;
+                transform: translateY(-50%);
                 background-color: #fff;
                 line-height: 2rem;
                 font-size: 1.6rem;

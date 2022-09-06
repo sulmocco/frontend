@@ -23,7 +23,7 @@ const DeleteAccount = () => {
         <LiveRendingWrap>
             <LiveRendingCont>
                 <h3>정말 탈퇴하시겠습니까?</h3>
-                <p>회원 탈퇴 시 모든 정보가 삭제됩니다.</p>
+                <p className='subtitle'>회원 탈퇴 시 모든 정보가 삭제됩니다.</p>
                 <img src='/images/img_deleterending.png' alt='img' className='mainimg' />
                 <ButtonWrapper style={{ margin: '0' }}>
                     <FriendCancelButton onClick={() => deleteAccount()}>탈퇴하기</FriendCancelButton>

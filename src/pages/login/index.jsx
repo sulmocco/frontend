@@ -10,7 +10,8 @@ const Login = () => {
     const id_ref = useRef();
     const pw_ref = useRef();
     const navigate = useNavigate()
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
         console.log(id_ref.current.value, pw_ref.current.value);
         await sulmoggoApi.login({ id: id_ref.current.value, password: pw_ref.current.value })
             .then(res => {
@@ -27,9 +28,9 @@ const Login = () => {
                 <form action="">
                     <input type='text' placeholder='아이디' ref={id_ref} />
                     <input type='password' placeholder='비밀번호' ref={pw_ref} />
+                    <p onClick={() => navigate("/resetPassword")}>비밀번호 찾기</p>
+                    <SignUpButton style={{ marginTop: "6.4rem" }} onClick={handleLogin} onKeyPress={(e) => e.key === 'Enter' && handleLogin()}>로그인</SignUpButton>
                 </form>
-                <p onClick={() => navigate("/resetPassword")}>비밀번호 찾기</p>
-                <SignUpButton style={{ marginTop: "6.4rem" }} onClick={handleLogin} onKeyPress={(e) => e.key === 'Enter' && handleLogin()}>로그인</SignUpButton>
             </LoginSection>
         </LoginWrap>
     );

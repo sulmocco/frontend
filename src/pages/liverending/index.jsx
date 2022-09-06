@@ -4,6 +4,7 @@ import { ButtonWrapper, FriendAddButton, FriendCancelButton } from '../../compon
 import { useNavigate, useParams } from 'react-router-dom';
 import ShareModal from '../../components/sharemodal';
 import { useState } from 'react';
+import sulmoggoApi from '../../shared/apis';
 
 const LiveRending = () => {
     const { chatRoomId } = useParams();
@@ -34,7 +35,16 @@ const LiveRending = () => {
                     <ShareModal isOpen={isOpen} onClose={onClose} copy={copy} right='9.6rem' bottom='2.3rem' chatRoomId={chatRoomId} />
                 </div>
                 <ButtonWrapper>
-                    <FriendCancelButton >취소하기</FriendCancelButton>
+                    <FriendCancelButton onClick={() => {
+                        if(window.confirm("정말로 술약속을 취소할까요?")){
+                            sulmoggoApi.removeChatRoom(chatRoomId).then(() => {
+                                alert("술약속이 취소되었습니다.")
+                                window.location.href = "/rooms"
+                            }).catch(err => {
+                                alert("문제가 발생했습니다." + err.response)
+                            })
+                        }
+                    }} >취소하기</FriendCancelButton>
                     <FriendAddButton onClick={() => navigate(`/chat/${chatRoomId}`)}>술약속 시작</FriendAddButton>
                 </ButtonWrapper>
             </LiveRendingCont>

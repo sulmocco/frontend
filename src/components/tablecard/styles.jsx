@@ -3,10 +3,10 @@ import styled from "styled-components";
 export const CardWrapper = styled.div`
     width: 100%;
     /* max-width: 40.5rem; */
-    height: fit-content;
+    height: 100%;
     border-radius: 1rem;
     background-color: ${props => props.theme.white};
-    padding: 2rem;
+    overflow: hidden;
     cursor: pointer;
     transition: all .2s ease-in-out;
     &:hover{
@@ -14,7 +14,13 @@ export const CardWrapper = styled.div`
         box-shadow: ${props => props.theme.shadow_gray};
     }
     /* border: 1px solid black; */
+    .cardContent{
+        padding: 1.6rem;
+    }
     .cardUpperWrap{
+        height: 22rem;
+    }
+    .cardProfileWrap{
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -26,22 +32,25 @@ export const CardWrapper = styled.div`
         flex-direction: column;
         margin-left: .8rem;
         width: calc(100% - 7.2rem);
+        gap: .8rem;
     }
     .tableTitle{
+        margin-top: .4rem;
         font-size: 2.6rem;
         font-weight: 700;
         line-height: 3.1rem;
         color: #101010;
         overflow: hidden;
-        white-space: nowrap;
         text-overflow: ellipsis;
+        display:-webkit-box;
+        -webkit-line-clamp:2;
+        -webkit-box-orient:vertical;
     }
     .tableUser{
         font-size: 2rem;
         font-weight: 500;
         line-height: 2.4rem;
         color: ${props => props.theme.primary};
-        margin-top: .4rem;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -66,14 +75,13 @@ export const CardWrapper = styled.div`
         width: 100%;
         flex-direction: row;
         gap: .8rem;
-        margin-top: 4rem;
         height: 2.7rem;
+        margin-bottom: .8rem;
     }
 `
 export const CardThumbnail = styled.div`
     width: 100%;
     height: 24rem;
-    border-radius: 1rem;
     background-image: url(${props => props.src || props.theme.placeholder});
     background-color: #d9d9d9;
     background-size: cover;

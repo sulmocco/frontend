@@ -124,9 +124,6 @@ const Rooms = (props) => {
       onSuccess: (data) => {
         // console.log(data);
       },
-      onError: (data) => {
-        alert("문제가 발생했습니다.", data);
-      },
       suspense: true,
     }
   );

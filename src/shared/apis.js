@@ -32,9 +32,9 @@ api.interceptors.response.use(
   async (error) => {
     //response 에서 error 가 발생했을 경우 catch로 넘어가기 전에 처리
     try {
-      const errorStatus = error.response.status;
-      const errorData = error.response.data;
-      const prevRequst = error.config;
+      const errorStatus = error.response?.status;
+      const errorData = error.response?.data;
+      const prevRequst = error?.config;
       // 토큰이 만료되어 발생하는 에러인 경우
       if (errorStatus === 401 || errorData === "만료된 토큰입니다.") {
         // 새로운 토큰 발행 요청
@@ -56,9 +56,12 @@ api.interceptors.response.use(
         prevRequst.headers.RefreshToken = localStorage.getItem("refreshToken");
         // 실패했던 기존 request 재시도
         return await axios(prevRequst);
+      }else{
+        window.location.href="/"
       }
     } catch (e) {
       //오류내용 출력 후 요청 거절
+      window.location.href = "/"
       return Promise.reject(e);
     }
   }

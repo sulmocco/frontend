@@ -36,7 +36,6 @@ const Live = React.lazy(() => import("./pages/live"));
 const LiveRending = React.lazy(() => import("./pages/liverending"));
 
 function App() {
-  useQuery(["user"], () =>
     sulmoggoApi
       .getUser()
       .then((res) => {
@@ -55,7 +54,6 @@ function App() {
         console.log(err);
         userLogout();
       })
-  );
 
   return (
     <Suspense fallback={<Spinner />}>

@@ -13,7 +13,26 @@ export const TablesWrapper = styled.div`
     margin-top: 1.6rem;
     display: flex;
     flex-direction: row;
-    gap: .8rem;
+    gap: 1.8rem;
+    width: 100%;
+    max-width: ${(props) => props.theme.contentWidth};
+    .checkedAlcohol {
+      background-color: ${(props) => props.theme.grey_04};
+      border-radius: 0.2rem;
+      padding: 0.6rem 0.8rem 0.7rem;
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: ${(props) => props.theme.grey_02};
+      cursor: pointer;
+      img {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+    }
   }
 `;
 

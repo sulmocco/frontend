@@ -44,7 +44,7 @@ const EditPost = () => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty, isValid },
+        formState: { errors },
     } = useForm({ mode: 'onChange' });
 
     const title = watch('title');

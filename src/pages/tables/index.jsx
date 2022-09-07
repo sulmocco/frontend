@@ -85,7 +85,6 @@ const Tables = (props) => {
         return undefined;
       },
       onSuccess: (data) => {
-        setTotal(data.pages[0].data.totalElements);
       },
       onError: (data) => {
         alert("문제가 발생했습니다.", data);
@@ -104,6 +103,7 @@ const Tables = (props) => {
   );
 
   useEffect(() => {
+    setTotal(data?.pages[0]?.data?.totalElements);
     const observer = new IntersectionObserver(handleIntersect, {
       threshold: 0.8,
       root: null,

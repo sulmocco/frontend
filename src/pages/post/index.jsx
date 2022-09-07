@@ -9,19 +9,21 @@ import { PostWrap, Title, Subtitle, Content, Image, Tag } from './styles'
 import { useRef } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
+import { useEffect } from 'react';
 
 const Post = () => {
   const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주", "기타"];
-  const [tagList, setTagList] = useState("맥주");
-  const [tagColor, setTagColor] = useState(0);
+  const [tagList, setTagList] = useState(null);
+  const [tagColor, setTagColor] = useState();
   const [imgList, SetImgList] = useState([]);
   const [content, SetContent] = useState("");
   const [thumbnail, SetThumbnail] = useState("");
   const [thumbnailImg, SetThumbnailImg] = useState("");
-  // const [submittable, setSubmittable] = useState(true)
   const navigate = useNavigate();
   const editorRef = useRef();
   const username = localStorage.getItem("username");
+  const [tagdisable, setTagDisable] = useState(false);
+  const [textdisable, setTextDisable] = useState(false);
 
   //태그 선택
   const addTag = (e) => {
@@ -54,8 +56,10 @@ const Post = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isDirty, isValid },
+  } = useForm({
+    mode: 'onChange'
+  });
 
   // 업로드 이미지 관리
   const onUploadImage = async (blob, callback) => {
@@ -71,15 +75,26 @@ const Post = () => {
     return false;
   };
 
+
   // 웹 에디터 content영역 확인하기
   const onChange = () => {
     const content = editorRef.current?.getInstance().getHTML()
     if (content.length > 60000) {
       alert("내용이 너무 많습니다.")
-      // setSubmittable(false)
+      setTextDisable(false)
+    }
+    if (12 < content.length < 60000) {
+      setTextDisable(true);
     }
     SetContent(content);
   };
+
+  useEffect(() => {
+    if (tagList !== null && tagColor !== null) {
+      setTagDisable(true);
+    }
+  }, [tagList, tagColor]);
+
 
   return (
     <PostWrap>
@@ -111,7 +126,6 @@ const Post = () => {
             ) : (
               <li value="0">맥주</li>
             )}
-
             {tagColor === 1 ? (
               <li value="1" className="fill">
                 소주
@@ -146,6 +160,13 @@ const Post = () => {
               </li>
             ) : (
               <li value="5">전통주</li>
+            )}
+            {tagColor === 6 ? (
+              <li value="6" className="fill">
+                기타
+              </li>
+            ) : (
+              <li value="6">기타</li>
             )}
           </ul>
         </Subtitle>
@@ -221,7 +242,7 @@ const Post = () => {
         </Tag>
         <ButtonWrapper style={{ margin: '14.4rem 0 16rem 0' }}>
           <FriendCancelButton className="whitebutton" onClick={() => navigate(-1)}>취소하기</FriendCancelButton>
-          <FriendAddButton className="bluebutton">작성완료</FriendAddButton>
+          <FriendAddButton className="bluebutton" disabled={!textdisable || !tagdisable || !isDirty || !isValid}>작성완료</FriendAddButton>
         </ButtonWrapper>
       </form>
     </PostWrap>

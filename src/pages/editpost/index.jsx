@@ -13,14 +13,15 @@ import { useEffect } from 'react';
 import { ButtonWrapper, FriendAddButton, FriendCancelButton } from '../../components/addfriendmodal/styles';
 import { PostWrap, Title, Subtitle, Content, Image, Tag } from '../post/styles'
 const EditPost = () => {
-    const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주"];
+    const tag = ["맥주", "소주", "와인", "막걸리", "양주", "전통주", "기타"];
     const [tagList, setTagList] = useState("맥주");
     const [tagColor, setTagColor] = useState(0);
     const [content, SetContent] = useState("");
     const [thumbnail, SetThumbnail] = useState("");
     const [thumbnailImg, SetThumbnailImg] = useState();
-    const [submittable, setSubmittable] = useState(true);
     const [imgList, SetImgList] = useState([]);
+    const [tagdisable, setTagDisable] = useState(false);
+    const [textdisable, setTextDisable] = useState(false);
     const title_ref = useRef();
     const freetag_ref = useRef();
     const navigate = useNavigate();
@@ -28,24 +29,26 @@ const EditPost = () => {
     const username = localStorage.getItem("username");
     const { tableId } = useParams();
     const { data, status } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data), {
-        onSuccess: () => {
-            SetImgList(editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g))
+        onSuccess: (data) => {
+            // SetImgList(editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g));
+            SetImgList(editorRef.current?.getInstance().getHTML().match(/<img [^>]*src="[^"]*"[^>]*>/gm)
+                ?.map(x => x.replace(/.*src="([^"]*)".*/, '$1')));
+            console.log(data.content.match(/<img [^>]*src="[^"]*"[^>]*>/gm)
+                ?.map(x => x.replace(/.*src="([^"]*)".*/, '$1')))
         },
         cacheTime: 0,
     });
+
     // useForm hook
     const {
         register,
         handleSubmit,
         watch,
-        formState: { errors },
-    } = useForm();
+        formState: { errors, isDirty, isValid },
+    } = useForm({ mode: 'onChange' });
 
     const title = watch('title');
     const freetag = watch('freetag');
-
-    console.log(imgList)
-
     const newData = {
         title: title,
         content: editorRef.current?.getInstance().getHTML(),
@@ -55,7 +58,6 @@ const EditPost = () => {
         imgUrlList: imgList,
         username,
     };
-
 
     const queryClient = useQueryClient();
     const mutation = useMutation((tableId) => sulmoggoApi.updateDetail(tableId, newData).then(() => {
@@ -73,7 +75,6 @@ const EditPost = () => {
         window.scrollTo(0, 0);
     }, []);
 
-
     //태그 선택
     const addTag = (e) => {
         setTagColor(e.target.value);
@@ -88,28 +89,41 @@ const EditPost = () => {
 
     // 업로드 이미지 관리
     const onUploadImage = async (blob, callback) => {
-        try {
-            const formData = new FormData();
-            formData.append("file", blob);
-            const url = await sulmoggoApi.img(formData);
-            callback(url.data[0].url, "alt text");
-            SetImgList((state) => [...state, url.data[0].url]);
-        } catch (err) {
-            console.log(err);
-        }
-
-        return false;
+        const formData = new FormData();
+        formData.append("file", blob);
+        const url = await sulmoggoApi.img(formData);
+        callback(url.data[0].url, "alt text");
+        SetImgList((state) => {
+            console.log(state);
+            if (state !== undefined) return [...state, url.data[0].url]
+            else return [url.data[0].url]
+        });
+        // if (imgList.length !== 0) {
+        //     SetImgList([...imgList, url.data[0].url]);
+        // } else {
+        //     SetImgList([url.data[0].url]);
+        // }
+        console.log('이건 안', imgList)
     };
+    console.log('이건 밖', imgList)
 
     // 웹 에디터 content영역 확인하기
     const onChange = () => {
         const content = editorRef.current?.getInstance().getHTML()
         if (content.length > 60000) {
             alert("내용이 너무 많습니다.")
-            setSubmittable(false)
+            setTextDisable(false)
+        }
+        if (12 < content.length < 60000) {
+            setTextDisable(true);
         }
         SetContent(content);
     };
+    useEffect(() => {
+        if (tagList !== null && tagColor !== null) {
+            setTagDisable(true);
+        }
+    }, [tagList, tagColor]);
 
     if (status === 'loading') {
         return <Spinner />
@@ -183,6 +197,13 @@ const EditPost = () => {
                             </li>
                         ) : (
                             <li value="5">전통주</li>
+                        )}
+                        {tagColor === 6 ? (
+                            <li value="6" className="fill">
+                                기타
+                            </li>
+                        ) : (
+                            <li value="6">기타</li>
                         )}
                     </ul>
                 </Subtitle>
@@ -260,7 +281,7 @@ const EditPost = () => {
                 </Tag>
                 <ButtonWrapper style={{ margin: '14.4rem 0 16rem 0' }}>
                     <FriendCancelButton className="whitebutton" onClick={() => navigate(-1)}>취소하기</FriendCancelButton>
-                    <FriendAddButton className="bluebutton">작성완료</FriendAddButton>
+                    <FriendAddButton className="bluebutton" disabled={!textdisable || !tagdisable}>수정완료</FriendAddButton>
                 </ButtonWrapper>
             </form>
         </PostWrap>

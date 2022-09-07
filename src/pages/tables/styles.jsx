@@ -30,6 +30,16 @@ export const PageTitle = styled.h1`
   line-height: 4.1rem;
   letter-spacing: -0.02em;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+  i {
+    content: '';
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+    background:url('/images/icon_back.svg');
+  }
 `;
 
 export const AlcoholCategories = styled.div`
@@ -95,29 +105,60 @@ export const SortButton = styled.button`
 
 export const WriteButton = styled(Link)`
   position: relative;
-  /* background-color: aliceblue; */
   box-sizing: inherit;
   width: 100%;
+  cursor: pointer;
+  &:hover .fixed {
+      width: 19.6rem;
+  }
+  &:hover .fixed > p {
+    display: flex;
+  }
   .absolute{
-    /* background-color: teal; */
     position: absolute;
     top: 0%;
     left: calc(100% - 8rem);
-    /* right: 0%; */
   }
   .fixed{
     position: fixed;
     top: 90vh;
-    /* right: 0; */
-    background-color: ${props => props.theme.secondary};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 8rem;
-  height: 8rem;
-  border-radius: 4rem;
-  box-shadow: ${props => props.theme.shadow_gray};
-  z-index: 400;
+    background-color: #fff;
+    border: .2rem solid ${props => props.theme.secondary};
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 10rem;
+    box-shadow: ${props => props.theme.shadow_gray};
+    z-index: 400;
+    transition: all .3s ease-in;
+    cursor: pointer;
+    overflow: hidden;
+    p{
+      position: absolute;
+      left: 3.2rem;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 2.8rem;
+      letter-spacing: -0.02rem;
+      display: none;
+      flex-wrap: nowrap;
+      color: ${props => props.theme.grey_01};
+      cursor: pointer;
+    }
+    span {
+      position: absolute;
+      top:-10;
+      right: -.1rem;
+      background-color: ${props => props.theme.secondary};
+      width: 8rem;
+      height: 8rem;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   img{
     width: 3.2rem;

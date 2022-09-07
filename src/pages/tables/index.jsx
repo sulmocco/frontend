@@ -1,17 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useInView } from 'react-intersection-observer';
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchBar from "../../components/searchbar";
 import TableCard from "../../components/tablecard";
 import sulmoggoApi from "../../shared/apis";
 import { Alcohol } from "../../shared/options";
 import { AlcoholButtons, NoList, Separator } from "../../styles/CommonStyles";
-// import { Container } from "../signup/styles";
 import {
   AlcoholCategories,
   AlcoholCategory,
-  // NoList,
   PageTitle,
   SearchBoxWrapper,
   SortButton,
@@ -30,8 +29,7 @@ const Tables = (props) => {
   const allParams = { keyword, alcohol, sortBy, isAsc };
   const lastTableRef = useRef();
   const [total, setTotal] = useState(0);
-
-  console.log(alcohol);
+  const navigate = useNavigate();
 
   const searchTables = (keyword) => {
     if (keyword) {
@@ -55,39 +53,25 @@ const Tables = (props) => {
       if (keyword || alcohol === "전체") delete newQuery.alcohol
       else delete newQuery.keyword
 
-      console.log(newQuery);
-
       let res = null
-      if(keyword) {
+      if (keyword) {
         res = await sulmoggoApi.searchTables(newQuery);
-      }else{
+      } else {
         res = await sulmoggoApi.getTables(newQuery)
       }
-      console.log("search!", keyword);
       return {
         data: res.data,
         nextPage: pageParam + 1,
         lastPage: res.data.last,
       };
-      // TODO: 작업용 코드. 완성 시에는 삭제해야함.
-      // eslint-disable-next-line
-      // return {
-      //   data: "",
-      //   nextPage: pageParam + 1,
-      //   lastPage: true,
-      // };
     },
     [alcohol, keyword, sortBy]
   );
   const {
     isSuccess,
     data,
-    // error,
     fetchNextPage,
     hasNextPage,
-    // isFetching,
-    // isFetchingNextPage,
-    // status,
   } = useInfiniteQuery(
     ["tables", keyword, alcohol, sortBy, page, isAsc],
     ({ pageParam = page }) => getTables(pageParam),
@@ -95,7 +79,6 @@ const Tables = (props) => {
       getNextPageParam: (currPage, allPages) => {
         if (!currPage.lastPage) {
           console.log("not last page");
-          // setQueryParams({keyword, alcohol, sortBy, page, isAsc})
           return currPage.nextPage;
         }
         return undefined;
@@ -113,7 +96,6 @@ const Tables = (props) => {
   const handleIntersect = useCallback(
     ([entry]) => {
       if (entry.isIntersecting && hasNextPage) {
-        console.log("!!!!intersect!!!!");
         fetchNextPage();
       }
     },
@@ -126,7 +108,6 @@ const Tables = (props) => {
       root: null,
     });
     lastTableRef.current && observer.observe(lastTableRef.current);
-    // console.log(data);
     return () => {
       observer.disconnect();
     };
@@ -134,7 +115,7 @@ const Tables = (props) => {
 
   return (
     <TablesWrapper>
-      <PageTitle>술상추천</PageTitle>
+      {alcohol ? (<PageTitle>술상추천</PageTitle>) : (<PageTitle><i onClick={() => navigate(-1)}></i>술상검색</PageTitle>)}
       {alcohol && (
         <>
           <AlcoholCategories>
@@ -144,7 +125,6 @@ const Tables = (props) => {
                 checked={alcohol.includes(x)}
                 onClick={() => {
                   if (i !== 0 && !alcohol.includes(x)) {
-                    // console.log(alcohol.replace(Alcohol[0], "").replace(/^,/, ""));
                     setQueryParams({
                       alcohol: (
                         alcohol.replace(Alcohol[0], "") +
@@ -201,7 +181,6 @@ const Tables = (props) => {
           <SortButton
             checked={sortBy === "id"}
             onClick={() => {
-              console.log(allParams);
               if (keyword) {
                 setQueryParams({ keyword, sortBy: "id" });
               } else if (alcohol !== "전체") {
@@ -242,7 +221,10 @@ const Tables = (props) => {
       <WriteButton to="/post">
         <div className="absolute">
           <div className="fixed">
-            <img src="/images/icon_write.svg" alt="작성" />
+            <p>술상추천<br />글쓰기</p>
+            <span>
+              <img src="/images/icon_write.svg" alt="작성" />
+            </span>
           </div>
         </div>
       </WriteButton>

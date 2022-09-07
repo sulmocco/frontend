@@ -6,7 +6,7 @@ import RoomCard from "../../components/roomscard";
 import SearchBar from "../../components/searchbar";
 import sulmoggoApi from "../../shared/apis";
 import { Alcohol, LiveVersion } from "../../shared/options";
-import { AlcoholButtons, NoList, Separator } from "../../styles/CommonStyles";
+import { NoList, Separator } from "../../styles/CommonStyles";
 // import { Container } from "../signup/styles";
 import {
   AlcoholCategories,

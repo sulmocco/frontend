@@ -4,6 +4,7 @@ import Live from "../../components/live";
 import Today from "../../components/today";
 import Recommend from "../../components/recommend";
 import LoginRending from "../../components/loginrending";
+import Review from '../../components/review';
 
 const Home = () => {
 
@@ -15,6 +16,7 @@ const Home = () => {
           <MainSlider />
           <Live />
           <Today />
+          <Review />
           <Recommend />
         </div>
       ) : (

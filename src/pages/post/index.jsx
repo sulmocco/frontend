@@ -113,7 +113,12 @@ const Post = () => {
           />
         </Title>
         <Subtitle>
-          <div>추천술 선택</div>
+          <div className='titlebox'>
+            <div>추천술 선택</div>
+            <div className="guidebubble">
+              술을 선택해 주세요
+            </div>
+          </div>
           <ul
             onClick={(e) => {
               addTag(e);

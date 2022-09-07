@@ -37,24 +37,24 @@ const LiveRending = React.lazy(() => import("./pages/liverending"));
 const EditPost = React.lazy(() => import("./pages/editpost"));
 
 function App() {
-    sulmoggoApi
-      .getUser()
-      .then((res) => {
-        if (res.data.response) {
-          const token = localStorage.getItem("token");
-          const refreshToken = localStorage.getItem("refreshToken");
-          userLogin({
-            username: res.data.username,
-            id: res.data.id,
-            token,
-            refreshToken,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        userLogout();
-      })
+  sulmoggoApi
+    .getUser()
+    .then((res) => {
+      if (res.data.response) {
+        const token = localStorage.getItem("token");
+        const refreshToken = localStorage.getItem("refreshToken");
+        userLogin({
+          username: res.data.username,
+          id: res.data.id,
+          token,
+          refreshToken,
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      userLogout();
+    });
 
   return (
     <Suspense fallback={<Spinner />}>

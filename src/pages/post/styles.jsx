@@ -29,6 +29,15 @@ div {
     font-size: 2rem;
     font-weight: 700;
 }
+.titlebox {
+    display: flex;
+    align-items: center;
+    margin-top: 5.6rem;
+    gap: 1.2rem;
+    div {
+        margin-top: 0;
+    }
+}
 ul {
     display: flex;
     gap: .8rem;
@@ -50,7 +59,22 @@ ul {
         color: white;
     }
     }
-}
+    }
+    .guidebubble{
+    border-image: url('/images/img_guide_bubble.svg');
+    border-image-slice: 18 13 13 13 fill;
+    border-image-width: auto;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch;
+    border-style: solid;
+    padding: .6rem .9rem .6rem 1.8rem;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    letter-spacing: -0.06em;
+    margin-top: .3rem;
+    color: ${props => props.theme.primary}
+  }
 `;
 
 export const Content = styled.div`

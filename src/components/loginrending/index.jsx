@@ -39,7 +39,7 @@ const LoginRending = () => {
                     <img src='/images/img_rending_02.svg' alt='이미지' />
                 </RendingContRow>
             </RendingSection>
-            <RendingSection color='#fff'>
+            {/* <RendingSection color='#fff'>
                 <RendingContRow>
                     <div className="desc">
                         <span>안주 고민도 끝!</span>
@@ -47,7 +47,7 @@ const LoginRending = () => {
                         <p>많은 사람들은 어떤 안주를 먹을까?<br />사람들이 찐으로 올리는 후기<br />술상 추천을 만나보세요!</p>
                     </div>
                 </RendingContRow>
-            </RendingSection>
+            </RendingSection> */}
         </Rending>
     );
 };

@@ -47,6 +47,21 @@ const GlobalStyles = createGlobalStyle`
         cursor: pointer;
     }
 
+    .errorPage{
+        height: calc(100vh - 17.5rem);
+        width: 100%;
+        padding-top: 11.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 2rem;
+        h1{
+            font-size: 5rem;
+            color: #7A7A80;
+        }
+    }
+
     // 기본
     @font-face {
     font-family: 'Pretendard';

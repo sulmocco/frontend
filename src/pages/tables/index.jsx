@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import { useInView } from 'react-intersection-observer';
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Nodata from '../../components/nodatalending';
 import SearchBar from "../../components/searchbar";
 import TableCard from "../../components/tablecard";
 import sulmoggoApi from "../../shared/apis";
@@ -211,11 +212,9 @@ const Tables = (props) => {
         {console.log(data.pages)}
       </TablesGrid>
       {isSuccess && !total && (
-        <NoList>
-          게시된 술상추천이 존재하지 않습니다.
-          <br />
-          좋아하는 술과 안주를 직접 추천해보시는 건 어떨까요?
-        </NoList>
+        <div style={{ margin: '0 auto' }}>
+          <Nodata />
+        </div>
       )}
       {!isSuccess && <NoList>문제가 발생했습니다.</NoList>}
       <WriteButton to="/post">

@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { useQuery } from "@tanstack/react-query";
 import Theme from "./styles/Theme";
 import Layout from "./components/common/Layout";
 import Spinner from "./components/spinner";

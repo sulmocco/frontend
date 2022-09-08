@@ -42,9 +42,10 @@ const ProfileEdit = () => {
     // 데이터 수정하기
     const mutation = useMutation((data) => sulmoggoApi.putUser(data), {
         onSuccess: (data, variables, context) => {
+            alert('수정이 완료되었습니다 재 로그인해 주세요')
+            userLogout();
+            navigate('/')
             queryClient.invalidateQueries(['user']);
-            localStorage.removeItem('username')
-            localStorage.setItem('username', username.current)
         },
         onError: (error) => {
             alert('실패', error.message)
@@ -88,10 +89,7 @@ const ProfileEdit = () => {
             level: alcoholLevelNum,
             profileUrl: profileImg,
         }
-        mutation.mutate(newData);
-        alert('수정이 완료되었습니다 재 로그인해 주세요')
-        userLogout();
-        navigate('/')
+        mutation.mutate(newData)
     }
 
     // 닉네임 중복체크

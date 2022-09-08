@@ -27,7 +27,7 @@ const MainSlider = () => {
         autoplay={true}
       >
         {data?.map(banner => (
-          <SwiperSlide key={banner.id} onClick={() => window.open((`${data.redirectUrl}`), '_blank')} >
+          <SwiperSlide key={banner.id} onClick={() => window.open((`${banner.redirectUrl}`), '_blank')} >
             <Image src={banner.imageUrl} alt='배너이미지' />
           </SwiperSlide>
         ))}

@@ -13,9 +13,7 @@ import PassWordInput from "./components/passwordreset";
 import DeleteAccount from "./components/deleteaccountrending";
 import sulmoggoApi from "./shared/apis";
 import { userLogin, userLogout } from "./shared/modules";
-import { ErrorBoundary } from "react-error-boundary";
-import Header from "./components/common/Header";
-import Footer from "./components/common/Footer";
+import ErrorBoundary from "./ErrorBoundary";
 
 const Home = React.lazy(() => import("./pages/home"));
 const Auth = React.lazy(() => import("./pages/auth"));
@@ -38,18 +36,6 @@ const Live = React.lazy(() => import("./pages/live"));
 const LiveRending = React.lazy(() => import("./pages/liverending"));
 const EditPost = React.lazy(() => import("./pages/editpost"));
 
-const ErrorFallback = (err) => {
-  return (
-    <>
-      <Header/>
-      <div className="errorPage">
-        <img src="/images/img_deleterending.png" alt="crying"/>
-        <h1>문제가 발생했습니다.</h1>
-      </div>
-      <Footer/>
-    </>
-  )
-}
 function App() {
   sulmoggoApi
     .getUser()
@@ -73,7 +59,7 @@ function App() {
   return (
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <ErrorBoundary>
         <Routes>
           <Route path="/chat/:chatRoomId" element={<Chat />} />
           <Route path="/live" element={<Live />} />
@@ -108,7 +94,7 @@ function App() {
             <Route path="/loading" element={<Spinner />} />
           </Route>
         </Routes>
-        </ErrorBoundary>
+          </ErrorBoundary>
       </ThemeProvider>
     </Suspense>
   );

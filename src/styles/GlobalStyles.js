@@ -48,7 +48,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     .errorPage{
-        height: calc(100vh - 17.5rem);
+        height: calc(100vh - 17.59rem);
         width: 100%;
         padding-top: 11.2rem;
         display: flex;
@@ -57,8 +57,12 @@ const GlobalStyles = createGlobalStyle`
         flex-direction: column;
         gap: 2rem;
         h1{
-            font-size: 5rem;
-            color: #7A7A80;
+            font-size: 4rem;
+            color: #B8BBC0;
+        }
+        img{
+            width: 26.3rem;
+            height: 26.3rem;
         }
     }
 

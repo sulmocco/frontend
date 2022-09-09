@@ -8,17 +8,17 @@ import ProgressBar from '../../components/progressbar';
 const Terms = () => {
     const [check1, setCheck1] = useState(false);
     const [check2, setCheck2] = useState(false);
-    const [check3, setCheck3] = useState(false);
+    // const [check3, setCheck3] = useState(false);
     const [fullCheck, setfullCheck] = useState(false);
 
     const setAll = () => {
         setfullCheck(!fullCheck)
         setCheck1(!fullCheck)
         setCheck2(!fullCheck)
-        setCheck3(!fullCheck)
+        // setCheck3(!fullCheck)
     }
 
-    const allCheck = check1 && check2 && check3
+    const allCheck = check1 && check2
 
     const { register } = useForm();
     const navigate = useNavigate();
@@ -60,12 +60,15 @@ const Terms = () => {
                                 })}
                             />
                             <label htmlFor='service'></label>
-                            <p onClick={() => {
-                                setCheck2(!check2)
-                                setfullCheck(false)
-                            }}>서비스 이용 필수 약관 동의 (필수)</p>
+                            <span>
+                                <p onClick={() => {
+                                    setCheck2(!check2)
+                                    setfullCheck(false)
+                                }}>서비스 이용 필수 약관 동의 (필수)</p>
+                                <i onClick={() => window.open('https://unexpected-waxflower-83e.notion.site/5233b642558b4b2dbce474864fb9b16b', '_blank')}></i>
+                            </span>
                         </li>
-                        <li >
+                        {/* <li >
                             <input type='checkbox' id='privacy' value='privacy' checked={check3}
                                 onClick={() => {
                                     setCheck3(!check3)
@@ -82,7 +85,7 @@ const Terms = () => {
                                 setCheck3(!check3)
                                 setfullCheck(false)
                             }}>개인 정보 수집 및 이용 동의 (필수)</p>
-                        </li>
+                        </li> */}
                         <li className='selectAll'>
                             {allCheck ? <>
                                 <input type='checkbox' id='selectAll' value='all' checked='true'

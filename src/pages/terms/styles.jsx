@@ -35,14 +35,24 @@ export const Termsection = styled.div`
             align-items: center;
             max-height: 6.4rem;
             gap: 1.6rem;
-            &:after {
-                content: '';
-                position: absolute;
-                right: 2rem;
+            span{
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                p {
+                font-weight: 400;
+                size: 2rem;
+                color: #4e4e56;
+                cursor: pointer;
+            }
+                i{
                 display: block;
                 background-image: url('/images/icon_arrow_right_gray.svg');
                 width: 1.4rem;
                 height: 2.4rem;
+                cursor: pointer;
+            }
+            }
             }
             &:first-child:after{
                 display: none;
@@ -70,12 +80,7 @@ export const Termsection = styled.div`
                     height: 1rem;
                 }
             }
-            p {
-                font-weight: 400;
-                size: 2rem;
-                color: #4e4e56;
-                cursor: pointer;
-            }
+            
         }
         .selectAll {
             background-color: #f2f3f3;

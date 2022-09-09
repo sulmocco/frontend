@@ -12,7 +12,8 @@ import PasswordRending from "./components/passwordrending";
 import PassWordInput from "./components/passwordreset";
 import DeleteAccount from "./components/deleteaccountrending";
 import sulmoggoApi from "./shared/apis";
-import { userLogin, userLogout } from "./shared/modules";
+import { useRecoilState } from "recoil";
+import { MaintainUser, SignOutSelector } from "./recoil/userdata";
 import ErrorBoundary from "./ErrorBoundary";
 
 const Home = React.lazy(() => import("./pages/home"));
@@ -37,23 +38,22 @@ const LiveRending = React.lazy(() => import("./pages/liverending"));
 const EditPost = React.lazy(() => import("./pages/editpost"));
 
 function App() {
+  const [, setMaintainUser] = useRecoilState(MaintainUser)
+  const [,signOut] = useRecoilState(SignOutSelector)
+
   sulmoggoApi
     .getUser()
     .then((res) => {
       if (res.data.response) {
-        const token = localStorage.getItem("token");
-        const refreshToken = localStorage.getItem("refreshToken");
-        userLogin({
-          username: res.data.username,
+        setMaintainUser({
           id: res.data.id,
-          token,
-          refreshToken,
-        });
+          username: res.data.username,
+        })
       }
     })
     .catch((err) => {
       console.log(err);
-      userLogout();
+      signOut()
     });
 
   return (

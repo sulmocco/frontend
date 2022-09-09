@@ -12,7 +12,7 @@ import {
 
 const Comment = ({ postId }) => {
   const [content, setContent] = useState("");
-  const username = localStorage.getItem("username")
+  const [username,] = useState(localStorage.getItem("username"))
   const queryClient = useQueryClient();
   const [onModify, setOnModify] = useState(null);
   const [modifyContent, setModifyContent] = useState(null);

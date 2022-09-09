@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { userLogout } from "../../shared/modules";
+import { useRecoilState } from "recoil";
+import { SignOutSelector } from "../../recoil/userdata";
+// import { userLogout } from "../../shared/modules";
 
 const Header = ({ location }) => {
   const Token = localStorage.getItem("token");
+  const [,setSignOut] = useRecoilState(SignOutSelector)
   return (
     <Wrap>
       <Navbar>
@@ -52,7 +55,7 @@ const Header = ({ location }) => {
               <li>
                 <div
                   onClick={() => {
-                    userLogout();
+                    setSignOut();
                     window.location.href = "/";
                   }}
                 >

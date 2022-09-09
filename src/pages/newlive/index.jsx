@@ -141,15 +141,24 @@ const NewLive = (props) => {
       console.log("this..");
     };
     foo();
-    const stopStream = () => {
-      track.stop()
-    }
-    window.addEventListener("beforeunload", stopStream)
-    return() => {
-      window.removeEventListener("beforeunload", stopStream)
-    }
     // eslint-disable-next-line
   }, [videoinput]);
+
+  const stopStream = () => {
+    if(videoPreview.current){
+    const stream = videoPreview?.current?.srcObject?.getTracks()[0]
+    stream.stop();
+    videoPreview.current = null
+    }
+  }
+  useEffect(() => {
+    window.addEventListener("beforeunload", stopStream)
+    window.addEventListener("unload", stopStream)
+    return() => {
+      window.removeEventListener("beforeunload", stopStream)
+      window.removeEventListener("unload", stopStream)
+    }
+  }, [videoPreview.current])
 
   useEffect(() => {
     if(!videoinput.deviceId && (cameraDevices.length > 0)){

@@ -4,18 +4,21 @@ import { LoginSection, LoginWrap } from './styles';
 import { SignUpButton } from '../signup/styles';
 import sulmoggoApi from '../../shared/apis';
 import { useNavigate } from 'react-router-dom';
-import { userLogin } from '../../shared/modules';
+import { useRecoilState } from 'recoil';
+import { SignInSelector } from '../../recoil/userdata';
+// import { userLogin } from '../../shared/modules';
 
 const Login = () => {
     const id_ref = useRef();
     const pw_ref = useRef();
     const navigate = useNavigate()
+    const [,setSignIn] = useRecoilState(SignInSelector)
     const handleLogin = async (e) => {
         e.preventDefault();
         console.log(id_ref.current.value, pw_ref.current.value);
         await sulmoggoApi.login({ id: id_ref.current.value, password: pw_ref.current.value })
             .then(res => {
-                userLogin({ username: res.data.username, token: res.headers.authorization, id: res?.data?.id, refreshToken: res.data.refreshToken })
+                setSignIn({ username: res.data.nickname, accessToken: res.headers.authorization, id: res?.data?.loginId, refreshToken: res.data.refreshToken })
                 navigate("/")
             }).catch(err => {
                 alert("로그인에 실패했습니다. 아이디 및 비밀번호를 확인해주세요.")

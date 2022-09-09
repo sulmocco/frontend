@@ -11,10 +11,10 @@ const userdataState = atom({
     }
 })
 
-export const userLogin = selector({
-    key: 'userLogin',
+export const SignInSelector = selector({
+    key: 'signin',
     get: ({get}) => {
-        const username = get(userdataState)
+        const username = get(userdataState).username
         return "signed in as" + username
     },
     set: ({set}, newValue) => {
@@ -22,13 +22,23 @@ export const userLogin = selector({
         localStorage.setItem('id', newValue.id)
         localStorage.setItem('accessToken', newValue.accessToken)
         localStorage.setItem('refreshToken', newValue.refreshToken)
-        localStorage('token', newValue.accessToken)
+        localStorage.setItem('token', newValue.accessToken)
         set(userdataState, {...newValue, isLogin: true})
     }
 })
 
-export const userLogout = selector({
-    key: 'userLogout',
+export const MaintainUser = selector({
+    key: 'maintainuser',
+    get: ({get}) => get(userdataState),
+    set: ({set}, newValue) => {
+        localStorage.setItem('username', newValue.username)
+        localStorage.setItem('id', newValue.id)
+        set(userdataState, {...userdataState, ...newValue, isLogin: true})
+    }
+})
+
+export const SignOutSelector = selector({
+    key: 'signout',
     get: ({get}) => {
         return "signed out"
     },
@@ -38,7 +48,7 @@ export const userLogout = selector({
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
         localStorage.removeItem('token')
-        set(userdataState, DefaultValue)
+        set(userdataState, new DefaultValue)
     }
 })
 

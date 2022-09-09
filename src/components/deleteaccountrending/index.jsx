@@ -1,17 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { LiveRendingCont, LiveRendingWrap } from '../../pages/liverending/styles';
+import { SignOutSelector } from '../../recoil/userdata';
 import sulmoggoApi from '../../shared/apis';
-import { userLogout } from '../../shared/modules';
+// import { userLogout } from '../../shared/modules';
 import { ButtonWrapper, FriendAddButton, FriendCancelButton } from '../addfriendmodal/styles';
 
 const DeleteAccount = () => {
+    const [,setSignOut] = useRecoilState(SignOutSelector)
     const mutation = useMutation(() => sulmoggoApi.deleteUser(), {
         onSuccess: () => {
             alert('탈퇴가 완료되었습니다');
             navigate('/loginrending');
-            userLogout();
+            setSignOut()
         }
     })
     const navigate = useNavigate();

@@ -9,7 +9,9 @@ import Spinner from '../../components/spinner';
 import sulmoggoApi from '../../shared/apis';
 import { AlcoholLevel } from '../../shared/options';
 import { Button, MyImgSection, MyInfoSection, ProfileEditCont, ProfileEditSection, ProfileEditWrap } from './style';
-import { getLevel, userLogout } from '../../shared/modules';
+import { getLevel } from '../../shared/modules';
+import { useRecoilState } from 'recoil';
+import { SignOutSelector } from '../../recoil/userdata';
 
 const ProfileEdit = () => {
     const navigate = useNavigate();
@@ -17,6 +19,7 @@ const ProfileEdit = () => {
     const levelText = useRef();
     const level = useRef();
     const queryClient = useQueryClient();
+    const [,setSignOut] = useRecoilState(SignOutSelector)
 
     // 폼관리
     const { register, watch, handleSubmit, setValue, setError, clearErrors, formState: { isDirty, errors } } = useForm({ mode: "onChange" });
@@ -43,7 +46,7 @@ const ProfileEdit = () => {
     const mutation = useMutation((data) => sulmoggoApi.putUser(data), {
         onSuccess: (data, variables, context) => {
             alert('수정이 완료되었습니다 재 로그인해 주세요')
-            userLogout();
+            setSignOut();
             navigate('/')
             queryClient.invalidateQueries(['user']);
         },

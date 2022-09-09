@@ -24,6 +24,11 @@ export const Container = styled.div`
   svg {
     font-size: 2.4rem;
   }
+  width: 100%;
+  overflow: scroll;
+  &::-webkit-scrollbar{
+  display:none;
+  }
 `;
 
 export const Listbox = styled.div`

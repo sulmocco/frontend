@@ -16,6 +16,7 @@ import {
   SortButton,
   TablesGrid,
   TablesWrapper,
+  WirteButton,
   WriteButton,
 } from "./styles";
 
@@ -215,16 +216,10 @@ const Tables = (props) => {
         </div>
       )}
       {!isSuccess && <NoList>문제가 발생했습니다.</NoList>}
-      <WriteButton to="/post">
-        <div className="absolute">
-          <div className="fixed">
-            <p>술상추천<br />글쓰기</p>
-            <span>
-              <img src="/images/icon_write.svg" alt="작성" />
-            </span>
-          </div>
-        </div>
-      </WriteButton>
+      <WirteButton to='/post'>
+        <p>술상추천<br />글쓰기</p>
+        <span></span>
+      </WirteButton>
     </TablesWrapper>
   );
 };

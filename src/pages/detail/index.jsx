@@ -42,7 +42,7 @@ const Detail = () => {
             queryClient.refetchQueries('table');
         },
         onError: (error) => {
-            console.log(error)
+            // console.log(error)
         }
     });
     const handleBookmark = () => {
@@ -58,7 +58,7 @@ const Detail = () => {
             queryClient.invalidateQueries('table');
         },
         onError: (error) => {
-            console.log(error)
+            // console.log(error)
         }
     });
     const deleteLikeMutation = useMutation(async () => await sulmoggoApi.deleteLike(tableId), {
@@ -66,7 +66,7 @@ const Detail = () => {
             queryClient.invalidateQueries('table');
         },
         onError: (error) => {
-            console.log(error)
+            // console.log(error)
         }
     });
     const handleLike = () => {

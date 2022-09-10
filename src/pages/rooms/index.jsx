@@ -38,8 +38,8 @@ const Rooms = (props) => {
   const allParams = { keyword, alcohol, sortBy, isAsc };
   const lastRoomRef = useRef();
 
-  console.log(alcohol);
-  console.log("version: ", version);
+  // console.log(alcohol);
+  // console.log("version: ", version);
 
   const searchRooms = (keyword) => {
     if (keyword) filterRooms({ type: "keyword", value: keyword });
@@ -92,7 +92,7 @@ const Rooms = (props) => {
       else delete newQuery.keyword;
       if (version === null) delete newQuery.version;
 
-      console.log(newQuery);
+      // console.log(newQuery);
 
       let res = null;
       if (keyword) {
@@ -100,7 +100,7 @@ const Rooms = (props) => {
       } else {
         res = await sulmoggoApi.getRooms(newQuery);
       }
-      console.log("search!", keyword);
+      // console.log("search!", keyword);
       return {
         data: res.data,
         nextPage: pageParam + 1,
@@ -116,7 +116,7 @@ const Rooms = (props) => {
     {
       getNextPageParam: (currPage, allPages) => {
         if (!currPage.lastPage) {
-          console.log("not last page");
+          // console.log("not last page");
           // setQueryParams({keyword, alcohol, sortBy, page, isAsc})
           return currPage.nextPage;
         }
@@ -132,7 +132,7 @@ const Rooms = (props) => {
   const handleIntersect = useCallback(
     ([entry]) => {
       if (entry.isIntersecting && hasNextPage) {
-        console.log("!!!!intersect!!!!");
+        // console.log("!!!!intersect!!!!");
         fetchNextPage();
       }
     },
@@ -189,7 +189,7 @@ const Rooms = (props) => {
             <SortButton
               checked={sortBy === "userCount"}
               onClick={() => {
-                console.log(allParams);
+                // console.log(allParams);
                 filterRooms({ type: "sortBy", value: "userCount" });
               }}
             >
@@ -199,7 +199,7 @@ const Rooms = (props) => {
             <SortButton
               checked={sortBy === "id"}
               onClick={() => {
-                console.log(allParams);
+                // console.log(allParams);
                 filterRooms({ type: "sortBy", value: "id" });
               }}
             >
@@ -229,7 +229,7 @@ const Rooms = (props) => {
                   } else if (alcohol.includes(x)) {
                     let newAlcohols = alcohol.split(",");
                     const idx = newAlcohols.indexOf(x);
-                    console.log(idx);
+                    // console.log(idx);
                     newAlcohols.splice(idx, 1);
                     filterRooms({
                       type: "alcohol",
@@ -252,7 +252,7 @@ const Rooms = (props) => {
                   if (alcohol.includes(x)) {
                     let newAlcohols = alcohol.split(",");
                     const idx = newAlcohols.indexOf(x);
-                    console.log(idx);
+                    // console.log(idx);
                     newAlcohols.splice(idx, 1);
                     filterRooms({
                       type: "alcohol",
@@ -287,7 +287,6 @@ const Rooms = (props) => {
               else return <RoomCard {...room} key={room.chatRoomId} />;
             });
           })}
-          {console.log(data.pages)}
         </RoomsGrid>
       )}
       {/* eslint-disable-next-line */}

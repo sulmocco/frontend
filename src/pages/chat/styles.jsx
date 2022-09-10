@@ -237,7 +237,7 @@ export const VideoContainer = styled.div`
         font-weight: 500;
         line-height: 2rem;
         letter-spacing: -0.04em;
-        z-index: 999;
+        z-index: 100;
         svg{
             width: 2rem;
             height: 2rem;

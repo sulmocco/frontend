@@ -78,7 +78,7 @@ const Tables = (props) => {
     {
       getNextPageParam: (currPage, allPages) => {
         if (!currPage.lastPage) {
-          console.log("not last page");
+          // console.log("not last page");
           return currPage.nextPage;
         }
         return undefined;
@@ -135,7 +135,7 @@ const Tables = (props) => {
                   } else if (alcohol.includes(x)) {
                     let newAlcohols = alcohol.split(",");
                     const idx = newAlcohols.indexOf(x);
-                    console.log(idx);
+                    // console.log(idx);
                     newAlcohols.splice(idx, 1);
                     setQueryParams({ alcohol: newAlcohols.join(",") });
                   } else {
@@ -165,7 +165,7 @@ const Tables = (props) => {
           <SortButton
             checked={sortBy === "count"}
             onClick={() => {
-              console.log(allParams);
+              // console.log(allParams);
               if (keyword) {
                 setQueryParams({ keyword, sortBy: "count" });
               } else if (alcohol !== "전체") {
@@ -208,7 +208,6 @@ const Tables = (props) => {
                 return <TableCard {...table} />;
             });
           })}
-        {console.log(data.pages)}
       </TablesGrid>
       {isSuccess && !total && (
         <div style={{ margin: '0 auto' }}>

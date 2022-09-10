@@ -35,7 +35,7 @@ const ProfileEdit = () => {
     const { data, status } = useQuery(['user'], () => sulmoggoApi.getUserDetail().then(res => res.data), {
         cacheTime: 0,
     });
-    console.log(data);
+    // console.log(data);
 
     // 프로필 이미지
     const [profileImg, setProfileImg] = useState(data?.profileUrl);

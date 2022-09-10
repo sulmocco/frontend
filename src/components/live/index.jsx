@@ -21,12 +21,12 @@ const Live = () => {
       const res = await sulmoggoApi.live();
       setList(res.data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
   useEffect(() => {
-    console.log(list);
+    // console.log(list);
   }, [list]);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Live = () => {
     setSlide(!slide);
   };
 
-  console.log(list)
+  // console.log(list)
 
   return (
     <Wrap>

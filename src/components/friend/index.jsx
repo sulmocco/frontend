@@ -7,7 +7,7 @@ import { FriendCont, FriendWrap } from './styles';
 const FriendList = (props) => {
 
     const { profile, level, username, isOnair } = props;
-    console.log(username)
+    // console.log(username)
 
     const mutation = useMutation(async (username) => await sulmoggoApi.deleteFriends(username), {
         onSuccess: () => {

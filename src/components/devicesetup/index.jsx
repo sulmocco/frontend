@@ -101,10 +101,10 @@ const DeviceSetup = (props) => {
   useEffect(() => {
     const foo = async () => {
       if(playvideo){
-        await getUserMedia({ video: {deviceId: videoinput.deviceId}});
+        await getUserMedia({ video: {deviceId: videoinput.deviceId}, audio: true});
       }
-      console.log(videoinput, audioinput, audiooutput);
-      console.log("this..");
+      // console.log(videoinput, audioinput, audiooutput);
+      // console.log("this..");
     };
     foo();
     const stopStream = () => {
@@ -140,7 +140,7 @@ const DeviceSetup = (props) => {
             <div>
               <div className="video">
                 {!playvideo && <img src="/images/icon_video_disabled.svg" alt="video off" />}
-                <video autoPlay ref={videoPreview} hidden={!playvideo} poster={process.env.PUBLIC_URL + "images/placeholder.png"}/>
+                <video autoPlay ref={videoPreview} hidden={!playvideo} poster={process.env.PUBLIC_URL + "images/placeholder.png"} muted={true}/>
               </div>
               <audio ref={speakerRef} hidden/>
             </div>

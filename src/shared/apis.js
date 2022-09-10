@@ -13,7 +13,7 @@ api.interceptors.request.use(
     const accessToken = localStorage.getItem("token"); // localStorage에 TOKEN 저장
     const refreshToken = localStorage.getItem("refreshToken");
     // console.log(accessToken);
-    console.log(refreshToken);
+    // console.log(refreshToken);
     if (config.headers) {
       config.headers.common.authorization = accessToken;
       config.headers.common.RefreshToken = refreshToken;

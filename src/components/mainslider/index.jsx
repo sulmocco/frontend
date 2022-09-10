@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 const MainSlider = () => {
   const { data } = useQuery(['banner'], () => sulmoggoApi.getBanner().then(res => res.data));
-  console.log(data)
+  // console.log(data)
 
   return (
     <Carousel>

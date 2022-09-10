@@ -21,7 +21,7 @@ const Layout = () => {
   const grayBg =
     location.pathname === "/tables" || location.pathname.startsWith("/tables?");
 
-  console.log(isShow);
+  // console.log(isShow);
   return (
     <>
       <Header location={location} />

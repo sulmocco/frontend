@@ -33,8 +33,8 @@ const EditPost = () => {
             // SetImgList(editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g));
             SetImgList(editorRef.current?.getInstance().getHTML().match(/<img [^>]*src="[^"]*"[^>]*>/gm)
                 ?.map(x => x.replace(/.*src="([^"]*)".*/, '$1')));
-            console.log(data.content.match(/<img [^>]*src="[^"]*"[^>]*>/gm)
-                ?.map(x => x.replace(/.*src="([^"]*)".*/, '$1')))
+            // console.log(data.content.match(/<img [^>]*src="[^"]*"[^>]*>/gm)
+            //     ?.map(x => x.replace(/.*src="([^"]*)".*/, '$1')))
         },
         cacheTime: 0,
     });
@@ -94,7 +94,7 @@ const EditPost = () => {
         const url = await sulmoggoApi.img(formData);
         callback(url.data[0].url, "alt text");
         SetImgList((state) => {
-            console.log(state);
+            // console.log(state);
             if (state !== undefined) return [...state, url.data[0].url]
             else return [url.data[0].url]
         });
@@ -103,9 +103,9 @@ const EditPost = () => {
         // } else {
         //     SetImgList([url.data[0].url]);
         // }
-        console.log('이건 안', imgList)
+        // console.log('이건 안', imgList)
     };
-    console.log('이건 밖', imgList)
+    // console.log('이건 밖', imgList)
 
     // 웹 에디터 content영역 확인하기
     const onChange = () => {

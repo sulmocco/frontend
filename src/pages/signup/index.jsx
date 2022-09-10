@@ -33,7 +33,7 @@ const SignUp = (props) => {
 
   // 회원가입
   const onSubmit = async (data) => {
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
     await sulmoggoApi.signUp(data).then((res) => {
       alert('회원가입 완료');
     });
@@ -44,7 +44,7 @@ const SignUp = (props) => {
   const onDropdownChange = (e) => {
     setValue("level", e.target.id);
     setValue("level_text", e.target.innerText);
-    console.log(e.target.id, e.target.innerText);
+    // console.log(e.target.id, e.target.innerText);
     toggleDropdown(); // 선택시 드롭다운 닫힘
   };
 

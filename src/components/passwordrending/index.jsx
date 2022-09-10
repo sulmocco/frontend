@@ -11,7 +11,7 @@ const PasswordRending = () => {
     const { params } = useParams();
     const [signup, setSignup] = useState();
 
-    console.log(params);
+    // console.log(params);
 
     useEffect(() => {
         if (params === 'signup') {

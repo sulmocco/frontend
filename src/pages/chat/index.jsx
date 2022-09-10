@@ -87,13 +87,13 @@ const Chat = (props) => {
       webSocketFactory: () =>
         new SockJS(`${process.env.REACT_APP_API_SERVER}/ws-stomp`),
       debug: (str) => {
-        console.log(str);
+        // console.log(str);
       },
       onConnect: (frame) => {
         socketSubscribe();
       },
       onStompError: (frame) => {
-        console.log(frame);
+        // console.log(frame);
       },
     });
     clientRef.current.activate();
@@ -108,7 +108,7 @@ const Chat = (props) => {
           const newMessage = JSON.parse(data.body);
           setUserCount(JSON.parse(data.body).userCount);
           console.log(JSON.parse(data.body));
-          console.log("여기!!!!!!!!!!");
+          // console.log("여기!!!!!!!!!!");
           setContent((prevContent) => [...prevContent, newMessage]);
           lastOne.current?.scrollIntoView();
         },
@@ -126,12 +126,12 @@ const Chat = (props) => {
 
   // 메세지 보내기
   const sendMessage = () => {
-    console.log({
-      type: "TALK",
-      chatRoomId: chatRoomId,
-      sender: username,
-      message: chatRef.current.value,
-    });
+    // console.log({
+    //   type: "TALK",
+    //   chatRoomId: chatRoomId,
+    //   sender: username,
+    //   message: chatRef.current.value,
+    // });
     clientRef.current.publish({
       destination: `/pub/chat/message`,
       headers,
@@ -194,14 +194,14 @@ const Chat = (props) => {
     const foo = async () => {
       try {
         const data = await sulmoggoApi.getRoomData(chatRoomId);
-        console.log(data.data.body);
+        // console.log(data.data.body);
         setRoomData(data.data.body);
         setUserCount(data.data.body?.userCount + 1);
         setCreatedAt(data.data.body.createdAt);
         connect();
-        console.log(clientRef.current.connected);
+        // console.log(clientRef.current.connected);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         alert("이미 입장한 방입니다!")
         window.location.href = "/rooms"
       }

@@ -20,11 +20,11 @@ const Today = () => {
   };
   const today = useQuery(["today"], getToday, {
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
     },
   }).data;
 
-  console.log(today);
+  // console.log(today);
   return (
     <Wrap>
       <Container>

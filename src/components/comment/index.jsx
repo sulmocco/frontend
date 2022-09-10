@@ -33,7 +33,7 @@ const Comment = ({ postId }) => {
 
   const getComments = async () => {
     const res = await sulmoggoApi.getReplies(postId || 0)
-    console.log(res.data);
+    // console.log(res.data);
     return res.data
   };
 

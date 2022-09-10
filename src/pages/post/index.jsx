@@ -45,10 +45,10 @@ const Post = () => {
 
     try {
       const res = await sulmoggoApi.tables(newData);
-      console.log(res);
+      // console.log(res);
       navigate(`/tables`);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -213,7 +213,7 @@ const Post = () => {
                       onClick={(e) => {
                         SetThumbnail(i);
                         SetThumbnailImg(v);
-                        console.log("썸네일 이미지 설정");
+                        // console.log("썸네일 이미지 설정");
                       }}
                     >
                       <img src={v} alt="img" />

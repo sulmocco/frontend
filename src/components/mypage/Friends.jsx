@@ -10,7 +10,7 @@ const Friends = () => {
     sulmoggoApi.getFriends().then((res) => res.data)
   );
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <Container>

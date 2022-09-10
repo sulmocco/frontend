@@ -44,15 +44,9 @@ function App() {
   sulmoggoApi
     .getUser()
     .then((res) => {
-      if (res.data.response) {
-        setMaintainUser({
-          id: res.data.id,
-          username: res.data.username,
-        })
-      }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       signOut()
     });
 

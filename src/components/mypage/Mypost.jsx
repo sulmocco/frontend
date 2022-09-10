@@ -45,7 +45,7 @@ const Mypost = () => {
     }
   }, [inView, fetchNextPage]);
 
-  console.log("찍어봄", my_table_query);
+  // console.log("찍어봄", my_table_query);
 
   if (status === "loading") {
     return <Spinner size="7rem" />;

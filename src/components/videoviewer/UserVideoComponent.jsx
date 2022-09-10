@@ -12,7 +12,7 @@ export default class UserVideoComponent extends Component {
         return this.getNicknameTag() === localStorage.getItem("username")
     }
     componentDidMount(){
-        console.log(this.props.openModal);
+        // console.log(this.props.openModal);
     }
     render() {
         return (

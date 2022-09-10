@@ -69,11 +69,13 @@ const NewLive = (props) => {
   });
   alcohol.current = watch("alcohol", "");
 
+  console.log("🌿component");
+
   const navigate = useNavigate();
   const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
     onSuccess: (res) => {
       alert("술약속을 잡았습니다!")
-      console.log(res);
+      // console.log(res);
       queryClient.invalidateQueries("rooms");
       setDeviceFor(res.data)
       navigate(`/render/live/` + res.data, {
@@ -86,7 +88,7 @@ const NewLive = (props) => {
     },
   });
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     const request = {
       version: data.version + (data.show === "공개" ? "" : "Private"),
       thumbnail: thumbnail,
@@ -98,21 +100,30 @@ const NewLive = (props) => {
     mutation.mutate(request);
   };
 
+  const initMedia = async () => {
+    await navigator.mediaDevices.getUserMedia({video: true, audio: true})
+    await navigator.mediaDevices.enumerateDevices().then(devices => {
+      setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
+      setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
+      setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
+    });
+  }
+
   const getUserMedia = async (constraints) => {
-    let devices = [];
-    devices = await navigator.mediaDevices.enumerateDevices();
-    setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
-    setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
-    setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
-    await navigator.mediaDevices
+    if(cameraDevices.length > 0 && audioDevices.length > 0){
+      await navigator.mediaDevices
       .getUserMedia(constraints)
       .then((stream) => {
         if("srcObject" in videoPreview.current){
           videoPreview.current.srcObject = stream;
+          console.log("🍇current is changing...");
+          // videoPreview.current.muted = true
         }else{
           videoPreview.current.src = window.URL.createObjectURL(stream)
         }
     });
+    }
+    
   };
 
   const handleCameraDeviceChange = (device) => {
@@ -133,14 +144,22 @@ const NewLive = (props) => {
   }
 
   useEffect(() => {
+    console.log("initializing media devices...");
+    initMedia()
+  }, [])
+
+  useEffect(() => {
+    if(videoinput.deviceId !== null){
     const foo = async () => {
       if(playvideo){
-        await getUserMedia({ video: {deviceId: videoinput.deviceId}});
-      }
-      console.log(videoinput, audioinput, audiooutput);
-      console.log("this..");
+        await getUserMedia({ video: {deviceId: videoinput.deviceId }, audio: true });
+        console.log("🍎getusermedia");
+    }
+      // console.log(videoinput, audioinput, audiooutput);
+      // console.log("this..");
     };
     foo();
+    }
     // eslint-disable-next-line
   }, [videoinput]);
 
@@ -152,6 +171,7 @@ const NewLive = (props) => {
     }
   }
   useEffect(() => {
+    console.log("🥝settingcameralistener");
     window.addEventListener("beforeunload", stopStream)
     window.addEventListener("unload", stopStream)
     return() => {
@@ -161,6 +181,11 @@ const NewLive = (props) => {
   }, [videoPreview.current])
 
   useEffect(() => {
+    console.log("🌭video preview is changing.. expects called twice");
+  }, [videoPreview.current])
+
+  useEffect(() => {
+    console.log("🍒setupdefaultdevices");
     if(!videoinput.deviceId && (cameraDevices.length > 0)){
       handleCameraDeviceChange(cameraDevices[0])
     }
@@ -176,7 +201,7 @@ const NewLive = (props) => {
     const formData = new FormData();
     formData.append("file", file[0]);
     const url = await sulmoggoApi.img(formData);
-    console.log(url.data[0].url);
+    // console.log(url.data[0].url);
     setThumbnail(url.data[0].url);
   }, []);
 
@@ -197,7 +222,7 @@ const NewLive = (props) => {
               count={LiveVersion.length}
               onClick={() => {
                 setVersionOpen(!versionOpen);
-                console.log(versionOpen);
+                // console.log(versionOpen);
               }}
             >
               <input
@@ -287,7 +312,7 @@ const NewLive = (props) => {
               <SubTitle>방송화면</SubTitle>
               <div className="video">
                 {!playvideo && <img src="/images/icon_video_disabled.svg" alt="video off" />}
-                <video autoPlay ref={videoPreview} hidden={!playvideo}/>
+                <video autoPlay ref={videoPreview} hidden={!playvideo} muted={true}/>
               </div>
               <audio ref={speakerRef} hidden/>
             </div>

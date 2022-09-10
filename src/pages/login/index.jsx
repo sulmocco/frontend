@@ -15,7 +15,7 @@ const Login = () => {
     const [,setSignIn] = useRecoilState(SignInSelector)
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log(id_ref.current.value, pw_ref.current.value);
+        // console.log(id_ref.current.value, pw_ref.current.value);
         await sulmoggoApi.login({ id: id_ref.current.value, password: pw_ref.current.value })
             .then(res => {
                 setSignIn({ username: res.data.nickname, accessToken: res.headers.authorization, id: res?.data?.loginId, refreshToken: res.data.refreshToken })

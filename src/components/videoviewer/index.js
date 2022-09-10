@@ -53,7 +53,7 @@ const VideoViewer = (props) => {
           },
         })
         .then((response) => {
-          console.log("CREATE SESION", response);
+          // console.log("CREATE SESION", response);
           resolve(response.data.id);
         })
         .catch((response) => {
@@ -61,7 +61,7 @@ const VideoViewer = (props) => {
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
-            console.log(error);
+            // console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
                 OPENVIDU_SERVER_URL
@@ -104,7 +104,7 @@ const VideoViewer = (props) => {
           }
         )
         .then((response) => {
-          console.log("TOKEN", response);
+          // console.log("TOKEN", response);
           resolve(response.data.token);
         })
         .catch((error) => reject(error));
@@ -217,10 +217,10 @@ const VideoViewer = (props) => {
               var audioDevices = devices.filter(
                 (device) => device.kind === "audioinput"
               );
-              console.log(videoDevices);
+              // console.log(videoDevices);
 
               // --- 5) Get your own camera stream ---
-              console.log(props.selectedDevices);
+              // console.log(props.selectedDevices);
               let camera =
                 videoinput.deviceId ||
                 videoDevices[0].deviceId;
@@ -239,8 +239,8 @@ const VideoViewer = (props) => {
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: true, // Whether to mirror your local video or not
               });
-              console.log("🛑------newPublisher!!!------🛑");
-              console.log(newPublisher);
+              // console.log("🛑------newPublisher!!!------🛑");
+              // console.log(newPublisher);
               // --- 6) Publish your stream ---
               const version = props.version;
               if (
@@ -255,11 +255,11 @@ const VideoViewer = (props) => {
               setPublisher(newPublisher)}
             })
             .catch((error) => {
-              console.log(
-                "There was an error connecting to the session:",
-                error.code,
-                error.message
-              );
+              // console.log(
+              //   "There was an error connecting to the session:",
+              //   error.code,
+              //   error.message
+              // );
             });
         }
         );}
@@ -277,11 +277,11 @@ const VideoViewer = (props) => {
           videoSource: videoinput.deviceId,
           audioSource: audioinput.deviceId
         };
-        console.log(properties);
+        // console.log(properties);
         var newPublisher = OVRef.current.initPublisher(undefined, properties);
         await sessionRef.current.unpublish(mainStreamManager);
         await sessionRef.current.publish(newPublisher).then((res) => {
-          console.log(res);
+          // console.log(res);
         });
 
         setMainStreamManager(newPublisher)
@@ -294,8 +294,8 @@ const VideoViewer = (props) => {
 
   const getNicknameTag = (sub) => {
     // Gets the nickName of the user
-    console.log("✅-----GETNICKNAMETAG-----✅", sub.stream);
-    console.log(sub);
+    // console.log("✅-----GETNICKNAMETAG-----✅", sub.stream);
+    // console.log(sub);
     return JSON.parse(sub.stream.connection.data || "").clientData;
   }
 
@@ -336,7 +336,7 @@ const VideoViewer = (props) => {
                   <UserVideoComponent
                     streamManager={
                       subscribers.filter((x) => {
-                        console.log(getNicknameTag(x));
+                        // console.log(getNicknameTag(x));
                         return true;
                       })[0]
                     }

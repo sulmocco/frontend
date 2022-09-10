@@ -47,12 +47,15 @@ const GlobalStyles = createGlobalStyle`
     .errorPage{
         height: calc(100vh - 17.59rem);
         width: 100%;
-        padding-top: 11.2rem;
+        padding-top: ${props => props.theme.headerSize};
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         gap: 2rem;
+        @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+            padding-top: ${props => props.theme.headerSizeMobile};
+        }
         h1{
             font-size: 4rem;
             color: #B8BBC0;

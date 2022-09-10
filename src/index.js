@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import GlobalStyles from './styles/GlobalStyles';
 import { RecoilRoot } from 'recoil';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -16,7 +15,6 @@ root.render(
   <RecoilRoot>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <GlobalStyles />
         <App />
       </QueryClientProvider>
     </BrowserRouter>

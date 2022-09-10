@@ -111,10 +111,10 @@ const Navbar = styled.nav`
   display: flex;
   width: 100%;
   max-width: 1280px;
-  height: 11.2rem;
+  height: ${props => props.theme.headerSize};
   margin: 0 auto;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-    height: 8rem;
+    height: ${props => props.theme.headerSizeMobile};
   }
 `;
 

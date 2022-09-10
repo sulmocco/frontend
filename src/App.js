@@ -15,6 +15,7 @@ import sulmoggoApi from "./shared/apis";
 import { useRecoilState } from "recoil";
 import { MaintainUser, SignOutSelector } from "./recoil/userdata";
 import ErrorBoundary from "./ErrorBoundary";
+import GlobalStyles from "./styles/GlobalStyles";
 
 const Home = React.lazy(() => import("./pages/home"));
 const Auth = React.lazy(() => import("./pages/auth"));
@@ -56,6 +57,7 @@ function App() {
   return (
     <Suspense fallback={<Spinner />}>
       <ThemeProvider theme={Theme}>
+        <GlobalStyles />
         <ErrorBoundary>
         <Routes>
           <Route path="/chat/:chatRoomId" element={<Chat />} />

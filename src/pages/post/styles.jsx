@@ -5,6 +5,9 @@ export const PostWrap = styled.section`
     font-size: 3.2rem;
     margin-top: 100px;
   }
+  .tab-item:last-child {
+    display: none !important;
+  }
 `
 export const Title = styled.div`
   div {

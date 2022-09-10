@@ -61,6 +61,33 @@ export const PageTitle = styled.h1`
   }
 `;
 
+export const TableCont = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  .top {
+    width: 100%;
+    background-color: ${props => props.theme.bg_light_gray};
+    padding-bottom: 4rem;
+  }
+  .bottom {
+    width: 100%;
+    background-color: #fff;
+    padding-top: 4rem;
+    padding-bottom: 12.8rem;
+    .rightWrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.4rem;
+    }
+  }
+  section {
+      width: ${props => props.theme.contentWidth};
+      margin: 0 auto;
+    }
+`
+
 export const AlcoholCategories = styled.div`
   display: flex;
   flex-direction: row;
@@ -103,13 +130,6 @@ export const SearchBoxWrapper = styled.div`
       color: ${(props) => props.theme.black_2};
     }
   }
-  .rightWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.4rem;
-  }
 `;
 
 export const SortButton = styled.button`
@@ -122,66 +142,52 @@ export const SortButton = styled.button`
     props.checked ? props.theme.black_2 : props.theme.grey_03};
 `;
 
-export const WriteButton = styled(Link)`
-  position: relative;
-  box-sizing: inherit;
-  width: 100%;
+export const WirteButton = styled(Link)`
+  position: fixed;
+  right: calc((100vw - 128rem)/2);
+  bottom: 5rem;
+  background-color: #fff;
+  border-radius: 8rem;
+  border: .2rem solid ${props => props.theme.secondary};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 8rem;
+  height: 8rem;
+  overflow: hidden;
+  transition: all 0.2s;
   cursor: pointer;
-  &:hover .fixed {
-      width: 19.6rem;
+  &:hover {
+    width: 19.6rem;
   }
-  &:hover .fixed > p {
-    display: flex;
+  &:hover p {
+    display: block;
   }
-  .absolute{
+  p{
     position: absolute;
-    top: 0%;
-    left: calc(100% - 8rem);
+    left: 0;
+    flex-wrap: nowrap;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -.02;
+    line-height: 2.8rem;
+    color: ${props => props.theme.grey_02};
+    margin: 1.2rem 0 1.2rem 3.2rem;
+    text-align: left;
+    display: none;
+    cursor: pointer;
   }
-  .fixed{
-    position: fixed;
-    top: 90vh;
-    background-color: #fff;
-    border: .2rem solid ${props => props.theme.secondary};
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  span{
+    position: absolute;
+    right: 0;
+    display: block;
     width: 8rem;
     height: 8rem;
-    border-radius: 10rem;
-    box-shadow: ${props => props.theme.shadow_gray};
-    z-index: 400;
-    transition: all .3s ease-in;
+    border-radius: 8rem;
+    background: url('/images/icon_write.svg') no-repeat center;
+    background-color: ${props => props.theme.secondary};
+    background-size: 4rem 4.2rem;
     cursor: pointer;
-    overflow: hidden;
-    p{
-      position: absolute;
-      left: 3.2rem;
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 2.8rem;
-      letter-spacing: -0.02rem;
-      display: none;
-      flex-wrap: nowrap;
-      color: ${props => props.theme.grey_01};
-      cursor: pointer;
-    }
-    span {
-      position: absolute;
-      top:-10;
-      right: -.1rem;
-      background-color: ${props => props.theme.secondary};
-      width: 8rem;
-      height: 8rem;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-  img{
-    width: 3.2rem;
-    height: 3.52rem;
   }
 `
 

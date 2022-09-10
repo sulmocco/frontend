@@ -24,16 +24,23 @@ import {
 import moment from "moment";
 import VideoViewer from "../../components/videoviewer";
 import AddFriendModal from "../../components/addfriendmodal";
-import ShareModal from '../../components/sharemodal';
+import ShareModal from "../../components/sharemodal";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { playvideoState, playaudioState, videoinputState, audioinputState, audiooutputState, setDeviceForState } from "../../recoil/mediaDevices";
+import {
+  playvideoState,
+  playaudioState,
+  videoinputState,
+  audioinputState,
+  audiooutputState,
+  setDeviceForState,
+} from "../../recoil/mediaDevices";
 import DeviceSetup from "../../components/devicesetup";
 
 const Chat = (props) => {
   const [content, setContent] = useState([]);
   const [roomData, setRoomData] = useState(null);
   const [usercount, setUserCount] = useState(0);
-  const [deviceFor, setDeviceFor] = useRecoilState(setDeviceForState)
+  const [deviceFor, setDeviceFor] = useRecoilState(setDeviceForState);
 
   const [selectedFriend, setSelectedFriend] = useState("");
   const [openFriendModal, setOpenFriendModal] = useState(false);
@@ -48,9 +55,9 @@ const Chat = (props) => {
   const username = localStorage.getItem("username");
   const naviagte = useNavigate();
 
-  const [, setVideoinput] = useRecoilState(videoinputState)
-  const [, setAudioinput] = useRecoilState(audioinputState)
-  const [, setAudiooutput] = useRecoilState(audiooutputState)
+  const [, setVideoinput] = useRecoilState(videoinputState);
+  const [, setAudioinput] = useRecoilState(audioinputState);
+  const [, setAudiooutput] = useRecoilState(audiooutputState);
   const [playvideo, setPlayvideo] = useRecoilState(playvideoState);
   const [playaudio, setPlayaudio] = useRecoilState(playaudioState);
 
@@ -58,9 +65,10 @@ const Chat = (props) => {
   const [audiosOpen, setAudiosOpen] = useState(false);
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
-  const [speakerDevices, setSpeakerDevices] = useState([])
-  const speakerRef = useRef()
+  const [speakerDevices, setSpeakerDevices] = useState([]);
+  const speakerRef = useRef();
 
+  const [speakerAvailable, setSpeakerAvailable] = useState(false);
   let isHost = username === roomData?.username;
   const timer = useRef(null);
   const clientRef = useRef(null);
@@ -69,16 +77,16 @@ const Chat = (props) => {
   // 공유모달 관련
   const [isOpen, setOpen] = useState();
   const onClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   const copy = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
-      alert('링크가 복사되었습니다')
+      alert("링크가 복사되었습니다");
     } catch (error) {
-      alert(error, '복사실패')
+      alert(error, "복사실패");
     }
-  }
+  };
 
   const connect = () => {
     clientRef.current = new Client({
@@ -151,27 +159,32 @@ const Chat = (props) => {
 
   // 카메라, 마이크, 스피커 목록 가져오기
   const getDevices = async () => {
-    let devices = []
-    devices = await navigator.mediaDevices.enumerateDevices();
-    setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
-    setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
-    setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
-  }
-
+    let devices = [];
+    try {
+      await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      devices = await navigator.mediaDevices.enumerateDevices();
+      setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
+      setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
+      setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
+      setSpeakerAvailable(speakerRef.current.setSinkId !== undefined);
+    } catch {
+      console.log("카메라 혹은 마이크 권한이 없습니다.");
+    }
+  };
 
   const handleCameraDeviceChange = (device) => {
-    setVideoinput(device)
-    setCamerasOpen(false)
+    setVideoinput(device);
+    setCamerasOpen(false);
   };
   const handleAudioDeviceChange = (device) => {
-    setAudioinput(device)
-    setAudiosOpen(false)
+    setAudioinput(device);
+    setAudiosOpen(false);
   };
   const handleSpeakerDeviceChange = (device) => {
-    setAudiooutput(device)
-    speakerRef.current.setSinkId(device.deviceId)
-    setAudiosOpen(false)
-  }
+    setAudiooutput(device);
+    speakerRef.current.setSinkId(device.deviceId);
+    setAudiosOpen(false);
+  };
 
   // 친구추가 모달
   const onClickModalOpen = (username) => {
@@ -186,7 +199,7 @@ const Chat = (props) => {
   // 기기 목록 가져오기
   useEffect(() => {
     getDevices();
-  }, [])
+  }, []);
 
   // 소켓 연결 및 방 데이터 로드
   // roomId가 바뀔때마다 다시 연결.
@@ -202,8 +215,8 @@ const Chat = (props) => {
         // console.log(clientRef.current.connected);
       } catch (err) {
         // console.log(err);
-        alert("이미 입장한 방입니다!")
-        window.location.href = "/rooms"
+        alert("이미 입장한 방입니다!");
+        window.location.href = "/rooms";
       }
     };
     foo();
@@ -244,214 +257,263 @@ const Chat = (props) => {
     // eslint-disable-next-line
   }, [username, roomData?.username]);
 
-
-  if((deviceFor || false) === chatRoomId){
-  return (
-    <LiveWrapper>
-      <div className="live_left_box">
-        <div className="upper">
-          <ProfileWrap>
-            <ProfileCircle />
-            <div style={{ width: '100%' }}>
-              <span className='shareWrap'>
-                <h1>{roomData?.title || "방제목이 없습니다."}</h1>
-                <button className='share' onClick={() => setOpen(true)}>공유하기</button>
-                <ShareModal isOpen={isOpen} onClose={onClose} copy={copy} right='0' top='4.8rem' onair chatRoomId={chatRoomId} />
-              </span>
-              <div className="userWrap">
-                <div className="username">
-                  {roomData?.username || "사용자가 없습니다."}
+  if ((deviceFor || false) === chatRoomId) {
+    return (
+      <LiveWrapper>
+        <div className="live_left_box">
+          <div className="upper">
+            <ProfileWrap>
+              <ProfileCircle />
+              <div style={{ width: "100%" }}>
+                <span className="shareWrap">
+                  <h1>{roomData?.title || "방제목이 없습니다."}</h1>
+                  <button className="share" onClick={() => setOpen(true)}>
+                    공유하기
+                  </button>
+                  <ShareModal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    copy={copy}
+                    right="0"
+                    top="4.8rem"
+                    onair
+                    chatRoomId={chatRoomId}
+                  />
+                </span>
+                <div className="userWrap">
+                  <div className="username">
+                    {roomData?.username || "사용자가 없습니다."}
+                  </div>
+                  {!isHost && (
+                    <AddHostFriendButton
+                      onClick={() => onClickModalOpen(roomData?.username)}
+                    >
+                      <img src="/images/icon_addfriend.svg" alt="add friend" />
+                      <span>친구추가</span>
+                    </AddHostFriendButton>
+                  )}
                 </div>
-                {!isHost && (
-                  <AddHostFriendButton onClick={() => onClickModalOpen(roomData?.username)}>
-                    <img src="/images/icon_addfriend.svg" alt="add friend" />
-                    <span>친구추가</span>
-                  </AddHostFriendButton>
-                )}
+              </div>
+            </ProfileWrap>
+            <div className="infoWrap">
+              <div className="tagWrap">
+                <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
+                <SnackTag>{roomData?.food || "안주"}</SnackTag>
+                <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
+              </div>
+              <div className="statWrap">
+                <img src="/images/icon_clock_grey_02.svg" alt="clock" />
+                <span>{time || "00:00:00"}</span>
+                <Separator />
+                <img src="/images/icon_people_grey_02.svg" alt="people" />
+                <span>{usercount || 0}</span>
               </div>
             </div>
-          </ProfileWrap>
-          <div className="infoWrap">
-            <div className="tagWrap">
-              <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
-              <SnackTag>{roomData?.food || "안주"}</SnackTag>
-              <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
-            </div>
-            <div className="statWrap">
-              <img src="/images/icon_clock_grey_02.svg" alt="clock" />
-              <span>{time || "00:00:00"}</span>
-              <Separator />
-              <img src="/images/icon_people_grey_02.svg" alt="people" />
-              <span>{usercount || 0}</span>
-            </div>
           </div>
-        </div>
-        <VideoContainer host={roomData?.version?.startsWith("host")}>
-          <audio ref={speakerRef} hidden />
-          <div className="videoWrap">
-            {roomData && (
-              <VideoViewer
-                host={roomData.username}
-                username={username ? username : "anonymous"}
-                chatRoomId={chatRoomId}
-                version={roomData.version}
-                openModal={onClickModalOpen}
-              />
-            )}
-          </div>
-          {((roomData?.version.startsWith("host") &&
-            username === roomData?.username) ||
-            roomData?.version.startsWith("friend")) && (
-            <div className="videoButtonWrap">
-              <VideoButton
-                play={playvideo}
-                open={camerasOpen}
-                count={cameraDevices.length + 1}
-                onBlur={() => setCamerasOpen(false)}
-              >
-                <div className="devicesWrap">
-                  <div className="deviceKind">
-                    비디오 설정
-                  </div>
-                  {cameraDevices &&
-                    cameraDevices.map((x) => {
-                      return (
-                        <div
-                          className="device"
-                          onClick={() => handleCameraDeviceChange(x)}
-                          title={x.label}
-                        >
-                          {x.label}
-                        </div>
-                      );
-                    })}
-                </div>
-                <img
-                  src={`/images/icon_video_${
-                    playvideo ? "available" : "disabled"
-                  }.svg`}
-                  alt="video"
-                  onClick={() => setPlayvideo(!playvideo)}
+          <VideoContainer host={roomData?.version?.startsWith("host")}>
+            <audio ref={speakerRef} hidden />
+            <div className="videoWrap">
+              {roomData && (
+                <VideoViewer
+                  host={roomData.username}
+                  username={username ? username : "anonymous"}
+                  chatRoomId={chatRoomId}
+                  version={roomData.version}
+                  openModal={onClickModalOpen}
                 />
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => setCamerasOpen(!camerasOpen)}>
-                <rect width="32" height="32" rx="10" fill="#F2F3F3"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z" fill="#7A7A80"/>
-                </svg>
-              </VideoButton>
-              <VideoButton
-                play={playaudio}
-                open={audiosOpen}
-                count={audioDevices.length + speakerDevices.length + 2}
-                onBlur={() => setAudiosOpen(false)}
-              >
-                <div className="devicesWrap">
-                  <div className="deviceKind">
-                    마이크 설정
-                  </div>
-                  {audioDevices &&
-                    audioDevices.map((x) => {
-                      return (
-                        <div
-                          className="device"
-                          onClick={() => handleAudioDeviceChange(x)}
-                          title={x.label}
-                        >
-                          {x.label}
-                        </div>
-                      );
-                    })}
-                    <div className="deviceKind">
-                    스피커 설정
-                  </div>
-                  {speakerDevices &&
-                    speakerDevices.map((x) => {
-                      return (
-                        <div
-                          className="device"
-                          onClick={() => handleSpeakerDeviceChange(x)}
-                          title={x.label}
-                        >
-                          {x.label}
-                        </div>
-                      );
-                    })}
-                </div>
-                <img
-                  src={`/images/icon_audio_${
-                    playaudio ? "available" : "disabled"
-                  }.svg`}
-                  alt="audio"
-                  onClick={() => setPlayaudio(!playaudio)}
-                />
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => setAudiosOpen(!audiosOpen)}>
-                <rect width="32" height="32" rx="10" fill="#F2F3F3"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z" fill="#7A7A80"/>
-                </svg>
-              </VideoButton>
+              )}
             </div>
-          )}
-        </VideoContainer>
-      </div>
-      <div className="live_right_box">
-        <ChatHeader>
-          <div>
-            <img src="/images/icon_chat.svg" alt="chat" />
-            <span>채팅</span>
-          </div>
-          <button
-            onClick={async (e) => {
-              e.preventDefault();
-              if (window.confirm("채팅방을 나가시겠습니까?")) {
-                // console.log("나가기버튼. 내용 : ", chatRef.current.value);
-                window.location.href = "/rooms"
-              }
-            }}
-          >
-            <img src="/images/icon_out.svg" alt="out" />
-          </button>
-        </ChatHeader>
-        <ChatWrapper>
-          {content.map((data, idx) => {
-            return (
-              <ChatContent
-                key={Math.random().toString(36).substr(2, 11)}
-                ref={idx !== content.length - 1 ? null : lastOne}
-              >
-                <span className="chatuser">{data.sender}</span>
-                <span className="chattext">: {data.message}</span>
-              </ChatContent>
-            );
-          })}
-          <ChatContent />
-        </ChatWrapper>
-        <ChatInputWrapper>
-          <form action="">
-            <div className="sendInputWrapper">
-              <input
-                type="text"
-                placeholder="채팅을 입력해 주세요"
-                ref={chatRef}
-              />
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (chatRef.current.value !== "") {
-                    sendMessage();
+            {((roomData?.version.startsWith("host") &&
+              username === roomData?.username) ||
+              roomData?.version.startsWith("friend")) && (
+              <div className="videoButtonWrap">
+                <VideoButton
+                  play={playvideo}
+                  open={camerasOpen}
+                  count={(cameraDevices.length || 1) + 1}
+                  onBlur={() => setCamerasOpen(false)}
+                >
+                  <div className="devicesWrap">
+                    <div className="deviceKind">비디오 설정</div>
+                    {cameraDevices.length > 0 ? (
+                      cameraDevices.map((x) => {
+                        return (
+                          <div
+                            className="device"
+                            onClick={() => handleCameraDeviceChange(x)}
+                            title={x.label}
+                          >
+                            {x.label}
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="device">카메라 없음</div>
+                    )}
+                  </div>
+                  <img
+                    src={`/images/icon_video_${
+                      playvideo ? "available" : "disabled"
+                    }.svg`}
+                    alt="video"
+                    onClick={() => setPlayvideo(!playvideo)}
+                  />
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    onClick={() => setCamerasOpen(!camerasOpen)}
+                  >
+                    <rect width="32" height="32" rx="10" fill="#F2F3F3" />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z"
+                      fill="#7A7A80"
+                    />
+                  </svg>
+                </VideoButton>
+                <VideoButton
+                  play={playaudio}
+                  open={audiosOpen}
+                  count={
+                    (audioDevices.length || 1) +
+                    (speakerAvailable ? speakerDevices.length || 1 : 0) +
+                    (speakerAvailable ? 2 : 1)
                   }
-                }}
-              >
-                <img src="/images/icon_send.svg" alt="send airplane" />
-              </button>
+                  onBlur={() => setAudiosOpen(false)}
+                >
+                  <div className="devicesWrap">
+                    <div className="deviceKind">마이크 설정</div>
+                    {audioDevices.length > 0 ? (
+                      audioDevices.map((x) => {
+                        return (
+                          <div
+                            className="device"
+                            onClick={() => handleAudioDeviceChange(x)}
+                            title={x.label}
+                          >
+                            {x.label}
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="device">마이크 없음</div>
+                    )}
+                    {speakerAvailable && (
+                      <div className="deviceKind">스피커 설정</div>
+                    )}
+                    {speakerAvailable &&
+                      (speakerDevices.length > 0 ? (
+                        speakerDevices.map((x) => {
+                          return (
+                            <div
+                              className="device"
+                              onClick={() => handleSpeakerDeviceChange(x)}
+                              title={x.label}
+                            >
+                              {x.label}
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div className="device">스피커 없음</div>
+                      ))}
+                  </div>
+                  <img
+                    src={`/images/icon_audio_${
+                      playaudio ? "available" : "disabled"
+                    }.svg`}
+                    alt="audio"
+                    onClick={() => setPlayaudio(!playaudio)}
+                  />
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    onClick={() => setAudiosOpen(!audiosOpen)}
+                  >
+                    <rect width="32" height="32" rx="10" fill="#F2F3F3" />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z"
+                      fill="#7A7A80"
+                    />
+                  </svg>
+                </VideoButton>
+              </div>
+            )}
+          </VideoContainer>
+        </div>
+        <div className="live_right_box">
+          <ChatHeader>
+            <div>
+              <img src="/images/icon_chat.svg" alt="chat" />
+              <span>채팅</span>
             </div>
-          </form>
-        </ChatInputWrapper>
-      </div>
-      {openFriendModal && (
-        <AddFriendModal username={selectedFriend} onClose={onClickModalClose} />
-      )}
-    </LiveWrapper>
-  )}else{
-    return <DeviceSetup deviceFor={deviceFor} setDeviceFor={setDeviceFor}/>
+            <button
+              onClick={async (e) => {
+                e.preventDefault();
+                if (window.confirm("채팅방을 나가시겠습니까?")) {
+                  // console.log("나가기버튼. 내용 : ", chatRef.current.value);
+                  window.location.href = "/rooms";
+                }
+              }}
+            >
+              <img src="/images/icon_out.svg" alt="out" />
+            </button>
+          </ChatHeader>
+          <ChatWrapper>
+            {content.map((data, idx) => {
+              return (
+                <ChatContent
+                  key={Math.random().toString(36).substr(2, 11)}
+                  ref={idx !== content.length - 1 ? null : lastOne}
+                >
+                  <span className="chatuser">{data.sender}</span>
+                  <span className="chattext">: {data.message}</span>
+                </ChatContent>
+              );
+            })}
+            <ChatContent />
+          </ChatWrapper>
+          <ChatInputWrapper>
+            <form action="">
+              <div className="sendInputWrapper">
+                <input
+                  type="text"
+                  placeholder="채팅을 입력해 주세요"
+                  ref={chatRef}
+                />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (chatRef.current.value !== "") {
+                      sendMessage();
+                    }
+                  }}
+                >
+                  <img src="/images/icon_send.svg" alt="send airplane" />
+                </button>
+              </div>
+            </form>
+          </ChatInputWrapper>
+        </div>
+        {openFriendModal && (
+          <AddFriendModal
+            username={selectedFriend}
+            onClose={onClickModalClose}
+          />
+        )}
+      </LiveWrapper>
+    );
+  } else {
+    return <DeviceSetup deviceFor={deviceFor} setDeviceFor={setDeviceFor} />;
   }
 };
 

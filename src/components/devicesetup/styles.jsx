@@ -82,7 +82,7 @@ export const VersionInputWrap = styled.div`
 `;
 
 export const SubtitleWrapper = styled.div`
-  margin-top: ${props => props.mt ? props.mt : "4rem"};
+  margin-top: ${(props) => (props.mt ? props.mt : "4rem")};
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -178,7 +178,7 @@ export const VideoWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    img{
+    img {
       width: 25rem;
       height: 25rem;
     }
@@ -204,6 +204,13 @@ export const VideoDevicesDropdownWrapper = styled.div`
   /* display: flex;
 flex-direction: row; */
   position: relative;
+  .notAvailable {
+    padding: 1.6rem 2rem;
+    margin-top: 1.6rem;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    color: ${(props) => props.theme.grey_03};
+  }
   .inputWrap {
     display: flex;
     flex-direction: row;
@@ -216,8 +223,11 @@ flex-direction: row; */
     font-size: 2rem;
     line-height: 2.4rem;
     width: 100%;
-    &::placeholder {
+    &::placeholder,
+    &::-webkit-input-placeholder,
+    input::-webkit-input-placeholder {
       color: ${(props) => props.theme.grey_02};
+      opacity: 1;
     }
     input {
       flex-grow: 1;
@@ -229,6 +239,10 @@ flex-direction: row; */
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      background-color: transparent;
+      color: ${(props) => props.theme.grey_02};
+      -webkit-text-fill-color: ${(props) => props.theme.grey_02};
+      opacity: 1;
     }
   }
   img {

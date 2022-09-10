@@ -160,6 +160,7 @@ const VideoViewer = (props) => {
     // --- 1) Get an OpenVidu object ---
 
     OVRef.current = new OpenVidu();
+    OVRef.current.enableProdMode()
 
     // --- 2) Init a session ---
 
@@ -237,7 +238,7 @@ const VideoViewer = (props) => {
                 resolution: "400x272", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-                mirror: true, // Whether to mirror your local video or not
+                mirror: false, // Whether to mirror your local video or not
               });
               // console.log("🛑------newPublisher!!!------🛑");
               // console.log(newPublisher);

@@ -45,6 +45,8 @@ export const VersionInputWrap = styled.div`
     height: 3.6rem;
     width: 12rem;
     color: ${(props) => props.theme.primary};
+    -webkit-text-fill-color: ${(props) => props.theme.primary};
+    opacity: 1;
     font-weight: 500;
     cursor: pointer;
   }
@@ -81,7 +83,7 @@ export const VersionInputWrap = styled.div`
 `;
 
 export const SubtitleWrapper = styled.div`
-  margin-top: ${props => props.mt ? props.mt : "4rem"};
+  margin-top: ${(props) => (props.mt ? props.mt : "4rem")};
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -108,20 +110,20 @@ export const SubtitleWrapper = styled.div`
       color: inherit;
     }
   }
-  .guidebubble{
-    border-image: url('/images/img_guide_bubble.svg');
+  .guidebubble {
+    border-image: url("/images/img_guide_bubble.svg");
     border-image-slice: 18 13 13 13 fill;
     border-image-width: auto;
     border-image-outset: 0px 0px 0px 0px;
     border-image-repeat: stretch stretch;
     border-style: solid;
-    padding: .6rem .9rem .6rem 1.8rem;
+    padding: 0.6rem 0.9rem 0.6rem 1.8rem;
     font-weight: 400;
     font-size: 1.2rem;
     line-height: 1.4rem;
     letter-spacing: -0.06em;
-    margin-top: .3rem;
-    color: ${props => props.theme.primary}
+    margin-top: 0.3rem;
+    color: ${(props) => props.theme.primary};
   }
 `;
 
@@ -191,7 +193,7 @@ export const VideoWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    img{
+    img {
       width: 25rem;
       height: 25rem;
     }
@@ -217,6 +219,13 @@ export const VideoDevicesDropdownWrapper = styled.div`
   /* display: flex;
 flex-direction: row; */
   position: relative;
+  .notAvailable {
+    padding: 1.6rem 2rem;
+    margin-top: 1.6rem;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    color: ${(props) => props.theme.grey_03};
+  }
   .inputWrap {
     display: flex;
     flex-direction: row;
@@ -229,8 +238,11 @@ flex-direction: row; */
     font-size: 2rem;
     line-height: 2.4rem;
     width: 100%;
-    &::placeholder {
+    &::placeholder,
+    &::-webkit-input-placeholder,
+    input::-webkit-input-placeholder {
       color: ${(props) => props.theme.grey_02};
+      opacity: 1;
     }
     input {
       flex-grow: 1;
@@ -242,6 +254,10 @@ flex-direction: row; */
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      background-color: transparent;
+      color: ${(props) => props.theme.grey_02};
+      -webkit-text-fill-color: ${(props) => props.theme.grey_02};
+      opacity: 1;
     }
   }
   img {

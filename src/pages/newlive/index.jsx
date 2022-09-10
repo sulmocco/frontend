@@ -26,31 +26,39 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { audioinputState, audiooutputState, playaudioState, playvideoState, setDeviceForState, videoinputState } from "../../recoil/mediaDevices";
+import {
+  audioinputState,
+  audiooutputState,
+  playaudioState,
+  playvideoState,
+  setDeviceForState,
+  videoinputState,
+} from "../../recoil/mediaDevices";
 
 const NewLive = (props) => {
   const alcohol = useRef({});
   const videoPreview = useRef();
-  const speakerRef = useRef()
-  const queryClient = useQueryClient()
-  const [videoinput, setVideoinput] = useRecoilState(videoinputState)
-  const [audioinput, setAudioinput] = useRecoilState(audioinputState)
-  const [audiooutput, setAudiooutput] = useRecoilState(audiooutputState)
-  const [,setDeviceFor] = useRecoilState(setDeviceForState)
+  const speakerRef = useRef();
+  const queryClient = useQueryClient();
+  const [videoinput, setVideoinput] = useRecoilState(videoinputState);
+  const [audioinput, setAudioinput] = useRecoilState(audioinputState);
+  const [audiooutput, setAudiooutput] = useRecoilState(audiooutputState);
+  const [, setDeviceFor] = useRecoilState(setDeviceForState);
 
   const [versionOpen, setVersionOpen] = useState(false);
   const [camerasOpen, setCamerasOpen] = useState(false);
   const [audiosOpen, setAudiosOpen] = useState(false);
-  const [speakersOpen, setSpeakersOpen] = useState(false)
+  const [speakersOpen, setSpeakersOpen] = useState(false);
   const [showOpen, setShowOpen] = useState(false);
 
   const [cameraDevices, setCameraDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
-  const [speakerDevices, setSpeakerDevices] = useState([])
-  const [, setPlayaudio] = useRecoilState(playaudioState)
-  const [playvideo, setPlayvideo] = useRecoilState(playvideoState)
+  const [speakerDevices, setSpeakerDevices] = useState([]);
+  const [, setPlayaudio] = useRecoilState(playaudioState);
+  const [playvideo, setPlayvideo] = useRecoilState(playvideoState);
+  const [speakerAvailable, setSpeakerAvailable] = useState(false);
 
-  const track = videoPreview.current?.srcObject?.getVideoTracks()[0]
+  const track = videoPreview.current?.srcObject?.getVideoTracks()[0];
 
   const [thumbnail, setThumbnail] = useState(null);
   const {
@@ -69,15 +77,13 @@ const NewLive = (props) => {
   });
   alcohol.current = watch("alcohol", "");
 
-  console.log("🌿component");
-
   const navigate = useNavigate();
   const mutation = useMutation((data) => sulmoggoApi.postChatRoom(data), {
     onSuccess: (res) => {
-      alert("술약속을 잡았습니다!")
+      alert("술약속을 잡았습니다!");
       // console.log(res);
       queryClient.invalidateQueries("rooms");
-      setDeviceFor(res.data)
+      setDeviceFor(res.data);
       navigate(`/render/live/` + res.data, {
         replace: true,
         state: { data: res.data },
@@ -101,101 +107,99 @@ const NewLive = (props) => {
   };
 
   const initMedia = async () => {
-    await navigator.mediaDevices.getUserMedia({video: true, audio: true})
-    await navigator.mediaDevices.enumerateDevices().then(devices => {
+    await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    await navigator.mediaDevices.enumerateDevices().then((devices) => {
       setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
       setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
       setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
     });
-  }
+    setSpeakerAvailable(speakerRef.current.setSinkId !== undefined);
+  };
 
   const getUserMedia = async (constraints) => {
-    if(cameraDevices.length > 0 && audioDevices.length > 0){
-      await navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then((stream) => {
-        if("srcObject" in videoPreview.current){
+    if (cameraDevices.length > 0 && audioDevices.length > 0) {
+      await navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+        if ("srcObject" in videoPreview.current) {
           videoPreview.current.srcObject = stream;
-          console.log("🍇current is changing...");
           // videoPreview.current.muted = true
-        }else{
-          videoPreview.current.src = window.URL.createObjectURL(stream)
+        } else {
+          videoPreview.current.src = window.URL.createObjectURL(stream);
         }
-    });
+      });
     }
-    
   };
 
   const handleCameraDeviceChange = (device) => {
     setValue("video", device ? device.label : "없음");
-    setVideoinput(device ? device : cameraDevices[0])
-    device ? setPlayvideo(true) : setPlayvideo(false)
+    setVideoinput(device ? device : cameraDevices[0]);
+    device ? setPlayvideo(true) : setPlayvideo(false);
   };
   const handleAudioDeviceChange = (device) => {
     setValue("audio", device ? device.label : "없음");
-    setAudioinput(device ? device : audioDevices[0])
-    device ? setPlayaudio(true) : setPlayaudio(false)
+    setAudioinput(device ? device : audioDevices[0]);
+    device ? setPlayaudio(true) : setPlayaudio(false);
     // setAudio(device);
   };
   const handleSpeakerDeviceChange = (device) => {
     setValue("speaker", device ? device.label : "없음");
-    setAudiooutput(device ? device : speakerDevices[0])
-    speakerRef.current.setSinkId(device.deviceId)
-  }
+    setAudiooutput(device ? device : speakerDevices[0]);
+    speakerRef.current.setSinkId(device.deviceId);
+  };
 
   useEffect(() => {
     console.log("initializing media devices...");
-    initMedia()
-  }, [])
+    initMedia();
+  }, []);
 
   useEffect(() => {
-    if(videoinput.deviceId !== null){
-    const foo = async () => {
-      if(playvideo){
-        await getUserMedia({ video: {deviceId: videoinput.deviceId }, audio: true });
-        console.log("🍎getusermedia");
-    }
-      // console.log(videoinput, audioinput, audiooutput);
-      // console.log("this..");
-    };
-    foo();
+    if (videoinput.deviceId !== null) {
+      const foo = async () => {
+        if (playvideo) {
+          await getUserMedia({
+            video: { deviceId: videoinput.deviceId },
+            audio: true,
+          });
+        }
+        // console.log(videoinput, audioinput, audiooutput);
+        // console.log("this..");
+      };
+      foo();
     }
     // eslint-disable-next-line
   }, [videoinput]);
 
   const stopStream = () => {
-    if(videoPreview.current){
-    const stream = videoPreview?.current?.srcObject?.getTracks()[0]
-    stream.stop();
-    videoPreview.current = null
+    if (videoPreview.current) {
+      const stream = videoPreview?.current?.srcObject?.getTracks()[0];
+      stream.stop();
+      videoPreview.current = null;
     }
-  }
+  };
   useEffect(() => {
     console.log("🥝settingcameralistener");
-    window.addEventListener("beforeunload", stopStream)
-    window.addEventListener("unload", stopStream)
-    return() => {
-      window.removeEventListener("beforeunload", stopStream)
-      window.removeEventListener("unload", stopStream)
-    }
-  }, [videoPreview.current])
+    window.addEventListener("beforeunload", stopStream);
+    window.addEventListener("unload", stopStream);
+    return () => {
+      window.removeEventListener("beforeunload", stopStream);
+      window.removeEventListener("unload", stopStream);
+    };
+  }, [videoPreview.current]);
 
   useEffect(() => {
-    console.log("🌭video preview is changing.. expects called twice");
-  }, [videoPreview.current])
-
-  useEffect(() => {
-    console.log("🍒setupdefaultdevices");
-    if(!videoinput.deviceId && (cameraDevices.length > 0)){
-      handleCameraDeviceChange(cameraDevices[0])
+    if (!videoinput.deviceId && cameraDevices.length > 0) {
+      handleCameraDeviceChange(cameraDevices[0]);
     }
-    if(!audioinput.deviceId && (audioDevices.length > 0)){
-      handleAudioDeviceChange(audioDevices[0])
+    if (!audioinput.deviceId && audioDevices.length > 0) {
+      handleAudioDeviceChange(audioDevices[0]);
     }
-    if(!audiooutput.deviceId && (speakerDevices.length > 0)){
-      handleSpeakerDeviceChange(speakerDevices[0])
+    if (
+      speakerAvailable &&
+      !audiooutput.deviceId &&
+      speakerDevices.length > 0
+    ) {
+      handleSpeakerDeviceChange(speakerDevices[0]);
     }
-  }, [cameraDevices, audioDevices, speakerDevices])
+  }, [cameraDevices, audioDevices, speakerDevices]);
 
   const onDrop = useCallback(async (file) => {
     const formData = new FormData();
@@ -276,9 +280,7 @@ const NewLive = (props) => {
           />
           <SubtitleWrapper mt={"5.6rem"}>
             <SubTitle>추천술 선택</SubTitle>
-            <div className="guidebubble">
-                술을 선택해 주세요
-            </div>
+            <div className="guidebubble">술을 선택해 주세요</div>
             {errors.alcohol && (
               <div className="error">
                 <img src="/images/icon_information.svg" alt="information" />
@@ -311,10 +313,17 @@ const NewLive = (props) => {
             <div>
               <SubTitle>방송화면</SubTitle>
               <div className="video">
-                {!playvideo && <img src="/images/icon_video_disabled.svg" alt="video off" />}
-                <video autoPlay ref={videoPreview} hidden={!playvideo} muted={true}/>
+                {!playvideo && (
+                  <img src="/images/icon_video_disabled.svg" alt="video off" />
+                )}
+                <video
+                  autoPlay
+                  ref={videoPreview}
+                  hidden={!playvideo}
+                  muted={true}
+                />
               </div>
-              <audio ref={speakerRef} hidden/>
+              <audio ref={speakerRef} hidden />
             </div>
             <div>
               <SubTitle>썸네일 이미지</SubTitle>
@@ -436,39 +445,51 @@ const NewLive = (props) => {
                 count={speakerDevices.length + 1}
                 onClick={() => setSpeakersOpen(!speakersOpen)}
               >
-                <div className="inputWrap">
-                  <input
-                    type="text"
-                    placeholder="-- 스피커 선택 --"
-                    small
-                    disabled
-                    {...register("speaker")}
-                    defaultValue={audiooutput.label}
-                  />
-                  <img src="/images/icon_dropdown_grey_02.svg" alt="dropdown"/>
-                </div>
-                <div className="devicesWrap">
-                  {speakerDevices &&
-                    speakerDevices.map((x) => {
-                      return (
-                        <div
-                          className="device"
-                          onClick={() => handleSpeakerDeviceChange(x)}
-                          title={x.label}
-                        >
-                          {x.label}
-                        </div>
-                      );
-                    })}
-                  <div
-                    className="device"
-                    onClick={() => {
-                      handleSpeakerDeviceChange(null);
-                    }}
-                  >
-                    없음
-                  </div>
-                </div>
+                {!speakerAvailable && (
+                  <p className="inputWrap notAvailable">
+                    스피커 선택을 지원하지 않는 브라우저입니다.
+                  </p>
+                )}
+                {speakerAvailable && (
+                  <>
+                    <div className="inputWrap">
+                      <input
+                        type="text"
+                        placeholder="-- 스피커 선택 --"
+                        small
+                        disabled
+                        {...register("speaker")}
+                        defaultValue={audiooutput.label}
+                      />
+                      <img
+                        src="/images/icon_dropdown_grey_02.svg"
+                        alt="dropdown"
+                      />
+                    </div>
+                    <div className="devicesWrap">
+                      {speakerDevices &&
+                        speakerDevices.map((x) => {
+                          return (
+                            <div
+                              className="device"
+                              onClick={() => handleSpeakerDeviceChange(x)}
+                              title={x.label}
+                            >
+                              {x.label}
+                            </div>
+                          );
+                        })}
+                      <div
+                        className="device"
+                        onClick={() => {
+                          handleSpeakerDeviceChange(null);
+                        }}
+                      >
+                        없음
+                      </div>
+                    </div>
+                  </>
+                )}
               </VideoDevicesDropdownWrapper>
             </div>
           </VideoWrapper>

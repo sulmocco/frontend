@@ -73,6 +73,7 @@ export const TableCont = styled.div`
     width: 100%;
     background-color: #fff;
     padding-top: 4rem;
+    padding-bottom: 12.8rem;
     .rightWrapper {
       display: flex;
       flex-direction: row;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const DetailWrap = styled.div`
     width: ${props => props.theme.contentWidth};
+    margin: 0 auto;
     padding: 15.5rem 0;
     /* background-color: aliceblue; */
 `

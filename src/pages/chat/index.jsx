@@ -8,6 +8,7 @@ import {
   Separator,
   SnackTag,
   ThemeTag,
+  UserLevel,
 } from "../../styles/CommonStyles";
 import {
   AddHostFriendButton,
@@ -18,6 +19,7 @@ import {
   LiveWrapper,
   ProfileCircle,
   ProfileWrap,
+  RoomDataWrap,
   VideoButton,
   VideoContainer,
 } from "./styles";
@@ -35,6 +37,7 @@ import {
   setDeviceForState,
 } from "../../recoil/mediaDevices";
 import DeviceSetup from "../../components/devicesetup";
+import { getLevel } from "../../shared/modules";
 
 const Chat = (props) => {
   const [content, setContent] = useState([]);
@@ -205,23 +208,26 @@ const Chat = (props) => {
   // roomId가 바뀔때마다 다시 연결.
   useEffect(() => {
     const foo = async () => {
-        await sulmoggoApi.getRoomData(chatRoomId).then(res => {
-          if(res){
-          setRoomData(res.data.body);
-          setUserCount(res.data.body?.userCount + 1);
-          setCreatedAt(res.data.body.createdAt);
-          connect();
+      await sulmoggoApi
+        .getRoomData(chatRoomId)
+        .then((res) => {
+          if (res) {
+            setRoomData(res.data.body);
+            setUserCount(res.data.body?.userCount + 1);
+            setCreatedAt(res.data.body.createdAt);
+            connect();
           }
-        }).catch(e => {
+        })
+        .catch((e) => {
           alert(e.response?.data?.message);
-          naviagte("/")
+          naviagte("/");
         });
     };
     foo();
 
     return () => {
-      if(clientRef.current){
-      clientRef.current.deactivate();
+      if (clientRef.current) {
+        clientRef.current.deactivate();
       }
     };
     // eslint-disable-next-line
@@ -248,11 +254,11 @@ const Chat = (props) => {
     const leaveRoom = () => {
       quitChatroom(isHost);
     };
-    window.addEventListener("pagehide", leaveRoom)
+    window.addEventListener("pagehide", leaveRoom);
     window.addEventListener("beforeunload", leaveRoom);
     window.addEventListener("unload", leaveRoom);
     return () => {
-      window.addEventListener("pagehide", leaveRoom)
+      window.addEventListener("pagehide", leaveRoom);
       window.removeEventListener("beforeunload", leaveRoom);
       window.removeEventListener("unload", leaveRoom);
     };
@@ -264,8 +270,7 @@ const Chat = (props) => {
       <LiveWrapper>
         <div className="live_left_box">
           <div className="upper">
-            <ProfileWrap>
-              <ProfileCircle />
+            <RoomDataWrap>
               <div style={{ width: "100%" }}>
                 <span className="shareWrap">
                   <h1>{roomData?.title || "방제목이 없습니다."}</h1>
@@ -282,27 +287,14 @@ const Chat = (props) => {
                     chatRoomId={chatRoomId}
                   />
                 </span>
-                <div className="userWrap">
-                  <div className="username">
-                    {roomData?.username || "사용자가 없습니다."}
-                  </div>
-                  {!isHost && (
-                    <AddHostFriendButton
-                      onClick={() => onClickModalOpen(roomData?.username)}
-                    >
-                      <img src="/images/icon_addfriend.svg" alt="add friend" />
-                      <span>친구추가</span>
-                    </AddHostFriendButton>
-                  )}
+                <div className="tagWrap">
+                  <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
+                  <SnackTag>{roomData?.food || "안주"}</SnackTag>
+                  <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
                 </div>
               </div>
-            </ProfileWrap>
+            </RoomDataWrap>
             <div className="infoWrap">
-              <div className="tagWrap">
-                <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
-                <SnackTag>{roomData?.food || "안주"}</SnackTag>
-                <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
-              </div>
               <div className="statWrap">
                 <img src="/images/icon_clock_grey_02.svg" alt="clock" />
                 <span>{time || "00:00:00"}</span>
@@ -360,22 +352,15 @@ const Chat = (props) => {
                     alt="video"
                     onClick={() => setPlayvideo(!playvideo)}
                   />
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    className="videoarrow"
                     onClick={() => setCamerasOpen(!camerasOpen)}
                   >
-                    <rect width="32" height="32" rx="10" fill="#F2F3F3" />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z"
-                      fill="#7A7A80"
+                    <img
+                      src={"/images/icon_dropdown_video.svg"}
+                      className="videoarrow"
                     />
-                  </svg>
+                  </div>
                 </VideoButton>
                 <VideoButton
                   play={playaudio}
@@ -431,26 +416,40 @@ const Chat = (props) => {
                     alt="audio"
                     onClick={() => setPlayaudio(!playaudio)}
                   />
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    className="videoarrow"
                     onClick={() => setAudiosOpen(!audiosOpen)}
                   >
-                    <rect width="32" height="32" rx="10" fill="#F2F3F3" />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M8.29289 12.207C8.68342 11.8164 9.31658 11.8164 9.70711 12.207L15.2929 17.7927C15.6834 18.1833 16.3166 18.1833 16.7071 17.7927L22.2929 12.207C22.6834 11.8164 23.3166 11.8164 23.7071 12.207C24.0976 12.5975 24.0976 13.2306 23.7071 13.6212L18.1213 19.207C16.9497 20.3785 15.0503 20.3785 13.8787 19.207L8.29289 13.6212C7.90237 13.2306 7.90237 12.5975 8.29289 12.207Z"
-                      fill="#7A7A80"
+                    <img
+                      src={"/images/icon_dropdown_video.svg"}
+                      className="videoarrow"
                     />
-                  </svg>
+                  </div>
                 </VideoButton>
               </div>
             )}
           </VideoContainer>
+          {roomData?.version?.startsWith("host") && (
+            <div className="lower">
+              <ProfileWrap>
+                <ProfileCircle src={roomData?.profileUrl} />
+                <div className="userWrap">
+                  <div className="username">
+                    {roomData?.username || "사용자가 없습니다."}
+                  </div>
+                  <UserLevel>{getLevel(roomData?.level || 0)}</UserLevel>
+                </div>
+              </ProfileWrap>
+              {!isHost && (
+                <AddHostFriendButton
+                  onClick={() => onClickModalOpen(roomData?.username)}
+                >
+                  <img src="/images/icon_addfriend.svg" alt="add friend" />
+                  <span>친구추가</span>
+                </AddHostFriendButton>
+              )}
+            </div>
+          )}
         </div>
         <div className="live_right_box">
           <ChatHeader>

@@ -316,7 +316,7 @@ const VideoViewer = (props) => {
                     handleMainVideoStream(publisher)
                   }
                 >
-                  <UserVideoComponent streamManager={publisher} />
+                  <UserVideoComponent streamManager={publisher} hostname={props.host}/>
                 </div>
               ) : null}
               {/* 호스트 모드이고, 자신이 호스트가 아닐 때 호스트의 화면 스트리밍 */}

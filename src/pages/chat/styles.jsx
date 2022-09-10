@@ -4,7 +4,6 @@ export const LiveWrapper = styled.div`
   display: flex;
   flex-direction: row;
   width: 100vw;
-  background-color: aliceblue;
   height: 100vh;
   /* div{
         display: flex;
@@ -22,10 +21,19 @@ export const LiveWrapper = styled.div`
       flex-direction: column;
       height: fit-content;
       background-color: ${(props) => props.theme.white};
-      padding-top: 5.1rem;
+      padding-top: 4.8rem;
       padding-left: 4.8rem;
       padding-right: 4.8rem;
-      padding-bottom: 2.4rem;
+      padding-bottom: 1.6rem;
+    }
+    .lower {
+      width: 100%;
+      height: fit-content;
+      background-color: ${(props) => props.theme.white};
+      padding: 3.2rem 4.8rem 4.8rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
   .live_right_box {
@@ -41,16 +49,7 @@ export const LiveWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-  }
-  .tagWrap {
-    /* background-color: blue; */
-    display: inline-flex;
-    /* width: 50%; */
-    flex-direction: row;
-    gap: 0.8rem;
-    margin-top: 4rem;
-    height: 2.7rem;
+    justify-content: flex-end;
   }
   .statWrap {
     display: inline-flex;
@@ -59,11 +58,11 @@ export const LiveWrapper = styled.div`
     flex-direction: row;
     /* background-color: red; */
     gap: 0.8rem;
-    margin-top: 4rem;
-    height: 2.7rem;
+    margin-top: 3.1rem;
+    height: 2.4rem;
     font-size: 1.6rem;
     font-weight: 500;
-    line-height: 1.8rem;
+    line-height: 1.9rem;
     letter-spacing: -0.04em;
     color: ${(props) => props.theme.grey_02};
     & > div {
@@ -76,31 +75,33 @@ export const LiveWrapper = styled.div`
   }
 `;
 
-export const ProfileWrap = styled.div`
+export const RoomDataWrap = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1.2rem;
   align-items: flex-end;
   height: fit-content;
   width: 100%;
+  .tagWrap {
+    margin-top: 1.6rem;
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    height: 2.7rem;
+  }
   .shareWrap {
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    h1 {
-      font-size: 2.6rem;
-      font-weight: 700;
-      line-height: 3.1rem;
-    }
     button {
       display: flex;
       align-items: center;
       flex-direction: row;
       border: 0.1rem solid ${(props) => props.theme.primary};
       border-radius: 2rem;
-      padding: 0.5rem 1.2rem;
+      padding: 0.4rem 1.2rem;
       background-color: #fff;
       color: ${(props) => props.theme.primary};
       font-weight: 500;
@@ -117,23 +118,34 @@ export const ProfileWrap = styled.div`
       }
     }
   }
+`;
+
+export const ProfileWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
+  gap: 1.6rem;
   .userWrap {
-    margin-top: 1rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    gap: 1.5rem;
+    align-items: flex-start;
+    gap: 0.8rem;
   }
   .username {
+    font-weight: 700;
     font-size: 2rem;
-    font-weight: 500;
-    line-height: 2.4rem;
-    color: ${(props) => props.theme.grey_01};
+    line-height: 2.8rem;
+    letter-spacing: -0.02em;
+    color: ${(props) => props.theme.primary};
   }
 `;
 
 export const ProfileCircle = styled.div`
+  display: flex;
   width: 6.4rem;
   height: 6.4rem;
   border-radius: 50%;
@@ -144,17 +156,20 @@ export const ProfileCircle = styled.div`
 `;
 
 export const AddHostFriendButton = styled.div`
-  background-color: ${(props) => props.theme.bg_light_blue};
+  background-color: ${(props) => props.theme.grey_04};
   width: fit-content;
-  padding: 0.6rem 0.8rem;
+  height: fit-content;
+  padding: 0.2rem 0.8rem;
   border-radius: 0.4rem;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   gap: 0.6rem;
-  color: ${(props) => props.theme.primary};
+  color: ${(props) => props.theme.grey_02};
   font-weight: 500;
-  font-size: 1.6rem;
-  line-height: 1.9rem;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
   letter-spacing: -0.04em;
   cursor: pointer;
   span {
@@ -164,10 +179,9 @@ export const AddHostFriendButton = styled.div`
 `;
 
 export const VideoContainer = styled.div`
-  background-color: ${(props) => props.theme.bg_light_gray};
+  background-color: ${(props) =>
+    props.host ? props.theme.white : props.theme.bg_light_gray};
   width: 100%;
-  height: 100%;
-  /* height: 100%; */
   flex-grow: 1;
   position: relative;
   .videoWrap {
@@ -180,7 +194,7 @@ export const VideoContainer = styled.div`
   }
   #video-container {
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
     max-width: 124rem;
     /* display: grid;
         grid-template-columns: repeat(auto-fit, minmax(40rem, 3fr));
@@ -194,7 +208,6 @@ export const VideoContainer = styled.div`
   }
   .container,
   #session {
-    width: 100%;
     height: 100%;
   }
   .container {
@@ -214,7 +227,6 @@ export const VideoContainer = styled.div`
     height: ${(props) => (props.host ? "100%" : "27.2rem")};
   }
   .streamcomponent {
-    width: 100%;
     height: 100%;
     position: relative;
     background-color: ${(props) => props.theme.black};
@@ -233,20 +245,22 @@ export const VideoContainer = styled.div`
     padding: 0.4rem 1rem;
     color: ${(props) => props.theme.white};
     background-color: rgba(0, 0, 0, 0.6);
-    gap: 0.8rem;
     font-size: 1.2rem;
     font-weight: 500;
     line-height: 2rem;
     letter-spacing: -0.04em;
     z-index: 100;
+    img {
+      margin-right: 0.4rem;
+    }
     svg {
+      margin-left: 0.8rem;
       width: 2rem;
       height: 2rem;
     }
   }
   video {
     border-radius: 1rem;
-    width: 100%;
     height: 100%;
   }
   .videoButtonWrap {
@@ -283,6 +297,21 @@ export const VideoButton = styled.button`
   img {
     width: 4rem;
     height: 4rem;
+  }
+  .videoarrow {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    transition: all 0.2s ease-in-out;
+    background-color: ${(props) => props.theme.grey_04};
+    border-radius: 1rem;
+    img {
+      width: 1.6rem;
+      height: 0.817rem;
+      transform: rotate(${(props) => (props.open ? "180deg" : "0deg")});
+    }
   }
   .devicesWrap {
     background-color: aliceblue;

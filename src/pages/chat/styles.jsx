@@ -137,8 +137,7 @@ export const ProfileCircle = styled.div`
   width: 6.4rem;
   height: 6.4rem;
   border-radius: 50%;
-  background-image: url(${(props) =>
-    props.src || props.theme.placeholder_profile});
+  background-image: url(${(props) => props.src || props.theme.placeholder_profile});
   background-color: #d9d9d9;
   background-size: cover;
   background-position: center;

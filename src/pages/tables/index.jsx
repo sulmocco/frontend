@@ -7,17 +7,15 @@ import SearchBar from "../../components/searchbar";
 import TableCard from "../../components/tablecard";
 import sulmoggoApi from "../../shared/apis";
 import { Alcohol } from "../../shared/options";
-import { AlcoholButtons, NoList, Separator } from "../../styles/CommonStyles";
+import { NoList, Separator } from "../../styles/CommonStyles";
+import { AlcoholCategories, AlcoholCategory, SortButton } from '../rooms/styles';
 import {
-  AlcoholCategories,
-  AlcoholCategory,
   PageTitle,
   SearchBoxWrapper,
-  SortButton,
+  TableCont,
   TablesGrid,
   TablesWrapper,
   WirteButton,
-  WriteButton,
 } from "./styles";
 
 const Tables = (props) => {
@@ -116,110 +114,133 @@ const Tables = (props) => {
 
   return (
     <TablesWrapper>
-      {alcohol ? (<PageTitle>술상추천</PageTitle>) : (<PageTitle><i onClick={() => navigate(-1)}></i>술상검색</PageTitle>)}
-      {alcohol && (
-        <>
-          <AlcoholCategories>
-            {Alcohol.map((x, i) => (
-              <AlcoholCategory
-                key={x}
-                checked={alcohol.includes(x)}
+      <TableCont>
+        <div className="top">
+          <section className='pagew'>
+            {alcohol ? (<PageTitle>술상추천</PageTitle>) : (<PageTitle><i onClick={() => navigate(-1)}></i>술상검색</PageTitle>)}
+            <SearchBoxWrapper>
+              <div className="leftWrapper">
+                <p>
+                  <span>{total || 0}개</span>의 술상추천이 있습니다.
+                </p>
+                <SearchBar onSearch={(keyword) => searchTables(keyword)} />
+              </div>
+            </SearchBoxWrapper>
+          </section>
+        </div>
+        <div className='bottom'>
+          <section>
+            {alcohol && (
+              <>
+                <AlcoholCategories>
+                  {Alcohol.map((x, i) => (
+                    <AlcoholCategory
+                      key={x}
+                      checked={alcohol.includes(x)}
+                      onClick={() => {
+                        if (i !== 0 && !alcohol.includes(x)) {
+                          setQueryParams({
+                            alcohol: (
+                              alcohol.replace(Alcohol[0], "") +
+                              "," +
+                              x
+                            ).replace(/^,/, ""),
+                          });
+                        } else if (alcohol.includes(x)) {
+                          let newAlcohols = alcohol.split(",");
+                          const idx = newAlcohols.indexOf(x);
+                          // console.log(idx);
+                          newAlcohols.splice(idx, 1);
+                          setQueryParams({ alcohol: newAlcohols.join(",") });
+                        } else {
+                          setQueryParams({});
+                        }
+                      }}
+                    >
+                      {x}
+                    </AlcoholCategory>
+                  ))}
+                </AlcoholCategories>
+                <div className="checkedAlcoholWrapper">
+                  {alcohol.split(",").map((x) => (
+                    <div
+                      className="checkedAlcohol"
+                      onClick={() => {
+                        if (alcohol.includes(x)) {
+                          let newAlcohols = alcohol.split(",");
+                          const idx = newAlcohols.indexOf(x);
+                          // console.log(idx);
+                          newAlcohols.splice(idx, 1);
+                          setQueryParams({ alcohol: newAlcohols.join(",") });
+                        }
+                      }}
+                    >{x}
+                      <img src="/images/icon_remove_tags.svg" alt="remove" />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+            <div className="rightWrapper">
+              <SortButton
+                checked={sortBy === "count"}
                 onClick={() => {
-                  if (i !== 0 && !alcohol.includes(x)) {
-                    setQueryParams({
-                      alcohol: (
-                        alcohol.replace(Alcohol[0], "") +
-                        "," +
-                        x
-                      ).replace(/^,/, ""),
-                    });
-                  } else if (alcohol.includes(x)) {
-                    let newAlcohols = alcohol.split(",");
-                    const idx = newAlcohols.indexOf(x);
-                    // console.log(idx);
-                    newAlcohols.splice(idx, 1);
-                    setQueryParams({ alcohol: newAlcohols.join(",") });
+                  // console.log(allParams);
+                  if (keyword) {
+                    setQueryParams({ keyword, sortBy: "count" });
+                  } else if (alcohol !== "전체") {
+                    setQueryParams({ alcohol, sortBy: "count" });
                   } else {
-                    setQueryParams({});
+                    setQueryParams({ sortBy: "count" });
                   }
                 }}
               >
-                {x}
-              </AlcoholCategory>
-            ))}
-          </AlcoholCategories>
-          <div className="checkedAlcoholWrapper">
-            {alcohol.split(",").map((x) => (
-              <AlcoholButtons>{x}</AlcoholButtons>
-            ))}
-          </div>
-        </>
-      )}
-      <SearchBoxWrapper>
-        <div className="leftWrapper">
-          <p>
-            <span>{total || 0}개</span>의 술상추천이 있습니다.
-          </p>
-          <SearchBar onSearch={(keyword) => searchTables(keyword)} />
+                인기순
+              </SortButton>
+              <Separator />
+              <SortButton
+                checked={sortBy === "id"}
+                onClick={() => {
+                  if (keyword) {
+                    setQueryParams({ keyword, sortBy: "id" });
+                  } else if (alcohol !== "전체") {
+                    setQueryParams({ alcohol, sortBy: "id" });
+                  } else {
+                    setQueryParams({ sortBy: "id" });
+                  }
+                }}
+              >
+                최신순
+              </SortButton>
+            </div>
+            <TablesGrid>
+              {isSuccess &&
+                data.pages.map((page, pageidx) => {
+                  const content = page.data.content;
+                  return content?.map((table, idx) => {
+                    if (idx === content.length - 1 && pageidx === data.pages.length - 1) return (
+                      <div ref={lastTableRef}>
+                        <TableCard {...table} />
+                      </div>
+                    )
+                    else
+                      return <TableCard {...table} />;
+                  });
+                })}
+            </TablesGrid>
+            {isSuccess && !total && (
+              <div style={{ margin: '0 auto' }}>
+                <Nodata />
+              </div>
+            )}
+            {!isSuccess && <NoList>문제가 발생했습니다.</NoList>}
+            <WirteButton to='/post'>
+              <p>술상추천<br />글쓰기</p>
+              <span></span>
+            </WirteButton>
+          </section>
         </div>
-        <div className="rightWrapper">
-          <SortButton
-            checked={sortBy === "count"}
-            onClick={() => {
-              // console.log(allParams);
-              if (keyword) {
-                setQueryParams({ keyword, sortBy: "count" });
-              } else if (alcohol !== "전체") {
-                setQueryParams({ alcohol, sortBy: "count" });
-              } else {
-                setQueryParams({ sortBy: "count" });
-              }
-            }}
-          >
-            인기순
-          </SortButton>
-          <Separator />
-          <SortButton
-            checked={sortBy === "id"}
-            onClick={() => {
-              if (keyword) {
-                setQueryParams({ keyword, sortBy: "id" });
-              } else if (alcohol !== "전체") {
-                setQueryParams({ alcohol, sortBy: "id" });
-              } else {
-                setQueryParams({ sortBy: "id" });
-              }
-            }}
-          >
-            최신순
-          </SortButton>
-        </div>
-      </SearchBoxWrapper>
-      <TablesGrid>
-        {isSuccess &&
-          data.pages.map((page, pageidx) => {
-            const content = page.data.content;
-            return content?.map((table, idx) => {
-              if (idx === content.length - 1 && pageidx === data.pages.length - 1) return (
-                <div ref={lastTableRef}>
-                  <TableCard {...table} />
-                </div>
-              )
-              else
-                return <TableCard {...table} />;
-            });
-          })}
-      </TablesGrid>
-      {isSuccess && !total && (
-        <div style={{ margin: '0 auto' }}>
-          <Nodata />
-        </div>
-      )}
-      {!isSuccess && <NoList>문제가 발생했습니다.</NoList>}
-      <WirteButton to='/post'>
-        <p>술상추천<br />글쓰기</p>
-        <span></span>
-      </WirteButton>
+      </TableCont>
     </TablesWrapper>
   );
 };

@@ -61,6 +61,32 @@ export const PageTitle = styled.h1`
   }
 `;
 
+export const TableCont = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  .top {
+    width: 100%;
+    background-color: ${props => props.theme.bg_light_gray};
+    padding-bottom: 4rem;
+  }
+  .bottom {
+    width: 100%;
+    background-color: #fff;
+    padding-top: 4rem;
+    .rightWrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.4rem;
+    }
+  }
+  section {
+      width: ${props => props.theme.contentWidth};
+      margin: 0 auto;
+    }
+`
+
 export const AlcoholCategories = styled.div`
   display: flex;
   flex-direction: row;
@@ -102,13 +128,6 @@ export const SearchBoxWrapper = styled.div`
       font-weight: 500;
       color: ${(props) => props.theme.black_2};
     }
-  }
-  .rightWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.4rem;
   }
 `;
 

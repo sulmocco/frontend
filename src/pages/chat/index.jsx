@@ -74,9 +74,6 @@ const Chat = (props) => {
   const clientRef = useRef(null);
   const headers = { Authorization: token };
 
-  let isIOS = navigator.userAgent.match(/iPad/i)|| navigator.userAgent.match(/iPhone/i);
-  let pageLeaveEventname = isIOS ? "pagehide" : "beforeunload"
-
   // 공유모달 관련
   const [isOpen, setOpen] = useState();
   const onClose = () => {
@@ -251,10 +248,12 @@ const Chat = (props) => {
     const leaveRoom = () => {
       quitChatroom(isHost);
     };
-    window.addEventListener(pageLeaveEventname, leaveRoom);
+    window.addEventListener("pagehide", leaveRoom)
+    window.addEventListener("beforeunload", leaveRoom);
     window.addEventListener("unload", leaveRoom);
     return () => {
-      window.removeEventListener(pageLeaveEventname, leaveRoom);
+      window.addEventListener("pagehide", leaveRoom)
+      window.removeEventListener("beforeunload", leaveRoom);
       window.removeEventListener("unload", leaveRoom);
     };
     // eslint-disable-next-line

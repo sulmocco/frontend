@@ -102,6 +102,9 @@ const Wrap = styled.div`
   img {
     width: 14.403rem;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    padding: 0 2rem;
+  }
 `;
 
 const Navbar = styled.nav`
@@ -110,6 +113,9 @@ const Navbar = styled.nav`
   max-width: 1280px;
   height: 11.2rem;
   margin: 0 auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: 8rem;
+  }
 `;
 
 const NavLeft = styled.div`
@@ -127,6 +133,9 @@ const NavLeft = styled.div`
 const NavLink = styled(Link)`
   color: ${(props) =>
     props.active ? props.theme.primary : props.theme.black} !important;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        font-size: 2rem;
+    }
 `;
 
 const NavRight = styled.div`
@@ -143,6 +152,7 @@ const NavRight = styled.div`
 
     li div {
       cursor: pointer;
+      
     }
   }
 `;

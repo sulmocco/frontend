@@ -24,6 +24,9 @@ const Theme = {
     placeholder: "/images/placeholder.png",
     placeholder_profile: "/images/placeholder-profile.png",
 
+    breakpoints: {
+        mobile: 1024,
+    }
 }
 
 export default Theme

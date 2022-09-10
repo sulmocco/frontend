@@ -357,6 +357,7 @@ const VideoViewer = (props) => {
                     <UserVideoComponent
                       streamManager={sub}
                       openModal={props.openModal}
+                      hostname={props.host}
                     />
                   </div>)
                 }

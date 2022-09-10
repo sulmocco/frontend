@@ -29,21 +29,21 @@ const TableCard = (props) => {
         <CardThumbnail src={thumbnail} />
         <div className="cardContent">
           <div className="cardUpperWrap">
-          <div className="tableTitle">{title}</div>
-          <div className="counterWrap">
-            <img src="/images/icon_favorite.svg" alt="heart" />
-            {likecount || 0}
-            <Separator />
-            <img src="/images/icon_eye.svg" alt="eye" />
-            {viewcount || 0}
-          </div>
-          <div className="cardProfileWrap">
-            <ProfileCircle src={profileimgurl} />
-            <div className="cardTitleWrap">
-              <div className="tableUser">{username}</div>
-              <UserLevel>{getLevel(level || 0)}</UserLevel>
+            <div className="tableTitle">{title}</div>
+            <div className="counterWrap">
+              <img src="/images/icon_favorite.svg" alt="heart" />
+              {likecount || 0}
+              <Separator />
+              <img src="/images/icon_eye.svg" alt="eye" />
+              {viewcount || 0}
             </div>
-          </div>
+            <div className="cardProfileWrap">
+              <ProfileCircle src={profileimgurl} />
+              <div className="cardTitleWrap">
+                <div className="tableUser">{username}</div>
+                <UserLevel>{getLevel(level || 0)}</UserLevel>
+              </div>
+            </div>
           </div>
           <div className="tagWrap">
             {alcoholtag && <AlchholTag>{alcoholtag}</AlchholTag>}

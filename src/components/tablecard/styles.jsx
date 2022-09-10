@@ -9,11 +9,10 @@ export const CardWrapper = styled.div`
     overflow: hidden;
     cursor: pointer;
     transition: all .2s ease-in-out;
+    box-shadow: ${props => props.theme.shadow_gray};
     &:hover{
         transform: translateY(-0.5rem);
-        box-shadow: ${props => props.theme.shadow_gray};
     }
-    /* border: 1px solid black; */
     .cardContent{
         padding: 1.6rem;
     }

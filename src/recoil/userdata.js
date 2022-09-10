@@ -29,9 +29,8 @@ export const SignInSelector = selector({
 
 export const MaintainUser = selector({
     key: 'maintainuser',
-    get: ({get}) => get(userdataState),
+    get: ({get}) => "updated userdata",
     set: ({set}, newValue) => {
-        localStorage.setItem('username', newValue.username)
         localStorage.setItem('id', newValue.id)
         set(userdataState, {...userdataState, ...newValue, isLogin: true})
     }

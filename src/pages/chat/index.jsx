@@ -302,7 +302,6 @@ const Chat = (props) => {
                 <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
                 <SnackTag>{roomData?.food || "안주"}</SnackTag>
                 <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
-                {navigator.userAgent}
               </div>
               <div className="statWrap">
                 <img src="/images/icon_clock_grey_02.svg" alt="clock" />

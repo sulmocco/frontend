@@ -143,7 +143,7 @@ const NewLive = (props) => {
   const handleSpeakerDeviceChange = (device) => {
     setValue("speaker", device ? device.label : "없음");
     setAudiooutput(device ? device : speakerDevices[0]);
-    speakerRef.current.setSinkId(device.deviceId);
+    speakerRef.current?.setSinkId(device.deviceId);
   };
 
   useEffect(() => {

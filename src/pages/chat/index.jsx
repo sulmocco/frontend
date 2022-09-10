@@ -74,6 +74,9 @@ const Chat = (props) => {
   const clientRef = useRef(null);
   const headers = { Authorization: token };
 
+  let isIOS = navigator.userAgent.match(/iPad/i)|| navigator.userAgent.match(/iPhone/i);
+  let pageLeaveEventname = isIOS ? "pagehide" : "beforeunload"
+
   // 공유모달 관련
   const [isOpen, setOpen] = useState();
   const onClose = () => {
@@ -166,7 +169,7 @@ const Chat = (props) => {
       setCameraDevices(devices.filter((x) => x.kind === "videoinput"));
       setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
       setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
-      setSpeakerAvailable(speakerRef.current.setSinkId !== undefined);
+      setSpeakerAvailable(speakerRef.current?.setSinkId !== undefined);
     } catch {
       console.log("카메라 혹은 마이크 권한이 없습니다.");
     }
@@ -205,24 +208,24 @@ const Chat = (props) => {
   // roomId가 바뀔때마다 다시 연결.
   useEffect(() => {
     const foo = async () => {
-      try {
-        const data = await sulmoggoApi.getRoomData(chatRoomId);
-        // console.log(data.data.body);
-        setRoomData(data.data.body);
-        setUserCount(data.data.body?.userCount + 1);
-        setCreatedAt(data.data.body.createdAt);
-        connect();
-        // console.log(clientRef.current.connected);
-      } catch (err) {
-        // console.log(err);
-        alert("이미 입장한 방입니다!");
-        window.location.href = "/rooms";
-      }
+        await sulmoggoApi.getRoomData(chatRoomId).then(res => {
+          if(res){
+          setRoomData(res.data.body);
+          setUserCount(res.data.body?.userCount + 1);
+          setCreatedAt(res.data.body.createdAt);
+          connect();
+          }
+        }).catch(e => {
+          alert(e.response?.data?.message);
+          naviagte("/")
+        });
     };
     foo();
 
     return () => {
+      if(clientRef.current){
       clientRef.current.deactivate();
+      }
     };
     // eslint-disable-next-line
   }, [chatRoomId]);
@@ -248,10 +251,10 @@ const Chat = (props) => {
     const leaveRoom = () => {
       quitChatroom(isHost);
     };
-    window.addEventListener("beforeunload", leaveRoom);
+    window.addEventListener(pageLeaveEventname, leaveRoom);
     window.addEventListener("unload", leaveRoom);
     return () => {
-      window.removeEventListener("beforeunload", leaveRoom);
+      window.removeEventListener(pageLeaveEventname, leaveRoom);
       window.removeEventListener("unload", leaveRoom);
     };
     // eslint-disable-next-line
@@ -300,6 +303,7 @@ const Chat = (props) => {
                 <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
                 <SnackTag>{roomData?.food || "안주"}</SnackTag>
                 <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
+                {navigator.userAgent}
               </div>
               <div className="statWrap">
                 <img src="/images/icon_clock_grey_02.svg" alt="clock" />

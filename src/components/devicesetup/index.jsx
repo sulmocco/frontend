@@ -78,7 +78,7 @@ const DeviceSetup = (props) => {
       setAudioDevices(devices.filter((x) => x.kind === "audioinput"));
       setSpeakerDevices(devices.filter((x) => x.kind === "audiooutput"));
     });
-    setSpeakerAvailable(speakerRef.current.setSinkId !== undefined);
+    setSpeakerAvailable(speakerRef.current?.setSinkId !== undefined);
   };
 
   const getUserMedia = async (constraints) => {

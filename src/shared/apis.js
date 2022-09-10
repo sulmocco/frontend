@@ -56,6 +56,8 @@ api.interceptors.response.use(
         prevRequst.headers.RefreshToken = localStorage.getItem("refreshToken");
         // 실패했던 기존 request 재시도
         return await axios(prevRequst);
+      }else{
+        return Promise.reject(error);
       }
     } catch (e) {
       //오류내용 출력 후 요청 거절

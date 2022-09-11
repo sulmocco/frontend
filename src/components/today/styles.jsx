@@ -8,6 +8,10 @@ export const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: fit-content;
+    padding: 5rem 0;
+  }
 `;
 
 export const Container = styled.div`
@@ -18,7 +22,7 @@ export const Container = styled.div`
   text-align: center;
   h2 {
     /* padding-top: 6.4rem; */
-    font-size: 3.2rem;
+    font-size: 3.4rem;
     font-weight: 700;
     margin-bottom: 4rem;
   }
@@ -27,6 +31,14 @@ export const Container = styled.div`
 export const RankWrapper = styled.div`
   display: flex;
   justify-content: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    /* flex-direction: column;
+    gap: 3rem; */
+    flex-wrap: wrap;
+    gap: 3rem;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 export const OneRankWrapper = styled.div`
   display: flex;
@@ -42,6 +54,15 @@ export const OneRankWrapper = styled.div`
   }
   &:last-child {
     margin-left: 3.2rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    &:first-child, &:last-child{
+      margin: 0;
+    }
+    &:nth-child(2){
+      width: 100%;
+      order: -1;
+    }
   }
   .crown {
     margin-bottom: 0.4rem;
@@ -133,5 +154,37 @@ export const TableCardWrapper = styled.div`
     margin-top: 1.8rem;
     display: flex;
     gap: 0.4rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    & .title{
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      -webkit-box-orient:vertical;
+      white-space: normal;
+    }
+    & .profile{
+      display: none;
+    }
+    & .counterWrap{
+      order: 1;
+    }
+    & .img{
+      width: 50%;
+      height: auto;
+    }
+    & .bottom{
+      width: 50%;
+      padding: 2rem;
+    }
+    & .title{
+      font-size: 2rem;
+      margin-top: 0;
+    }
+    & .username{
+      font-size: 1.5rem;
+    }
   }
 `;

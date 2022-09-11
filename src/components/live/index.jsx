@@ -99,7 +99,7 @@ const Live = () => {
                         <span>{v.userCount}</span>
                       </div>
                     </Desc>
-                    <div style={{ display: "flex", marginTop: "4rem" }}>
+                    <div className="tagWrap">
                       <AlchholTag style={{ marginRight: "1rem" }}>
                         {v.theme}
                       </AlchholTag>

@@ -32,10 +32,27 @@ export const Carousel = styled.section`
   .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
     bottom: 2.4rem;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: fit-content;
+    .swiper-button-prev{
+      margin-left: 1rem;
+      display: none;
+    }
+    .swiper-button-next{
+      margin-right: 1rem;
+      display: none;
+    }
+    .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: 1rem;
+    }
+  }
 `;
 
 export const Image = styled.img`
   width: 100%;
   max-height: 60.9rem;
   object-fit: cover;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: 25vh;
+  }
 `;

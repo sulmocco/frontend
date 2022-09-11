@@ -9,6 +9,11 @@ export const ReviewWrap = styled.div`
     margin: 13rem auto;
     cursor: pointer;
     border-radius: 1rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        padding: 2rem 2rem;
+        max-width: 90%;
+        margin: 2rem auto;
+    }
 `
 export const ReviewCont = styled.div`
     display: flex;
@@ -41,6 +46,25 @@ export const ReviewCont = styled.div`
             letter-spacing: -0.04rem;
             background-color: ${props => props.theme.secondary};
             border-radius: 1rem;
+        }
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        .left{
+            h4{
+                font-size: 2.3rem;
+            line-height: 3rem;
+            }
+            p{
+                font-size: 1.5rem;
+                line-height: 2.2rem;
+                margin: 1rem 0;
+            }
+            span{
+                font-size: 2rem;
+            }
+        }
+        & img{
+            width: 10rem;
         }
     }
 `

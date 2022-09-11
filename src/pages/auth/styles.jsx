@@ -8,7 +8,11 @@ export const AuthWrap = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.bg_light_gray};
-    min-height: calc(100vh - 72px - 120px);
+    min-height: calc(100vh - ${props => props.theme.footerSize + " - " + props.theme.headerSize});
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        min-height: calc(100vh - ${props => props.theme.footerSizeMobile + " - " + props.theme.headerSizeMobile});
+        background-color: ${props => props.theme.white};
+    }
 `
 
 export const AuthSection = styled.div`
@@ -18,6 +22,9 @@ export const AuthSection = styled.div`
     min-height: 40rem;
     text-align: center;
     margin-bottom: 19rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        padding: 4rem;
+    }
     h3{
         font-size: 3.2rem;
         font-weight: 700;

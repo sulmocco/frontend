@@ -21,6 +21,8 @@ const Theme = {
     
     headerSize: "11.2rem",
     headerSizeMobile: "8rem",
+    footerSize: "17.6rem",
+    footerSizeMobile: "10rem",
     
     contentWidth: "128rem",
 

@@ -12,6 +12,10 @@ export const SignUpButton = styled.button`
     font-size: 2.6rem;
     font-weight: 700;
     max-width: 40rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        font-size: 3rem;
+        background-color: ${props => props.theme.white};
+    }
     &:enabled {
         color: ${props => props.theme.white};
         background-color: ${props => props.theme.primary};
@@ -19,7 +23,7 @@ export const SignUpButton = styled.button`
 `
 
 export const Container = styled.div`
-        background-color: #F2F3F6;
+    background-color: #F2F3F6;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,6 +33,13 @@ export const Container = styled.div`
     padding: 0;
     padding-top: 13.6rem;
     flex-direction: column;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        padding: 0 4rem;
+        background-color: ${props => props.theme.white};
+    }
+    form{
+        text-align: center;
+    }
     /* overflow: auto; */
     /* width: 100vw; */
 `

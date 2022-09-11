@@ -81,7 +81,9 @@ export const RendingCont = styled.div`
     line-height: 2.4rem;
     letter-spacing: -0.04rem;
     margin-top: 2.4rem;
-    cursor: pointer;
+    cursor: pointer;@media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        font-size: 2.5rem;
+    }
   }
 `;
 export const RendingContRow = styled.div`

@@ -19,8 +19,8 @@ const LoginRedirect = () => {
       );
       // console.log("데이터확인~", res.data);
       navigate(`/signup?userId=${res.data.userId}`);
-    } catch (err) {
-      alert("성인이 아닙니다!");
+    } catch (e) {
+      alert(e.response?.data?.message);
       navigate("/loginrending");
     }
   }, [navigate, queryData.code]);

@@ -5,8 +5,11 @@ export const TermsWrap = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #e3e5e9;
+    max-height: 100vh;
+    background-color: ${props => props.theme.bg_light_gray};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        background-color: ${props => props.theme.white};
+    }
 `
 
 export const Termsection = styled.div`
@@ -16,12 +19,20 @@ export const Termsection = styled.div`
     max-width: 71.2rem;
     max-height: 88.5rem;
     margin-bottom: 13.6rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        padding: 4rem;
+        margin-bottom: 6rem;
+    }
     h2 {
         font-weight: 700;
         font-size: 3.2rem;
         line-height: 4.7rem;
         letter-spacing: -0.5px;
         text-align: center;
+        @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+            font-size: 3.5rem;
+            word-break: keep-all;
+        }
     }
     ul {
         margin-top: 4.9rem;
@@ -44,12 +55,17 @@ export const Termsection = styled.div`
                 size: 2rem;
                 color: #4e4e56;
                 cursor: pointer;
+                @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+                    font-size: 2rem;
+                    word-break: keep-all;
+                }
             }
                 i{
                 display: block;
                 background-image: url('/images/icon_arrow_right_gray.svg');
                 width: 1.4rem;
                 height: 2.4rem;
+                background-size: contain;
                 cursor: pointer;
             }
             }
@@ -61,6 +77,7 @@ export const Termsection = styled.div`
                 display: none;
             &:checked + label:after {
                     background-image: url('/images/icon_check_blue.svg');
+                    background-size: contain;
             }
             }
             label {
@@ -76,6 +93,7 @@ export const Termsection = styled.div`
                     content: '';
                     display: block;
                     background-image: url('/images/icon_check_gray.svg');
+                    background-size: contain;
                     width: 1.6rem;
                     height: 1rem;
                 }
@@ -102,10 +120,14 @@ export const Termsection = styled.div`
                 display: none;
             }
         }
-    }
+    
     P {
         font-size: 1.4rem;
         color: #7a7a80;
+        @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+            font-size: 2rem;
+            word-break: keep-all;
+        }
     }
     .desc {
         display: flex;

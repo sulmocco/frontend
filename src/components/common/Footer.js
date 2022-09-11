@@ -28,7 +28,11 @@ export default Footer;
 const Wrap = styled.div`
   border-top: 1px solid #e1e1e1;
   background-color: #4e4e56;
-  height: 17.6rem;
+  height: ${props => props.theme.footerSize};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: ${props => props.theme.footerSizeMobile};
+    padding: 2rem;
+  }
 `;
 
 const Container = styled.div`
@@ -42,6 +46,9 @@ const Container = styled.div`
   height: 100%;
   img {
     width: 20.503rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        width: 15rem;
+    }
   }
   div {
     font-size: 1.6rem;
@@ -65,6 +72,9 @@ const Container = styled.div`
     font-size: 1.4rem;
     font-weight: 400;
     color: ${(props) => props.theme.grey_03};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        font-size: 1rem;
+    }
   }
 `;
 

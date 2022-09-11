@@ -77,6 +77,9 @@ export const CenterWrapper = styled.div`
     width: 100%;
     height: 5.6rem;
     background: #ffffff;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px){
+      background-color: ${props => props.theme.bg_light_gray};
+    }
     border: ${(props) => {
     if (props.error) {
       return "2px solid " + props.theme.error
@@ -124,6 +127,9 @@ export const OptionsWrapper = styled.div`
     height: ${props => props.open ? "29.2rem" : 0};
     overflow: hidden;
     transition: all .3s ease-in-out;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+      box-shadow: ${props => props.theme.shadow_gray};
+    }
     div{
         font-size: 1.6rem;
         padding-left: 6px;

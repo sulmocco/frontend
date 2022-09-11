@@ -48,13 +48,12 @@ const Background = styled.div`
 const Main = styled.main`
   max-width: ${(props) => (props.show ? "100%" : "1290px")};
   margin: 0 auto;
-  padding: ${props => props.theme.headerSize} 5px 30px;
+  padding: ${props => !props.show && props.theme.headerSize + "5px 30px"};
   padding-top: ${(props) =>
     props.loc.startsWith("/signup") ? "none" : props.theme.headerSize};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-    padding: ${props => props.theme.headerSizeMobile} 5px 30px;
-    padding-top: ${(props) =>
-    props.loc.startsWith("/signup") ? "none" : props.theme.headerSizeMobile};
+    padding: ${props => !props.show && props.theme.headerSizeMobile} 0 0;
+    padding-top: ${(props) => props.theme.headerSizeMobile};
   }
 `;
 

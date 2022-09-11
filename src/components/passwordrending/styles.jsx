@@ -10,18 +10,23 @@ export const LoginWrap = styled.div`
     background-color: ${props => props.theme.bg_light_gray};
     min-height: calc(100vh - 72px - 120px);
     padding-bottom: 13.6rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        background-color: ${props => props.theme.white};
+    }
 `
 
 export const LoginSection = styled.div`
     background-color: #fff;
-    width: 712px;
+    width: 71.2rem;
     padding: 8.8rem 1.18rem;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        max-width: 100%;
+    }
     h1 {
         font-size: 3.2rem;
         font-weight: 700;
@@ -59,6 +64,9 @@ export const LoginSection = styled.div`
     }
     img{
         margin-top: 3.3rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        width: 30rem;
+    }
     }
     p {
         color: #000;

@@ -13,11 +13,11 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn install && yarn build
         env: 
-            REACT_APP_API_SERVER: ${{ secrets.REACT_APP_API_SERVER }}
-            REACT_APP_AUTH: ${{ secrets.REACT_APP_AUTH }}
-            REACT_APP_AUTH_PW: ${{ secrets.REACT_APP_AUTH_PW }} 
-            REACT_APP_OPENVIDU_SERVER_URL: ${{ REACT_APP_OPENVIDU_SERVER_URL }}
-            REACT_APP_OPENVIDU_SERVER_SECRET: ${{ REACT_APP_OPENVIDU_SERVER_SECRET }}
+          REACT_APP_API_SERVER: ${{ secrets.REACT_APP_API_SERVER }}
+          REACT_APP_AUTH: ${{ secrets.REACT_APP_AUTH }}
+          REACT_APP_AUTH_PW: ${{ secrets.REACT_APP_AUTH_PW }} 
+          REACT_APP_OPENVIDU_SERVER_URL: ${{ REACT_APP_OPENVIDU_SERVER_URL }}
+          REACT_APP_OPENVIDU_SERVER_SECRET: ${{ REACT_APP_OPENVIDU_SERVER_SECRET }}
           
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

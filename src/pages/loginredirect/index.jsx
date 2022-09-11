@@ -20,7 +20,7 @@ const LoginRedirect = () => {
       // console.log("데이터확인~", res.data);
       navigate(`/signup?userId=${res.data.userId}`);
     } catch (e) {
-      alert(e.response?.data?.message);
+      alert(e.response?.data);
       navigate("/loginrending");
     }
   }, [navigate, queryData.code]);

@@ -29,7 +29,7 @@ const DeviceSetup = (props) => {
   const { chatRoomId } = useParams();
   const videoPreview = useRef();
   const speakerRef = useRef();
-  const [, setDeviceFor] = props;
+  const { setDeviceFor } = props;
   const [videoinput, setVideoinput] = useRecoilState(videoinputState);
   const [audioinput, setAudioinput] = useRecoilState(audioinputState);
   const [audiooutput, setAudiooutput] = useRecoilState(audiooutputState);

@@ -168,15 +168,15 @@ const NewLive = (props) => {
     // eslint-disable-next-line
   }, [videoinput]);
 
+  const stopStream = () => {
+    if (videoPreview.current) {
+      const stream = videoPreview?.current?.srcObject?.getTracks()[0];
+      stream.stop();
+      videoPreview.current = null;
+    }
+  };
   useEffect(() => {
     console.log("🥝settingcameralistener");
-    const stopStream = () => {
-      if (videoPreview.current) {
-        const stream = videoPreview?.current?.srcObject?.getTracks()[0];
-        stream.stop();
-        videoPreview.current = null;
-      }
-    };
     window.addEventListener("beforeunload", stopStream);
     window.addEventListener("unload", stopStream);
     return () => {

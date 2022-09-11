@@ -230,6 +230,7 @@ export const VideoContainer = styled.div`
     height: 100%;
     position: relative;
     background-color: ${(props) => props.theme.black};
+    text-align: center;
   }
   .videousername {
     position: absolute;

@@ -16,6 +16,7 @@ jobs:
           REACT_APP_AUTH_PW: ${{ secrets.REACT_APP_AUTH_PW }} 
           REACT_APP_OPENVIDU_SERVER_URL: ${{ secrets.REACT_APP_OPENVIDU_SERVER_URL }}
           REACT_APP_OPENVIDU_SERVER_SECRET: ${{ secrets.REACT_APP_OPENVIDU_SERVER_SECRET }}
+          REACT_APP_API_KAKAO_KEY: ${{ secrets.REACT_APP_API_KAKAO_KEY }}
             
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

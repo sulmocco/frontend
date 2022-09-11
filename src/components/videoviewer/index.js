@@ -1,6 +1,6 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
-import React, { Component, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { audioinputState, playaudioState, playvideoState, videoinputState } from "../../recoil/mediaDevices";
 import UserVideoComponent from "./UserVideoComponent";
@@ -135,10 +135,12 @@ const VideoViewer = (props) => {
       window.removeEventListener("unload", leaveSession);
       sessionRef.current.disconnect()
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     updatePublishState()
+    // eslint-disable-next-line
   }, [playaudio, playvideo, videoinput, audioinput])
 
   const handleMainVideoStream = (stream) => {
@@ -264,6 +266,7 @@ const VideoViewer = (props) => {
             });
         }
         );}
+        // eslint-disable-next-line
   }, [])
 
 
@@ -361,6 +364,7 @@ const VideoViewer = (props) => {
                     />
                   </div>)
                 }
+                else return null
               })}
             </div>
           </div>

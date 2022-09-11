@@ -58,7 +58,7 @@ const NewLive = (props) => {
   const [playvideo, setPlayvideo] = useRecoilState(playvideoState);
   const [speakerAvailable, setSpeakerAvailable] = useState(false);
 
-  const track = videoPreview.current?.srcObject?.getVideoTracks()[0];
+  // const track = videoPreview.current?.srcObject?.getVideoTracks()[0];
 
   const [thumbnail, setThumbnail] = useState(null);
   const {
@@ -168,21 +168,22 @@ const NewLive = (props) => {
     // eslint-disable-next-line
   }, [videoinput]);
 
-  const stopStream = () => {
-    if (videoPreview.current) {
-      const stream = videoPreview?.current?.srcObject?.getTracks()[0];
-      stream.stop();
-      videoPreview.current = null;
-    }
-  };
   useEffect(() => {
     console.log("🥝settingcameralistener");
+    const stopStream = () => {
+      if (videoPreview.current) {
+        const stream = videoPreview?.current?.srcObject?.getTracks()[0];
+        stream.stop();
+        videoPreview.current = null;
+      }
+    };
     window.addEventListener("beforeunload", stopStream);
     window.addEventListener("unload", stopStream);
     return () => {
       window.removeEventListener("beforeunload", stopStream);
       window.removeEventListener("unload", stopStream);
     };
+    // eslint-disable-next-line
   }, [videoPreview.current]);
 
   useEffect(() => {
@@ -199,6 +200,7 @@ const NewLive = (props) => {
     ) {
       handleSpeakerDeviceChange(speakerDevices[0]);
     }
+    // eslint-disable-next-line
   }, [cameraDevices, audioDevices, speakerDevices]);
 
   const onDrop = useCallback(async (file) => {

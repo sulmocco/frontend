@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AlchholTag,
@@ -7,7 +6,6 @@ import {
   ThemeTag,
 } from "../../styles/CommonStyles";
 import sulmoggoApi from "../../shared/apis";
-import styled from "styled-components";
 import Nodata from '../nodatalending';
 import { Container, Listbox, LiveWrap, Title, Wrap, Image, ProfileImage, ProfileBox, Desc, Profile } from './styles';
 
@@ -34,10 +32,7 @@ const Live = () => {
   }, []);
 
   // 지금 인기있는 술약속 슬라이드 설정
-  const [slide, setSlide] = useState(false);
-  const moveSlide = () => {
-    setSlide(!slide);
-  };
+  const [slide,] = useState(false);
 
   // console.log(list)
 

@@ -25,7 +25,6 @@ const Tables = (props) => {
   const sortBy = queryParams.get("sortBy") || "id";
   const page = queryParams.get("page") || 1;
   const isAsc = queryParams.get("isAsc") || null;
-  const allParams = { keyword, alcohol, sortBy, isAsc };
   const lastTableRef = useRef();
   const [total, setTotal] = useState(0);
   const navigate = useNavigate();

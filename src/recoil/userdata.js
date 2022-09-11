@@ -47,7 +47,7 @@ export const SignOutSelector = selector({
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
         localStorage.removeItem('token')
-        set(userdataState, new DefaultValue)
+        set(userdataState, new DefaultValue())
     }
 })
 

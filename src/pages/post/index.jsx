@@ -44,7 +44,7 @@ const Post = () => {
     };
 
     try {
-      const res = await sulmoggoApi.tables(newData);
+      await sulmoggoApi.tables(newData);
       // console.log(res);
       navigate(`/tables`);
     } catch (err) {

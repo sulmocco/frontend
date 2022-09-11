@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import sulmoggoApi from '../../shared/apis';
-import { AlchholTag, SnackTag } from '../../styles/CommonStyles';
+import { AlchholTag } from '../../styles/CommonStyles';
 import { RecommendItem, RecommendWrap } from './styles';
 
 const Recommend = () => {

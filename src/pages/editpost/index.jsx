@@ -54,7 +54,7 @@ const EditPost = () => {
         content: editorRef.current?.getInstance().getHTML(),
         alcoholtag: tagList,
         freetag: freetag,
-        thumbnail: thumbnailImg || imgList && imgList[0],
+        thumbnail: thumbnailImg || (imgList && imgList[0]),
         imgUrlList: imgList,
         username,
     };
@@ -71,8 +71,9 @@ const EditPost = () => {
     useEffect(() => {
         editorRef.current?.getInstance().setHTML(data?.content)
         setTagList(data?.alcoholtag);
-        setTagColor(tag.findIndex((el) => el == data?.alcoholtag));
+        setTagColor(tag.findIndex((el) => el === data?.alcoholtag));
         window.scrollTo(0, 0);
+        // eslint-disable-next-line
     }, []);
 
     //태그 선택

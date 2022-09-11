@@ -124,6 +124,7 @@ const ProfileEdit = () => {
     useEffect(() => {
         setValue('level', data?.level);
         setValue('level_text', getLevel(data?.level));
+        // eslint-disable-next-line
     }, []);
 
     // 로딩스피너 적용

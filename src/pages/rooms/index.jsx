@@ -35,7 +35,6 @@ const Rooms = (props) => {
   const sortBy = queryParams.get("sortBy") || "id";
   const page = queryParams.get("page") || 1;
   const isAsc = queryParams.get("isAsc") || null;
-  const allParams = { keyword, alcohol, sortBy, isAsc };
   const lastRoomRef = useRef();
 
   // console.log(alcohol);

@@ -9,7 +9,6 @@ import {
 } from "./styles";
 import { useQuery } from '@tanstack/react-query';
 import sulmoggoApi from '../../shared/apis';
-import { useNavigate } from 'react-router-dom';
 
 const MainSlider = () => {
   const { data } = useQuery(['banner'], () => sulmoggoApi.getBanner().then(res => res.data));

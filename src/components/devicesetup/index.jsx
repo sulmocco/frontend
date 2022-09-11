@@ -1,16 +1,12 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { useRef, useCallback } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import sulmoggoApi from "../../shared/apis";
-import { Alcohol, LiveVersion } from "../../shared/options";
-import { useDropzone } from "react-dropzone";
+import { LiveVersion } from "../../shared/options";
 import { PageTitle } from "../../pages/tables/styles";
 import {
   NewLiveContainer,
   StartLiveButton,
-  SubmitWrapper,
   SubTitle,
   SubtitleWrapper,
   VideoDevicesDropdownWrapper,
@@ -31,10 +27,9 @@ import Header from "../common/Header";
 
 const DeviceSetup = (props) => {
   const { chatRoomId } = useParams();
-  const alcohol = useRef({});
   const videoPreview = useRef();
   const speakerRef = useRef();
-  const { deviceFor, setDeviceFor } = props;
+  const [, setDeviceFor] = props;
   const [videoinput, setVideoinput] = useRecoilState(videoinputState);
   const [audioinput, setAudioinput] = useRecoilState(audioinputState);
   const [audiooutput, setAudiooutput] = useRecoilState(audiooutputState);
@@ -54,10 +49,8 @@ const DeviceSetup = (props) => {
 
   const {
     register,
-    watch,
     handleSubmit,
-    setValue,
-    formState: { errors, isDirty, isValid },
+    setValue
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -156,6 +149,7 @@ const DeviceSetup = (props) => {
     ) {
       handleSpeakerDeviceChange(speakerDevices[0]);
     }
+    // eslint-disable-next-line
   }, [cameraDevices, audioDevices, speakerDevices]);
 
   return (

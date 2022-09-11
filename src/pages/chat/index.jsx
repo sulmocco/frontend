@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useRef, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
-import { Stomp, Client, Message } from "@stomp/stompjs";
+import { Client } from "@stomp/stompjs";
 import sulmoggoApi from "../../shared/apis";
 import {
   AlchholTag,
@@ -27,7 +27,7 @@ import moment from "moment";
 import VideoViewer from "../../components/videoviewer";
 import AddFriendModal from "../../components/addfriendmodal";
 import ShareModal from "../../components/sharemodal";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   playvideoState,
   playaudioState,
@@ -359,6 +359,7 @@ const Chat = (props) => {
                     <img
                       src={"/images/icon_dropdown_video.svg"}
                       className="videoarrow"
+                      alt="dropdown"
                     />
                   </div>
                 </VideoButton>
@@ -423,6 +424,7 @@ const Chat = (props) => {
                     <img
                       src={"/images/icon_dropdown_video.svg"}
                       className="videoarrow"
+                      alt="dropdown"
                     />
                   </div>
                 </VideoButton>

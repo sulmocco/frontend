@@ -117,5 +117,33 @@ export const ModalWrap = styled.div`
         margin: auto;
         width: 100%;
         height: fit-content;
+        z-index: 500;
+        max-width: 29.5rem;
+        padding: 1.5rem 2rem 1.6rem;
+        .title{
+            h4{
+            font-size: 1.4rem;
+            }
+        }
+        .sns{
+            gap: 3rem;
+            li{
+                img{
+                margin: 1.8rem 0 1.2rem 0;
+                }
+            p {
+                font-size: 1.2rem;
+                line-height: 1.4rem;
+            }
+            }
+        }
+        .url_copy{
+            padding: 1.2rem .8rem 1.1rem;
+            width: 100%;
+            span{
+                font-size: 1.4rem;
+                line-height: 2rem;
+            }
+        }
     }
 `

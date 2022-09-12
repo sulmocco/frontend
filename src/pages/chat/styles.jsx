@@ -11,8 +11,8 @@ export const LiveWrapper = styled.div`
     } */
   .live_left_box {
     /* width: 133.6rem; */
-    flex-grow: 1;
-    height: 100%;
+    /* flex-grow: 1; */
+    width: 100%;
     display: flex;
     flex-direction: column;
     .upper {
@@ -46,10 +46,17 @@ export const LiveWrapper = styled.div`
     position: relative;
   }
   .infoWrap {
-    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 1.6rem;
+    .tagWrap {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    height: 2.7rem;
+    }
   }
   .statWrap {
     display: inline-flex;
@@ -58,7 +65,6 @@ export const LiveWrapper = styled.div`
     flex-direction: row;
     /* background-color: red; */
     gap: 0.8rem;
-    margin-top: 3.1rem;
     height: 2.4rem;
     font-size: 1.6rem;
     font-weight: 500;
@@ -73,11 +79,45 @@ export const LiveWrapper = styled.div`
       height: 2.4rem;
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100vh;
+    .live_left_box{
+      height: 100vh;
+      .upper{
+        padding: 0;
+      }
+      .lower{
+        order: 0;
+        padding: 2rem;
+      }
+    }
+    .live_right_box{
+      display: none;
+    }
+    .infoWrap{
+      justify-content: flex-start;
+      padding: 0rem 2rem 1.8rem 2rem;
+    }
+    .statWrap{
+      font-size: 1rem;
+      line-height: 1.2rem;
+      height: fit-content;
+      gap: .4rem;
+      margin-top: 0.8rem;
+      img{
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+    }
+  }
 `;
 
 export const RoomDataWrap = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 1.2rem;
   align-items: flex-end;
   height: fit-content;
@@ -95,6 +135,10 @@ export const RoomDataWrap = styled.div`
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    h1{
+      font-size: 2.6rem;
+      line-height: 3.8rem;
+    }
     button {
       display: flex;
       align-items: center;
@@ -115,6 +159,36 @@ export const RoomDataWrap = styled.div`
         height: 2.4rem;
         background: url("/images/icon_share.svg") no-repeat center;
         background-size: 1.4rem 1.5rem;
+      }
+    }
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    justify-content: space-between;
+    height: fit-content;
+    align-items: flex-start;
+    padding: 1.8rem 2rem 0;
+    flex-direction: row;
+    .tagWrap{
+      order: -1;
+      margin-top: 0;
+    }
+    .shareWrap{
+      width: fit-content;
+      h1{
+        display: none;
+      }
+      button{
+        font-size: 0;
+        padding: .5rem 1.2rem .6rem;
+        gap: 0;
+        border: none;
+        background-color: ${props => props.theme.bg_light_blue};
+        &:after {
+          content: "";
+          width: 1.8rem;
+          height: 1.8rem;
+          background: url("/images/icon_share_mobile.svg") no-repeat center;
+        }
       }
     }
   }
@@ -194,7 +268,7 @@ export const VideoContainer = styled.div`
   }
   #video-container {
     width: 100%;
-    height: 100%;
+    height: ${props => props.host ? "100%" : "auto"};
     max-width: 124rem;
     /* display: grid;
         grid-template-columns: repeat(auto-fit, minmax(40rem, 3fr));
@@ -212,6 +286,7 @@ export const VideoContainer = styled.div`
   }
   .container {
     overflow: auto;
+    width: 100%;
   }
   #session {
     display: flex;
@@ -274,6 +349,78 @@ export const VideoContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 3.2rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    flex-grow: 1;
+    height: 100%;
+    max-height: calc(100vh - 14.3rem);
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .videoWrap{
+    padding: 0 2rem;
+    }
+    .container{
+      ::-webkit-scrollbar{
+        display: none;
+      }
+    }
+    .chatWrap{
+    max-height: 19.2rem;
+    /* position: relative; */
+    position: absolute;
+    bottom: 8rem;
+    left: 0;
+    right: 0;
+    z-index: 400;
+    height: 100%;
+    background-color: white;
+    }
+    #session{
+      margin-top: ${props => props.chatOpen ? "1.7rem" : "3.7rem"};
+      margin-bottom: ${props => props.chatOpen ? "1.7rem" : "3.7rem"};
+      align-items: flex-start;
+      height: auto;
+    }
+    #video-container {
+      gap: .7rem;
+      align-items: ${props => props.chatOpen ? "flex-start" : "center"};
+      height: ${props => props.host ? "100%" : "auto"};
+    }
+    .stream-container {
+      width: ${(props) => (props.host ? "100%" : "16.4rem")};
+      height: ${(props) => (props.host ? "100%" : (props.chatOpen ? "11.2rem" : "16rem"))};
+    }
+    .videousername{
+      left: 0;
+      right: 0;
+      bottom: .8rem;
+      width: fit-content;
+      margin: auto;
+      font-size: 1rem;
+      line-height: 1.6rem;
+      padding: .3rem .8rem;
+      img{
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+      svg{
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+    }
+    .videoButtonWrap {
+      gap: 1.2rem;
+      left: 2rem;
+      right: auto;
+      bottom: 1.7rem;
+    }
+    .chatButtonWrap {
+      position: absolute;
+      right: 2rem;
+      left: auto;
+      bottom: 1.7rem;
+    }
   }
 `;
 
@@ -360,7 +507,47 @@ export const VideoButton = styled.button`
     text-align: left;
     cursor: default;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    padding: 1rem 1.4rem 1rem 1rem;
+    gap: 1.6rem;
+    &:hover {
+      transform: translateY(0);
+    }
+    img{
+      width: 2.8rem;
+      height: 2.8rem;
+    }
+    .videoarrow{
+      width: 2.4rem;
+      height: 2.4rem;
+      img{
+        width: 1rem;
+        height: .5rem;
+      }
+    }
+    .devicesWrap{
+    height: ${(props) => (props.open ? 4 * props.count : 0)}rem;
+    bottom: 5.6rem;
+    width: 50vw;
+    }
+    .device, .deviceKind{
+      font-size: 1rem;
+      line-height: 2rem;
+      padding: 1rem 1.4rem;
+    }
+  }
 `;
+export const ChatButton = styled(VideoButton)`
+  background-color: ${props => props.theme.white};
+  justify-content: flex-start;
+  gap: .4rem;
+  p{
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+    font-weight: 700;
+    color: ${props => props.theme.primary};
+  }
+`
 
 export const ChatHeader = styled.div`
   background-color: ${(props) => props.theme.primary};
@@ -388,6 +575,18 @@ export const ChatHeader = styled.div`
     background-color: ${(props) => props.theme.white};
     border: none;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    padding: .9rem 2rem;
+    line-height: 3.8rem;
+    button{
+      padding: 0;
+      background-color: transparent;
+      img{
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
 `;
 
 export const ChatWrapper = styled.div`
@@ -398,6 +597,12 @@ export const ChatWrapper = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    /* background-color: red; */
+    padding: .4rem 2rem 0;
+    height: 100%;
+    overflow-y: auto;
+  }
 `;
 
 export const ChatContent = styled.div`
@@ -428,6 +633,15 @@ export const ChatContent = styled.div`
     color: ${(props) => props.theme.grey_01};
     margin-left: 0.4rem;
     font-weight: 500;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    overflow-y: scroll;
+      font-size: 1.4rem;
+      line-height: 2.8rem;
+      margin-top: 0;
+      &:last-child {
+    padding-bottom: 6rem;
+  }
   }
 `;
 
@@ -482,5 +696,21 @@ export const ChatInputWrapper = styled.div`
     font-weight: 500;
     padding-left: 0.8rem;
     flex-grow: 1;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    padding: 1.2rem 1.7rem 1.2rem 2rem;
+    height: fit-content;
+    input{
+      font-size: 1.4rem;
+      line-height: 1.7rem;
+    }
+    button{
+      padding: 0.4rem;
+      border-radius: .8rem;
+      img{
+        width: 2.358rem;
+        height: 2.358rem;
+      }
+    }
   }
 `;

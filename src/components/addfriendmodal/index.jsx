@@ -18,7 +18,6 @@ const AddFriendModal = ({username, onClose}) => {
         })
         onClose()
     }
-    // TODO: api 호출
     useEffect(() => {
         const foo = async () => {
             await sulmoggoApi.getSelectedUser(username).then(res => {

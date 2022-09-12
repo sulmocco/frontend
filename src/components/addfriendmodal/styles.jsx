@@ -45,6 +45,23 @@ export const ModalContainer = styled.div`
         line-height: 3.1rem;
         letter-spacing: -0.02em;
     }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        max-width: 90%;
+        height: fit-content;
+        padding: 3rem 2rem;
+        h1{
+            font-size: 2rem;
+        }
+        .friendProfileWrapper{
+            width: 20rem;
+            height: 20rem;
+            margin-top: 2rem;
+        }
+        .friendUsername{
+            font-size: 2rem;
+            margin-top: 1rem;
+        }
+    }
 `
 
 export const ProfileCircle = styled.div`
@@ -55,6 +72,10 @@ export const ProfileCircle = styled.div`
     background-color: #d9d9d9;
     background-size: cover;
     background-position: center;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        width: 5rem;
+        height: 5rem;
+    }
 `
 
 export const AlcoholLevel = styled(UserLevel)`

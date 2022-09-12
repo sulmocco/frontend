@@ -12,6 +12,7 @@ import {
 } from "../../styles/CommonStyles";
 import {
   AddHostFriendButton,
+  ChatButton,
   ChatContent,
   ChatHeader,
   ChatInputWrapper,
@@ -76,6 +77,8 @@ const Chat = (props) => {
   const timer = useRef(null);
   const clientRef = useRef(null);
   const headers = { Authorization: token };
+  let isMobile = window.innerWidth < 1024;
+  const [mobileChatOpen, setMobileChatOpen] = useState(false)
 
   // 공유모달 관련
   const [isOpen, setOpen] = useState();
@@ -204,6 +207,13 @@ const Chat = (props) => {
     getDevices();
   }, []);
 
+  window.addEventListener("load",function() {
+    setTimeout(function(){
+        // This hides the address bar:
+        window.scrollTo(0, 1);
+    }, 0);
+  });
+
   // 소켓 연결 및 방 데이터 로드
   // roomId가 바뀔때마다 다시 연결.
   useEffect(() => {
@@ -270,8 +280,23 @@ const Chat = (props) => {
       <LiveWrapper>
         <div className="live_left_box">
           <div className="upper">
+          {isMobile && <ChatHeader>
+            <div>
+              <span>{roomData?.title || "방제목이 없습니다."}</span>
+            </div>
+            <button
+              onClick={async (e) => {
+                e.preventDefault();
+                if (window.confirm("채팅방을 나가시겠습니까?")) {
+                  // console.log("나가기버튼. 내용 : ", chatRef.current.value);
+                  window.location.href = "/rooms";
+                }
+              }}
+            >
+              <img src="/images/icon_out_mobile.svg" alt="out" />
+            </button>
+          </ChatHeader>}
             <RoomDataWrap>
-              <div style={{ width: "100%" }}>
                 <span className="shareWrap">
                   <h1>{roomData?.title || "방제목이 없습니다."}</h1>
                   <button className="share" onClick={() => setOpen(true)}>
@@ -287,14 +312,18 @@ const Chat = (props) => {
                     chatRoomId={chatRoomId}
                   />
                 </span>
-                <div className="tagWrap">
+                {isMobile && <div className="tagWrap">
                   <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
                   <SnackTag>{roomData?.food || "안주"}</SnackTag>
                   <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
-                </div>
-              </div>
+                </div>}
             </RoomDataWrap>
             <div className="infoWrap">
+            {!isMobile && <div className="tagWrap">
+                  <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
+                  <SnackTag>{roomData?.food || "안주"}</SnackTag>
+                  <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
+                </div>}
               <div className="statWrap">
                 <img src="/images/icon_clock_grey_02.svg" alt="clock" />
                 <span>{time || "00:00:00"}</span>
@@ -304,7 +333,7 @@ const Chat = (props) => {
               </div>
             </div>
           </div>
-          <VideoContainer host={roomData?.version?.startsWith("host")}>
+          <VideoContainer host={roomData?.version?.startsWith("host")} chatOpen={mobileChatOpen}>
             <audio ref={speakerRef} hidden />
             <div className="videoWrap">
               {roomData && (
@@ -317,6 +346,43 @@ const Chat = (props) => {
                 />
               )}
             </div>
+            {isMobile && mobileChatOpen && <div className="chatWrap">
+            <ChatWrapper>
+            {content.map((data, idx) => {
+              return (
+                <ChatContent
+                  key={Math.random().toString(36).substr(2, 11)}
+                  ref={idx !== content.length - 1 ? null : lastOne}
+                >
+                  <span className="chatuser">{data.sender}</span>
+                  <span className="chattext">: {data.message}</span>
+                </ChatContent>
+              );
+            })}
+            <ChatContent />
+          </ChatWrapper>
+          <ChatInputWrapper>
+            <form action="">
+              <div className="sendInputWrapper">
+                <input
+                  type="text"
+                  placeholder="채팅을 입력해 주세요"
+                  ref={chatRef}
+                />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (chatRef.current.value !== "") {
+                      sendMessage();
+                    }
+                  }}
+                >
+                  <img src="/images/icon_send.svg" alt="send airplane" />
+                </button>
+              </div>
+            </form>
+          </ChatInputWrapper>
+          </div>}
             {((roomData?.version.startsWith("host") &&
               username === roomData?.username) ||
               roomData?.version.startsWith("friend")) && (
@@ -430,6 +496,19 @@ const Chat = (props) => {
                 </VideoButton>
               </div>
             )}
+              {isMobile && <div className="chatButtonWrap">
+                <ChatButton
+                  onClick={() => {
+                    setMobileChatOpen(!mobileChatOpen)
+                  }}
+                >
+                  <img
+                    src={`/images/icon_chat_mobile.svg`}
+                    alt="chat"
+                  />
+                  <p>채팅</p>
+                </ChatButton>
+              </div>}
           </VideoContainer>
           {roomData?.version?.startsWith("host") && (
             <div className="lower">
@@ -453,7 +532,7 @@ const Chat = (props) => {
             </div>
           )}
         </div>
-        <div className="live_right_box">
+        {!isMobile && <div className="live_right_box">
           <ChatHeader>
             <div>
               <img src="/images/icon_chat.svg" alt="chat" />
@@ -506,7 +585,7 @@ const Chat = (props) => {
               </div>
             </form>
           </ChatInputWrapper>
-        </div>
+        </div>}
         {openFriendModal && (
           <AddFriendModal
             username={selectedFriend}

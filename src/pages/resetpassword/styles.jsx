@@ -8,6 +8,9 @@ export const LoginWrap = styled.div`
     height: 100%;
     background-color: ${props => props.theme.bg_light_gray};
     min-height: calc(100vh - 72px - 120px);
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        min-height: calc(100vh - 5rem - 10rem);
+    }
 `
 
 export const LoginSection = styled.div`
@@ -20,6 +23,7 @@ export const LoginSection = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     h1 {
         font-size: 3.2rem;
         font-weight: 700;
@@ -65,5 +69,15 @@ export const LoginSection = styled.div`
         margin-top: 2rem;
         display: block;
         cursor: pointer;
+    }
+    @media (max-width:${props => props.theme.breakpoints.mobile}px){
+        max-width: 100vw;
+        padding: 4rem .2rem;
+        h1 {
+            font-size: 2rem;
+        }
+        p {
+            font-size: 1.6rem;
+        }
     }
 ` 

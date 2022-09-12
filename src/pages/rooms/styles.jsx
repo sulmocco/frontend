@@ -7,6 +7,12 @@ export const RoomsWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  .sortWrapper{
+    width: 100%;
+    max-width: ${props => props.theme.contentWidth};
+    text-align: right;
+    margin-top: 6.2rem;
+  }
   .checkedAlcoholWrapper {
     margin-top: 1.6rem;
     display: flex;
@@ -64,6 +70,10 @@ export const PageTitle = styled.h1`
   line-height: 4.1rem;
   letter-spacing: -0.02em;
   font-weight: 700;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    font-size: 2.2rem;
+    line-height: 2.6rem;
+  }
 `;
 
 export const AlcoholCategories = styled.div`
@@ -100,7 +110,7 @@ export const SearchBoxWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 3.2rem;
+  margin-top: 7.2rem;
   .leftWrapper {
     display: flex;
     flex-direction: column;

@@ -184,27 +184,6 @@ const Rooms = (props) => {
               </VersionTab>
             ))}
           </ul>
-          <div className="rightWrapper">
-            <SortButton
-              checked={sortBy === "userCount"}
-              onClick={() => {
-                // console.log(allParams);
-                filterRooms({ type: "sortBy", value: "userCount" });
-              }}
-            >
-              인기순
-            </SortButton>
-            <Separator />
-            <SortButton
-              checked={sortBy === "id"}
-              onClick={() => {
-                // console.log(allParams);
-                filterRooms({ type: "sortBy", value: "id" });
-              }}
-            >
-              최신순
-            </SortButton>
-          </div>
         </RoomsTabs>
       </RoomsHeaderWrapper>
       {alcohol && (
@@ -267,7 +246,27 @@ const Rooms = (props) => {
           </div>
         </>
       )}
-
+      <div className="sortWrapper">
+            <SortButton
+              checked={sortBy === "userCount"}
+              onClick={() => {
+                // console.log(allParams);
+                filterRooms({ type: "sortBy", value: "userCount" });
+              }}
+            >
+              인기순
+            </SortButton>
+            <Separator />
+            <SortButton
+              checked={sortBy === "id"}
+              onClick={() => {
+                // console.log(allParams);
+                filterRooms({ type: "sortBy", value: "id" });
+              }}
+            >
+              최신순
+            </SortButton>
+          </div>
       {/* eslint-disable-next-line */}
       {isSuccess && data.pages[0].data.totalElements != 0 && (
         <RoomsGrid>

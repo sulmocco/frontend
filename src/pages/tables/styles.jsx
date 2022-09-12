@@ -75,6 +75,7 @@ export const TableCont = styled.div`
     padding-top: 4rem;
     padding-bottom: 12.8rem;
     .rightWrapper {
+      margin-top: 6.2rem;
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
@@ -92,7 +93,7 @@ export const AlcoholCategories = styled.div`
   display: flex;
   flex-direction: row;
   gap: 2.4rem;
-  margin-top: 3.2rem;
+  /* margin-top: 3.2rem; */
 `;
 
 export const AlcoholCategory = styled.button`
@@ -116,7 +117,7 @@ export const SearchBoxWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 6.4rem;
+  margin-top: 7.2rem;
   .leftWrapper {
     display: flex;
     flex-direction: column;

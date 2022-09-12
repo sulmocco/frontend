@@ -131,7 +131,7 @@ const Tables = (props) => {
           <section>
             {alcohol && (
               <>
-                <AlcoholCategories>
+                <AlcoholCategories style={{marginTop: 0}}>
                   {Alcohol.map((x, i) => (
                     <AlcoholCategory
                       key={x}

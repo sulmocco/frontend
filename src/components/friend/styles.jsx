@@ -66,4 +66,20 @@ export const FriendCont = styled.div`
         border: none;
         border-radius: 2rem;
     }
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        padding: 2rem 1rem;
+        min-width: 100vw;
+        .section {
+            .img {
+                width: 5rem;
+                height: 5rem;
+            }
+            .desc {
+                h4 {
+                    font-size: 1.8rem;
+                    line-height: 2.2rem;
+                }
+            }
+        }
+    }
 `

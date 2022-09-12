@@ -2,12 +2,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import styled from "styled-components";
 import sulmoggoApi from "../../shared/apis";
 import Nodata from "../nodatalending";
 import Spinner from "../spinner";
 import TableCard from "../tablecard";
-import { MypageWrap, TablesGrid } from "./styles";
+import { Content, TablesGrid, Wrap } from "./styles";
 
 const Bookmark = () => {
   const { ref, inView } = useInView();
@@ -44,7 +43,7 @@ const Bookmark = () => {
   return (
     <>
       {data.pages[0].data?.length >= 1 ? (
-        <MypageWrap>
+        <Wrap>
           <TablesGrid>
             {data &&
               data.pages.map((item, index) => (
@@ -56,23 +55,14 @@ const Bookmark = () => {
               ))}
           </TablesGrid>
           {isFetchingNextPage ? <Spinner size="7rem" /> : <div ref={ref}></div>}
-        </MypageWrap>
+        </Wrap>
       ) : (
-        <Content>
+        <Wrap>
           <Nodata />
-        </Content>
+        </Wrap>
       )}
     </>
   );
 };
 
 export default Bookmark;
-
-const Content = styled.div`
-  width: 100%;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;

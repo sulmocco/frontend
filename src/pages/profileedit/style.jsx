@@ -21,22 +21,38 @@ export const ProfileEditSection = styled.section`
         justify-content: center;
         gap: 2.4rem;
     }
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        padding: 5rem 0 ;
+        width: 90vw;
+        h1 {
+            font-size: 2rem;
+            line-height: 2.2rem;
+        }
+        .buttons {
+            gap: 1rem;
+        }
+    }
 `
 export const ProfileEditCont = styled.div`
     padding: 5.6rem 4rem 14.4rem 4rem;
     display: flex;
     flex-direction: row;
     gap: 4rem;
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        padding: 3rem;
+        gap: 4rem;
+        flex-direction: column;
+    }
 `
 export const MyImgSection = styled.div`
     position: relative;
     background-color: #fff;
     min-width: 40rem;
-    height: 29.6rem;
     border-radius: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 4rem;
     .section{
         display: flex;
         flex-direction: column;
@@ -96,6 +112,9 @@ export const MyImgSection = styled.div`
         border-radius: 2rem;
         cursor: pointer;
     }
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px) {
+        min-width: 0;
+    }
 `
 export const MyInfoSection = styled.form`
     width: 100%;
@@ -112,4 +131,9 @@ export const Button = styled.button`
     letter-spacing: -0.02;
     line-height: 3.103rem;
     padding: 2.8rem 4.45rem;
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        padding: 2rem;
+        font-size: 1.8rem;
+        line-height: 2rem;
+    }
 `

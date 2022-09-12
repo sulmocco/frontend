@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import sulmoggoApi from "../../shared/apis";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import Loading from "../common/Loading";
 import TableCard from "../tablecard";
 import Spinner from "../spinner";
-import { TablesGrid } from "./styles";
+import { TablesGrid, Wrap } from "./styles";
 import Nodata from "../nodatalending";
 
 const Mypost = () => {
@@ -45,8 +44,6 @@ const Mypost = () => {
     }
   }, [inView, fetchNextPage]);
 
-  // console.log("찍어봄", my_table_query);
-
   if (status === "loading") {
     return <Spinner size="7rem" />;
   }
@@ -70,9 +67,9 @@ const Mypost = () => {
           {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
         </Wrap>
       ) : (
-        <Content>
+        <Wrap>
           <Nodata />
-        </Content>
+        </Wrap>
       )}
     </>
   );
@@ -80,15 +77,4 @@ const Mypost = () => {
 
 export default Mypost;
 
-const Content = styled.div`
-  width: 100%;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const Wrap = styled.div`
-  width: 1290px;
-  margin: 0 auto;
-`;
+

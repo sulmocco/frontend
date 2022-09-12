@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../components/spinner";
 import sulmoggoApi from "../../shared/apis";
 import { getLevel } from '../../shared/modules';
+import { MypageNav, Profile, ProfileBox, Wrap } from './styles';
 
 const Mypage = () => {
   const navigate = useNavigate();
@@ -65,126 +65,3 @@ const Mypage = () => {
 };
 
 export default Mypage;
-
-const Profile = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 561px;
-  background: #eef3ff;
-  border-radius: 10px;
-
-  h1 {
-    margin-top: 144px;
-    font-weight: 700;
-    font-size: 34px;
-  }
-`;
-
-const Wrap = styled.div`
-  width: 1290px;
-  h1 {
-    font-weight: 700;
-    font-size: 34px;
-  }
-`;
-
-const ProfileBox = styled.div`
-  position: relative;
-  margin-top: 56px;
-  width: 1280px;
-  height: 208px;
-  background: #ffffff;
-  border-radius: 10px;
-
-  display: flex;
-  align-items: center;
-
-  img {
-    width: 88px;
-    height: 88px;
-    margin-left: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-
-  }
-
-  .info {
-    margin-left: 16px;
-
-    .level {
-      font-weight: 500;
-      font-size: 12px;
-      width: 48px;
-      height: 18px;
-      background: #eef3ff;
-      border-radius: 4px;
-      color: #2459e0;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 5px;
-    }
-    div {
-      font-weight: 700;
-      font-size: 32px;
-    }
-  }
-
-  button {
-    position: absolute;
-    right: 32px;
-    font-weight: 500;
-    font-size: 16px;
-    color: #7a7a80;
-
-    background: #f2f3f3;
-    border: none;
-    border-radius: 20px;
-    width: 86px;
-    height: 33px;
-  }
-`;
-
-const MypageNav = styled.nav`
-  margin-top: 112px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 1278px;
-    height: 80px;
-    background: #ffffff;
-    border: 2px solid #f2f3f3;
-    box-shadow: 0px 4px 24px rgba(184, 187, 192, 0.16);
-    border-radius: 10px;
-  }
-
-  li {
-    div {
-      width: 426px;
-      height: 80px;
-      font-size: 26px;
-      color: #7a7a80;
-      font-weight: 700;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    a {
-      &.active {
-        font-weight: 700;
-
-        div {
-          background: #eef3ff;
-          color: #2459e0;
-        }
-      }
-    }
-  }
-`;

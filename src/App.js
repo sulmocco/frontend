@@ -39,19 +39,19 @@ const LiveRending = React.lazy(() => import("./pages/liverending"));
 const EditPost = React.lazy(() => import("./pages/editpost"));
 
 function App() {
-  const [, setMaintainUser] = useRecoilState(MaintainUser)
-  const [,signOut] = useRecoilState(SignOutSelector)
+  const [, setMaintainUser] = useRecoilState(MaintainUser);
+  const [, signOut] = useRecoilState(SignOutSelector);
 
   sulmoggoApi
     .getUser()
     .then((res) => {
       setMaintainUser({
-        username: res.data.username
-      })
+        username: res.data.username,
+      });
     })
     .catch((err) => {
       // console.log(err);
-      signOut()
+      signOut();
     });
 
   return (
@@ -59,41 +59,47 @@ function App() {
       <ThemeProvider theme={Theme}>
         <GlobalStyles />
         <ErrorBoundary>
-        <Routes>
-          <Route path="/chat/:chatRoomId" element={<Chat />} />
-          <Route path="/live" element={<Live />} />
-          <Route path="/" element={<Layout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/oauth2/redirect" element={<LoginRedirect />} />
-            <Route path="/oauth2/redirect_pw" element={<PasswordRedirect />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/loginrending" element={<LoginRending />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/post" element={<Post />} />
-            <Route path="/editpost/:tableId" element={<EditPost />} />
-            <Route path="/spinner" element={<Spinner />} />
-            <Route path="/tables" element={<Tables />} />
-            <Route path="/tables/:tableId" element={<Detail />} />
-            <Route path="/live/new" element={<NewLive />} />
-            <Route path="/render/live/:chatRoomId" element={<LiveRending />} />
-            <Route path="/resetPassword" element={<ResetPassword />} />
-            <Route path="/password" element={<PassWordInput />} />
-            <Route path="/render/:params" element={<PasswordRending />} />
-            <Route path="/render/deleteAccount" element={<DeleteAccount />} />
-            <Route path="/comment" element={<Comment />} />
-            <Route path="/rooms" element={<Rooms />} />
-            <Route path="/mypage" element={<Mypage />}>
-              <Route path="/mypage/bookmark" element={<Bookmark />} />
-              <Route path="/mypage/mypost" element={<Mypost />} />
-              <Route path="/mypage/friends" element={<Friends />} />
+          <Routes>
+            <Route path="/chat/:chatRoomId" element={<Chat />} />
+            <Route path="/live" element={<Live />} />
+            <Route path="/" element={<Layout />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/oauth2/redirect" element={<LoginRedirect />} />
+              <Route
+                path="/oauth2/redirect_pw"
+                element={<PasswordRedirect />}
+              />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/loginrending" element={<LoginRending />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/post" element={<Post />} />
+              <Route path="/editpost/:tableId" element={<EditPost />} />
+              <Route path="/spinner" element={<Spinner />} />
+              <Route path="/tables" element={<Tables />} />
+              <Route path="/tables/:tableId" element={<Detail />} />
+              <Route path="/live/new" element={<NewLive />} />
+              <Route
+                path="/render/live/:chatRoomId"
+                element={<LiveRending />}
+              />
+              <Route path="/resetPassword" element={<ResetPassword />} />
+              <Route path="/password" element={<PassWordInput />} />
+              <Route path="/render/:params" element={<PasswordRending />} />
+              <Route path="/render/deleteAccount" element={<DeleteAccount />} />
+              <Route path="/comment" element={<Comment />} />
+              <Route path="/rooms" element={<Rooms />} />
+              <Route path="/mypage" element={<Mypage />}>
+                <Route path="/mypage/bookmark" element={<Bookmark />} />
+                <Route path="/mypage/mypost" element={<Mypost />} />
+                <Route path="/mypage/friends" element={<Friends />} />
+              </Route>
+              <Route path="/mypage/edit" element={<ProfileEdit />} />
+              <Route path="/loading" element={<Spinner />} />
             </Route>
-            <Route path="/mypage/edit" element={<ProfileEdit />} />
-            <Route path="/loading" element={<Spinner />} />
-          </Route>
-        </Routes>
-          </ErrorBoundary>
+          </Routes>
+        </ErrorBoundary>
       </ThemeProvider>
     </Suspense>
   );

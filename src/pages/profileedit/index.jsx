@@ -19,7 +19,7 @@ const ProfileEdit = () => {
     const levelText = useRef();
     const level = useRef();
     const queryClient = useQueryClient();
-    const [,setSignOut] = useRecoilState(SignOutSelector)
+    const [, setSignOut] = useRecoilState(SignOutSelector)
 
     // 폼관리
     const { register, watch, handleSubmit, setValue, setError, clearErrors, formState: { isDirty, errors } } = useForm({ mode: "onChange" });

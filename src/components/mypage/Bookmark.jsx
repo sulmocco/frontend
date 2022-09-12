@@ -6,7 +6,7 @@ import sulmoggoApi from "../../shared/apis";
 import Nodata from "../nodatalending";
 import Spinner from "../spinner";
 import TableCard from "../tablecard";
-import { Content, TablesGrid, Wrap } from "./styles";
+import { TablesGrid, Wrap } from "./styles";
 
 const Bookmark = () => {
   const { ref, inView } = useInView();

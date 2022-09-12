@@ -64,7 +64,7 @@ export const PasswordSection = styled.div`
         display: block;
         cursor: pointer;
     }
-    @media(max-width : ${props => props.theme.breakpoint.mobile}px){
+    @media(max-width : ${props => props.theme.breakpoints.mobile}px){
         max-width: 100vw;
         padding: 4rem .5rem;
     }

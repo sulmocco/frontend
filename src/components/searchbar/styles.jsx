@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const SearchBox = styled.div`
-  width: 64rem;
+  width: 100%;
+  max-width: 64rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -24,5 +25,21 @@ export const SearchBox = styled.div`
     outline: none;
     border: none;
     background-color: transparent;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    max-width: 23.5rem;
+    padding: .8rem;
+    input{
+      font-size: 1rem;
+      line-height: 1.2rem;
+    }
+    button{
+      width: 2rem;
+      height: 2rem;
+      img{
+        width: 2rem;
+        height: 2rem;
+      }
+    }
   }
 `;

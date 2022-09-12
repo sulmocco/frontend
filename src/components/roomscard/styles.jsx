@@ -73,6 +73,35 @@ export const CardWrapper = styled.div`
         margin-top: 4rem;
         height: 2.7rem;
     }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        .counterWrap{
+            font-size: 1rem;
+            line-height: 1.2rem;
+            margin-top: 1rem;
+            img{
+                width: 1.2rem;
+            }
+        }
+        .cardUpperWrap{
+            margin-top: .8rem;
+        }
+        .roomTitle{
+            margin-top: .4rem;
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+        }
+        .roomUser{
+            font-size: 1.2rem;
+            line-height: 1.4rem;
+        }
+        .cardTitleWrap{
+            gap: .4rem;
+            margin-left: .6rem;
+        }
+        .tagWrap{
+            margin-top: 1.8rem;
+        }
+    }
 `
 export const CardThumbnail = styled.div`
     width: 100%;
@@ -82,6 +111,9 @@ export const CardThumbnail = styled.div`
     background-color: #d9d9d9;
     background-size: cover;
     background-position: center;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        height: 10.6rem;
+    }
 `
 export const ProfileCircle = styled.div`
     width: 6.4rem;
@@ -91,4 +123,8 @@ export const ProfileCircle = styled.div`
     background-color: #d9d9d9;
     background-size: cover;
     background-position: center;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        width: 3.2rem;
+        height: 3.2rem;
+    }
 `

@@ -41,6 +41,13 @@ export const UserLevel = styled.div`
   background-color: ${(props) => props.theme.bg_light_blue};
   color: ${(props) => props.theme.primary};
   text-align: center;
+  border-radius: .4rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    font-size: .8rem;
+    line-height: 1rem;
+    width: 3.3rem;
+    height: 1.4rem;
+  }
 `;
 
 // 버튼 베이스 스타일 (디자인 시스템)
@@ -87,6 +94,14 @@ export const TagBase = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    padding: .4rem 1rem;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    height: fit-content;
+  }
 `;
 
 // 주종 태그

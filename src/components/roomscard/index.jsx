@@ -36,13 +36,13 @@ const RoomCard = (props) => {
         <img src="/images/icon_people_black.svg" alt="people" />
         {userCount || 0}
       </div>
-      <div className="roomTitle">{title}</div>
+      <div className="roomTitle">{title || "방제목이 없습니다."}</div>
 
       <div className="cardUpperWrap">
         <ProfileCircle src={profileimgurl}/>
         <div className="cardTitleWrap">
           
-          <div className="roomUser">{username}</div>
+          <div className="roomUser">{username || "사용자가 없습니다."}</div>
           <UserLevel>{getLevel(level || 0)}</UserLevel>
         </div>
       </div>
@@ -51,7 +51,6 @@ const RoomCard = (props) => {
         {alcoholtag && <AlchholTag>{alcoholtag}</AlchholTag>}
         {food && <SnackTag>{food}</SnackTag>}
         {theme && <ThemeTag>{theme}</ThemeTag>}
-
       </div>
     </CardWrapper>
     </Link>

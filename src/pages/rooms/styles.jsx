@@ -7,9 +7,9 @@ export const RoomsWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  .sortWrapper{
+  .sortWrapper {
     width: 100%;
-    max-width: ${props => props.theme.contentWidth};
+    max-width: ${(props) => props.theme.contentWidth};
     text-align: right;
     margin-top: 6.2rem;
   }
@@ -38,6 +38,32 @@ export const RoomsWrapper = styled.div`
       }
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    .checkedAlcoholWrapper {
+      width: 100%;
+      overflow: scroll;
+      margin-top: 1.6rem;
+      padding: 0 2.8rem;
+      gap: 0.8rem;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      .checkedAlcohol{
+        white-space: pre;
+        font-size: 1rem;
+        line-height: 1.2rem;
+        padding: .6rem .8rem .6rem .6rem;
+        gap: .6rem;
+        img{
+          width: 1.2rem;
+          height: 1.2rem;
+        }
+      }
+    }
+    .sortWrapper {
+      padding: 0 2rem;
+    }
+  }
 `;
 
 export const RoomsTopWrapper = styled.div`
@@ -51,6 +77,9 @@ export const RoomsTopWrapper = styled.div`
     width: 100%;
     max-width: ${(props) => props.theme.contentWidth};
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    padding: 2.5rem 2rem 1.8rem;
+  }
   /* max-width: ${(props) => props.theme.contentWidth}; */
 `;
 
@@ -63,6 +92,13 @@ export const RoomsGrid = styled.div`
   grid-row-gap: 6.4rem;
   grid-column-gap: 4rem;
   margin-bottom: 16rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    margin-top: 0;
+    padding: .8rem 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(16.4rem, 1fr));
+    grid-column-gap: .7rem;
+    grid-row-gap: 1.6rem;
+  }
 `;
 
 export const PageTitle = styled.h1`
@@ -83,6 +119,16 @@ export const AlcoholCategories = styled.div`
   margin-top: 3.2rem;
   width: 100%;
   max-width: ${(props) => props.theme.contentWidth};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    width: 100%;
+    overflow: scroll;
+    margin-top: 2rem;
+    padding: 0 2rem;
+    gap: 0.8rem;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;
 
 export const AlcoholCategory = styled.button`
@@ -102,6 +148,12 @@ export const AlcoholCategory = styled.button`
   &:hover {
     color: ${(props) => props.theme.primary};
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    white-space: pre;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+    padding: 0.8rem 1.4rem 0.7rem;
+  }
 `;
 
 export const SearchBoxWrapper = styled.div`
@@ -112,6 +164,7 @@ export const SearchBoxWrapper = styled.div`
   align-items: flex-end;
   margin-top: 7.2rem;
   .leftWrapper {
+    width: 100%;
     display: flex;
     flex-direction: column;
     p {
@@ -131,6 +184,15 @@ export const SearchBoxWrapper = styled.div`
     align-items: center;
     gap: 0.4rem;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    margin-top: 2.8rem;
+    .leftWrapper {
+      width: 100%;
+      p {
+        font-size: 1.6rem;
+      }
+    }
+  }
 `;
 
 export const SortButton = styled.button`
@@ -141,6 +203,10 @@ export const SortButton = styled.button`
   background-color: transparent;
   color: ${(props) =>
     props.checked ? props.theme.black_2 : props.theme.grey_03};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    font-size: 1rem;
+    line-height: 1.2rem;
+  }
 `;
 
 export const NoList = styled.div`
@@ -165,12 +231,19 @@ export const RoomsTabs = styled.nav`
   align-items: center;
   width: 100%;
   max-width: ${(props) => props.theme.contentWidth};
+  border-bottom: 0.1rem solid ${(props) => props.theme.grey_04};
   ul {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     height: 8rem;
     gap: 1.6rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    padding: 0 2rem;
+    ul {
+      height: 5rem;
+    }
   }
 `;
 
@@ -190,4 +263,9 @@ export const VersionTab = styled.li`
   align-items: center;
   border-bottom: 0.3rem solid
     ${(props) => (props.active ? props.theme.primary : "transparent")};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    min-width: 9.1rem;
+    font-size: 1.6rem;
+    padding: 0.4rem 0.8rem 0;
+  }
 `;

@@ -9,6 +9,8 @@ export const TermsWrap = styled.div`
     background-color: ${props => props.theme.bg_light_gray};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
         background-color: ${props => props.theme.white};
+        max-height: fit-content;
+        min-height: calc(100vh - ${props => props.theme.headerSizeMobile+" - "+props.theme.footerSizeMobile});
     }
 `
 
@@ -19,20 +21,12 @@ export const Termsection = styled.div`
     max-width: 71.2rem;
     max-height: 88.5rem;
     margin-bottom: 13.6rem;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        padding: 4rem;
-        margin-bottom: 6rem;
-    }
     h2 {
         font-weight: 700;
         font-size: 3.2rem;
         line-height: 4.7rem;
         letter-spacing: -0.5px;
         text-align: center;
-        @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-            font-size: 3.5rem;
-            word-break: keep-all;
-        }
     }
     ul {
         margin-top: 4.9rem;
@@ -55,11 +49,7 @@ export const Termsection = styled.div`
                 size: 2rem;
                 color: #4e4e56;
                 cursor: pointer;
-                @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-                    font-size: 2rem;
-                    word-break: keep-all;
                 }
-            }
                 i{
                 display: block;
                 background-image: url('/images/icon_arrow_right_gray.svg');
@@ -121,7 +111,7 @@ export const Termsection = styled.div`
             }
         }
     
-    P {
+    p {
         font-size: 1.4rem;
         color: #7a7a80;
         @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
@@ -138,5 +128,23 @@ export const Termsection = styled.div`
         width: 100%;
         display: flex;
         justify-content: center;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        padding: 2rem;
+        margin-bottom: 6rem;
+        ul li{
+            max-height: 6rem;
+        }
+        h2{
+            font-size: 3rem;
+            word-break: keep-all;
+        }
+        ul li span p{
+            font-size: 1.8rem;
+            word-break: keep-all;
+        }
+        p{
+            font-size: 1.8rem;
+        }
     }
 `

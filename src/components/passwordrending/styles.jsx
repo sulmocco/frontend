@@ -8,10 +8,11 @@ export const LoginWrap = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.bg_light_gray};
-    min-height: calc(100vh - 72px - 120px);
+    min-height: calc(100vh - ${props => props.theme.headerSize+" - "+props.theme.footerSize});
     padding-bottom: 13.6rem;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
         background-color: ${props => props.theme.white};
+        min-height: calc(100vh - ${props => props.theme.headerSizeMobile+" - "+props.theme.footerSizeMobile});
     }
 `
 
@@ -24,9 +25,6 @@ export const LoginSection = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        max-width: 100%;
-    }
     h1 {
         font-size: 3.2rem;
         font-weight: 700;
@@ -64,9 +62,6 @@ export const LoginSection = styled.div`
     }
     img{
         margin-top: 3.3rem;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        width: 30rem;
-    }
     }
     p {
         color: #000;
@@ -75,5 +70,14 @@ export const LoginSection = styled.div`
         margin-top: 2rem;
         display: block;
         cursor: pointer;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        max-width: 100%;
+        h1{
+            font-size: 3rem;
+        }
+        img{
+            width: 30rem;
+        }
     }
 ` 

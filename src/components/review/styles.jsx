@@ -51,12 +51,12 @@ export const ReviewCont = styled.div`
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
         .left{
             h4{
-                font-size: 2.3rem;
-            line-height: 3rem;
+                font-size: 2rem;
+            line-height: 2.5rem;
             }
             p{
-                font-size: 1.5rem;
-                line-height: 2.2rem;
+                font-size: 1.3rem;
+                line-height: 2rem;
                 margin: 1rem 0;
             }
             span{

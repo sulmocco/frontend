@@ -26,6 +26,11 @@ export const Container = styled.div`
     font-weight: 700;
     margin-bottom: 4rem;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    h2{
+      font-size: 2.2rem;
+    }
+  }
 `;
 
 export const RankWrapper = styled.div`
@@ -55,6 +60,14 @@ export const OneRankWrapper = styled.div`
   &:last-child {
     margin-left: 3.2rem;
   }
+  .crown {
+    margin-bottom: 0.4rem;
+    width: inherit;
+    justify-content: center;
+    img {
+      width: ${(props) => (props.first ? 8.9 : 6.3)}rem;
+    }
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
     &:first-child, &:last-child{
       margin: 0;
@@ -63,13 +76,8 @@ export const OneRankWrapper = styled.div`
       width: 100%;
       order: -1;
     }
-  }
-  .crown {
-    margin-bottom: 0.4rem;
-    width: inherit;
-    justify-content: center;
-    img {
-      width: ${(props) => (props.first ? 8.9 : 6.3)}rem;
+    .crown img {
+      width: 5rem;
     }
   }
 `;
@@ -180,7 +188,7 @@ export const TableCardWrapper = styled.div`
       padding: 2rem;
     }
     & .title{
-      font-size: 2rem;
+      font-size: 1.8rem;
       margin-top: 0;
     }
     & .username{

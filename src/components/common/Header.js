@@ -54,6 +54,7 @@ const Header = ({ location }) => {
               </li>
               <li>
                 <div
+                  className="logout"
                   onClick={() => {
                     setSignOut();
                     window.location.href = "/";
@@ -104,6 +105,16 @@ const Wrap = styled.div`
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
     padding: 0 2rem;
+    img{
+      width: 7.8rem;
+    }
+    .logout{
+      font-size: 1.2rem;
+      line-height: 1.4rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 `;
 
@@ -115,6 +126,11 @@ const Navbar = styled.nav`
   margin: 0 auto;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
     height: ${props => props.theme.headerSizeMobile};
+  }
+  li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -128,13 +144,22 @@ const NavLeft = styled.div`
     font-size: 2rem;
     gap: 8rem;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    ul{
+      gap: 1rem;
+    }
+  }
 `;
 
 const NavLink = styled(Link)`
   color: ${(props) =>
     props.active ? props.theme.primary : props.theme.black} !important;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        font-size: 2rem;
+        font-size: 1.2rem;
+        line-height: 1.4rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 `;
 
@@ -155,6 +180,11 @@ const NavRight = styled.div`
       
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    ul{
+      gap: 1rem;
+    }
+  }
 `;
 
 const NavLive = styled(Link)`
@@ -164,4 +194,11 @@ const NavLive = styled(Link)`
   line-height: 1.9rem;
   border-radius: 0.4rem;
   color: ${(props) => props.theme.primary} !important;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+      font-size: 1.2rem;
+      line-height: 1.4rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+  }
 `;

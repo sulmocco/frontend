@@ -5,11 +5,6 @@ export const RecommendWrap = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 11.4rem 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        width: 100%;
-        justify-content: center;
-        margin-top: 8rem;
-    }
     h2 {
         font-size: 3.4rem;
         font-weight: 700;
@@ -21,7 +16,15 @@ export const RecommendWrap = styled.div`
         flex-wrap: wrap;
         gap: 4.8rem 3.2rem;
         width: 128rem;
-        @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        width: 100%;
+        justify-content: center;
+        margin-top: 8rem;
+        h2{
+            font-size: 2.2rem;
+        }
+        .recommendsection{
             width: 100%;
             justify-content: center;
         }
@@ -87,6 +90,7 @@ export const RecommendItem = styled.li`
         }
         .title, .price, .tag{
             margin-top: 1rem;
+            font-size: 2rem;
         }
     }
 `

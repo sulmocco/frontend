@@ -13,7 +13,10 @@ export const SignUpButton = styled.button`
     font-weight: 700;
     max-width: 40rem;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        font-size: 3rem;
+        width: 40rem;
+        max-width: 90%;
+        font-size: 2.5rem;
+        height: 6rem;
         background-color: ${props => props.theme.white};
     }
     &:enabled {
@@ -34,11 +37,11 @@ export const Container = styled.div`
     padding-top: 13.6rem;
     flex-direction: column;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        padding: 0 4rem;
+        padding: 0;
         background-color: ${props => props.theme.white};
-    }
-    form{
-        text-align: center;
+        form{
+            text-align: center;
+        }
     }
     /* overflow: auto; */
     /* width: 100vw; */

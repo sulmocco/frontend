@@ -23,6 +23,9 @@ export const Title = styled.div`
   font-weight: 700;
   margin-top: 7rem;
   text-align: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    font-size: 2.2rem;
+  }
 `;
 
 export const Container = styled.div`

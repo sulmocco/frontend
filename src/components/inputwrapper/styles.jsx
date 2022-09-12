@@ -27,6 +27,16 @@ export const Wrapper = styled.div`
       cursor: default;
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    padding: 2rem;
+    margin-bottom: 0rem;
+    button{
+      font-size: 1.3rem;
+      height: 2.5rem;
+      width: 7rem;
+      margin-top: 1rem;
+    }
+  }
 `;
 
 export const UpperWrapper = styled.div`
@@ -58,6 +68,17 @@ export const UpperWrapper = styled.div`
         margin-right: .3rem;
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    .title{
+      font-size: 1.8rem;
+    }
+    .error{
+      font-size: 1.2rem;
+    }
+    .success{
+      descent-override: 1.2rem;
+    }
+  }
 `;
 
 export const GuideText = styled.div`
@@ -65,6 +86,10 @@ export const GuideText = styled.div`
   font-size: 1.2rem;
   color: ${(props) => props.theme.grey_02};
   white-space: pre-line;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px){
+    width: 100%;
+    text-align: left;
+  }
 `;
 
 export const CenterWrapper = styled.div`
@@ -115,6 +140,12 @@ export const CenterWrapper = styled.div`
     img{
         cursor: pointer;
         margin: auto;
+    }
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px){
+    margin-top: .8rem;
+    input{
+      opacity: 1;
     }
   }
 `;

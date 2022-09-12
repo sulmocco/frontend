@@ -22,6 +22,12 @@ export const BigButton = styled.button`
     color: #000;
     border: 1px solid #d6d6d6;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    width: 40rem;
+    max-width: 90%;
+    font-size: 2.5rem;
+    height: 6rem;
+  }
 `;
 
 // 나의 술 레벨

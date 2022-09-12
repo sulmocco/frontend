@@ -21,9 +21,6 @@ export const LoginSection = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        padding: 0rem;
-    }
     img{
         margin-bottom: 6.4rem;
     }
@@ -51,5 +48,25 @@ export const LoginSection = styled.div`
         margin-top: 16px;
         display: block;
         cursor: pointer;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        width: 100%;
+        padding: 2rem;
+        form{
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            input{
+                width: 100%;
+                min-width: fit-content;
+                max-width: 40rem;
+            }
+        }
+        p{
+            width: 100%;
+            min-width: fit-content;
+            max-width: 40rem;
+        }
+
     }
 ` 

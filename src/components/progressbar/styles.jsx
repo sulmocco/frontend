@@ -15,6 +15,12 @@ export const ProgressSection = styled.ul`
         background-color: ${props => props.theme.primary};
         margin-bottom: 2rem;
     }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        padding: 5rem 2rem 4rem 2rem;
+        span{
+            width: 5rem;
+        }
+    }
 `
 
 export const ProgressLi = styled.li`

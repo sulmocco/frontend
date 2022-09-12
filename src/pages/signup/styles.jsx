@@ -13,6 +13,7 @@ export const SignUpButton = styled.button`
     font-weight: 700;
     max-width: 40rem;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        margin: 0 auto;
         width: 40rem;
         max-width: 90%;
         font-size: 2.5rem;

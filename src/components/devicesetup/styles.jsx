@@ -31,6 +31,17 @@ export const NewLiveContainer = styled.div`
     align-items: center;
     justify-content: flex-start;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    width: 100%;
+    margin: ${props => props.theme.headerSizeMobile} 0 1.6rem;
+    padding: 2.5rem 2rem;
+    form{
+      width: 100%;
+    }
+    .devicesSetupWrapper{
+      width: 100%;
+    }
+  }
 `;
 
 export const VersionInputWrap = styled.div`
@@ -109,6 +120,10 @@ export const SubtitleWrapper = styled.div`
       color: inherit;
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    margin-top: 2rem;
+    gap: 1rem;
+  }
 `;
 
 export const SubTitle = styled.h2`
@@ -117,6 +132,9 @@ export const SubTitle = styled.h2`
   line-height: 3.1rem;
   letter-spacing: -0.02em;
   color: ${(props) => props.theme.black};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    font-size: 2rem;
+  }
 `;
 
 export const AlcoholWrapper = styled.div`
@@ -189,6 +207,15 @@ export const VideoWrapper = styled.div`
         props.isInput ? props.theme.black : "#d9d9d9"};
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    flex-direction: column;
+    margin-top: 1.5rem;
+    .video{
+      margin-top: 0rem;
+      width: 100%;
+      height: 30rem;
+    }
+  }
 `;
 
 export const SubmitWrapper = styled.div`
@@ -198,6 +225,18 @@ export const SubmitWrapper = styled.div`
   align-items: center;
   gap: 2.4rem;
   margin-top: 9.6rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+   width: 100%;
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   height: fit-content;
+   flex-direction : row;
+   gap: 1rem;
+   background-color: ${props => props.theme.white};
+   box-shadow: ${props => props.theme.shadow_gray};
+   padding: 1rem 1rem 3rem;
+  }
 `;
 
 export const VideoDevicesDropdownWrapper = styled.div`
@@ -284,6 +323,28 @@ flex-direction: row; */
       background-color: ${(props) => props.theme.bg_light_blue};
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    width: 100%;
+    .notAvailable{
+      font-size: 1.4rem;
+      padding: 1rem 1.5rem;
+      line-height: 2rem;
+    }
+    .inputWrap{
+      font-size: 1.4rem;
+      padding: 1rem 1.5rem;
+      margin-top: 1rem;
+    }
+    .devicesWrap{
+      width: 100%;
+      height: ${(props) => (props.open ? 4 * props.count : 0)}rem;
+      .device{
+        font-size: 1.4rem;
+        line-height: 2rem;
+        padding: 1rem 1.5rem;
+      }
+    }
+  }
 `;
 
 export const ThumbnailDropzone = styled.div`
@@ -324,6 +385,11 @@ export const StartLiveButton = styled(BlueButton)`
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-top: 8rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: 6rem;
+    font-size: 2rem;
+    margin-top: 0;
+  }
 `;
 
 export const CancelButton = styled(WhiteButton)`

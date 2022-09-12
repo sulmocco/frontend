@@ -9,6 +9,7 @@ import {
   StartLiveButton,
   SubTitle,
   SubtitleWrapper,
+  SubmitWrapper,
   VideoDevicesDropdownWrapper,
   VideoWrapper,
 } from "./styles";
@@ -174,7 +175,7 @@ const DeviceSetup = (props) => {
               </div>
               <audio ref={speakerRef} hidden />
             </div>
-            <div>
+            <div className="devicesSetupWrapper">
               <SubtitleWrapper mt={"2.4rem"}>
                 <SubTitle>비디오</SubTitle>
               </SubtitleWrapper>
@@ -311,7 +312,9 @@ const DeviceSetup = (props) => {
                   </>
                 )}
               </VideoDevicesDropdownWrapper>
-              <StartLiveButton type="submit">시작하기</StartLiveButton>
+              <SubmitWrapper>
+                <StartLiveButton type="submit">시작하기</StartLiveButton>
+              </SubmitWrapper>
             </div>
           </VideoWrapper>
         </form>

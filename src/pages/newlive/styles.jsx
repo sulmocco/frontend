@@ -284,7 +284,6 @@ export const VideoWrapper = styled.div`
     .video{
       width: 100%;
       height: 30rem;
-      position: sticky;
     }
   }
 `;

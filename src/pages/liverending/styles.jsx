@@ -55,9 +55,6 @@ export const LiveRendingCont = styled.div`
       border-radius: 1rem;
       padding: 2rem 1.6rem;
       position: relative;
-      /* display: flex;
-            flex-direction: row;
-            justify-content: space-between; */
       align-items: center;
       gap: 2rem;
       max-height: 6.4rem;
@@ -113,6 +110,9 @@ export const LiveRendingCont = styled.div`
     padding: 0 2rem;
     h3 {
       font-size: 3rem;
+    }
+    .subtitle{
+      font-size: 1.8rem;
     }
     .mainimg {
       max-width: 25rem;

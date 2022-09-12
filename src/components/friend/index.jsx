@@ -17,8 +17,8 @@ const FriendList = (props) => {
 
     const deleteFriend = () => {
         if (window.confirm('친구를 삭제하시겠습니까?')) {
+            mutation.mutate(username);
         }
-        mutation.mutate(username);
     }
 
     return (

@@ -28,7 +28,7 @@ const LiveRending = () => {
                 <img src='/images/img_liverending.png' className='mainimg' alt='img' />
                 <div className="share">
                     <div className='url'>
-                        <p className='text'>{`https://www.sulmoggo.live/chat/${chatRoomId}`}</p>
+                        <input className='text' type="text" value={`https://www.sulmoggo.live/chat/${chatRoomId}`} readOnly/>
                         <span onClick={() => copy(`https://www.sulmoggo.live/chat/${chatRoomId}`)}>URL 복사</span>
                     </div>
                     <button onClick={() => setOpen(true)}></button>

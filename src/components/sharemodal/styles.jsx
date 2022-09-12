@@ -108,4 +108,14 @@ export const ModalWrap = styled.div`
                 cursor: pointer;
             }
         }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        width: 100%;
+        height: fit-content;
+    }
 `

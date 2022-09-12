@@ -210,10 +210,17 @@ export const VideoWrapper = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
     flex-direction: column;
     margin-top: 1.5rem;
+    width: 100%;
+    div{
+      width: 100%;
+    }
     .video{
       margin-top: 0rem;
       width: 100%;
       height: 30rem;
+      video{
+        width: 100%;
+      }
     }
   }
 `;
@@ -384,7 +391,6 @@ export const StartLiveButton = styled(BlueButton)`
   line-height: 3.1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-top: 8rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
     height: 6rem;
     font-size: 2rem;

@@ -69,6 +69,11 @@ export const ButtonWrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 2.5rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+        width: 100%;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
 `
 export const FriendCancelButton = styled(WhiteButton)`
     width: 30rem;
@@ -76,6 +81,11 @@ export const FriendCancelButton = styled(WhiteButton)`
     padding: 2rem 1.05rem;
     font-size: 2.6rem;
     line-height: 3.1rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: 6rem;
+    font-size: 2rem;
+    margin-top: 0;
+  }
 `
 export const FriendAddButton = styled(BlueButton)`
     width: 30rem;
@@ -83,4 +93,9 @@ export const FriendAddButton = styled(BlueButton)`
     padding: 2rem 1.05rem;
     font-size: 2.6rem;
     line-height: 3.1rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: 6rem;
+    font-size: 2rem;
+    margin-top: 0;
+  }
 `

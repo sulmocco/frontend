@@ -45,10 +45,8 @@ const Post = () => {
 
     try {
       await sulmoggoApi.tables(newData);
-      // console.log(res);
       navigate(`/tables`);
     } catch (err) {
-      // console.log(err);
     }
   };
 
@@ -126,10 +124,10 @@ const Post = () => {
           >
             {tagColor === 0 ? (
               <li value="0" className="fill">
-                맥주
+                <p>맥주</p>
               </li>
             ) : (
-              <li value="0">맥주</li>
+              <li value="0"><p>맥주</p></li>
             )}
             {tagColor === 1 ? (
               <li value="1" className="fill">

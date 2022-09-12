@@ -8,6 +8,12 @@ export const PostWrap = styled.section`
   .tab-item:last-child {
     display: none !important;
   }
+  @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+    h2 {
+      font-size: 2.5rem;
+      margin-top: 5rem;
+    }
+  }
 `
 export const Title = styled.div`
   div {
@@ -25,43 +31,53 @@ export const Title = styled.div`
     padding: 2rem;
     margin-top: 1rem;
   }
+  @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+    div {
+      margin-top: 3rem;
+      font-size: 2rem;
+    }
+    input {
+      height: 4rem;
+      font-size: 1.6rem;
+    }
+  }
 `
 export const Subtitle = styled.div`
-div {
-    margin-top: 4.6rem;
-    font-size: 2rem;
-    font-weight: 700;
-}
-.titlebox {
-    display: flex;
-    align-items: center;
-    margin-top: 5.6rem;
-    gap: 1.2rem;
-    div {
-        margin-top: 0;
-    }
-}
-ul {
+  div {
+      margin-top: 4.6rem;
+      font-size: 2rem;
+      font-weight: 700;
+  }
+  .titlebox {
+      display: flex;
+      align-items: center;
+      margin-top: 5.6rem;
+      gap: 1.2rem;
+      div {
+          margin-top: 0;
+      }
+  }
+  ul {
     display: flex;
     gap: .8rem;
-    li {
-    cursor: pointer;
-    margin-top: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 2rem;
-    line-height: 2.8rem;
-    letter-spacing: -0.02rem;
-    color: ${props => props.theme.grey_03};
-    padding: .6rem 1.6rem;
-    &.fill {
-        background: ${props => props.theme.primary};
-        border-radius: 2rem;
-        color: white;
-    }
-    }
+      li {
+      cursor: pointer;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 2.8rem;
+      letter-spacing: -0.02rem;
+      color: ${props => props.theme.grey_03};
+      padding: .6rem 1.6rem;
+        &.fill {
+            background: ${props => props.theme.primary};
+            border-radius: 2rem;
+            color: white;
+        }
+      }
     }
     .guidebubble{
     border-image: url('/images/img_guide_bubble.svg');
@@ -78,10 +94,35 @@ ul {
     margin-top: .3rem;
     color: ${props => props.theme.primary}
   }
+  @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+    div {
+      margin-top: 2rem;
+    }
+    .titlebox{
+      margin-top: 4rem;
+    }
+    ul {
+      margin-top: 1.5rem;
+      overflow: scroll;
+      li{
+        font-size: 1.6rem;
+        line-height: 1.8rem;
+        margin-top: 0;
+        max-height: 3rem;
+        white-space: nowrap;
+      }
+      &::-webkit-scrollbar {
+        display: none;
+      } 
+    }
+    }
 `;
 
 export const Content = styled.div`
   margin-top: 4rem;
+  @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+    margin-top: 2rem;
+  }
 `;
 
 export const Image = styled.div`
@@ -152,5 +193,12 @@ export const Tag = styled.div`
     font-size: 2rem;
     padding: 2rem;
     margin-top: 1rem;
+  }
+  @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+    input {
+      font-size: 1.6rem;
+      line-height: 1.8rem;
+      height: 4rem;
+    }
   }
 `;

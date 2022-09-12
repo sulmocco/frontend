@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const CardWrapper = styled.div`
     width: 100%;
-    /* max-width: 40.5rem; */
     height: 100%;
     border-radius: 1rem;
     background-color: ${props => props.theme.white};
@@ -10,6 +9,7 @@ export const CardWrapper = styled.div`
     cursor: pointer;
     transition: all .2s ease-in-out;
     box-shadow: ${props => props.theme.shadow_gray};
+    max-width: 100vw;
     &:hover{
         transform: translateY(-0.5rem);
     }
@@ -77,6 +77,35 @@ export const CardWrapper = styled.div`
         height: 2.7rem;
         margin-bottom: .8rem;
     }
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px) {
+        max-width: 100vw;
+        margin: 0;
+        .cardContent {
+            padding: 1rem;
+            .cardUpperWrap {
+                height: auto;
+                margin-bottom: 2rem;
+                .tableTitle {
+                font-size: 2rem;
+                margin-top: 0;
+                }
+                .counterWrap {
+                    margin-top: .5rem;
+                    font-size: 1.2rem;
+                    line-height: 1.6rem;
+                    img {
+                        width: 1.2rem;
+                    }
+                }
+                .cardTitleWrap{
+                    .tableUser{
+                        font-size: 1.6rem;
+                        line-height: 1.8rem;
+                    }
+                }
+            }
+        }
+    }
 `
 export const CardThumbnail = styled.div`
     width: 100%;
@@ -85,6 +114,9 @@ export const CardThumbnail = styled.div`
     background-color: #d9d9d9;
     background-size: cover;
     background-position: center;
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px) {
+        height: 18rem;
+    }
 `
 export const ProfileCircle = styled.div`
     width: 6.4rem;
@@ -94,4 +126,8 @@ export const ProfileCircle = styled.div`
     background-color: #d9d9d9;
     background-size: cover;
     background-position: center;
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        width: 4rem;
+        height: 4rem;
+    }
 `

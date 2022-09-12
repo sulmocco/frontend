@@ -4,7 +4,10 @@ export const DetailWrap = styled.div`
     width: ${props => props.theme.contentWidth};
     margin: 0 auto;
     padding: 15.5rem 0;
-    /* background-color: aliceblue; */
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        max-width: 100vw;
+        padding: 5rem 0;
+    }
 `
 export const DetailHeader = styled.div`
     .title {
@@ -56,6 +59,29 @@ export const DetailHeader = styled.div`
             }
         }
     }
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        .title {
+            h3 {
+                font-size: 2.4rem;
+            }
+            img {
+                width: 3rem;
+            }
+        }
+        .user {
+            padding: 1rem 0;
+            .img {
+                width: 5rem;
+                height: 5rem;
+            }
+            .desc {
+                .user-name {
+                    font-size: 1.6rem;
+                    line-height: 1.8rem;
+                }
+            }
+        }
+    }
 `
 export const DetailCont = styled.div`
 margin: 3.5rem 0 6.4rem 0;
@@ -101,6 +127,19 @@ margin: 3.5rem 0 6.4rem 0;
         flex-direction: row;
         gap: 0.8rem;
         justify-content: flex-end;
+    }
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+        margin: 2rem 0 0 0;
+        .header {
+            font-size: 1.2rem;
+            padding: .8rem 0;
+        }
+        .main {
+            padding: 3rem 0;
+        }
+        .footer {
+            padding: 1rem;
+        }
     }
 `
 

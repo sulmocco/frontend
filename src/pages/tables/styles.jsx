@@ -34,6 +34,10 @@ export const TablesWrapper = styled.div`
       }
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    overflow: hidden;
+    padding-top: 5rem;
+  }
 `;
 
 export const TablesGrid = styled.div`
@@ -88,7 +92,7 @@ export const TableCont = styled.div`
     }
   }
   section {
-      width: ${props => props.theme.contentWidth};
+      max-width: ${props => props.theme.contentWidth};
       margin: 0 auto;
     }
 `
@@ -97,7 +101,6 @@ export const AlcoholCategories = styled.div`
   display: flex;
   flex-direction: row;
   gap: 2.4rem;
-  /* margin-top: 3.2rem; */
 `;
 
 export const AlcoholCategory = styled.button`
@@ -125,6 +128,7 @@ export const SearchBoxWrapper = styled.div`
   .leftWrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
     p {
       font-size: 2rem;
       font-weight: 400;
@@ -134,6 +138,9 @@ export const SearchBoxWrapper = styled.div`
       font-weight: 500;
       color: ${(props) => props.theme.black_2};
     }
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    margin-top: 4rem;
   }
 `;
 
@@ -193,6 +200,23 @@ export const WirteButton = styled(Link)`
     background-color: ${props => props.theme.secondary};
     background-size: 4rem 4.2rem;
     cursor: pointer;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    right: .5rem;
+    width: 6rem;
+    height: 6rem;
+    &:hover {
+      width: 16rem;
+    }
+    p {
+      font-size: 1.6rem;
+      line-height: 1.8rem;
+    }
+    span {
+      width: 6rem;
+      height: 6rem;
+      background-size: 3rem 3.2rem;
+    }
   }
 `
 

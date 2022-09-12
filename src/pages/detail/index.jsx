@@ -124,7 +124,6 @@ const Detail = () => {
                 </section>
                 <section className='main'>
                     <Viewer initialValue={data.content} />
-                    {/* {data.content} */}
                 </section>
                 <section className='footer'>
                     <Icon like={data?.like} onClick={handleLike}>

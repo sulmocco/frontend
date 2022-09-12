@@ -76,7 +76,6 @@ const Tables = (props) => {
     {
       getNextPageParam: (currPage, allPages) => {
         if (!currPage.lastPage) {
-          // console.log("not last page");
           return currPage.nextPage;
         }
         return undefined;
@@ -131,7 +130,7 @@ const Tables = (props) => {
           <section>
             {alcohol && (
               <>
-                <AlcoholCategories style={{marginTop: 0}}>
+                <AlcoholCategories style={{ marginTop: 0 }}>
                   {Alcohol.map((x, i) => (
                     <AlcoholCategory
                       key={x}
@@ -148,7 +147,6 @@ const Tables = (props) => {
                         } else if (alcohol.includes(x)) {
                           let newAlcohols = alcohol.split(",");
                           const idx = newAlcohols.indexOf(x);
-                          // console.log(idx);
                           newAlcohols.splice(idx, 1);
                           setQueryParams({ alcohol: newAlcohols.join(",") });
                         } else {
@@ -168,7 +166,6 @@ const Tables = (props) => {
                         if (alcohol.includes(x)) {
                           let newAlcohols = alcohol.split(",");
                           const idx = newAlcohols.indexOf(x);
-                          // console.log(idx);
                           newAlcohols.splice(idx, 1);
                           setQueryParams({ alcohol: newAlcohols.join(",") });
                         }
@@ -184,7 +181,6 @@ const Tables = (props) => {
               <SortButton
                 checked={sortBy === "count"}
                 onClick={() => {
-                  // console.log(allParams);
                   if (keyword) {
                     setQueryParams({ keyword, sortBy: "count" });
                   } else if (alcohol !== "전체") {
@@ -218,7 +214,7 @@ const Tables = (props) => {
                   const content = page.data.content;
                   return content?.map((table, idx) => {
                     if (idx === content.length - 1 && pageidx === data.pages.length - 1) return (
-                      <div ref={lastTableRef}>
+                      <div ref={lastTableRef} >
                         <TableCard {...table} />
                       </div>
                     )

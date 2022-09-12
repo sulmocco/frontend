@@ -20,6 +20,7 @@ export const PasswordSection = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
     h1 {
         font-size: 3.2rem;
         font-weight: 700;
@@ -62,5 +63,9 @@ export const PasswordSection = styled.div`
         margin-top: 2rem;
         display: block;
         cursor: pointer;
+    }
+    @media(max-width : ${props => props.theme.breakpoint.mobile}px){
+        max-width: 100vw;
+        padding: 4rem .5rem;
     }
 ` 

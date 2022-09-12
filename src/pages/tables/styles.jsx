@@ -59,6 +59,10 @@ export const PageTitle = styled.h1`
     height: 2.4rem;
     background:url('/images/icon_back.svg');
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    font-size: 2.2rem;
+    line-height: 2.6rem;
+  }
 `;
 
 export const TableCont = styled.div`

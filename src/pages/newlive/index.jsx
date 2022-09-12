@@ -66,6 +66,7 @@ const NewLive = (props) => {
     watch,
     handleSubmit,
     setValue,
+    trigger,
     formState: { errors, isDirty, isValid },
   } = useForm({
     mode: "onChange",
@@ -150,6 +151,10 @@ const NewLive = (props) => {
     console.log("initializing media devices...");
     initMedia();
   }, []);
+
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   useEffect(() => {
     if (videoinput.deviceId !== null) {
@@ -278,17 +283,11 @@ const NewLive = (props) => {
             placeholder="제목을 입력해 주세요."
             error={errors.title}
             maxLength={50}
-            {...register("title", { required: "제목을 입력해달라" })}
+            {...register("title", { required: "제목을 입력해 주세요." })}
           />
           <SubtitleWrapper mt={"5.6rem"}>
             <SubTitle>추천술 선택</SubTitle>
             <div className="guidebubble">술을 선택해 주세요</div>
-            {errors.alcohol && (
-              <div className="error">
-                <img src="/images/icon_information.svg" alt="information" />
-                <label>{errors.alcohol.message}</label>
-              </div>
-            )}
           </SubtitleWrapper>
           <AlcoholWrapper>
             {Alcohol.map((x, i) => {
@@ -511,17 +510,8 @@ const NewLive = (props) => {
             maxLength={10}
             {...register("food", { required: "안주를 입력해 주세요." })}
           />
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              gap: "4rem",
-            }}
-          >
-            <div style={{ flexGrow: "1" }}>
+          <div className="themeShowWrap">
+            <div className="theme">
               <SubtitleWrapper mt={"7rem"}>
                 <SubTitle>테마</SubTitle>
                 {errors.theme && (
@@ -539,15 +529,9 @@ const NewLive = (props) => {
                 {...register("theme", { required: "테마를 입력해 주세요." })}
               />
             </div>
-            <div style={{ width: "40rem" }}>
+            <div className="showOption">
               <SubtitleWrapper mt={"7rem"}>
                 <SubTitle>공개 / 비공개 설정</SubTitle>
-                {errors.theme && (
-                  <div className="error">
-                    <img src="/images/icon_information.svg" alt="information" />
-                    <label>{errors.theme.message}</label>
-                  </div>
-                )}
               </SubtitleWrapper>
               <ShowHideDropdownWrapper
                 open={showOpen}

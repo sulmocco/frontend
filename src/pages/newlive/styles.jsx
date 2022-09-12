@@ -15,6 +15,12 @@ export const StyledInput = styled.input`
   &::placeholder {
     color: ${(props) => props.theme.grey_02};
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    line-height: 2rem;
+    padding: 1rem 1.5rem;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+  }
 `;
 
 export const NewLiveContainer = styled.div`
@@ -29,6 +35,37 @@ export const NewLiveContainer = styled.div`
     gap: 2.4rem;
     align-items: center;
     justify-content: flex-start;
+  }
+  .themeShowWrap{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 4rem;
+      .theme{
+        flex-grow: 1;
+      }
+      .showOption{
+        width: 40rem;
+      }
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    margin: 2.5rem 0;
+    padding: 0 2rem;
+    .titleWrap{
+      gap: 1rem;
+    }
+    .themeShowWrap{
+      flex-direction: column;
+      gap: 0rem;
+      .theme{
+        width: 100%;
+      }
+      .showOption{
+        width: 100%;
+      }
+    }
   }
 `;
 
@@ -80,6 +117,23 @@ export const VersionInputWrap = styled.div`
       background-color: ${(props) => props.theme.bg_light_blue};
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    width: 10rem;
+    input{
+      font-size: 1rem;
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+      height: 2.6rem;
+      width: 100%;
+    }
+    .versionsWrap{
+      width: 100%;
+      height: ${(props) => (props.open ? 2.4 * props.count : 0)}rem;
+    }
+    .version{
+      font-size: 1rem;
+      padding: .5rem 1rem;
+    }
+  }
 `;
 
 export const SubtitleWrapper = styled.div`
@@ -125,6 +179,10 @@ export const SubtitleWrapper = styled.div`
     margin-top: 0.3rem;
     color: ${(props) => props.theme.primary};
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    margin-top: 4rem;
+    gap: 1rem;
+  }
 `;
 
 export const SubTitle = styled.h2`
@@ -133,6 +191,9 @@ export const SubTitle = styled.h2`
   line-height: 3.1rem;
   letter-spacing: -0.02em;
   color: ${(props) => props.theme.black};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    font-size: 2rem;
+  }
 `;
 
 export const AlcoholWrapper = styled.div`
@@ -140,6 +201,15 @@ export const AlcoholWrapper = styled.div`
   flex-direction: row;
   margin-top: 2.4rem;
   gap: 0.8rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    width: 100%;
+    overflow: auto;
+    gap: 0.6rem;
+    margin-top: 2rem;
+    ::-webkit-scrollbar{
+      display: none;
+    }
+  }
 `;
 
 export const AlcoholButton = styled.div`
@@ -166,6 +236,11 @@ export const AlcoholButton = styled.div`
             width: 100%;
             content: "호호";
         } */
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    font-size: 1.5rem;
+    white-space: pre;  
+    background-color: ${(props) => props.checked ? props.theme.primary : props.theme.bg_light_gray};
   }
 `;
 
@@ -204,6 +279,14 @@ export const VideoWrapper = styled.div`
         props.isInput ? props.theme.black : "#d9d9d9"};
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    flex-direction: column;
+    .video{
+      width: 100%;
+      height: 30rem;
+      position: sticky;
+    }
+  }
 `;
 
 export const SubmitWrapper = styled.div`
@@ -213,6 +296,18 @@ export const SubmitWrapper = styled.div`
   align-items: center;
   gap: 2.4rem;
   margin-top: 9.6rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+   width: 100%;
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   height: fit-content;
+   flex-direction : row;
+   gap: 1rem;
+   background-color: ${props => props.theme.white};
+   box-shadow: ${props => props.theme.shadow_gray};
+   padding: 1rem 1rem 3rem;
+  }
 `;
 
 export const VideoDevicesDropdownWrapper = styled.div`
@@ -299,6 +394,28 @@ flex-direction: row; */
       background-color: ${(props) => props.theme.bg_light_blue};
     }
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    width: 100%;
+    .notAvailable{
+      font-size: 1.4rem;
+      padding: 1rem 1.5rem;
+      line-height: 2rem;
+    }
+    .inputWrap{
+      font-size: 1.4rem;
+      padding: 1rem 1.5rem;
+      margin-top: 1rem;
+    }
+    .devicesWrap{
+      width: 100%;
+      height: ${(props) => (props.open ? 4 * props.count : 0)}rem;
+      .device{
+        font-size: 1.4rem;
+        line-height: 2rem;
+        padding: 1rem 1.5rem;
+      }
+    }
+  }
 `;
 
 export const ThumbnailDropzone = styled.div`
@@ -328,26 +445,39 @@ export const ThumbnailDropzone = styled.div`
   p {
     cursor: inherit;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    width: 100%;
+  }
 `;
 
 export const StartLiveButton = styled(BlueButton)`
-  width: 36.8rem;
+  width: 100%;
+  max-width: 36.8rem;
   height: 8.8rem;
   padding: 2.8rem 4.45rem;
   font-size: 2.6rem;
   line-height: 3.1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: 6rem;
+    font-size: 2rem;
+  }
 `;
 
 export const CancelButton = styled(WhiteButton)`
-  width: 36.8rem;
+  width: 100%;
+  max-width: 36.8rem;
   height: 8.8rem;
   padding: 2.8rem 4.45rem;
   font-size: 2.6rem;
   line-height: 3.1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    height: 6rem;
+    font-size: 2rem;
+  }
 `;
 
 export const ShowHideDropdownWrapper = styled(VideoDevicesDropdownWrapper)`
@@ -359,5 +489,13 @@ export const ShowHideDropdownWrapper = styled(VideoDevicesDropdownWrapper)`
   }
   .device {
     padding: 2rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+    .inputWrap{
+      padding: 1rem 1.5rem;
+    }
+    .devicesWrap {
+    height: ${(props) => (props.open ? 4 * props.count : 0)}rem;
+    }
   }
 `;

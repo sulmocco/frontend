@@ -128,6 +128,15 @@ margin: 3.5rem 0 6.4rem 0;
         gap: 0.8rem;
         justify-content: flex-end;
     }
+    .toastui-editor-contents{
+            max-width: ${props => props.theme.contentWidth};
+            overflow: hidden;
+            p {
+                img {
+                    max-width: ${props => props.theme.contentWidth};
+                }
+            }
+        }
     @media (max-width: ${props => props.theme.breakpoints.mobile}px){
         margin: 2rem 0 0 0;
         .header {
@@ -142,9 +151,10 @@ margin: 3.5rem 0 6.4rem 0;
         }
         .toastui-editor-contents{
             max-width: 100vw;
+            overflow: hidden;
             p {
                 img {
-                    max-width: 100vw!important;
+                    max-width: 100vw;
                 }
             }
         }

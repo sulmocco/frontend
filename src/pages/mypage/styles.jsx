@@ -63,6 +63,7 @@ export const ProfileBox = styled.div`
       justify-content: center;
       align-items: center;
       margin-bottom: 5px;
+      max-width: 4.8rem;
     }
     div {
       font-weight: 700;

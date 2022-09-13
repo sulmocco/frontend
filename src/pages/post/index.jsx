@@ -124,10 +124,10 @@ const Post = () => {
           >
             {tagColor === 0 ? (
               <li value="0" className="fill">
-                <p>맥주</p>
+                맥주
               </li>
             ) : (
-              <li value="0"><p>맥주</p></li>
+              <li value="0">맥주</li>
             )}
             {tagColor === 1 ? (
               <li value="1" className="fill">

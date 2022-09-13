@@ -21,7 +21,7 @@ export const SpinnerWrap = styled.div`
         color: ${props => props.theme.grey_01};
         line-height: 3.103rem;
     }
-    @media (max-width: ${props => props.theme.breakpoints.mobile}px){
+    @media (max-width:1024px) {
         gap: 2.5rem;
         max-height: calc(100vh - 15rem);
         img {

@@ -12,9 +12,7 @@ import { useEffect } from 'react';
 const Detail = () => {
     const user = localStorage.getItem('username');
     const { tableId } = useParams();
-    const { data, status } = useQuery(['table'], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data), {
-        cacheTime: 0,
-    });
+    const { data, status } = useQuery(['table', tableId], async () => await sulmoggoApi.getDetail(tableId).then(res => res.data));
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 

@@ -25,7 +25,8 @@ export const SpinnerWrap = styled.div`
         gap: 2.5rem;
         max-height: calc(100vh - 15rem);
         img {
-            width: 30rem
+            width: 30rem;
+            max-width: 50%;
         }
         p {
             font-size: 2.2rem;

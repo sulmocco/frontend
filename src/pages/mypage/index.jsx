@@ -13,7 +13,7 @@ const Mypage = () => {
     cacheTime: 0,
   });
 
-  // console.log(data)
+  console.log(data)
 
   // 쿼리 데이터 로딩전에 스피너
   if (status === "loading") {

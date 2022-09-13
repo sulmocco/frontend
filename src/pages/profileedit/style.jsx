@@ -53,6 +53,7 @@ export const MyImgSection = styled.div`
     justify-content: center;
     align-items: center;
     padding: 4rem;
+    max-height: 33rem;
     .section{
         display: flex;
         flex-direction: column;

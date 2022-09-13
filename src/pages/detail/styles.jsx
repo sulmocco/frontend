@@ -140,6 +140,14 @@ margin: 3.5rem 0 6.4rem 0;
         .footer {
             padding: 1rem;
         }
+        .toastui-editor-contents{
+            max-width: 100vw;
+            p {
+                img {
+                    max-width: 100vw!important;
+                }
+            }
+        }
     }
 `
 

@@ -13,6 +13,9 @@ export const PostWrap = styled.section`
       font-size: 2.5rem;
       margin-top: 5rem;
     }
+    .toastui-editor-popup {
+          margin: 0!important;
+      }
   }
 `
 export const Title = styled.div`

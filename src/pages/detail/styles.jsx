@@ -148,9 +148,6 @@ margin: 3.5rem 0 6.4rem 0;
                 }
             }
         }
-        .toastui-editor-popup.toastui-editor-popup-add-image {
-            margin-left: 0!important;
-        }
     }
 `
 

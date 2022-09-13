@@ -63,6 +63,7 @@ export const Subtitle = styled.div`
   ul {
     display: flex;
     gap: .8rem;
+    max-width: 55rem;
       li {
       cursor: pointer;
       margin-top: 2rem;

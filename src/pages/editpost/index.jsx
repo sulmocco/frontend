@@ -28,15 +28,14 @@ const EditPost = () => {
     const editorRef = useRef();
     const username = localStorage.getItem("username");
     const { tableId } = useParams();
-    const { data, status } = useQuery(['table'], () => sulmoggoApi.getDetail(tableId).then(res => res.data), {
+    const { data, status } = useQuery(['table', tableId], () => sulmoggoApi.getDetail(tableId).then(res => res.data), {
         onSuccess: (data) => {
             // SetImgList(editorRef.current?.getInstance().getHTML().match(/(?<=src=")(.*?)(?=")/g));
             SetImgList(editorRef.current?.getInstance().getHTML().match(/<img [^>]*src="[^"]*"[^>]*>/gm)
                 ?.map(x => x.replace(/.*src="([^"]*)".*/, '$1')));
             // console.log(data.content.match(/<img [^>]*src="[^"]*"[^>]*>/gm)
             //     ?.map(x => x.replace(/.*src="([^"]*)".*/, '$1')))
-        },
-        cacheTime: 0,
+        }
     });
 
     // useForm hook

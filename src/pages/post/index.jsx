@@ -73,7 +73,6 @@ const Post = () => {
     return false;
   };
 
-
   // 웹 에디터 content영역 확인하기
   const onChange = () => {
     const content = editorRef.current?.getInstance().getHTML()
@@ -81,7 +80,7 @@ const Post = () => {
       alert("내용이 너무 많습니다.")
       setTextDisable(false)
     }
-    if (12 < content.length < 60000) {
+    if (10 < content.length < 60000) {
       setTextDisable(true);
     }
     SetContent(content);

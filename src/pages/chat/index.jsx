@@ -207,10 +207,10 @@ const Chat = (props) => {
     getDevices();
   }, []);
 
-  window.addEventListener("load",function() {
-    setTimeout(function(){
-        // This hides the address bar:
-        window.scrollTo(0, 1);
+  window.addEventListener("load", function () {
+    setTimeout(function () {
+      // This hides the address bar:
+      window.scrollTo(0, 1);
     }, 0);
   });
 
@@ -280,50 +280,50 @@ const Chat = (props) => {
       <LiveWrapper>
         <div className="live_left_box">
           <div className="upper">
-          {isMobile && <ChatHeader>
-            <div>
-              <span>{roomData?.title || "방제목이 없습니다."}</span>
-            </div>
-            <button
-              onClick={async (e) => {
-                e.preventDefault();
-                if (window.confirm("채팅방을 나가시겠습니까?")) {
-                  // console.log("나가기버튼. 내용 : ", chatRef.current.value);
-                  window.location.href = "/rooms";
-                }
-              }}
-            >
-              <img src="/images/icon_out_mobile.svg" alt="out" />
-            </button>
-          </ChatHeader>}
+            {isMobile && <ChatHeader>
+              <div>
+                <span>{roomData?.title || "방제목이 없습니다."}</span>
+              </div>
+              <button
+                onClick={async (e) => {
+                  e.preventDefault();
+                  if (window.confirm("채팅방을 나가시겠습니까?")) {
+                    // console.log("나가기버튼. 내용 : ", chatRef.current.value);
+                    window.location.href = "/rooms";
+                  }
+                }}
+              >
+                <img src="/images/icon_out_mobile.svg" alt="out" />
+              </button>
+            </ChatHeader>}
             <RoomDataWrap>
-                <span className="shareWrap">
-                  <h1>{roomData?.title || "방제목이 없습니다."}</h1>
-                  <button className="share" onClick={() => setOpen(true)}>
-                    공유하기
-                  </button>
-                  <ShareModal
-                    isOpen={isOpen}
-                    onClose={onClose}
-                    copy={copy}
-                    right="0"
-                    top="4.8rem"
-                    onair
-                    chatRoomId={chatRoomId}
-                  />
-                </span>
-                {isMobile && <div className="tagWrap">
-                  <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
-                  <SnackTag>{roomData?.food || "안주"}</SnackTag>
-                  <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
-                </div>}
+              <span className="shareWrap">
+                <h1>{roomData?.title || "방제목이 없습니다."}</h1>
+                <button className="share" onClick={() => setOpen(true)}>
+                  공유하기
+                </button>
+                <ShareModal
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  copy={copy}
+                  right="0"
+                  top="4.8rem"
+                  onair
+                  chatRoomId={chatRoomId}
+                />
+              </span>
+              {isMobile && <div className="tagWrap">
+                <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
+                <SnackTag>{roomData?.food || "안주"}</SnackTag>
+                <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
+              </div>}
             </RoomDataWrap>
             <div className="infoWrap">
-            {!isMobile && <div className="tagWrap">
-                  <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
-                  <SnackTag>{roomData?.food || "안주"}</SnackTag>
-                  <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
-                </div>}
+              {!isMobile && <div className="tagWrap">
+                <AlchholTag>{roomData?.alcoholtag || "주종"}</AlchholTag>
+                <SnackTag>{roomData?.food || "안주"}</SnackTag>
+                <ThemeTag>{roomData?.theme || "테마"}</ThemeTag>
+              </div>}
               <div className="statWrap">
                 <img src="/images/icon_clock_grey_02.svg" alt="clock" />
                 <span>{time || "00:00:00"}</span>
@@ -347,125 +347,60 @@ const Chat = (props) => {
               )}
             </div>
             {isMobile && mobileChatOpen && <div className="chatWrap">
-            <ChatWrapper>
-            {content.map((data, idx) => {
-              return (
-                <ChatContent
-                  key={Math.random().toString(36).substr(2, 11)}
-                  ref={idx !== content.length - 1 ? null : lastOne}
-                >
-                  <span className="chatuser">{data.sender}</span>
-                  <span className="chattext">: {data.message}</span>
-                </ChatContent>
-              );
-            })}
-            <ChatContent />
-          </ChatWrapper>
-          <ChatInputWrapper>
-            <form action="">
-              <div className="sendInputWrapper">
-                <input
-                  type="text"
-                  placeholder="채팅을 입력해 주세요"
-                  ref={chatRef}
-                />
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (chatRef.current.value !== "") {
-                      sendMessage();
-                    }
-                  }}
-                >
-                  <img src="/images/icon_send.svg" alt="send airplane" />
-                </button>
-              </div>
-            </form>
-          </ChatInputWrapper>
-          </div>}
+              <ChatWrapper>
+                {content.map((data, idx) => {
+                  return (
+                    <ChatContent
+                      key={Math.random().toString(36).substr(2, 11)}
+                      ref={idx !== content.length - 1 ? null : lastOne}
+                    >
+                      <span className="chatuser">{data.sender}</span>
+                      <span className="chattext">: {data.message}</span>
+                    </ChatContent>
+                  );
+                })}
+                <ChatContent />
+              </ChatWrapper>
+              <ChatInputWrapper>
+                <form action="">
+                  <div className="sendInputWrapper">
+                    <input
+                      type="text"
+                      placeholder="채팅을 입력해 주세요"
+                      ref={chatRef}
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (chatRef.current.value !== "") {
+                          sendMessage();
+                        }
+                      }}
+                    >
+                      <img src="/images/icon_send.svg" alt="send airplane" />
+                    </button>
+                  </div>
+                </form>
+              </ChatInputWrapper>
+            </div>}
             {((roomData?.version.startsWith("host") &&
               username === roomData?.username) ||
               roomData?.version.startsWith("friend")) && (
-              <div className="videoButtonWrap">
-                <VideoButton
-                  play={playvideo}
-                  open={camerasOpen}
-                  count={(cameraDevices.length || 1) + 1}
-                  onBlur={() => setCamerasOpen(false)}
-                >
-                  <div className="devicesWrap">
-                    <div className="deviceKind">비디오 설정</div>
-                    {cameraDevices.length > 0 ? (
-                      cameraDevices.map((x) => {
-                        return (
-                          <div
-                            className="device"
-                            onClick={() => handleCameraDeviceChange(x)}
-                            title={x.label}
-                          >
-                            {x.label}
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div className="device">카메라 없음</div>
-                    )}
-                  </div>
-                  <img
-                    src={`/images/icon_video_${
-                      playvideo ? "available" : "disabled"
-                    }.svg`}
-                    alt="video"
-                    onClick={() => setPlayvideo(!playvideo)}
-                  />
-                  <div
-                    className="videoarrow"
-                    onClick={() => setCamerasOpen(!camerasOpen)}
+                <div className="videoButtonWrap">
+                  <VideoButton
+                    play={playvideo}
+                    open={camerasOpen}
+                    count={(cameraDevices.length || 1) + 1}
+                    onBlur={() => setCamerasOpen(false)}
                   >
-                    <img
-                      src={"/images/icon_dropdown_video.svg"}
-                      className="videoarrow"
-                      alt="dropdown"
-                    />
-                  </div>
-                </VideoButton>
-                <VideoButton
-                  play={playaudio}
-                  open={audiosOpen}
-                  count={
-                    (audioDevices.length || 1) +
-                    (speakerAvailable ? speakerDevices.length || 1 : 0) +
-                    (speakerAvailable ? 2 : 1)
-                  }
-                  onBlur={() => setAudiosOpen(false)}
-                >
-                  <div className="devicesWrap">
-                    <div className="deviceKind">마이크 설정</div>
-                    {audioDevices.length > 0 ? (
-                      audioDevices.map((x) => {
-                        return (
-                          <div
-                            className="device"
-                            onClick={() => handleAudioDeviceChange(x)}
-                            title={x.label}
-                          >
-                            {x.label}
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div className="device">마이크 없음</div>
-                    )}
-                    {speakerAvailable && (
-                      <div className="deviceKind">스피커 설정</div>
-                    )}
-                    {speakerAvailable &&
-                      (speakerDevices.length > 0 ? (
-                        speakerDevices.map((x) => {
+                    <div className="devicesWrap">
+                      <div className="deviceKind">비디오 설정</div>
+                      {cameraDevices.length > 0 ? (
+                        cameraDevices.map((x) => {
                           return (
                             <div
                               className="device"
-                              onClick={() => handleSpeakerDeviceChange(x)}
+                              onClick={() => handleCameraDeviceChange(x)}
                               title={x.label}
                             >
                               {x.label}
@@ -473,42 +408,105 @@ const Chat = (props) => {
                           );
                         })
                       ) : (
-                        <div className="device">스피커 없음</div>
-                      ))}
-                  </div>
-                  <img
-                    src={`/images/icon_audio_${
-                      playaudio ? "available" : "disabled"
-                    }.svg`}
-                    alt="audio"
-                    onClick={() => setPlayaudio(!playaudio)}
-                  />
-                  <div
-                    className="videoarrow"
-                    onClick={() => setAudiosOpen(!audiosOpen)}
-                  >
+                        <div className="device">카메라 없음</div>
+                      )}
+                    </div>
                     <img
-                      src={"/images/icon_dropdown_video.svg"}
-                      className="videoarrow"
-                      alt="dropdown"
+                      src={`/images/icon_video_${playvideo ? "available" : "disabled"
+                        }.svg`}
+                      alt="video"
+                      onClick={() => setPlayvideo(!playvideo)}
                     />
-                  </div>
-                </VideoButton>
-              </div>
-            )}
-              {isMobile && <div className="chatButtonWrap">
-                <ChatButton
-                  onClick={() => {
-                    setMobileChatOpen(!mobileChatOpen)
-                  }}
-                >
-                  <img
-                    src={`/images/icon_chat_mobile.svg`}
-                    alt="chat"
-                  />
-                  <p>채팅</p>
-                </ChatButton>
-              </div>}
+                    <div
+                      className="videoarrow"
+                      onClick={() => setCamerasOpen(!camerasOpen)}
+                    >
+                      <img
+                        src={"/images/icon_dropdown_video.svg"}
+                        className="videoarrow"
+                        alt="dropdown"
+                      />
+                    </div>
+                  </VideoButton>
+                  <VideoButton
+                    play={playaudio}
+                    open={audiosOpen}
+                    count={
+                      (audioDevices.length || 1) +
+                      (speakerAvailable ? speakerDevices.length || 1 : 0) +
+                      (speakerAvailable ? 2 : 1)
+                    }
+                    onBlur={() => setAudiosOpen(false)}
+                  >
+                    <div className="devicesWrap">
+                      <div className="deviceKind">마이크 설정</div>
+                      {audioDevices.length > 0 ? (
+                        audioDevices.map((x) => {
+                          return (
+                            <div
+                              className="device"
+                              onClick={() => handleAudioDeviceChange(x)}
+                              title={x.label}
+                            >
+                              {x.label}
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div className="device">마이크 없음</div>
+                      )}
+                      {speakerAvailable && (
+                        <div className="deviceKind">스피커 설정</div>
+                      )}
+                      {speakerAvailable &&
+                        (speakerDevices.length > 0 ? (
+                          speakerDevices.map((x) => {
+                            return (
+                              <div
+                                className="device"
+                                onClick={() => handleSpeakerDeviceChange(x)}
+                                title={x.label}
+                              >
+                                {x.label}
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <div className="device">스피커 없음</div>
+                        ))}
+                    </div>
+                    <img
+                      src={`/images/icon_audio_${playaudio ? "available" : "disabled"
+                        }.svg`}
+                      alt="audio"
+                      onClick={() => setPlayaudio(!playaudio)}
+                    />
+                    <div
+                      className="videoarrow"
+                      onClick={() => setAudiosOpen(!audiosOpen)}
+                    >
+                      <img
+                        src={"/images/icon_dropdown_video.svg"}
+                        className="videoarrow"
+                        alt="dropdown"
+                      />
+                    </div>
+                  </VideoButton>
+                </div>
+              )}
+            {isMobile && <div className="chatButtonWrap">
+              <ChatButton
+                onClick={() => {
+                  setMobileChatOpen(!mobileChatOpen)
+                }}
+              >
+                <img
+                  src={`/images/icon_chat_mobile.svg`}
+                  alt="chat"
+                />
+                <p>채팅</p>
+              </ChatButton>
+            </div>}
           </VideoContainer>
           {roomData?.version?.startsWith("host") && (
             <div className="lower">

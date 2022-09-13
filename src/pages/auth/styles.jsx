@@ -30,11 +30,30 @@ export const AuthSection = styled.div`
         font-weight: 700;
         line-height: 3.819rem;
     }
-    p{
+    span {
+        display: block;
+        padding: 4rem 0;
+        p{
         font-size: 2.6rem;
         font-weight: 400;
         letter-spacing: -0.12rem;
-        line-height: 3.103rem;
-        margin: 2rem 0 6.4rem 0;
+        line-height: 4.5rem;
+        i {
+            position: relative;
+            z-index: 9;
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                display: block;
+                width: 100%;
+                height: 1.5rem;
+                background-color: ${props => props.theme.light_yellow_01};
+                z-index: -1;
+                border-radius: 1rem;
+            }
+        }
+    }
     }
 ` 

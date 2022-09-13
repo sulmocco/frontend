@@ -142,6 +142,10 @@ export const Image = styled.div`
   .upload {
     margin-top: 2rem;
     display: flex;
+    overflow: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+      }
   }
   .Img {
     width: 18rem;

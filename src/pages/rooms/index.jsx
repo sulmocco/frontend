@@ -1,9 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import Nodata from "../../components/nodatalending";
 import RoomCard from "../../components/roomscard";
 import SearchBar from "../../components/searchbar";
+import userdataState from "../../recoil/userdata";
 import sulmoggoApi from "../../shared/apis";
 import { Alcohol, LiveVersion } from "../../shared/options";
 import { NoList, Separator } from "../../styles/CommonStyles";
@@ -36,6 +38,7 @@ const Rooms = (props) => {
   const page = queryParams.get("page") || 1;
   const isAsc = queryParams.get("isAsc") || null;
   const lastRoomRef = useRef();
+  const username = useRecoilValue(userdataState).username
 
   // console.log(alcohol);
   // console.log("version: ", version);
@@ -279,10 +282,10 @@ const Rooms = (props) => {
               )
                 return (
                   <div ref={lastRoomRef} key={room.chatRoomId}>
-                    <RoomCard {...room} />
+                    <RoomCard {...room} myUsername={username}/>
                   </div>
                 );
-              else return <RoomCard {...room} key={room.chatRoomId} />;
+              else return <RoomCard {...room}  myUsername={username} key={room.chatRoomId} />;
             });
           })}
         </RoomsGrid>

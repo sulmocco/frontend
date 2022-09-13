@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { UserLevel } from "../../styles/CommonStyles";
 
 export const CardWrapper = styled.div`
     width: 100%;
@@ -127,4 +128,13 @@ export const ProfileCircle = styled.div`
         width: 3.2rem;
         height: 3.2rem;
     }
+`
+export const DeleteButton = styled(UserLevel)`
+    background-color: ${props => props.theme.bg_light_gray};
+    border: .1rem solid ${props => props.theme.grey_03};
+    color: ${props => props.theme.grey_02};
+    margin-left: 2rem;
+    padding: .2rem .5rem;
+    width: fit-content;
+    height: fit-content;
 `

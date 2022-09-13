@@ -123,7 +123,7 @@ const Detail = () => {
                     )}
                 </section>
                 <section className='main'>
-                    <Viewer initialValue={data.content} />
+                    <Viewer initialValue={data.content} className='viewer' />
                 </section>
                 <section className='footer'>
                     <Icon like={data?.like} onClick={handleLike}>

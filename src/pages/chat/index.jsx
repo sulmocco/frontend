@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
@@ -40,6 +40,27 @@ import {
 import DeviceSetup from "../../components/devicesetup";
 import { getLevel } from "../../shared/modules";
 
+const TimeLabel = ({createdAt}) => {
+  const [time, setTime] = useState(0);
+  const timer = useRef(null);
+  // 방 생성 이후 시간 계산(1초마다)
+    useEffect(() => {
+      const updateTime = () => {
+        if (createdAt) {
+          var date1 = moment(createdAt);
+          var date2 = moment();
+          var diff = date2.diff(date1, "seconds");
+          setTime(moment.utc(diff * 1000).format("HH:mm:ss"));
+        }
+      };
+      timer.current = setInterval(() => updateTime(), 1000);
+      return () => {
+        if (timer.current !== null) clearInterval(timer.current);
+      };
+    }, [createdAt]);
+  return (<span>{time || "00:00:00"}</span>)
+}
+
 const Chat = (props) => {
   const [content, setContent] = useState([]);
   const [roomData, setRoomData] = useState(null);
@@ -49,7 +70,7 @@ const Chat = (props) => {
   const [selectedFriend, setSelectedFriend] = useState("");
   const [openFriendModal, setOpenFriendModal] = useState(false);
 
-  const [time, setTime] = useState(0);
+
 
   const chatRef = useRef();
   const lastOne = useRef();
@@ -74,7 +95,6 @@ const Chat = (props) => {
 
   const [speakerAvailable, setSpeakerAvailable] = useState(false);
   let isHost = username === roomData?.username;
-  const timer = useRef(null);
   const clientRef = useRef(null);
   const headers = { Authorization: token };
   let isMobile = window.innerWidth < 1024;
@@ -121,7 +141,7 @@ const Chat = (props) => {
         (data) => {
           const newMessage = JSON.parse(data.body);
           setUserCount(JSON.parse(data.body).userCount);
-          console.log(JSON.parse(data.body));
+          // console.log(JSON.parse(data.body));
           // console.log("여기!!!!!!!!!!");
           setContent((prevContent) => [...prevContent, newMessage]);
           lastOne.current?.scrollIntoView();
@@ -243,21 +263,7 @@ const Chat = (props) => {
     // eslint-disable-next-line
   }, [chatRoomId]);
 
-  // 방 생성 이후 시간 계산(1초마다)
-  useEffect(() => {
-    const updateTime = () => {
-      if (createdAt) {
-        var date1 = moment(createdAt);
-        var date2 = moment();
-        var diff = date2.diff(date1, "seconds");
-        setTime(moment.utc(diff * 1000).format("HH:mm:ss"));
-      }
-    };
-    timer.current = setInterval(() => updateTime(), 1000);
-    return () => {
-      if (timer.current !== null) clearInterval(timer.current);
-    };
-  }, [createdAt]);
+
 
   // 방장이 방을 떠날 경우 방 삭제
   useEffect(() => {
@@ -326,7 +332,7 @@ const Chat = (props) => {
               </div>}
               <div className="statWrap">
                 <img src="/images/icon_clock_grey_02.svg" alt="clock" />
-                <span>{time || "00:00:00"}</span>
+                <TimeLabel createdAt={roomData?.createdAt}/>
                 <Separator />
                 <img src="/images/icon_people_grey_02.svg" alt="people" />
                 <span>{usercount || 0}</span>
@@ -597,4 +603,4 @@ const Chat = (props) => {
   }
 };
 
-export default Chat;
+export default memo(Chat);

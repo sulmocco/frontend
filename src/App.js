@@ -16,6 +16,7 @@ import { useRecoilState } from "recoil";
 import { MaintainUser, SignOutSelector } from "./recoil/userdata";
 import ErrorBoundary from "./ErrorBoundary";
 import GlobalStyles from "./styles/GlobalStyles";
+import adapter from "webrtc-adapter";
 
 const Home = React.lazy(() => import("./pages/home"));
 const Auth = React.lazy(() => import("./pages/auth"));

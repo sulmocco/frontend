@@ -9,7 +9,7 @@ export const SpinnerWrap = styled.div`
     justify-content: center;
     align-items: center;
     gap: 5.6rem;
-    img {
+    video {
         width: ${props => props.size || '40rem'};
         height: auto;
         margin-top: -10rem;
@@ -24,7 +24,7 @@ export const SpinnerWrap = styled.div`
     @media (max-width:1024px) {
         gap: 2.5rem;
         max-height: calc(100vh - 15rem);
-        img {
+        video {
             width: 30rem;
             max-width: 50%;
         }

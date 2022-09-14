@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, memo } from "react";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Nodata from '../../components/nodatalending';
@@ -240,4 +240,4 @@ const Tables = (props) => {
   );
 };
 
-export default Tables;
+export default memo(Tables);

@@ -12,6 +12,7 @@ const Recommend = () => {
         <RecommendWrap>
             <h2>이상품 어때요?</h2>
             <section className="recommendsection">
+                <ul>
                 {data?.map((item, index) => (
                     <RecommendItem key={item.id} onClick={() => window.open(`${item.redirectUrl}`, '_blank')}>
                         <img src={item.imageUrl} alt='상품이미지' />
@@ -22,6 +23,7 @@ const Recommend = () => {
                         </div>
                     </RecommendItem>
                 ))}
+                </ul>
             </section>
         </RecommendWrap>
     );

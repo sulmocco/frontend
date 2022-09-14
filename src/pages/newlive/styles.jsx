@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { BlueButton, WhiteButton } from "../../styles/CommonStyles";
+import { memo } from "react";
 
-export const StyledInput = styled.input`
+export const StyledInput = memo(styled.input`
   padding: ${(props) => (props.small ? "1.6rem 2rem" : "2rem")};
   border: ${(props) =>
     props.error ? ".2rem solid " + props.theme.error : "none"};
@@ -21,7 +22,7 @@ export const StyledInput = styled.input`
     font-size: 1.4rem;
     margin-top: 1rem;
   }
-`;
+`);
 
 export const NewLiveContainer = styled.div`
   width: 100%;
@@ -136,7 +137,7 @@ export const VersionInputWrap = styled.div`
   }
 `;
 
-export const SubtitleWrapper = styled.div`
+export const SubtitleWrapper = (styled.div`
   margin-top: ${(props) => (props.mt ? props.mt : "4rem")};
   width: 100%;
   display: flex;
@@ -183,9 +184,9 @@ export const SubtitleWrapper = styled.div`
     margin-top: 4rem;
     gap: 1rem;
   }
-`;
+`);
 
-export const SubTitle = styled.h2`
+export const SubTitle = memo(styled.h2`
   font-size: 2.6rem;
   font-weight: 700;
   line-height: 3.1rem;
@@ -194,7 +195,7 @@ export const SubTitle = styled.h2`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
     font-size: 2rem;
   }
-`;
+`);
 
 export const AlcoholWrapper = styled.div`
   display: flex;

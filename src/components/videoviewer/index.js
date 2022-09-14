@@ -1,6 +1,6 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 import { useRecoilValue } from "recoil";
 import { audioinputState, playaudioState, playvideoState, videoinputState } from "../../recoil/mediaDevices";
 import UserVideoComponent from "./UserVideoComponent";
@@ -298,7 +298,7 @@ const VideoViewer = (props) => {
 
   const getNicknameTag = (sub) => {
     // Gets the nickName of the user
-    // console.log("✅-----GETNICKNAMETAG-----✅", sub.stream);
+    console.log("✅-----GETNICKNAMETAG-----✅", sub.stream);
     // console.log(sub);
     return JSON.parse(sub.stream.connection.data || "").clientData;
   }
@@ -375,4 +375,4 @@ const VideoViewer = (props) => {
   
 }
 
-export default VideoViewer;
+export default memo(VideoViewer);

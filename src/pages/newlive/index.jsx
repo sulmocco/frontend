@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, {memo} from "react";
 import { useRef, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -584,4 +584,4 @@ const NewLive = (props) => {
   );
 };
 
-export default NewLive;
+export default memo(NewLive);

@@ -1,6 +1,6 @@
 import { atom, DefaultValue, selector } from "recoil";
 
-const userdataState = atom({
+export const userdataState = atom({
     key: 'userdata',
     default: {
         username: 'anonymous',

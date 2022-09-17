@@ -74,7 +74,6 @@ const Chat = (props) => {
 
   const chatRef = useRef();
   const lastOne = useRef();
-  const [createdAt, setCreatedAt] = useState(0);
   const { chatRoomId } = useParams();
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
@@ -244,7 +243,6 @@ const Chat = (props) => {
           if (res) {
             setRoomData(res.data.body);
             setUserCount(res.data.body?.userCount + 1);
-            setCreatedAt(res.data.body.createdAt);
             connect();
           }
         })

@@ -50,7 +50,7 @@ export const RendingCont = styled.div`
     }
   }
   img {
-    max-width: 93.4rem;
+    max-width: 98.2rem;
   }
   .signup {
     font-size: 2rem;
@@ -58,30 +58,31 @@ export const RendingCont = styled.div`
     line-height: 2.4rem;
     letter-spacing: -0.04rem;
     margin-top: 2.4rem;
-    cursor: pointer;@media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-        font-size: 2.5rem;
+    cursor: pointer;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
+      font-size: 2.5rem;
     }
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
     max-width: 100vw;
     padding: 25rem 2rem 6.2rem 2rem;
-    .desc{
+    .desc {
       top: 5rem;
       padding: 2rem;
-      span{
+      span {
         font-size: 2rem;
       }
-      h3{
+      h3 {
         font-size: 3.5rem;
         margin-top: 0rem;
       }
-      p{
+      p {
         font-size: 1.7rem;
         line-height: 2.5rem;
         margin-top: 0rem;
       }
     }
-    img{
+    img {
       max-width: 100%;
     }
   }
@@ -128,10 +129,10 @@ export const RendingContRow = styled.div`
       max-width: 100%;
       margin-bottom: 2rem;
     }
-    span{
+    span {
       font-size: 2rem;
     }
-    h3{
+    h3 {
       font-size: 3.5rem;
       margin-top: 0rem;
       line-height: 4rem;

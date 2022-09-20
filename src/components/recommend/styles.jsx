@@ -13,9 +13,13 @@ export const RecommendWrap = styled.div`
     }
     .recommendsection {
         display: flex;
-        flex-wrap: wrap;
-        gap: 4.8rem 3.2rem;
         width: 128rem;
+        ul{
+            display: flex;
+            gap: 4.8rem 3.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
     }
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
         width: 100%;
